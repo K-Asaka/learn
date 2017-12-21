@@ -1,0 +1,3 @@
+Tarou Funabashi,100,88,81
+Jirou Chiba,77,94,85
+Daiki Makuwari,80,52,99
