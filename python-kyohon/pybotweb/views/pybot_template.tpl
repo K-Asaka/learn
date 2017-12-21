@@ -1,9 +1,11 @@
 <html>
 <body>
-<ul>
-<li>Hello World!</li>
-<li>現在時刻は{{now}}です</li>
-</ul>
+<form method="post" action="/hello">
+<input type="text" name="input_text">
+<input type="submit" value="送信">
+</form>
+<br>
+送信されたテキスト: {{text}}
 </body>
 </html>
 
