@@ -1,3 +1,9 @@
+def len_command(command):
+    cmd, text = command.split()
+    length = len(text)
+    response = '文字列ノ長サハ {} 文字デス'.format(length)
+    return response
+
 def heisei_command(command):
     heisei, year_str = command.split()
     year = int(year_str)
@@ -29,6 +35,8 @@ while True:
             break
     if '平成' in command:
         response = heisei_command(command)
+    if '長さ' in command:
+        response = len_command(command)
 
     if not response:
         response = '何ヲ言ッテルカ、ワカラナイ'
