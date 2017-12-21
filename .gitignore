@@ -1,7 +1,5 @@
 python-kyohon/output.txt
 python-kyohon/evaluation.txt
-python-kyohon/__pycache__/
-python-kyohon/env/
-python-kyohon/pybotweb/env/
-python-kyohon/pybotweb/__pycache__/
+__pycache__/
+env/
 
