@@ -1,5 +1,4 @@
-open_file = open('point.txt')
-raw_data = open_file.read()
-open_file.close()
+with open('point.txt') as open_file:
+    raw_data = open_file.read()
 print(raw_data)
 
