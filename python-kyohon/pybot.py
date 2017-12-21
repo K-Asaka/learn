@@ -1,4 +1,5 @@
 from pybot_eto import eto_command
+from pybot_random import choice_command, dice_command
 
 def len_command(command):
     cmd, text = command.split()
@@ -41,6 +42,10 @@ while True:
         response = len_command(command)
     if '干支' in command:
         response = eto_command(command)
+    if '選ぶ' in command:
+        response = choice_command(command)
+    if 'さいころ' in command:
+        response = dice_command()
 
     if not response:
         response = '何ヲ言ッテルカ、ワカラナイ'
