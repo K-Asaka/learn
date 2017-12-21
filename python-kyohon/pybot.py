@@ -11,14 +11,14 @@ def len_command(command):
 
 def heisei_command(command):
     heisei, year_str = command.split()
-    try:
+    if year_str.isdigit():
         year = int(year_str)
         if year >= 1989:
             heisei_year = year - 1988
             response = '西暦{}年ハ、平成{}年デス'.format(year, heisei_year)
         else:
             response = '西暦{}年ハ、平成デハアリマセン'.format(year)
-    except ValueError:
+    else:
         response = '数値ヲ指定シテクダサイ'
     return response
 
