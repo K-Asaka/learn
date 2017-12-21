@@ -1,5 +1,6 @@
 from pybot_eto import eto_command
 from pybot_random import choice_command, dice_command
+from pybot_datetime import today_command, now_command, weekday_command
 
 def len_command(command):
     cmd, text = command.split()
@@ -46,6 +47,12 @@ while True:
         response = choice_command(command)
     if 'さいころ' in command:
         response = dice_command()
+    if '今日' in command:
+        response = today_command()
+    if '現在' in command:
+        response = now_command()
+    if '曜日' in command:
+        response = weekday_command(command)
 
     if not response:
         response = '何ヲ言ッテルカ、ワカラナイ'
