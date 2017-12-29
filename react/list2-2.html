@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>React Sample</title>
+    <script src="https://fb.me/react-15.3.0.js"></script>
+    <script src="https://fb.me/react-dom-15.3.0.js"></script>
+  </head>
+  <body>
+    <div id="content"></div>
+
+    <script>
+      var MultiElement = React.createClass({
+        render: function() {
+          return (
+            React.DOM.h2(null, 'First Element'),
+            React.DOM.h2(null, 'Second Element'),
+            React.DOM.h2(null, 'Third Element')
+          );
+        }
+      });
+
+      ReactDOM.render(
+        React.createElement(MultiElement),
+        document.getElementById('content')
+      );
+    </script>
+  </body>
+</html>
+
