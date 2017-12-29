@@ -10,15 +10,14 @@
     <div id="content"></div>
 
     <script>
+      var HelloWorld = React.createClass({
+        render: function() {
+          return React.DOM.h2(null, 'Hello, React World!');
+        }
+      });
+
       ReactDOM.render(
-        React.DOM.h2({
-          style: {
-            fontStyle: 'oblique',
-            fontFamily: 'Arial',
-            color: 'green'
-          }},
-          'Hello, React World!'
-        ),
+        React.createElement(HelloWorld),
         document.getElementById('content')
       );
     </script>
