@@ -20,13 +20,7 @@
       }
 
       ReactDOM.render(
-        <p><input
-          type = {myAttributes.type}
-          checked = {myAttributes.checked}
-          readOnly = {myAttributes.readOnly}
-          disabled = {myAttributes.disabled}
-          size = {myAttributes.size}
-        />Check Me!</p>,
+        <p><input {...myAttributes}/>Check Me!</p>,
         document.getElementById('content')
       );
     </script>
