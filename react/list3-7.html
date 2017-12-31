@@ -11,16 +11,28 @@
     <div id="content"></div>
 
     <script type="text/babel">
-      var myStyle = {
-        fontStyle: 'normal',
-        fontFamily: 'Courier',
-        color: 'brown'
-      }
+      var ColoredButton = React.createClass({
+        render: function() {
+          return (
+            <button {...this.props}>
+              {this.props.children}
+            </button>
+          )
+        }
+      });
 
       ReactDOM.render(
-        <h2 style = {{...myStyle}}>
-          Let's Spread!
-        </h2>,
+        <ColoredButton
+          style = {{
+            color: '#A04020',
+            backgroundColor: '#90C0A0',
+            fontFamily: 'Serif',
+            fontSize: 22
+          }}
+          type = 'button'
+          disabled = {false}>
+          Click Me!
+        </ColoredButton>,
         document.getElementById('content')
       );
     </script>
