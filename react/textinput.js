@@ -1,6 +1,6 @@
 var TextInput = React.createClass({
   render: function() {
-    return (<div>JSX Input: <input type='text' value='入力欄' /></div>);
+    return (<div>JSX Input: <input type='text' defaultValue='入力欄' /></div>);
   }
 });
 
