@@ -1,26 +1,35 @@
 var RadioButton = React.createClass({
+  getInitialState: function() {
+    return { selection: 'first' };
+  },
+  handleChange: function(event) {
+    console.log(event.target.value);
+    this.setState({ selection: event.target.value });
+  },
   render: function() {
     return (<div>どれか1つを選んでください：
       <div>
         <input
           type="radio"
-          name="三択"
           value="first"
-          defaultChecked
+          checked={this.state.selection === 'first'}
+          onChange={this.handleChange}
         />最初の選択肢
       </div>
       <div>
         <input
           type="radio"
-          name="三択"
           value="second"
+          checked={this.state.selection === 'second'}
+          onChange={this.handleChange}
         />次の選択肢
       </div>
       <div>
         <input
           type="radio"
-          name="三択"
           value="third"
+          checked={this.state.selection === 'third'}
+          onChange={this.handleChange}
         />最後の選択肢
       </div>
     </div>);
