@@ -13,23 +13,27 @@
     <script type="text/babel">
       var ColoredButton = React.createClass({
         render: function() {
+          var defAttrs = {
+            style: {
+              color: '#A04020',
+              backgroundColor: '#90C0A0',
+              fontFamily: 'Serif',
+              fontSize: 22
+            },
+            type: 'button',
+            disabled: false
+          }
           return (
-            <button {...this.props}/>
+            <button {...defAttrs}>
+              {this.props.children}
+            </button>
           )
         }
       });
 
       ReactDOM.render(
-        <ColoredButton
-          style = {{
-            color: '#A04020',
-            backgroundColor: '#90C0A0',
-            fontFamily: 'Serif',
-            fontSize: 22
-          }}
-          type = 'button'
-          disabled = {false}>
-          Click Me!
+        <ColoredButton>
+          Tap Me!
         </ColoredButton>,
         document.getElementById('content')
       );
