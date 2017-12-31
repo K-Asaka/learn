@@ -6,7 +6,7 @@ var RadioButton = React.createClass({
           type="radio"
           name="三択"
           value="first"
-          checked
+          defaultChecked
         />最初の選択肢
       </div>
       <div>
