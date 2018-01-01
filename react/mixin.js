@@ -6,18 +6,24 @@ var tableData = [
   {id: 3, name: '田中三郎', area: '千葉県銚子市', number: '7891279'}
 ];
 
+var startTime = Date.now();
+
 var MonitorLifeCycleMixin = {
   componentDidMount: function() {
     console.log('componentDidMount:', this.constructor.displayName);
   },
   componentWillReceiveProps: function(nextProps) {
     console.log('componentWillReceiveProps:', nextProps);
+  },
+  showElapsed: function() {
+    console.log(this.constructor.displayName, Date.now() - startTime);
   }
 };
 
 var ContactTable = React.createClass({
   mixins: [MonitorLifeCycleMixin],
   render: function() {
+    this.showElapsed();
     return (<table>
       {this.props.children}
     </table>);
@@ -32,6 +38,7 @@ ContactTable.Header = React.createClass({
         {cName}
       </th>);
     });
+    this.showElapsed();
     return (<thead>
       <tr>
         {tableTitles}
@@ -50,6 +57,7 @@ ContactTable.Body = React.createClass({
         <td>{person.number}</td>
       </tr>);
     });
+    this.showElapsed();
     return (<tbody>
       {tableRows}
     </tbody>);
@@ -59,6 +67,7 @@ ContactTable.Body = React.createClass({
 var DispTable = React.createClass({
   mixins: [MonitorLifeCycleMixin],
   render: function() {
+    this.showElapsed();
     return (<ContactTable className="regularTable">
       <ContactTable.Header title={this.props.title} />
       <ContactTable.Body data={this.props.data} />
