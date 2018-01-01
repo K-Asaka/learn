@@ -1,6 +1,6 @@
 var SimpleTable = React.createClass({
   render: function() {
-    return (<table border="1">
+    return (<table className="regularTable">
       <tr>
         <th>名前</th>
         <th>地域</th>
