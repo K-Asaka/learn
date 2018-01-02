@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>CSS Animation Control Example</title>
+    <style>
+      .hidden {
+        opacity: 0.1;
+        transition: 0.5s;
+      }
+      .shown {
+        opacity: 0.9;
+        transition: 1.5s;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="checkbox" id="cb1" onClick=checkChange()>
+      隠れたテキストを表示
+    <h2 class="hidden" id="text1">普段は見えないテキスト</h2>
+  <script>
+    function checkChange() {
+      var text1 = document.getElementById('text1');
+      if (document.getElementById('cb1').checked) {
+        text1.className = 'shown';
+      } else {
+        text1.className = 'hidden';
+      };
+    }
+  </script>
+  </body>
+</html>
+
