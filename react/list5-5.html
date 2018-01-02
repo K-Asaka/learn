@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>CSS Animation React Example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.0/react-with-addons.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.0/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+    <style>
+      .fadingText-enter {
+        opacity: 0;
+      }
+      .fadingText-enter.fadingText-enter-active {
+        opacity: 1;
+        transition: 1500ms;
+      }
+      .fadingText-leave {
+        opacity: 1;
+      }
+      .fadingText-leave.fadingText-leave-active {
+        opacity: 0;
+        transition: 500ms;
+      }
+      .fadingText-appear {
+        opacity: 0;
+      }
+      .fadingText-appear.fadingText-appear-active {
+        opacity: 1;
+        transition: 800ms;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content"></div>
+    <script type="text/babel" src="initialmount.js"></script>
+  </body>
+</html>
+
