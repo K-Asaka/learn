@@ -1,4 +1,5 @@
 #! /usr/local/bin/ruby
+# -*- coding: utf-8 -*-
 # 関数的メソッドの定義
 def odd?(n)
   # 値による多岐分岐
