@@ -1,5 +1,5 @@
 #! /usr/local/bin/ruby
-# -*- cording: utf-8 -*-
+# -*- coding: utf-8 -*-
 require 'stringio'
 buffer = String.new
 sio = StringIO.new(buffer)
