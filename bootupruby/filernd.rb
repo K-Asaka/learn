@@ -1,5 +1,5 @@
 #! /usr/local/bin/ruby
-# -*- cording: utf-8 -*-
+# -*- coding: utf-8 -*-
 File.open("time.log", "r+b") {|f|
   print "#{f.pos}: "
   print f.gets
