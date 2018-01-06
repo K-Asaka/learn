@@ -1,5 +1,5 @@
 #! /usr/local/bin/ruby
-# -*- cording: utf-8 -*-
+# -*- coding: utf-8 -*-
 p $stdin
 p $stdout
 p $stderr
