@@ -18,3 +18,13 @@ ensure
   puts "ensure節"
 end
 
+def process(i)
+  puts i
+end
+
+begin
+  process(1); process(2); process(3)
+ensure
+  puts Time.now
+end
+
