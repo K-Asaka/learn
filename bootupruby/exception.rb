@@ -28,3 +28,5 @@ ensure
   puts Time.now
 end
 
+raise ArgumentError, 'message'
+
