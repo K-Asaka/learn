@@ -1,6 +1,8 @@
 #! /usr/local/bin/ruby
 # -*- coding: utf-8 -*-
-a = "str"
-[1, 2, 3].each {|a| p a }
-p a
+a, b = "str", "ing"
+[1, 2, 3].each do |i; a, b|
+  a, b = 1, 2
+end
+p a, b
 
