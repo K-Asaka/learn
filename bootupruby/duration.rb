@@ -7,7 +7,10 @@ class Duration
   end
   attr_accessor :since, :until
   def self.print(x); p x end
-  def display; puts self end
+  def display(target=$>)
+    super
+    target.write "(#{self.since}-#{self.until})"
+  end
 end
 duration = Duration.new(Time.now, Time.now + 3600)
 p duration.until
