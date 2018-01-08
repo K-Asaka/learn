@@ -1,5 +1,6 @@
 #! /usr/local/bin/ruby
 # -*- coding: utf-8 -*-
+Fixnum.freeze
 class Fixnum
   alias original_addition +
   def +(rhs)
