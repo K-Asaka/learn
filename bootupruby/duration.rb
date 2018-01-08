@@ -33,8 +33,10 @@ duration2.print_since
 p Duration::DAYS_OF_WEEK
 
 class Duration    # 再オープン
-  def self.a_week_from(from)
-    return self.new(from, from + 7 * 24 * 60 * 60)
+  class << self
+    def a_week_from(from)
+      return self.new(from, from + 7 * 24 * 60 * 60)
+    end
   end
 end
 p Duration.a_week_from(Time.now)
