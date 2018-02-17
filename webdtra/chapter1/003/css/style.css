@@ -81,3 +81,30 @@ html, body {
   line-height: 1.7em;
 }
 
+header {
+  position: fixed;
+  top: 25px;
+  left: 30px;
+  width: 100%;
+  z-index: 1;
+}
+
+#logo {
+  float: left;
+  margin-right: 10px;
+}
+
+nav li {
+  float: left;
+  padding-top: 7px;
+  margin: 0 10px;
+  font-size: 14px;
+}
+
+footer {
+  position: fixed;
+  bottom: 25px;
+  right: 30px;
+  font-size: 12px;
+}
+
