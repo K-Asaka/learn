@@ -1,0 +1,11 @@
+body {
+  font-family: Helvetica, Arial, "游ゴシック", YuGothic, "ヒラギノ角ゴPro W3", "Hiragino KakuGothic Pro", "メイリオ", Meiryo, sans-serif;
+  font-size: 12px;
+  line-height: 2em;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+
