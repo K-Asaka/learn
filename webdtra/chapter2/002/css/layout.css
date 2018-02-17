@@ -36,3 +36,22 @@
   height: 0;
   visibility: hidden;
 }
+
+.g-nav-01 ul li a {
+  display: block;
+  padding: 20px 0 23px;
+  text-align: center;
+  color: #fff;
+}
+
+.g-nav-01 ul li a:link, .g-nav-01 ul li a:visited {
+  text-decoration: none;
+}
+
+.g-nav-01 ul li a:hover, .g-nav-01 ul li a:active {
+  padding: 20px 0;
+  background: #fff;
+  text-decoration: none;
+  color: #cc3d14;
+  font-weight: bold;
+}
