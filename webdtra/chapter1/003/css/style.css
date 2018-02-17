@@ -48,3 +48,16 @@ html, body {
   background-color: #f8edc9;
 }
 
+.content h2 {
+  font-family: 'Amiri', serif;
+  font-style: italic;
+  font-size: 64px;
+  font-weight: normal;
+  margin-top: -35px;
+  margin-bottom: 21px;
+  padding-bottom: 7px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+}
+
