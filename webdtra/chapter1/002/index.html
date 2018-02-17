@@ -5,6 +5,15 @@
   <link rel="stylesheet" href="css/style.css" type="text/css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="js/masonry.pkgd.min.js"></script>
+  <script>
+    $(function () {
+      var $container = $('#content');
+      $container.masonry({
+        itemSelector: '.item',
+        columnWidth: 250
+      });
+    });
+  </script>
 </head>
 <body>
 <div id="wrap">
