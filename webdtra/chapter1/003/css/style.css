@@ -1,0 +1,29 @@
+html, body {
+  height: 100%;
+}
+
+#wrap {
+  position: relative;
+  width: 100%;
+  min-width: 700px;
+  height: 100%;
+}
+
+#left-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background-color: #f8edc9;
+}
+
+#right-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background-color: #fff;
+}
+
