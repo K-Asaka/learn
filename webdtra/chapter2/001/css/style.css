@@ -52,3 +52,19 @@ a.col3:hover {
   background-color: #905;
 }
 
+a.col1:hover {
+  box-shadow: 1px 1px 4px #006 inset;
+}
+
+a.col2:hover {
+  box-shadow: 1px 1px 4px #030 inset;
+}
+
+a.col3:hover {
+  box-shadow: 1px 1px 4px #400 inset;
+}
+
+.btn {
+  border-radius: 6px;
+}
+
