@@ -25,3 +25,18 @@ a.btn {
   border: 1px solid #999;
 }
 
+a.col1:link, a.col1:visited, a.col1:hover {
+  background-color: #49d;
+  color: #fff;
+}
+
+a.col2:link, a.col2:visited, a.col2:hover {
+  background-color: #8b2;
+  color: #fff;
+}
+
+a.col3:link, a.col3:visited, a.col3:hover {
+  background-color: #d49;
+  color: #fff;
+}
+
