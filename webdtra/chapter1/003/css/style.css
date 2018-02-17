@@ -75,3 +75,9 @@ html, body {
   border-color: #f8edc9;
 }
 
+.content p {
+  margin: 0 auto;
+  width: 230px;
+  line-height: 1.7em;
+}
+
