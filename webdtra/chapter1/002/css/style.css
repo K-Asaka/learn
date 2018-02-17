@@ -1,0 +1,37 @@
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  background-color: #f8edc9;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+header {
+  width: 100%;
+  text-align: center;
+}
+
+#logo {
+  padding: 40px 0 15px;
+}
+
+nav {
+  padding-bottom: 35px;
+}
+
+nav li {
+  margin: 0 10px;
+  display: inline-block;
+}
+
+footer {
+  width: 100%;
+  text-align: center;
+  padding-bottom: 15px;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
