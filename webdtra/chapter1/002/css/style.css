@@ -35,3 +35,18 @@ footer {
   letter-spacing: 1px;
 }
 
+.item {
+  width: 220px;
+  margin: 15px;
+  padding-bottom: 20px;
+  background-color: #fff;
+}
+
+.info {
+  position: relative;
+  padding: 20px;
+  margin: 20px 20px 0;
+  background-color: #ecedf0;
+  width: 140px;
+}
+
