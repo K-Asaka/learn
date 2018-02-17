@@ -40,3 +40,15 @@ a.col3:link, a.col3:visited, a.col3:hover {
   color: #fff;
 }
 
+a.col1:hover {
+  background-color: #05b;
+}
+
+a.col2:hover {
+  background-color: #480;
+}
+
+a.col3:hover {
+  background-color: #905;
+}
+
