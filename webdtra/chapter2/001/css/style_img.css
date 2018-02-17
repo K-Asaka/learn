@@ -12,7 +12,7 @@ ul {
   margin: 0;
   padding: 0;
   list-style: none;
-  height: 40px;
+  height: 80px;
 }
 
 li {
@@ -20,5 +20,29 @@ li {
   padding: 0;
   float: left;
   width: 230px;
+}
+
+body {
+  background-color: #033a70;
+}
+
+ul {
+  overflow: hidden;
+}
+
+a {
+  display: block;
+  margin: 0;
+  padding: 6px 0 10px 0;
+  text-decoration: none;
+  text-align: center;
+  color: #ffffff;
+  background: #066da0 url(../img/button-effects.png) left top no-repeat;
+}
+
+a:hover {
+  color: #ffffff;
+  text-shadow: 1px 1px 4px #eeff3a;
+  background: #066da0 url(../img/button-effects.png) left bottom no-repeat;
 }
 
