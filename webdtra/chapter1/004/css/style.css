@@ -1,0 +1,13 @@
+body {
+  background-image: url(../img/bg.jpg);
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-color: #999;
+
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: #fff;
+}
+
