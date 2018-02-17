@@ -1,0 +1,27 @@
+.cf:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+ul li {
+  display: inline;
+}
+
+a.btn {
+  display: block;
+  float: left;
+  width: 30%;
+  height: 40px;
+  margin: 0 6px 0 0;
+  padding: 0;
+  line-height: 2.6em;
+  text-align: center;
+  border: 1px solid #999;
+}
+
