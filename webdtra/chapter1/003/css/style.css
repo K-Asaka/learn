@@ -36,3 +36,15 @@ html, body {
   margin-left: -170px;
 }
 
+.content .circle {
+  width: 240px;
+  height: 240px;
+  padding: 50px;
+  background-color: #fff;
+  border-radius: 50%;
+}
+
+#right-content .content .circle {
+  background-color: #f8edc9;
+}
+
