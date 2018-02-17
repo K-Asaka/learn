@@ -68,3 +68,21 @@ a.col3:hover {
   border-radius: 6px;
 }
 
+a.col1:active {
+  background-color: #039;
+  color: #48c;
+  box-shadow: 2px 2px 4px #002 inset;
+}
+
+a.col2:active {
+  background-color: #260;
+  color: #7a2;
+  box-shadow: 3px 3px 6px #020 inset;
+}
+
+a.col3:active {
+  background-color: #703;
+  color: #c48;
+  box-shadow: 3px 3px 6px #200 inset;
+}
+
