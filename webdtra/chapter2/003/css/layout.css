@@ -1,0 +1,100 @@
+.wrapper {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto 50px;
+}
+
+.header {
+  width: 100%;
+  background: #edc9c9;
+  margin: 0 0 2em 0;
+}
+
+.g-nav-01 {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 5px 0 0 0;
+  background: #cc3d14;
+}
+
+.g-nav-01 ul li {
+  width: 18%;
+  padding: 5px 1%;
+  list-style: none;
+  float: left;
+}
+
+.clearfix {
+  *zoom: 1;
+}
+
+.clearfix:after {
+  content: ".";
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
+}
+
+.g-nav-01 ul li a {
+  display: block;
+  padding: 20px 0 23px;
+  text-align: center;
+  color: #fff;
+}
+
+.g-nav-01 ul li a:link, .g-nav-01 ul li a:visited {
+  text-decoration: none;
+}
+
+.g-nav-01 ul li a:hover, .g-nav-01 ul li a:active {
+  padding: 20px 0;
+  background: #fff;
+  text-decoration: none;
+  color: #cc3d14;
+  font-weight: bold;
+}
+
+.g-nav-01 ul li a span {
+  width: 21px;
+  height: 17px;
+  display: inline-block;
+  margin: 0 0.3em 0 0;
+  background-repeat: no-repeat;
+}
+
+.g-nav-01 ul li.home a span {
+  background-image: url("../img/icon-home-white.png");
+}
+.g-nav-01 ul li.home a:hover span, .g-nav-01 ul li.home a:active span {
+  background-image: url("../img/icon-home-red.png");
+}
+
+.g-nav-01 ul li.flower a span {
+  background-image: url("../img/icon-flower-white.png");
+}
+.g-nav-01 ul li.flower a:hover span, .g-nav-01 ul li.flower a:active span {
+  background-image: url("../img/icon-flower-red.png");
+}
+
+.g-nav-01 ul li.gift a span {
+  background-image: url("../img/icon-gift-white.png");
+}
+.g-nav-01 ul li.gift a:hover span, .g-nav-01 ul li.gift a:active span {
+  background-image: url("../img/icon-gift-red.png");
+}
+
+.g-nav-01 ul li.shop a span {
+  background-image: url("../img/icon-shop-white.png");
+}
+.g-nav-01 ul li.shop a:hover span, .g-nav-01 ul li.shop a:active span {
+  background-image: url("../img/icon-shop-red.png");
+}
+
+.g-nav-01 ul li.contact a span {
+  background-image: url("../img/icon-contact-white.png");
+}
+.g-nav-01 ul li.contact a:hover span, .g-nav-01 ul li.contact a:active span {
+  background-image: url("../img/icon-contact-red.png");
+}
