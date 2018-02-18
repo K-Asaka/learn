@@ -1,0 +1,43 @@
+@charset 'UTF-8';
+body {
+	font-family: '游ゴシック', 'Yu Gothic', '游ゴシック体', 'YuGothic', 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, sans-serif;
+	font-size: 16px;
+	font-weight: bold; 
+	color: #292c34;
+	background: url(../images/bg.jpg) repeat;
+}
+
+/*テキスト周辺の余白を消すスタイル挿入場所*/
+
+a {
+	text-decoration: none;
+	color: #292c34;
+}
+a:hover {
+	text-decoration: underline; 
+	color: #1edba1;
+}
+
+.nav-global {
+	text-align: center;
+}
+.nav-global li {
+	font-size: 18px; 
+	display: inline-block;
+	margin: 1em 0.5em;
+}
+
+footer {
+	font-weight: normal; 
+	margin-top: 2em;
+	padding: 1em;
+	text-align: center;
+	color: #fff;
+	background: #292c34;
+}
+
+/*リストを横並びにするスタイル挿入場所*/
+
+/*上映会場の項目にスラッシュを追加するタイル挿入場所*/
+
+/*リードコピーと見出しのスタイル挿入場所*/

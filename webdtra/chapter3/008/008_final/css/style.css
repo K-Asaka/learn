@@ -1,0 +1,107 @@
+@charset 'UTF-8';
+body {
+	font-family: '游ゴシック', 'Yu Gothic', '游ゴシック体', 'YuGothic', 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, sans-serif;
+	font-size: 16px;
+	line-height: 1.75;
+	color: #464952; 
+	background: white;
+}
+
+body, div, header, nav, ul, li, h1, h2, h3, h4, p, article, img {
+	box-sizing: border-box;
+	margin: 0; 
+	padding: 0;
+}
+
+header {
+	position: relative;
+	z-index: 1;
+}
+header h1 {
+	line-height: 1;
+	position: absolute;
+	top: 0;
+	left: 0;
+	margin: 15px;
+}
+header nav {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 15px;
+}
+header nav li {
+	display: inline;
+}
+header nav li a {
+	font-size: 13px;
+	font-weight: bold;
+	margin-left: 1em;
+	text-decoration: none; 
+	color: #464952;
+}
+header nav li a:hover {
+	color: #000;
+}
+
+article {
+	max-width: 960px;
+	margin: 4em auto;
+	padding: 0 20px;
+}
+article h3 {
+	font-size: 20px; 
+	margin-bottom: 20px;
+	padding: 20px 0 20px 70px;
+	background: url(../images/num1.svg) no-repeat left center;
+}
+article h3:nth-of-type(2) {
+	background-image: url(../images/num2.svg);
+}
+article h3:nth-of-type(3) {
+	background-image: url(../images/num3.svg);
+}
+article p {
+	font-size: 15px;
+}
+article p + h3 {
+	margin-top: 4em;
+}
+article p + p {
+	margin-top: 2em;
+}
+
+.hero {
+	position: relative;
+	min-height: 480px;
+	background: url(../images/bg3.svg) no-repeat right 80px, url(../images/bg2.svg) no-repeat right bottom, #6fcfd4 url(../images/bg1.svg) no-repeat left bottom;
+}
+.hero:after {
+	position: absolute;
+	right: 0;
+	bottom: -20px;
+	display: block;
+	width: 250px;
+	height: 180px;
+	content: '';
+	background: url(../images/building.svg) no-repeat left top;
+}
+.hero h2, .hero h4 {
+	max-width: 960px;
+	margin: auto;
+	padding: 0 20px;
+}
+.hero h4 {
+	font-size: 80px;
+	font-size: 24px;
+	padding-top: 80px;
+	padding-bottom: 5px; 
+	color: #464952;
+}
+.hero h2 {
+	font-family: 'Shuei KakuGo Gin L';
+	font-size: 78px;
+	font-weight: normal;
+	line-height: 1.3; 
+	color: #fff;
+}

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="258px" height="197px" viewBox="0 0 258 197" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.4.4 (17249) - http://www.bohemiancoding.com/sketch -->
+    <title>bg1</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="258" height="197"></rect>
+        <path id="path-3" d="M84.25,148.2035 L113,98.4075 L141.75,148.2035 L84.25,148.2035 Z"></path>
+        <path id="path-4" d="M170.5003,198 L228.0003,198 L199.2503,148.204 L170.5003,198 Z"></path>
+        <path id="path-5" d="M55.5,98.4071 L84.25,48.6111 L113,98.4071 L55.5,98.4071 Z"></path>
+        <path id="path-6" d="M170.5,98.4071 L199.25,48.6111 L228,98.4071 L170.5,98.4071 Z"></path>
+    </defs>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="sample3-01b" sketch:type="MSArtboardGroup" transform="translate(-766.000000, 0.000000)">
+            <g id="bg1" sketch:type="MSLayerGroup" transform="translate(766.000000, 0.000000)">
+                <mask id="mask-2" sketch:name="Mask" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Mask" sketch:type="MSShapeGroup" xlink:href="#path-1"></use>
+                <g id="Fill-2">
+                    <use fill="none" sketch:type="MSShapeGroup" mask="url(#mask-2)" xlink:href="#path-3"></use>
+                    <use fill="#EEF81C" xlink:href="#path-3"></use>
+                </g>
+                <path d="M141.75,148.2035 L170.5,98.4075 L199.25,148.2035 L141.75,148.2035 Z" id="Fill-3" fill="#EEF81C" sketch:type="MSShapeGroup" mask="url(#mask-2)"></path>
+                <path d="M-2,198 L55.5,198 L26.75,148.204 L-2,198 Z" id="Fill-4" fill="#EEF81C" sketch:type="MSShapeGroup" mask="url(#mask-2)"></path>
+                <g id="Fill-7">
+                    <use fill="none" sketch:type="MSShapeGroup" mask="url(#mask-2)" xlink:href="#path-4"></use>
+                    <use fill="#EEF81C" xlink:href="#path-4"></use>
+                </g>
+                <path d="M199.25,148.2035 L228,98.4075 L256.75,148.2035 L199.25,148.2035 Z" id="Fill-8" fill="#EEF81C" sketch:type="MSShapeGroup" mask="url(#mask-2)"></path>
+                <path d="M141.75,48.6106 L170.5,-1.1854 L199.25,48.6106 L141.75,48.6106 Z" id="Fill-10" fill="#EEF81C" sketch:type="MSShapeGroup" mask="url(#mask-2)"></path>
+                <g id="Fill-14">
+                    <use fill="none" sketch:type="MSShapeGroup" mask="url(#mask-2)" xlink:href="#path-5"></use>
+                    <use fill="#EEF81C" xlink:href="#path-5"></use>
+                </g>
+                <path d="M113,98.4071 L141.75,48.6111 L170.5,98.4071 L113,98.4071 Z" id="Fill-15" fill="#EEF81C" sketch:type="MSShapeGroup" mask="url(#mask-2)"></path>
+                <g id="Fill-16">
+                    <use fill="none" sketch:type="MSShapeGroup" mask="url(#mask-2)" xlink:href="#path-6"></use>
+                    <use fill="#EEF81C" xlink:href="#path-6"></use>
+                </g>
+                <path d="M228,98.4071 L256.75,48.6111 L285.5,98.4071 L228,98.4071 Z" id="Fill-19" fill="#EEF81C" sketch:type="MSShapeGroup" mask="url(#mask-2)"></path>
+                <path d="M256.75,148.2035 L285.5,98.4075 L314.25,148.2035 L256.75,148.2035 Z" id="Fill-20" fill="#EEF81C" sketch:type="MSShapeGroup" mask="url(#mask-2)"></path>
+                <path d="M256.75,48.6106 L285.5,-1.1854 L314.25,48.6106 L256.75,48.6106 Z" id="Fill-27" fill="#EEF81C" sketch:type="MSShapeGroup" mask="url(#mask-2)"></path>
+            </g>
+        </g>
+    </g>
+</svg>

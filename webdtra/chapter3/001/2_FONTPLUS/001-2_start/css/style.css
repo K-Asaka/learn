@@ -1,0 +1,89 @@
+@charset 'UTF-8';
+body {
+	font-family: '游明朝', 'Yu Mincho', '游明朝体', 'YuMincho', 'ヒラギノ明朝 Pro W3', 'Hiragino Mincho Pro', 'HiraMinProN-W3', 'ＭＳ 明朝', 'MS Mincho', serif;
+	color: #000; 
+	background: url(../images/bg2.png) no-repeat left bottom, url(../images/dot1.png);
+}
+
+body, header, nav, h1, h2, h3, p, div, ul, li, article {
+	font-weight: normal; 
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	text-decoration: none; 
+	color: #000;
+}
+a:hover {
+	color: #ec3c81;
+}
+
+header {
+	float: left; 
+	width: 240px;
+}
+header h1 {
+	padding: 30px 0; 
+	text-align: center;
+}
+header .nav-global ul {
+	margin-left: 40px; 
+	list-style: none;
+}
+header .nav-global ul a {
+	display: block;
+	padding: 10px 0;
+}
+
+.contents {
+	min-width: 960px;
+	margin-left: 240px;
+	padding: 30px 60px; 
+	background: white url(../images/bg1.png) no-repeat right top;
+}
+.contents .back {
+	margin: 0 0 30px;
+	padding: 0 0 15px;
+	border-bottom: 1px solid #ddd;
+}
+.contents .back a:before {
+	margin-right: 5px; 
+	content: '←';
+}
+.contents article .series-title {
+	min-height: 90px;
+	margin-bottom: 30px; 
+	padding: 30px 0 0 105px;
+	background: url(../images/image1.jpg) no-repeat left center;
+	background-size: 90px;
+}
+.contents article h2 {
+	/*FONTPLUS用font-family挿入場所*/
+	font-family: "NUDモトヤアポロ Std W3";
+	font-size: 56px;
+	line-height: 1.5;
+	margin: 0 -60px 30px;
+	padding: 30px 60px 190px;
+	background: #eef81c url(../images/image2.jpg) repeat-x left bottom;
+	background-size: auto 160px;
+}
+.contents article h3 {
+	/*FONTPLUS用font-family挿入場所*/
+	font-size: 32px; 
+	padding: 30px 0;
+	text-align: center;
+}
+.contents article h3:after {
+	display: block;
+	width: 25px;
+	height: 4px;
+	margin: 30px auto;
+	content: '';
+	background: #000;
+}
+.contents article p:not([class]) {
+	line-height: 2; 
+	margin-bottom: 30px;
+}

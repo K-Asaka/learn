@@ -1,0 +1,143 @@
+@charset 'UTF-8';
+body {
+	font-family: '秀英丸ゴシック L'; 
+	color: #000;
+	background: #fff;
+}
+
+body, header, footer, nav, h1, h2, h3, h4, ul, li, p, div {
+	box-sizing: boder-box; 
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	text-decoration: none;
+	color: #000;
+}
+a:hover {
+	color: #c87d4d;
+}
+
+header {
+	position: relative; 
+	min-width: 960px;
+	margin: auto;
+	background: #f2eede;
+}
+header h1 {
+	position: absolute;
+	top: 15px; 
+	left: 15px;
+}
+
+.nav-global {
+	position: absolute;
+	top: 15px; 
+	right: 15px;
+}
+.nav-global li {
+	display: inline-block;
+	margin-left: 30px;
+}
+.nav-global li a {
+	font-size: 13px;
+	font-weight: bold;
+	letter-spacing: 0.1em;
+}
+
+footer {
+	margin-top: 60px; 
+	padding-top: 15px;
+	border-top: 1px dotted #c4c7cd;
+}
+footer .credit {
+	text-align: center;
+}
+
+.hero {
+	background: #f2eede;
+}
+
+.hero-text {
+	min-width: 800px;
+	max-width: 960px;
+	margin: auto; 
+	padding: 120px 60px 90px;
+	background: url(../images/main_image.png) no-repeat right 45px;
+}
+
+.copy-catch {
+	font-weight: normal; 
+	margin-bottom: 45px;
+	letter-spacing: 0.2em;
+}
+
+.copy-read {
+	line-height: 2.5; 
+	letter-spacing: 0.2em;
+}
+
+.content {
+	min-width: 960px;
+	max-width: 1024px;
+	margin: auto;
+}
+
+h3 {
+	font-size: 24px;
+	font-weight: normal; 
+	padding: 40px 0;
+	text-align: center;
+	letter-spacing: 0.1em;
+	color: #c87d4d;
+}
+
+.feature {
+	overflow: hidden; 
+	width: 900px;
+	margin: auto;
+	text-align: center;
+}
+.feature li {
+	float: left;
+	width: 240px;
+	margin: 0 30px; 
+	list-style: none;
+}
+.feature li h4 {
+	font-size: 18px;
+	font-weight: normal; 
+	margin-bottom: 15px;
+	padding: 180px 0 15px;
+	letter-spacing: 0.2em;
+	border-bottom: 1px dotted #c4c7cd;
+	background-repeat: no-repeat;
+	background-position: center top;
+}
+.feature li p {
+	font-size: 14px;
+	line-height: 1.75;
+	margin-bottom: 30px;
+	text-align: left;
+	letter-spacing: 0.1em;
+}
+.feature li a {
+	line-height: 1; 
+	display: inline-block;
+	padding: 15px 30px;
+	border: 1px solid #dfe1e5;
+	border-radius: 100px;
+}
+.feature li a:hover {
+	border-color: #c87d4d;
+}
+.feature li:nth-of-type(1) h4 {
+	background-image: url(../images/image1.png);
+}
+.feature li:nth-of-type(2) h4 {
+	background-image: url(../images/image2.png);
+}
+.feature li:nth-of-type(3) h4 {
+	background-image: url(../images/image3.png);
+}

@@ -1,0 +1,100 @@
+@charset 'UTF-8';
+body {
+	font-family: 'ヒラギノ明朝 ProN W3', 'HiraMinProN-W3', 'HG明朝E', 'ＭＳ Ｐ明朝', 'MS PMincho', 'MS 明朝', serif; 
+	background: #fff;
+}
+
+body, header, h1, h2, h3, ul, li, nav, article, section, p, div {
+	box-sizing: border-box; 
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	text-decoration: none;
+	color: #000;
+}
+a:hover {
+	color: #f0222a;
+}
+
+header {
+	overflow: hidden;
+	min-width: 960px;
+	padding: 30px 30px;
+	background: #fff url(../images/bg1.png) right bottom no-repeat;
+}
+header h1 {
+	font-size: 40px;
+	font-weight: normal;
+	float: left;
+	padding-left: 100px; 
+	letter-spacing: 0.05em;
+	color: #52a989;
+	background: url(../images/logo.svg) left center no-repeat;
+	background-size: 80px 60px;
+}
+header h1 span {
+	font-size: 11px;
+	line-height: 1; 
+	display: block;
+	letter-spacing: 0;
+}
+header nav {
+	position: relative;
+}
+header nav ul {
+	position: absolute;
+	top: 25px; 
+	right: 0;
+}
+header nav ul li {
+	display: inline-block;
+	margin: 0 0 0 7.5px;
+}
+header nav ul li a {
+	font-size: 15px;
+	display: block;
+	margin-left: 15px; 
+	letter-spacing: 0.05em;
+}
+
+.hero {
+	min-width: 960px;
+	padding: 120px 0;
+	text-align: center; 
+	background: url('../images/photo.jpg') center bottom no-repeat;
+	background-size: cover;
+}
+.hero p {
+	font-family: "Kaimin Sora Medium";
+	font-size: 64px;
+	display: inline-block;
+	padding: 0 0.2em;
+	text-align: center;
+	color: #fff;
+	background: #000;
+}
+
+article {
+	width: 100%;
+	min-width: 960px;
+	padding: 60px;
+}
+article h3 {
+	font-family: "Kaimin Sora Medium";
+	font-size: 32px;
+	font-weight: normal;
+	margin: 0 0 60px;
+	padding: 15px 0; 
+	text-align: center;
+	color: #f0222a;
+	background: url(../images/dot2.png) center center repeat;
+}
+article p + h3 {
+	margin-top: 60px;
+}
+article p {
+	line-height: 2;
+	margin-bottom: 30px;
+}
