@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width">
+<meta name="format-detection" content="telephone=no">
+<title>Full-size Movie</title>
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/sp.css" media="screen and (max-width: 568px)">
+<link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.tubular.1.0.js"></script>
+
+<script>
+$(function(){
+	if ( !((navigator.userAgent.indexOf('iPhone') > 0 || navigator.userAgent.indexOf('iPad') > 0) || navigator.userAgent.indexOf('iPod') > 0 || navigator.userAgent.indexOf('Android') > 0 || navigator.userAgent.indexOf('Windows Phone') > 0) ) {
+		var options = { videoId: 'q7o7R5BgWDY'};
+        $('#YouTubeBg').tubular(options);
+	}
+});
+</script>
+
+<script type="text/javascript" src="js/common.js"></script>
+</head>
+
+<body>
+
+<div id="YouTubeBg">
+
+<header>
+	<div id="headerInner">
+		<h1><a href="index.html">Full-size Movie</a></h1>
+	</div>
+	<nav id="nav">
+		<div id="navInner">
+			<div id="navMenu">
+				<button id="sp-menu">
+				<div class="menu-icon"> <span class="bar1"></span> <span class="bar2"></span> <span class="bar3"></span> </div>
+				</button>
+				<ul class="gnav">
+					<li class="current"><a href="#">Home</a></li>
+					<li><a href="#">News</a></li>
+					<li><a href="#">Service</a></li>
+					<li><a href="#">Blog</a></li>
+					<li><a href="#">Recruit</a></li>
+					<li><a href="#">Access</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+</header>
+<div id="main">
+	<div class="mainInner"> 
+		
+		<!-- カラム -->
+		<div class="column-Box">
+        
+			<h2>Full-size Movie</h2>
+            
+            <p class="btn"><a href="#">click here!</a></p>
+            
+            <p>Webサイトの背景に、動画ファイルの映像を埋め込みます。<br>
+            全画面のサイズで再生されるため、<br>
+            とてもインパクトのあるWebサイトを表現できます。</p>
+            
+            <p>音声は流れません。音声を流す場合は、<br>
+            ユーザーの許可を得てから行なうのがマナーです。</p>
+            
+            <p>動画ファイルの形式はmp4で用意しましょう。<br>
+            余裕があれば別の形式（webmやogv）も準備しておくとよいですが、<br>
+            主要ブラウザで閲覧する分には、mp4があればひとまず大丈夫です。</p>
+            
+            <p>動画ファイルのサイズは重すぎると表示に時間がかかるので注意しましょう。<br>
+            どんなに重くても、1MB以下には抑えましょう。</p>
+            
+            <p>また、自分で動画ファイルの用意が出来ない場合は、<br>
+            Youtubeにアップロードしておき、jQueryを使って、<br>
+            Youtube動画を背景に流す手法もあります。</p>
+            
+    	</div>
+	</div>
+	<!--mainInner END--> 
+	
+</div>
+<!--main END-->
+
+<footer>
+	<div class="footerInner">
+		<p>© 2016 Full-size Movie.</p>
+	</div>
+</footer>
+
+</div>
+
+</body>
+</html>

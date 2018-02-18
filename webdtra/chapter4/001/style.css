@@ -1,0 +1,161 @@
+@charset "UTF-8";
+/* CSS Document */
+/* -----------------------------------------------------------
+reset
+----------------------------------------------------------- */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 100%;
+	vertical-align: baseline;
+}
+address,caption,cite,code,dfn,em,strong,th,var {
+  font-style: normal;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	border: none;
+}
+img,abbr,acronym,fieldset,a {
+	border: 0;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section,img {
+	display: block;
+}
+ul li {
+	list-style-type:none;
+}
+/* ----------------------------------------------------------
+	共通	
+---------------------------------------------------------- */
+body {
+  font-family:  "メイリオ", Meiryo, Osaka, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+  font-size: 16px;
+		line-height:1.6;
+  color: #3D272B;
+}
+
+a {
+  color: #3D272B;
+  text-decoration: underline;
+}
+a:hover {
+  text-decoration: none;
+}
+
+a img:hover{
+	opacity: 0.8 ;
+	-webkit-transition: 0.6s ;
+	transition: 0.6s ;
+}
+
+
+/* ----------------------------------------------------------
+	ヘッダー
+---------------------------------------------------------- */
+header{
+	font-family: 'Josefin Slab', serif;
+	background: url(img/main.jpg) no-repeat center top fixed;
+	background-size: cover;
+	text-align: center;
+	color: #fff;
+}
+header h1{
+	margin-bottom: 10px;
+	font-size: 5rem;
+	border-bottom: 1px solid #fff;
+	padding: 10px 0;
+	line-height: 1;
+}
+header img{
+	margin: 200px auto 20px;
+}
+header p{
+	font-size: 2rem;
+	margin-bottom: 30px;
+}
+header p.btn{
+	margin-bottom: 150px;
+}
+header p.btn a{
+	font-size: 1.5rem;
+	color: #fff;
+	border: 1px solid #fff;
+	text-decoration: none;
+	padding: 10px 30px;
+}
+header p.btn a:hover{
+	background-color: rgba(255,255,255,0.6); 
+}
+
+/* ----------------------------------------------------------
+	ナビ	
+---------------------------------------------------------- */
+.gnav{
+	width: 100%;
+	margin: 0 auto;
+	position: fixed;
+	top: 0;
+	padding:10px 0;
+	background-color: rgba(255,255,255,0.6); 
+}
+.gnav ul{
+	position: relative;
+	left: 50%;
+	float: left;
+}
+.gnav li a{
+	text-decoration: none;
+}
+.gnav li a:hover{
+	color: #fff;
+}
+.gnav li{
+	float: left;
+	margin-left: 65px;
+	position: relative;
+	left: -50%;
+}
+
+
+/* ----------------------------------------------------------
+	コンテンツ	
+---------------------------------------------------------- */
+.wrap{
+	margin: 0 auto;
+	overflow: hidden;
+}
+
+#box01{
+	background-color: #fff;
+	text-align: center;
+	color: #3D272B;
+	padding:80px 0 30px;
+}
+h2{
+	font-size: 2rem;
+	font-family: 'Josefin Slab', serif;
+	border-bottom: 1px solid #3D272B;
+	margin-bottom: 30px;
+}
+#box01 p{
+	margin-bottom: 30px;
+}
+#box01 img{
+	margin: auto;
+}
+
+/* ----------------------------------------------------------
+	フッター
+---------------------------------------------------------- */
+footer{
+	background-color: #3D272B;
+	font-family: 'Josefin Slab', serif;
+	text-align: center;
+	color: #fff;
+	padding:10px 0;
+}

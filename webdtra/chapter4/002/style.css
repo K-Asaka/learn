@@ -1,0 +1,181 @@
+@charset "UTF-8";
+/* CSS Document */
+/* -----------------------------------------------------------
+reset
+----------------------------------------------------------- */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 100%;
+	vertical-align: baseline;
+}
+address,caption,cite,code,dfn,em,strong,th,var {
+  font-style: normal;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	border: none;
+}
+img,abbr,acronym,fieldset,a {
+	border: 0;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section,img {
+	display: block;
+}
+ul li {
+	list-style-type:none;
+}
+/* ----------------------------------------------------------
+	共通	
+---------------------------------------------------------- */
+body {
+  font-family:  "メイリオ", Meiryo, Osaka, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+  font-size: 16px;
+		line-height:1.6;
+  color: #3C0918;
+		background: url(img/bg.jpg) repeat;
+}
+
+a {
+  color: #3D272B;
+  text-decoration: underline;
+}
+a:hover {
+  text-decoration: none;
+}
+
+a img:hover{
+	opacity: 0.8 ;
+	-webkit-transition: 0.6s ;
+	transition: 0.6s ;
+}
+
+
+/* ----------------------------------------------------------
+	ヘッダー
+---------------------------------------------------------- */
+header{
+	overflow: hidden;
+	position: relative;
+}
+header h1{
+	text-align: center;
+	margin-bottom: 10px;
+	font-family: 'Marck Script', cursive;
+	font-size: 5rem;
+	line-height: 1;
+	border-bottom: 2px #3C0918 dotted;
+	border-top: 2px #3C0918 dotted;
+	padding: 5px 0;
+}
+header p{
+	float: left;
+	margin: 0 0 0 10px;
+}
+.btnarea{
+	position: absolute;
+	overflow: hidden;
+	top: 140px;
+	right: 30px;
+}
+
+/* ----------------------------------------------------------
+	コンテンツ	
+---------------------------------------------------------- */
+.main{
+	background-color: #fff;
+	padding: 60px 50px;
+	width: 980px;
+	margin: 40px auto;
+	border-bottom: 20px solid #3d3228;
+	border-top: 20px solid #3d3228;
+}
+.wrap{
+	width: 960px;
+	margin: 10px auto;
+	overflow: hidden;
+}
+.content{
+	border-top: 1px solid #3C282A;
+}
+
+/* ----------------------------------------------------------
+ギャラリー
+---------------------------------------------------------- */
+.box{
+	position: relative;
+	background-color: #fff;
+	width: 278px;
+	padding: 15px 15px 30px;
+	float: left;
+	margin: 0 10px 20px 0;
+	height: 550px;
+}
+.box h2{
+	font-family: 'Marck Script', cursive;
+	font-size: 2rem;
+}
+.box .textarea{
+	height: 100px;
+	padding: 20px;
+	margin-bottom: 20px;
+}
+.box .imgarea{
+	margin-bottom: 20px;
+}
+.box .codearea{
+	width: 238px;
+	height: 100px;
+	border: 1px solid #ccc;
+	padding: 20px;
+	overflow: auto;
+}
+
+
+/* ----------------------------------------------------------
+	フレームスタイル
+---------------------------------------------------------- */
+#frame01 .textarea{
+	border: 1px solid #ccc;
+}
+#frame02 .textarea{
+	border-bottom: 1px solid #ccc;
+}
+#frame03 .textarea{
+	border: 1px dotted #ccc;
+}
+#frame04 .textarea{
+	border-bottom: 2px solid #402000;
+	border-top: 1px solid #C1A899;
+	border-left: 1px solid #E8DED9;
+	border-right: 1px solid #49372C;
+}
+#frame05 .textarea{
+	background: url(img/line01.gif) center bottom repeat-x;
+}
+#frame06 .textarea{
+	background: url(img/line02.gif) center bottom repeat-x,url(img/line02.gif) center top repeat-x;
+}
+#frame07 .textarea{
+	background: url(img/line03.gif) center bottom repeat-x;
+}
+#frame08 .textarea{
+	background: url(img/line04.gif) center bottom no-repeat;
+}
+#frame09 .textarea{
+	background: url(img/line03.gif) center bottom repeat-x,url(img/line03.gif) center top repeat-x,url(img/line03_2.gif) left top repeat-y,url(img/line03_2.gif) right top repeat-y;
+}
+/* ----------------------------------------------------------
+	フッター
+---------------------------------------------------------- */
+footer{
+	text-align: center;
+	background: url(img/bg.jpg) repeat;
+	color: #fff;
+	font-family: 'Marck Script', cursive;
+	padding:10px 0;
+}
