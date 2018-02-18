@@ -75,11 +75,33 @@ figure {
     padding: 0;
 }
 /*............................
+    clearfix
+............................*/
+.clearfix,
+.header,
+#g-nav-05 ul {
+    *zoom: 1;
+}
+
+.clearfix:after,
+.header:after,
+#g-nav-05 ul:after {
+    content: ".";
+    display: block;
+    clear: both;
+    height: 0;
+    visibility: hidden;
+}
+
+/*............................
     Layout
 ............................*/
 body {
     background: #f2f2f2;
     font-size: 16px;
+    position: relative;
+    -ms-overflow-x: hidden;
+    overflow-x: hidden;
 }
 
 .wrapper {
@@ -90,17 +112,17 @@ body {
 
 .header {
     width: 100%;
-    background: #edc9c9;
     margin: 0 0 2em 0;
     text-align: center;
+    position: relative;
 }
 
-.main-right {
-    width: 60%;
+.main {
+    width: 100%;
     height: 300px;
     margin: 0 0 2em 0;
-    background: #e6edc9;
     float: right;
+    background: #e6edc9;
     text-align: center;
 }
 
@@ -112,131 +134,262 @@ body {
     text-align: center;
 }
 
-.header, .main, .main-right, .footer {
+.main, .main-right, .footer {
     padding: 3em 0;
 }
 /* ---------------------------------------------------------
-	header
+	画面幅640px以下の場合のスタイル
 --------------------------------------------------------- */
-.g-nav-04 {
-    width: 35%;
-    float: left;
-    margin: 0 0 2em 0;
+
+#g-nav-05 {
+    width: 100%;
+    margin: 0 auto;
+    background: #cc3d14;
+    clear: both;
 }
 
-.g-nav-04 ul li {
-    width: 96%;
-    height: auto;
-    background: #cc3d14;
-    margin: 0 0 1px 0;
-    padding: 5px 2%;
+#g-nav-05 ul {
+    position: relative;
+}
+
+#g-nav-05 ul li {
+    width: 100%;
+    padding: 0;
     list-style: none;
 }
 
-.g-nav-04 ul li a {
+#g-nav-05 ul li a {
     display: block;
-    padding: 1em;
+    padding: 20px 0 20px 1em;
+    text-align: left;
     color: #fff;
 }
 
-.g-nav-04 ul li a:link,
-.g-nav-04 ul li a:visited {
+#g-nav-05 ul li a:link,
+#g-nav-05 ul li a:visited {
     text-decoration: none;
 }
 
-.g-nav-04 ul li a:hover,
-.g-nav-04 ul li a:active {
+#g-nav-05 ul li a:hover,
+#g-nav-05 ul li a:active {
     background: #fff;
     text-decoration: none;
     color: #cc3d14;
     font-weight: bold;
 }
 
-.g-nav-04 ul li a span {
+#g-nav-05 ul li a span {
     width: 21px;
     height: 17px;
     display: inline-block;
     margin: 0 0.3em 0 0;
     background-repeat: no-repeat;
-    background-position: bottom;
+    background-position: left center;
 }
 
-.g-nav-04 ul li:hover a,
-.g-nav-04 ul li:active a {
-    background: #fff;
-    color: #cc3d14;
-    font-weight: bold;
+#g-nav-05 ul li .mega-menu {
+    visibility: hidden;
 }
 
-.g-nav-04 ul li #second-level-01,
-.g-nav-04 ul li #second-level-02 {
-    background: #fff;
-    border-top: 1px dotted #cc3d14;
+#g-nav-05 ul li .mega-menu .cols-3 {
     display: none;
-    font-size: 0.9em;
 }
 
-.g-nav-04 ul li #second-level-01 li,
-.g-nav-04 ul li #second-level-02 li {
-    background: #fff;
+#g-nav-05 ul li .mega-menu .second-level-nav {
+    display: none;
 }
 
-.g-nav-04 ul li #second-level-01 li a,
-.g-nav-04 ul li #second-level-02 li a {
-    padding: 1em 1em 0.8em 20px;
-    margin: 0 0 0 1em;
-    background: url("../images/icon-arrow-red.png") no-repeat left center;
-    text-align: left;
-    color: #cc3d14;
-    font-weight: normal;
-}
-
-.g-nav-04 ul li #second-level-01 li a:hover,
-.g-nav-04 ul li #second-level-02 li a:hover {
-    text-decoration: underline;
-}
-
-.g-nav-04 ul li.home a span {
+#g-nav-05 ul li.home a span {
     background-image: url("../images/icon-home-white.png");
 }
 
-.g-nav-04 ul li.home:hover span,
-.g-nav-04 ul li.home:active span {
+#g-nav-05 ul li.home:hover span,
+#g-nav-05 ul li.home:active span {
     background-image: url("../images/icon-home-red.png");
 }
 
-.g-nav-04 ul li.flower a span {
+#g-nav-05 ul li.flower a span {
     background-image: url("../images/icon-flower-white.png");
 }
 
-.g-nav-04 ul li.flower:hover span,
-.g-nav-04 ul li.flower:active span {
+#g-nav-05 ul li.flower:hover span,
+#g-nav-05 ul li.flower:active span {
     background-image: url("../images/icon-flower-red.png");
 }
 
-.g-nav-04 ul li.gift a span {
+#g-nav-05 ul li.gift a span {
     background-image: url("../images/icon-gift-white.png");
 }
 
-.g-nav-04 ul li.gift:hover span,
-.g-nav-04 ul li.gift:active span {
+#g-nav-05 ul li.gift:hover span,
+#g-nav-05 ul li.gift:active span {
     background-image: url("../images/icon-gift-red.png");
 }
 
-.g-nav-04 ul li.shop a span {
+#g-nav-05 ul li.shop a span {
     background-image: url("../images/icon-shop-white.png");
 }
 
-.g-nav-04 ul li.shop:hover span,
-.g-nav-04 ul li.shop:active span {
+#g-nav-05 ul li.shop:hover span,
+#g-nav-05 ul li.shop:active span {
     background-image: url("../images/icon-shop-red.png");
 }
 
-.g-nav-04 ul li.contact a span {
+#g-nav-05 ul li.contact a span {
     background-image: url("../images/icon-contact-white.png");
 }
 
-.g-nav-04 ul li.contact:hover span,
-.g-nav-04 ul li.contact:active span {
+#g-nav-05 ul li.contact:hover span,
+#g-nav-05 ul li.contact:active span {
     background-image: url("../images/icon-contact-red.png");
 }
+
+#menu {
+    width: 50px;
+    height: 50px;
+    display: block;
+    float: right;
+    margin: 10px;
+    background-image: url("../images/menu-btn.png");
+    background-repeat: no-repeat;
+    -webkit-background-size: 100%;
+    -o-background-size: 100%;
+    background-size: 100%;
+}
+
+#menu.on {
+    background-image: url("../images/menu-btn-on.png");
+}
+
+/* ---------------------------------------------------------
+	画面幅640px以上の場合のスタイル
+--------------------------------------------------------- */
+
+@media screen and (min-width: 640px) {
+    #g-nav-05 {
+        width: 100%;
+        max-width: 960px;
+        margin: 0 auto;
+        background: #cc3d14;
+    }
+    #g-nav-05 ul li {
+        width: 18%;
+        padding: 5px 1%;
+        float: left;
+    }
+    #g-nav-05 ul li a {
+        padding: 20px 0;
+        text-align: center;
+    }
+    #g-nav-05 ul li:hover a,
+    #g-nav-05 ul li:active a {
+        color: #cc3d14;
+        background: #fff;
+        font-weight: bold;
+    }
+    #g-nav-05 ul li .mega-menu {
+        width: 96%;
+        padding: 2%;
+        background: #cc3d14;
+        color: #FFF;
+        font-size: 0.9em;
+        opacity: 0;
+        visibility: hidden;
+        position: absolute;
+        top: 74px;
+        left: 0;
+        text-align: left;
+    }
+    #g-nav-05 ul li:hover .mega-menu,
+    #g-nav-05 ul li:active .mega-menu {
+        opacity: 1;
+        visibility: visible;
+        -webkit-transition: 0.5s;
+        -moz-transition: 0.5s;
+        -ms-transition: 0.5s;
+        -o-transition: 0.5s;
+        transition: 0.5s;
+        top: 74px;
+        left: 0;
+    }
+    #g-nav-05 ul li:hover .mega-menu li a,
+    #g-nav-05 ul li:active .mega-menu li a {
+        color: #cc3d14;
+        border-bottom: none;
+        font-weight: normal;
+    }
+    #g-nav-05 ul li:hover .mega-menu .second-level-nav li,
+    #g-nav-05 ul li:active .mega-menu .second-level-nav li {
+        padding: 0;
+    }
+    #g-nav-05 ul li .mega-menu .cols-3 {
+        width: 75%;
+        float: left;
+        display: block;
+    }
+    #g-nav-05 ul li .mega-menu .cols-3 li {
+        width: 30%;
+        margin: 0 3% 0 0;
+        padding: 0;
+        float: left;
+        display: block;
+        border: none;
+    }
+    #g-nav-05 ul li .mega-menu .cols-3 li img,
+    #g-nav-05 ul li .mega-menu .cols-3 li p {
+        margin: 0 0 0.5em 0;
+    }
+    #g-nav-05 ul li .mega-menu .cols-3 li a {
+        padding: 0.5em;
+        background: #f2db38;
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
+        color: #333;
+        font-weight: bold;
+    }
+    #g-nav-05 ul li .mega-menu .cols-3 li a span {
+        width: 15px;
+        height: 12px;
+        display: inline-block;
+        background: url("../images/icon-arrow-gry.png") no-repeat;
+        vertical-align: middle;
+    }
+    #g-nav-05 ul li .mega-menu .cols-3 li a:hover,
+    #g-nav-05 ul li .mega-menu .cols-3 li a:active {
+        background: #E6A822;
+        border: none;
+        color: #FFF;
+    }
+    #g-nav-05 ul li .mega-menu .cols-3 li a:hover span,
+    #g-nav-05 ul li .mega-menu .cols-3 li a:active span {
+        background: url("../images/icon-arrow-white.png") no-repeat;
+    }
+    #g-nav-05 ul li .mega-menu .cols-3:hover a,
+    #g-nav-05 ul li .mega-menu .cols-3:active a {
+        border: none;
+        color: #4C4C4C;
+    }
+    #g-nav-05 ul li .mega-menu .second-level-nav {
+        width: 25%;
+        float: right;
+        display: block;
+    }
+    #g-nav-05 ul li .mega-menu .second-level-nav li {
+        width: 100%;
+        border-bottom: 1px dotted #fff;
+    }
+    #g-nav-05 ul li .mega-menu .second-level-nav li a {
+        text-align: left;
+        color: #FFF;
+        padding: 1em 0 1em 20px;
+        background: url("../images/icon-arrow-white.png") no-repeat left center;
+    }
+    #g-nav-05 ul li .mega-menu .second-level-nav li a:hover,
+    #g-nav-05 ul li .mega-menu .second-level-nav li a:active {
+        text-decoration: underline;
+    }
+    #menu {
+        display: none;
+    }
+}
+/* ---	640以上 end --- */
