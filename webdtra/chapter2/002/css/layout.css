@@ -55,3 +55,46 @@
   color: #cc3d14;
   font-weight: bold;
 }
+
+.g-nav-01 ul li a span {
+  width: 21px;
+  height: 17px;
+  display: inline-block;
+  margin: 0 0.3em 0 0;
+  background-repeat: no-repeat;
+}
+
+.g-nav-01 ul li.home a span {
+  background-image: url("../img/icon-home-white.png");
+}
+.g-nav-01 ul li.home a:hover span, .g-nav-01 ul li.home a:active span {
+  background-image: url("../img/icon-home-red.png");
+}
+
+.g-nav-01 ul li.flower a span {
+  background-image: url("../img/icon-flower-white.png");
+}
+.g-nav-01 ul li.flower a:hover span, .g-nav-01 ul li.flower a:active span {
+  background-image: url("../img/icon-flower-red.png");
+}
+
+.g-nav-01 ul li.gift a span {
+  background-image: url("../img/icon-gift-white.png");
+}
+.g-nav-01 ul li.gift a:hover span, .g-nav-01 ul li.gift a:active span {
+  background-image: url("../img/icon-gift-red.png");
+}
+
+.g-nav-01 ul li.shop a span {
+  background-image: url("../img/icon-shop-white.png");
+}
+.g-nav-01 ul li.shop a:hover span, .g-nav-01 ul li.shop a:active span {
+  background-image: url("../img/icon-shop-red.png");
+}
+
+.g-nav-01 ul li.contact a span {
+  background-image: url("../img/icon-contact-white.png");
+}
+.g-nav-01 ul li.contact a:hover span, .g-nav-01 ul li.contact a:active span {
+  background-image: url("../img/icon-contact-red.png");
+}
