@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width">
+<meta name="format-detection" content="telephone=no">
+<title>Form Page</title>
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/sp.css" media="screen and (max-width: 568px)">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+//TXT COUNT
+$(function(){
+	$('.formTxt').bind('keydown keyup keypress change',function(){
+		var count = $(this).val().length;
+		$('#txtCount span').text(count);
+	});
+});
+</script>
+<script type="text/javascript" src="js/common.js"></script>
+</head>
+
+<body id="top">
+<header>
+	<div id="headerInner">
+		<h1><a href="index.html"><img src="images/logo.png" alt="">Form Page</a></h1>
+	</div>
+	<nav id="nav">
+		<div id="navInner">
+			<div id="navMenu">
+				<button id="sp-menu">
+				<div class="menu-icon"> <span class="bar1"></span> <span class="bar2"></span> <span class="bar3"></span> </div>
+				</button>
+				<ul class="gnav">
+					<li class="current"><a href="#">Home</a></li>
+					<li><a href="#">News</a></li>
+					<li><a href="#">Service</a></li>
+					<li><a href="#">Blog</a></li>
+					<li><a href="#">Recruit</a></li>
+					<li><a href="#">Access</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+</header>
+<div id="main">
+	<div class="mainInner"> 
+		
+		<!-- カラム -->
+		<div class="column-Box">
+			<p><img src="images/slide01.jpg" alt=""></p>
+			<h2>Contact</h2>	
+            
+            <form method="post">
+			<ul id="formArea">
+				<li class="formTit">姓 （全角）</li>
+				<li><input type="text" class="formTxt" placeholder="太郎"></li>
+				<li class="formTit">名 （全角）</li>
+				<li><input type="text" class="formTxt" placeholder="鈴木"></li>
+				<li class="formTit">メールアドレス （半角）</li>
+				<li><input type="text" class="formTxt" placeholder="info@MdN.co.jp"></li>
+				<li class="formTit">内容</li>
+				<li><textarea class="formTxt" maxlength="300" placeholder="（例）資料を送って欲しい"></textarea></li>
+				<li class="formTit" id="txtCount">文字数 <span>0</span> / 300</li>
+				<li class="formBtn"><input type="submit" value="送信する" class="BtnSubmit"></li>
+			</ul>
+			</form>
+	
+    	</div>
+	</div>
+	<!--mainInner END--> 
+	
+</div>
+<!--main END-->
+
+<footer>
+	<div id="footerInner">
+		<ul>
+			<li><a href="#">Home</a></li>
+			<li><a href="#">News</a></li>
+			<li><a href="#">Service</a></li>
+			<li><a href="#">Blog</a></li>
+			<li><a href="#">Recruit</a></li>
+			<li><a href="#">Access</a></li>
+		</ul>
+	</div>
+	<div class="footerInner2">
+		<p>Form Page</p>
+		<p class="copy">© 2016 Form Page.</p>
+	</div>
+</footer>
+</body>
+</html>

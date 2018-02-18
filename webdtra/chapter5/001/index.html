@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width">
+<meta name="format-detection" content="telephone=no">
+<title>Simple Room</title>
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/sp.css" media="screen and (max-width: 568px)">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+
+
+<link rel="stylesheet" href="js/basictable/basictable.css">
+<script type="text/javascript" src="js/basictable/jquery.basictable.min.js"></script>
+<script>
+$(function(){
+	$('#table').basictable({
+		breakpoint: 568	//ブレークポイントの横幅
+	});
+});
+</script>
+
+
+</head>
+
+<body id="top">
+<header>
+	<div id="headerInner">
+		<h1><a href="index.html"><img src="images/logo.png" alt="">Simple Room</a></h1>
+	</div>
+	<nav id="nav">
+		<div id="navInner">
+			<div id="navMenu">
+				<button id="sp-menu">
+				<div class="menu-icon"> <span class="bar1"></span> <span class="bar2"></span> <span class="bar3"></span> </div>
+				</button>
+				<ul class="gnav">
+					<li class="current"><a href="#">Home</a></li>
+					<li><a href="#">News</a></li>
+					<li><a href="#">Service</a></li>
+					<li><a href="#">Blog</a></li>
+					<li><a href="#">Recruit</a></li>
+					<li><a href="#">Access</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+</header>
+<div id="main">
+	<div class="mainInner"> 
+		
+		<!-- カラム -->
+		<div class="column-Box">
+			<p><img src="images/slide01.jpg" alt=""></p>
+			<h2>イベント情報</h2>
+			<p>近々開催するイベント情報を掲載しています。参加をご希望されるかたは、お申し込みページから申し込みの手続きをお願いいたします。イベント内容で分からない事があればご連絡ください。</p>
+			
+			<!--<div class="bt-wrapper active">-->
+			
+			<table id="table">
+				<thead>
+					<tr>
+						<th>催事名</th>
+						<th>日時</th>
+						<th>場所</th>
+						<th>費用</th>
+						<th>定員</th>
+                        <th>締切日</th>
+                        <th>残席</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>新社会人研修セミナーNo.1</td>
+						<td>4月20日</td>
+						<td>東京都</td>
+						<td>500円</td>
+						<td>50人</td>
+						<td>1週間前</td>
+                        <td>○</td>
+					</tr>
+					<tr>
+						<td>シニア限定勉強会 A</td>
+						<td>4月24日</td>
+						<td>東京都</td>
+						<td>無料</td>
+						<td>20人</td>
+                        <td>2週間前</td>
+                        <td>○</td>
+					</tr>
+					<tr>
+						<td>男の料理教室</td>
+						<td>5月1日</td>
+						<td>神奈川県</td>
+						<td>無料</td>
+						<td>10人</td>
+                        <td>1週間前</td>
+                        <td>△</td>
+					</tr>
+					<tr>
+						<td>新社会人研修セミナーNo.2</td>
+						<td>5月10日</td>
+						<td>静岡県</td>
+						<td>1,000円</td>
+						<td>20人</td>
+                        <td>3週間前</td>
+                        <td>×</td>
+					</tr>
+					<tr>
+						<td>江戸時代体験ツアー</td>
+						<td>5月25日</td>
+						<td>東京都</td>
+						<td>2,000円</td>
+						<td>35人</td>
+                        <td>2週間前</td>
+                        <td>×</td>
+					</tr>
+					<tr>
+						<td>シニア限定勉強会 B</td>
+						<td>6月5日</td>
+						<td>愛知県</td>
+						<td>無料</td>
+						<td>100人</td>
+                        <td>1週間前</td>
+                        <td>○</td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<!--</div>--> 
+			
+		</div>
+	</div>
+	<!--mainInner END--> 
+	
+</div>
+<!--main END-->
+
+<footer>
+	<div id="footerInner">
+		<ul>
+			<li><a href="#">Home</a></li>
+			<li><a href="#">News</a></li>
+			<li><a href="#">Service</a></li>
+			<li><a href="#">Blog</a></li>
+			<li><a href="#">Recruit</a></li>
+			<li><a href="#">Access</a></li>
+		</ul>
+	</div>
+	<div class="footerInner2">
+		<p>Simple Room</p>
+		<p class="copy">© 2016 Simple Room.</p>
+	</div>
+</footer>
+</body>
+</html>

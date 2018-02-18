@@ -1,0 +1,372 @@
+@charset "utf-8";
+/* ----------------------------------------------------------
+	リセット
+---------------------------------------------------------- */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+html {
+  overflow-y: scroll;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+  content: '';
+  content: none;
+}
+
+input, textarea {
+  margin: 0;
+  padding: 0;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+caption, th {
+  text-align: left;
+}
+
+a:focus {
+  outline: none;
+}
+
+img, textarea {
+  vertical-align: bottom;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+*, *:before, *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+a, a img {
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+}
+
+a img:hover {
+  opacity: 0.8;
+  filter: alpha(opacity=80);
+}
+
+/* ----------------------------------------------------------
+	共通	
+---------------------------------------------------------- */
+body {
+  font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+  background: #F0FAF0;
+  font-size: 14px;
+  font-size: 1.4rem;
+  color: #000;
+}
+
+a {
+  color: #000000;
+  text-decoration: underline;
+}
+a:hover {
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ----------------------------------------------------------
+	ヘッダー	
+---------------------------------------------------------- */
+header {
+  margin: 0 auto 10px;
+  box-shadow: 0 3px 2px 0 rgba(200, 200, 200, 0.1);
+}
+header #headerInner {
+  max-width: 1020px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+header #headerInner:after {
+  content: ".";
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
+  font-size: 0.1em;
+}
+* html header #headerInner {
+  height: 1%;
+}
+header #headerInner h1 {
+  float: left;
+  margin: 0;
+  padding: 20px 0;
+  width: 50%;
+  font-weight: normal;
+  font-size: 28px;
+  font-size: 2.8rem;
+}
+header #headerInner h1 a {
+  color: #51A451;
+  text-decoration: none;
+}
+header #headerInner h1 img {
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+#nav {
+  background: #fff;
+  border-top: #ddd 1px solid;
+  border-bottom: #ddd 1px solid;
+}
+#nav #navInner {
+  max-width: 1020px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+#nav #navInner:after {
+  content: ".";
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
+  font-size: 0.1em;
+}
+* html #nav #navInner {
+  height: 1%;
+}
+#nav #navInner #sp-menu, #nav #navInner #sp-search {
+  display: none;
+}
+#nav #navInner #navMenu {
+  width: 100%;
+  padding: 0;
+}
+#nav #navInner #navMenu:after {
+  content: ".";
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
+  font-size: 0.1em;
+}
+* html #nav #navInner #navMenu {
+  height: 1%;
+}
+#nav #navInner #navMenu .gnav {
+  display: table;
+  width: 100%;
+}
+#nav #navInner #navMenu .gnav li {
+  display: table-cell;
+  border-right: #ddd 1px solid;
+}
+#nav #navInner #navMenu .gnav li a {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  padding: 20px 0;
+  color: #51A451;
+}
+#nav #navInner #navMenu .gnav li:first-child {
+  border-left: #ddd 1px solid;
+}
+
+/* ----------------------------------------------------------
+	コンテンツ	
+---------------------------------------------------------- */
+.column-Box {
+  margin: 0 0 50px;
+}
+.column-Box:after {
+  content: ".";
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
+  font-size: 0.1em;
+}
+* html .column-Box {
+  height: 1%;
+}
+
+#main .mainInner {
+  max-width: 1020px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 10px 0 0 0;
+}
+#main .mainInner:after {
+  content: ".";
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
+  font-size: 0.1em;
+}
+* html #main .mainInner {
+  height: 1%;
+}
+#main .mainInner p {
+  margin-top: 0;
+}
+#main .mainInner h2 {
+  font-size: 32px;
+  font-size: 3.2rem;
+  text-align: center;
+  margin-top: 20px;
+  color: #51A451;
+}
+
+/* ----------------------------------------------------------
+	フォーム
+---------------------------------------------------------- */
+input,
+button,
+textarea,
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  font-size: 13px;
+}
+
+input:focus,
+textarea:focus {
+  background-color: #ffffff;
+}
+
+#formArea {
+  background: #1A3165;
+  /* グラデーションが効かないブラウザ用 */
+  background: linear-gradient(to left, #dbdce2 0%, #f5f6f6 25%, #f5f6f6 75%, #dddfe3 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdce2', endColorstr='#dddfe3',GradientType=1 );
+  /* IE6-IE9 色は2つのみ */
+  border: 1px solid #fff;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.9) 0 1px 5px;
+  margin: 20px 0 0;
+  padding: 0 20px 20px;
+}
+
+.formTit {
+  text-shadow: #ffffff 0 1px 0;
+  font-size: 12px;
+  margin: 20px 0;
+}
+
+::-webkit-input-placeholder {
+  color: #777777;
+}
+
+::-moz-placeholder {
+  color: #777777;
+}
+
+:input-placeholder {
+  color: #777777;
+}
+
+.formTxt {
+  background: #E3E3E3;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-shadow: white 0 1px 0;
+  padding: 8px;
+  width: 100%;
+}
+
+textarea.formTxt {
+  height: 120px;
+}
+
+#txtCount {
+  text-align: right;
+  margin: 5px 5px 10px 5px;
+}
+
+.formBtn {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.BtnSubmit {
+  background: #2b6263;
+  background: linear-gradient(to bottom, #73d673 0%, #008a00 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#73d673', endColorstr='#008a00',GradientType=0 );
+  border: 1px solid #008a00;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.4) 0 0 3px;
+  color: #fff;
+  text-shadow: #000000 0 1px 0;
+  font-weight: bold;
+  padding: 8.5px 18px;
+  width: 300px;
+  cursor: pointer;
+}
+
+/* ----------------------------------------------------------
+	フッター
+---------------------------------------------------------- */
+footer {
+  text-align: center;
+}
+footer #footerInner {
+  max-width: 1020px;
+  width: 100%;
+  margin: 0 auto 40px;
+  padding: 40px 0 0;
+}
+footer #footerInner ul li {
+  display: inline-block;
+  margin-left: 30px;
+}
+footer #footerInner ul li:first-child {
+  margin-left: 0;
+}
+footer .footerInner2 {
+  background: #51A451;
+  color: #fff;
+  padding: 50px 0;
+}
+footer .footerInner2 p {
+  font-size: 26px;
+  font-size: 2.6rem;
+}
+footer .footerInner2 .copy {
+  font-size: 12px;
+  font-size: 1.2rem;
+}

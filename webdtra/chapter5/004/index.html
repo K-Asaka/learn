@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width">
+<meta name="format-detection" content="telephone=no">
+<title>Responsive Movie Player</title>
+<link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/sp.css" media="screen and (max-width: 767px)">
+</head>
+
+<body id="top">
+<header>
+	<div id="headerInner">
+		<h1><a href="index.html">Responsive Movie Player</a></h1>
+	</div>
+</header>
+<div id="main">
+	<div class="mainInner"> 
+		
+		<!-- カラム -->
+		<div class="column-Box">
+            
+			<div class="movieBox">
+                <iframe width="640" height="360" src="https://www.youtube.com/embed/q7o7R5BgWDY?rel=0" frameborder="0" allowfullscreen></iframe>
+			</div>
+            
+            <!--
+            <div class="movieBox">
+                <iframe src="https://player.vimeo.com/video/140947117" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+			</div>
+            -->
+            
+            <p>CSSを記述して、「YouTube」の動画をレスポンシブWebデザイン対応します。どのデバイスや画面サイズで見ても、動画の比率を保ったまま、サイズを自動的に可変させて表示することができます。</p>
+            <p>今回の方法は「YouTube」以外にも、「Vimeo」などの動画サービスにも対応しています。（iframeで動画を読み込む形式であればOK）埋め込み動画をレスポンシブ対応することで、様々なユーザーの閲覧環境をフォローできます</p>
+    
+    	</div>
+	</div>
+	<!--mainInner END--> 
+	
+</div>
+<!--main END-->
+
+<footer>
+	<div id="footerInner">
+		<ul>
+			<li><a href="#">Home</a></li>
+			<li><a href="#">News</a></li>
+			<li><a href="#">Service</a></li>
+			<li><a href="#">Blog</a></li>
+			<li><a href="#">Recruit</a></li>
+			<li><a href="#">Access</a></li>
+		</ul>
+	</div>
+	<div class="footerInner2">
+		<p>Responsive Movie Player</p>
+		<p class="copy">© 2016 Responsive Movie Player.</p>
+	</div>
+</footer>
+</body>
+</html>

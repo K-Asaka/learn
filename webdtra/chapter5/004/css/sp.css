@@ -1,0 +1,83 @@
+@charset "UTF-8";
+/* ----------------------------------------------------------
+	共通	
+---------------------------------------------------------- */
+* p {
+  letter-spacing: normal;
+}
+
+* input, * select {
+  -webkit-appearance: none;
+}
+
+/* ----------------------------------------------------------
+	ヘッダー	
+---------------------------------------------------------- */
+header {
+  margin: 0 auto 10px;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -ms-box-shadow: none;
+  -o-box-shadow: none;
+  box-shadow: none;
+}
+header #headerInner {
+  padding: 5px 0;
+  max-width: auto;
+  width: 100%;
+  float: left;
+}
+header #headerInner h1 {
+  padding: 0;
+  width: auto;
+  font-size: 20px;
+  font-size: 2rem;
+}
+
+/* ----------------------------------------------------------
+	コンテンツ
+---------------------------------------------------------- */
+.column-Box {
+  margin: 0 0 20px;
+}
+#main .mainInner {
+  max-width: none;
+  padding: 10px;
+}
+
+/* ----------------------------------------------------------
+	フッター	
+---------------------------------------------------------- */
+footer {
+  margin-top: 0;
+}
+footer #footerInner {
+  max-width: none;
+  margin: 0 auto 0;
+  padding: 20px 0 0;
+}
+footer #footerInner ul {
+  border-top: #fff 1px solid;
+}
+footer #footerInner ul li {
+  display: block;
+  margin-left: 0;
+  text-align: left;
+  border-bottom: #fff 1px solid;
+}
+footer #footerInner ul li a {
+  display: block;
+  text-decoration: none;
+  padding: 10px;
+}
+footer .footerInner2 {
+  padding: 20px 0;
+}
+footer .footerInner2 p {
+  font-size: 20px;
+  font-size: 2rem;
+}
+footer .footerInner2 .copy {
+  font-size: 10px;
+  font-size: 1rem;
+}
