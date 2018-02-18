@@ -200,48 +200,48 @@ body {
 }
 
 #g-nav-05 ul li.home a span {
-    background-image: url("../images/icon-home-white.png");
+    background-image: url("../img/icon-home-white.png");
 }
 
 #g-nav-05 ul li.home:hover span,
 #g-nav-05 ul li.home:active span {
-    background-image: url("../images/icon-home-red.png");
+    background-image: url("../img/icon-home-red.png");
 }
 
 #g-nav-05 ul li.flower a span {
-    background-image: url("../images/icon-flower-white.png");
+    background-image: url("../img/icon-flower-white.png");
 }
 
 #g-nav-05 ul li.flower:hover span,
 #g-nav-05 ul li.flower:active span {
-    background-image: url("../images/icon-flower-red.png");
+    background-image: url("../img/icon-flower-red.png");
 }
 
 #g-nav-05 ul li.gift a span {
-    background-image: url("../images/icon-gift-white.png");
+    background-image: url("../img/icon-gift-white.png");
 }
 
 #g-nav-05 ul li.gift:hover span,
 #g-nav-05 ul li.gift:active span {
-    background-image: url("../images/icon-gift-red.png");
+    background-image: url("../img/icon-gift-red.png");
 }
 
 #g-nav-05 ul li.shop a span {
-    background-image: url("../images/icon-shop-white.png");
+    background-image: url("../img/icon-shop-white.png");
 }
 
 #g-nav-05 ul li.shop:hover span,
 #g-nav-05 ul li.shop:active span {
-    background-image: url("../images/icon-shop-red.png");
+    background-image: url("../img/icon-shop-red.png");
 }
 
 #g-nav-05 ul li.contact a span {
-    background-image: url("../images/icon-contact-white.png");
+    background-image: url("../img/icon-contact-white.png");
 }
 
 #g-nav-05 ul li.contact:hover span,
 #g-nav-05 ul li.contact:active span {
-    background-image: url("../images/icon-contact-red.png");
+    background-image: url("../img/icon-contact-red.png");
 }
 
 #menu {
@@ -250,7 +250,7 @@ body {
     display: block;
     float: right;
     margin: 10px;
-    background-image: url("../images/menu-btn.png");
+    background-image: url("../img/menu-btn.png");
     background-repeat: no-repeat;
     -webkit-background-size: 100%;
     -o-background-size: 100%;
@@ -258,7 +258,7 @@ body {
 }
 
 #menu.on {
-    background-image: url("../images/menu-btn-on.png");
+    background-image: url("../img/menu-btn-on.png");
 }
 
 /* ---------------------------------------------------------
@@ -351,7 +351,7 @@ body {
         width: 15px;
         height: 12px;
         display: inline-block;
-        background: url("../images/icon-arrow-gry.png") no-repeat;
+        background: url("../img/icon-arrow-gry.png") no-repeat;
         vertical-align: middle;
     }
     #g-nav-05 ul li .mega-menu .cols-3 li a:hover,
@@ -362,7 +362,7 @@ body {
     }
     #g-nav-05 ul li .mega-menu .cols-3 li a:hover span,
     #g-nav-05 ul li .mega-menu .cols-3 li a:active span {
-        background: url("../images/icon-arrow-white.png") no-repeat;
+        background: url("../img/icon-arrow-white.png") no-repeat;
     }
     #g-nav-05 ul li .mega-menu .cols-3:hover a,
     #g-nav-05 ul li .mega-menu .cols-3:active a {
@@ -382,7 +382,7 @@ body {
         text-align: left;
         color: #FFF;
         padding: 1em 0 1em 20px;
-        background: url("../images/icon-arrow-white.png") no-repeat left center;
+        background: url("../img/icon-arrow-white.png") no-repeat left center;
     }
     #g-nav-05 ul li .mega-menu .second-level-nav li a:hover,
     #g-nav-05 ul li .mega-menu .second-level-nav li a:active {

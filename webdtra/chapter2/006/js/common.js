@@ -1,9 +1,25 @@
 $(function () {
-    // [.syncer-acdn]にクリックイベントを設定する
-    $('.g-nav-04 ul li').click(function () {
-        // [data-target]の属性値を代入する
-        var target = $(this).data('target');
-        // [target]と同じ名前のIDを持つ要素に[slideToggle()]を実行する
-        $('#' + target).slideToggle();
+
+    var minWidth = 640;
+    $(window).resize(function () {
+        if (minWidth >= $(this).width()) {
+            $('#g-nav-05').hide();
+            $('#menu').removeClass("on");
+        } else {
+            $('#g-nav-05').show();
+        }
+    }).trigger('resize');
+
+
+    $('#menu').click(function () {
+
+        $('#g-nav-05').stop(true, true).slideToggle(200);
+
+        if ($(this).hasClass("on")) {
+            $(this).removeClass("on");
+        } else {
+            $(this).addClass("on");
+        }
+
     });
 });
