@@ -1,0 +1,208 @@
+@charset "UTF-8";
+/* ---------------------------------------------------------
+	Browser Reset CSS
+--------------------------------------------------------- */
+body, ul, ol, li, h1, h2, h3, h4, h5, h6, div, dl, dt, dd, pre, code, form, fieldset, legend, p, blockquote, table, th, td {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "メイリオ", "Meiryo", "ＭＳ Ｐゴシック", "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", Verdana, Helvetica, sans-serif;
+    vertical-align: middle;
+}
+
+img {
+    border: 0;
+    vertical-align: top;
+}
+
+ul, dl, ol {
+    text-indent: 0;
+}
+
+sup {
+    vertical-align: text-top;
+}
+
+sub {
+    vertical-align: text-bottom;
+}
+
+/* input,textarea,select {font-family: inherit; font-size: inherit; font-weight:inherit;} */
+* html input, * html textarea, * html select {
+    font-size: 100%;
+}
+
+*:first-child + html + input, *:first-child html + textarea, *:first-child + html select {
+     font-size: 100%;
+ }
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    font-size: inherit;
+}
+
+caption {
+    text-align: left;
+}
+
+pre, code, kbd, samp, tt {
+    font-family: monospace;
+}
+
+* html pre, * html code, * html kbd, * html samp, * html tt {
+    font-size: 100%;
+    line-height: 100%;
+}
+
+*:first-child + html pre, *:first-child html + code, *:first-child html + kbd, *:first-child + html + samp, *:first-child + html tt {
+    font-size: 108%;
+    line-height: 100%;
+}
+
+input, select, textarea {
+    font-size: 100%;
+}
+
+input {
+    outline: none;
+}
+
+figure {
+    margin: 0;
+    padding: 0;
+}
+
+/*............................
+    Layout
+............................*/
+body {
+    background: #f2f2f2;
+    font-size: 16px;
+}
+
+.wrapper {
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto 50px;
+}
+
+.header {
+    width: 100%;
+    background: #edc9c9;
+    margin: 0 0 2em 0;
+    text-align: center;
+}
+
+.main-right {
+    width: 60%;
+    height: 300px;
+    margin: 0 0 2em 0;
+    background: #e6edc9;
+    float: right;
+    text-align: center;
+}
+
+.footer {
+    width: 100%;
+    margin: 0 0 10em 0;
+    background: #c9ede3;
+    clear: both;
+    text-align: center;
+}
+
+.header,.main,.main-right,.footer {
+    padding: 3em 0;
+}
+
+/* ---------------------------------------------------------
+	header
+--------------------------------------------------------- */
+.g-nav-02 {
+    width: 35%;
+    float: left;
+    margin: 0 0 2em 0;
+}
+
+.g-nav-02 ul li {
+    width: 96%;
+    background: #cc3d14;
+    margin: 0 0 1px 0;
+    padding: 0.3em 2%;
+    list-style: none;
+}
+
+.g-nav-02 ul li a {
+    display: block;
+    padding: 1em;
+    color: #fff;
+}
+
+.g-nav-02 ul li a:link,
+.g-nav-02 ul li a:visited {
+    text-decoration: none;
+}
+
+.g-nav-02 ul li a:hover,
+.g-nav-02 ul li a:active {
+    background: #fff;
+    text-decoration: none;
+    color: #cc3d14;
+    font-weight: bold;
+}
+
+.g-nav-02 ul li a span {
+    width: 21px;
+    height: 17px;
+    display: inline-block;
+    margin: 0 0.3em 0 0;
+    background-repeat: no-repeat;
+    background-position: bottom;
+}
+
+.g-nav-02 ul li.home a span {
+    background-image: url("../img/icon-home-white.png");
+}
+
+.g-nav-02 ul li.home a:hover span,
+.g-nav-02 ul li.home a:active span {
+    background-image: url("../img/icon-home-red.png");
+}
+
+.g-nav-02 ul li.flower a span {
+    background-image: url("../img/icon-flower-white.png");
+}
+
+.g-nav-02 ul li.flower a:hover span,
+.g-nav-02 ul li.flower a:active span {
+    background-image: url("../img/icon-flower-red.png");
+}
+
+.g-nav-02 ul li.gift a span {
+    background-image: url("../img/icon-gift-white.png");
+}
+
+.g-nav-02 ul li.gift a:hover span,
+.g-nav-02 ul li.gift a:active span {
+    background-image: url("../img/icon-gift-red.png");
+}
+
+.g-nav-02 ul li.shop a span {
+    background-image: url("../img/icon-shop-white.png");
+}
+
+.g-nav-02 ul li.shop a:hover span,
+.g-nav-02 ul li.shop a:active span {
+    background-image: url("../img/icon-shop-red.png");
+}
+
+.g-nav-02 ul li.contact a span {
+    background-image: url("../img/icon-contact-white.png");
+}
+
+.g-nav-02 ul li.contact a:hover span,
+.g-nav-02 ul li.contact a:active span {
+    background-image: url("../img/icon-contact-red.png");
+}
