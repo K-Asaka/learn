@@ -76,21 +76,7 @@ figure {
 }
 
 /*............................
-　　clearfix
-............................*/
-.clearfix {
-    *zoom: 1;
-}
-
-.clearfix:after {
-    content: ".";
-    display: block;
-    clear: both;
-    height: 0;
-    visibility: hidden;
-}
-/*............................
-    Lyout
+    Layout
 ............................*/
 body {
     background: #f2f2f2;
@@ -110,12 +96,12 @@ body {
     text-align: center;
 }
 
-.main {
-    width: 100%;
+.main-right {
+    width: 60%;
     height: 300px;
     margin: 0 0 2em 0;
-    float: right;
     background: #e6edc9;
+    float: right;
     text-align: center;
 }
 
@@ -127,146 +113,96 @@ body {
     text-align: center;
 }
 
-.main,
-.main-right,
-.footer {
+.header,.main,.main-right,.footer {
     padding: 3em 0;
 }
+
 /* ---------------------------------------------------------
 	header
 --------------------------------------------------------- */
-.g-nav-03 {
-    width: 100%;
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 5px 0 0 0;
-    background: #cc3d14;
-}
-
-.g-nav-03 ul li {
-    width: 18%;
-    padding: 5px 1%;
-    list-style: none;
+.g-nav-02 {
+    width: 35%;
     float: left;
-    position: relative;
+    margin: 0 0 2em 0;
 }
 
-.g-nav-03 ul li a {
+.g-nav-02 ul li {
+    width: 96%;
+    background: #cc3d14;
+    margin: 0 0 1px 0;
+    padding: 0.3em 2%;
+    list-style: none;
+}
+
+.g-nav-02 ul li a {
     display: block;
-    padding: 20px 0 23px;
-    text-align: center;
+    padding: 1em;
     color: #fff;
 }
 
-.g-nav-03 ul li a:link,
-.g-nav-03 ul li a:visited {
+.g-nav-02 ul li a:link,
+.g-nav-02 ul li a:visited {
     text-decoration: none;
 }
 
-.g-nav-03 ul li a:hover,
-.g-nav-03 ul li a:active {
-    padding: 20px 0;
+.g-nav-02 ul li a:hover,
+.g-nav-02 ul li a:active {
     background: #fff;
     text-decoration: none;
     color: #cc3d14;
     font-weight: bold;
 }
 
-.g-nav-03 ul li a span {
+.g-nav-02 ul li a span {
     width: 21px;
     height: 17px;
     display: inline-block;
     margin: 0 0.3em 0 0;
     background-repeat: no-repeat;
-    background-position: left center;
+    background-position: bottom;
 }
 
-.g-nav-03 ul li:hover a,
-.g-nav-03 ul li:active a {
-    color: #cc3d14;
-    background: #fff;
-    font-weight: bold;
-}
-/* ---------------------------------------------------------
-	second-level
---------------------------------------------------------- */
-.g-nav-03 ul li .second-level {
-    width: 100%;
-    position: absolute;
-    background: #cc3d14;
-    font-size: 0.9em;
-    opacity: 0;
-}
-
-.g-nav-03 ul li .second-level li {
-    width: 90%;
-    color: fff;
-    padding: 0 5%;
-}
-
-.g-nav-03 ul li .second-level li a {
-    padding: 1em 0 0.8em 20px;
-    background: url("../img/icon-arrow-white.png") no-repeat left center;
-    text-align: left;
-    color: #FFF;
-    font-weight: normal;
-}
-
-.g-nav-03 ul li .second-level li a:hover {
-    text-decoration: underline;
-}
-
-.g-nav-03 ul li:hover .second-level {
-    top: 77px;
-    opacity: 1;
-    -webkit-transition: 0.5s;
-    -moz-transition: 0.5s;
-    -ms-transition: 0.5s;
-    -o-transition: 0.5s;
-    transition: 0.5s;
-}
-
-.g-nav-03 ul li.home a span {
+.g-nav-02 ul li.home a span {
     background-image: url("../img/icon-home-white.png");
 }
 
-.g-nav-03 ul li.home:hover span,
-.g-nav-03 ul li.home:active span {
+.g-nav-02 ul li.home a:hover span,
+.g-nav-02 ul li.home a:active span {
     background-image: url("../img/icon-home-red.png");
 }
 
-.g-nav-03 ul li.flower a span {
+.g-nav-02 ul li.flower a span {
     background-image: url("../img/icon-flower-white.png");
 }
 
-.g-nav-03 ul li.flower:hover span,
-.g-nav-03 ul li.flower:active span {
+.g-nav-02 ul li.flower a:hover span,
+.g-nav-02 ul li.flower a:active span {
     background-image: url("../img/icon-flower-red.png");
 }
 
-.g-nav-03 ul li.gift a span {
+.g-nav-02 ul li.gift a span {
     background-image: url("../img/icon-gift-white.png");
 }
 
-.g-nav-03 ul li.gift:hover span,
-.g-nav-03 ul li.gift:active span {
+.g-nav-02 ul li.gift a:hover span,
+.g-nav-02 ul li.gift a:active span {
     background-image: url("../img/icon-gift-red.png");
 }
 
-.g-nav-03 ul li.shop a span {
+.g-nav-02 ul li.shop a span {
     background-image: url("../img/icon-shop-white.png");
 }
 
-.g-nav-03 ul li.shop:hover span,
-.g-nav-03 ul li.shop:active span {
+.g-nav-02 ul li.shop a:hover span,
+.g-nav-02 ul li.shop a:active span {
     background-image: url("../img/icon-shop-red.png");
 }
 
-.g-nav-03 ul li.contact a span {
+.g-nav-02 ul li.contact a span {
     background-image: url("../img/icon-contact-white.png");
 }
 
-.g-nav-03 ul li.contact:hover span,
-.g-nav-03 ul li.contact:active span {
+.g-nav-02 ul li.contact a:hover span,
+.g-nav-02 ul li.contact a:active span {
     background-image: url("../img/icon-contact-red.png");
 }
