@@ -98,3 +98,18 @@
 .g-nav-01 ul li.contact a:hover span, .g-nav-01 ul li.contact a:active span {
   background-image: url("../img/icon-contact-red.png");
 }
+
+
+.g-nav-03 ul li .second-level {
+  width: 100%;
+  position: absolute;
+  background: #cc3d14;
+  font-size: 0.9em;
+  opacity: 0;
+}
+
+.g-nav-03 ul li .second-level li {
+  width: 90%;
+  color: #fff;
+  padding: 0 5%;
+}
