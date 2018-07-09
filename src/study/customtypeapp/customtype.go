@@ -16,7 +16,7 @@ const (
 	YELLOW
 )
 
-// Color Color型
+// Color Color型(byte型のエイリアス)
 type Color byte
 
 // Box Box構造体
@@ -28,17 +28,27 @@ type Box struct {
 // BoxList Box構造体のslice
 type BoxList []Box // a slice of boxes
 
-// Volume 体積
+// Volume Boxの体積を返す
 func (b Box) Volume() float64 {
 	return b.width * b.height * b.depth
 }
 
-// SetColor 色設定
+// SetColor Boxの色をcに変更する
 func (b *Box) SetColor(c Color) {
+	// Boxのポインタを使っている。
+	// SetColorの目的はBoxの色を変えることだが、ポインタで渡さなければ
+	// SetColorが受け取るのはBoxのコピーとなるため、BoxのColorを変更することができない。
 	b.color = c
+	// *b.color = cと書かなくて良い
+	// bはBoxのポインタであることをGoはわかっている
+	// メソッドのreceiverが*Tならば、T型のエンティティの変数V上でこのメソッドをコールすることができる。
+	// &Vによってメソッドをコールする必要はない。
+	// もし、メソッドのreceiverがTならば、T型の変数P上でこのメソッドをコールすることができる。
+	// Pを使ってメソッドをコールする必要はない。
+	// コールしているポインタのメソッドがポインタのメソッドであるかどうかは気にする必要がない。
 }
 
-// BiggestColor カラー情報
+// BiggestColor BoxListに定義されており、listの中の体積が最大の色を返す
 func (bl BoxList) BiggestColor() Color {
 	v := 0.00
 	k := Color(WHITE)
@@ -51,13 +61,15 @@ func (bl BoxList) BiggestColor() Color {
 	return k
 }
 
-// PaintItBlack 黒色で塗りつぶす
+// PaintItBlack BoxListのすべてのBoxの色を全部黒に変更する
 func (bl BoxList) PaintItBlack() {
 	for i, _ := range bl {
 		bl[i].SetColor(BLACK)
+		// SetColorにはBoxのポインタを渡すが、記述はこれでよい。
 	}
 }
 
+// String Colorに定義されており、Colorの具体的な色を返す
 func (c Color) String() string {
 	strings := []string{"WHITE", "BLACK", "BLUE", "RED", "YELLOW"}
 	return strings[c]
