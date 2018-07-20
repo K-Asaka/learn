@@ -2,11 +2,6 @@ package main
 
 import "fmt"
 
-// カスタム定義型
-type ages int
-type money float32
-type months map[string]int
-
 // WHITE 白, BLACK 黒, BLUE 青, RED 赤, YELLOW 黄
 const (
 	WHITE = iota
@@ -76,6 +71,11 @@ func (c Color) String() string {
 }
 
 func main() {
+	// カスタム定義型の確認コード
+	// カスタム定義型を使うことで、自分のコードの中に意味のある型を定義することができる
+	type ages int
+	type money float32
+	type months map[string]int
 	m := months{
 		"January":  31,
 		"February": 28,
@@ -101,4 +101,5 @@ func main() {
 	boxes.PaintItBlack()
 	fmt.Println("The color of the second one is", boxes[1].color.String())
 	fmt.Println("Obviously, now, the biggest one is", boxes.BiggestColor().String())
+
 }
