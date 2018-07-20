@@ -93,7 +93,7 @@ func main() {
 	}
 
 	fmt.Printf("We have %d boxes in our set\n", len(boxes))
-	fmt.Println("The volume of the first one is ", boxes[0].Volume(), "cm3")
+	fmt.Println("The volume of the first one is ", boxes[0].Volume(), "cm³")
 	fmt.Println("The color of the last one is ", boxes[len(boxes)-1].color.String())
 	fmt.Println("The biggest one is ", boxes.BiggestColor().String())
 
