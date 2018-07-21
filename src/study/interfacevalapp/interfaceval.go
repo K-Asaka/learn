@@ -79,3 +79,7 @@ func main() {
 		value.SayHi()
 	}
 }
+
+// interfaceはメソッドの集合を抽象化したもの。
+// 他のinterfaceではない型によって実装されなければならず、自分自身では実装することができない。
+// goはinterfaceを通してduck-typingを実現できる。
