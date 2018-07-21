@@ -75,4 +75,7 @@ func main() {
 	// この3つはどれも異なる要素だが、同じインターフェースを実装する
 	x[0], x[1], x[2] = paul, sam, mike
 
+	for _, value := range x {
+		value.SayHi()
+	}
 }
