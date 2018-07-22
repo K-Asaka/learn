@@ -78,6 +78,21 @@ func main() {
 	for _, value := range x {
 		value.SayHi()
 	}
+
+	// 空のinterfaceにはなんのメソッドも含まれていない。
+	// すべての型は空のinterfaceを実装している。
+	// 空のinterfaceはそれ自体はなんの意味もないが、任意の型の数値を保存する際には役に立つ。
+	// あらゆる型の数値を保存することができるため、C言語のvoid*型に似ている。
+	// ある関数がinterface{}を引数にとると、任意の型の値を引数にとることができる。
+	// もし関数がinterface{}を返せば、任意の型の値を返すことができる。
+	// aを空のインタフェースとして定義
+	var a interface{}
+	var b = 5
+	s := "Hello world"
+	// aは任意の型の数値を保存できる
+	a = b
+	a = s
+	fmt.Println(a)
 }
 
 // interfaceはメソッドの集合を抽象化したもの。
