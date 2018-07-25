@@ -12,7 +12,10 @@ package main
 // value == 0 ! バッファリング無し(ブロック)
 // value > 0 ! バッファリング(ブロック無し、value個の要素まで)
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 func fibonacci(n int, c chan int) {
 	x, y := 1, 1
@@ -21,6 +24,29 @@ func fibonacci(n int, c chan int) {
 		x, y = y, x+y
 	}
 	close(c)
+}
+
+func fibonacci2(c, quit chan int) {
+	// Select
+	// 複数のchannelが存在する場合、selectを通してchannel上のデータを監視することができる。
+	// selectはデフォルトでブロックされる。
+	// channelの中でやりとりされるデータを監視する時のみ実行する。
+	// 複数のchannelの準備が整った時に、selectはランダムにひとつ選択し実行する。
+	x, y := 1, 1
+	for {
+		select {
+		case c <- x:
+			x, y = y, x+y
+		case <-quit:
+			fmt.Println("quit")
+			return
+		default:
+			fmt.Println("xがブロックされた")
+		}
+	}
+	// selectの中にもdefault文がある。selectはswitchの機能によく似ている。
+	// defaultは監視しているchannelがどれも準備が整っていない時に、デフォルトで実行される。
+	// (selectはchannelを待ってブロックしない)
 }
 
 func main() {
@@ -45,4 +71,42 @@ func main() {
 	// また、channelはファイルのようなものではない。
 	// 頻繁に閉じる必要はない。何のデータも送ることが無い場合はrangeループを終了させたい場合などで良い。
 
+	// Select
+	c2 := make(chan int)
+	quit := make(chan int)
+	go func() {
+		for i := 0; i < 10; i++ {
+			fmt.Println(<-c2)
+		}
+		quit <- 0
+	}()
+	fibonacci2(c2, quit)
+
+	// タイムアウト
+	// ときどきgoroutineがブロックされる状況に出くわす。
+	// プログラム全体がブロックされる状況をどのように回避するのか。
+	// selectを使ってタイムアウトを設定することができる。
+	c3 := make(chan int)
+	o := make(chan bool)
+	go func() {
+		for {
+			select {
+			case v := <-c3:
+				println(v)
+			case <-time.After(5 * time.Second):
+				println("timeout")
+				o <- true
+				break
+			}
+		}
+	}()
+	<-o
 }
+
+// runtime goroutine
+// runtimeパッケージにはgoroutineを処理するいくつかの関数が含まれる
+// Goexit：事前に実行されたgoroutineから抜ける。ただし、defer関数は継続してコールされる
+// Gosched：事前のgoroutineの実行権限をジェネレートする。ディスパッチャが他の待機中のタスクの実行を予定し、次のある時点でこの位置から実行を復元する
+// NumCPU：CPUのコア数を返す
+// NumGoroutien：現在実行しているgoroutineの総数を返す
+// GOMAXPROCS：実行できるCPUコア数の最大値を設定し、前のコア数を返す
