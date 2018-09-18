@@ -1,9 +1,8 @@
 var exec = require("child_process").exec;
-var content = "empty";
 
 function start() {
     console.log("Request handler 'start' was colled.");
-    // var content = "empty";
+    var content = "empty";
 
     exec("ls -lah", function (error, stdout, stderr) {
         content = stdout;
