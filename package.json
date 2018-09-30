@@ -13,9 +13,18 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
+  "devDependencies": {},
+  "dependencies": {
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.9"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/K-Asaka/learn.git"
+  },
+  "bugs": {
+    "url": "https://github.com/K-Asaka/learn/issues"
+  },
+  "homepage": "https://github.com/K-Asaka/learn#readme"
 }
