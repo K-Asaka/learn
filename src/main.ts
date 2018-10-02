@@ -1,5 +1,15 @@
-import {hello} from './sub';
+import Vue from 'vue';
+import MyComponent from './sub';
 
-const message: string = 'Hello World';
-
-hello(message);
+new Vue({
+    el  : '#app',
+    template:
+        `<div class="app">
+        <h1>Hello Vue.js!</h1>
+        <my-component message="My Counter for TypeScript"></my-component>
+        </div>`,
+    
+    components: {
+        'my-component': MyComponent
+    }
+});

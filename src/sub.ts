@@ -1,12 +1,22 @@
-export const hello = (message: string): void => {
-    log(message);
-};
+import Vue from 'vue';
+import Component from 'vue-class-component';
 
-function log(message: string): void {
-    document.body.innerText = `${message}`;
-    console.log(message);
-}
+@Component({
+    template: `
+        <div>
+            <h2>{{message}}</h2>
+            <p>{{count}}</p>
+            <p>
+                <button @click="onClick">Add +1</button>
+            </p>
+        </div>`,
+    props: ['message'],
+})
+export default class MyComponent extends Vue {
+    count = 0;
 
-export function piyo() {
-    
+    onClick() {
+        console.log('クリックされました');
+        this.count = this.count + 1;
+    }
 }
