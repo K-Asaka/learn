@@ -1,9 +1,26 @@
 module.exports = {
-    entry: `./src/index.js`,
+    entry: `./src/main.ts`,
 
     output: {
         path: `${__dirname}/dist`,
         filename: 'main.js'
+    },
+    module: {
+        rules: [
+            {
+                test: /\.ts$/,
+                use: 'ts-loader'
+            }
+        ]
+    },
+    resolve: {
+        extensions: [
+            '.js',
+            '.ts'
+        ],
+        alias: {
+            vue: 'vue/dist/vue.js'
+        }    
     },
     devServer: {
         contentBase: 'dist',
