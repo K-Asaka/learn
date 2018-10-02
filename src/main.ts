@@ -2,7 +2,7 @@ import Vue from 'vue';
 import MyComponent from './sub';
 
 new Vue({
-    el  : '#app',
+    el: '#app',
     template:
         `<div class="app">
         <h1>Hello Vue.js!</h1>
