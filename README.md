@@ -12,3 +12,7 @@
 `ruby -E UTF-8 スクリプトファイル名`
 
 `irb -E UTF-8`
+
+### --simple-promptオプション
+
+`irb` に `--simple-prompt` オプションをつけると、irbのプロンプト表示を簡易にすることができる。
