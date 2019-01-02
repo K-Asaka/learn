@@ -7,6 +7,10 @@ class HelloWorld                    # class文
     def hello                       # インスタンスメソッド
         puts "Hello, world. I am #{@name}."
     end
+
+    def greet
+        puts "Hi, I am #{self.name}."
+    end
 =begin
     def name                        # @nameを参照する
         @name
@@ -27,4 +31,4 @@ bob.hello()
 p bob.name
 bob.name = "Robert"
 p bob.name
-
+bob.greet
