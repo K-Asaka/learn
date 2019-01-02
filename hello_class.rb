@@ -18,11 +18,11 @@ class HelloWorld                    # class文
     end
 
     # クラスメソッドの定義
-    class << self
-        def hello(name)
+    #class << self
+        def self.hello(name)
             puts "#{name} said hello."
         end
-    end
+    #end
 =begin
     def name                        # @nameを参照する
         @name
