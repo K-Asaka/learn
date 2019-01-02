@@ -10,9 +10,13 @@ module M2
     end
 end
 
+module M3
+    include M2      # M2をインクルードする
+end
+
 class C
     include M1       # M1をインクルードする
-    include M2       # M2をインクルードする
+    include M3       # M3をインクルードする
 end
 
 p C.ancestors
