@@ -1,4 +1,5 @@
 class HelloWorld                    # class文
+    attr_accessor :name
     def initialize(myname = "Ruby") # initializeメソッド
         @name = myname              # インスタンス変数の初期化
     end
@@ -6,7 +7,7 @@ class HelloWorld                    # class文
     def hello                       # インスタンスメソッド
         puts "Hello, world. I am #{@name}."
     end
-
+=begin
     def name                        # @nameを参照する
         @name
     end
@@ -14,7 +15,7 @@ class HelloWorld                    # class文
     def name=(value)                # @nameを変更する
         @name = value
     end
-
+=end
 end
 
 bob = HelloWorld.new("Bob")
