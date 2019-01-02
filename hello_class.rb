@@ -37,6 +37,7 @@ end
 =begin
 # このクラス定義の中にインスタンスメソッドの形式で記述するメソッドが
 # クラスメソッドになる
+# この書き方のクラスを「特異クラス定義」という
 class << HelloWorld
     def hello(name)
         puts "#{name} said hello."
