@@ -1,4 +1,5 @@
 class HelloWorld                    # class文
+    Version = "1.0"
     attr_accessor :name
     def initialize(myname = "Ruby") # initializeメソッド
         @name = myname              # インスタンス変数の初期化
@@ -58,3 +59,4 @@ bob.greet
 bob.test_name
 bob.greet
 HelloWorld.hello("ClassMethod")
+p HelloWorld::Version
