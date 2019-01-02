@@ -12,3 +12,6 @@ c = C.new
 p c.meth
 # includeされているかを調べる
 p C.include?(M)
+
+p C.ancestors
+p C.superclass
