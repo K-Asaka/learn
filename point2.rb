@@ -16,12 +16,22 @@ class Point
     def -(other)            # x,yのそれぞれを引く
         self.class.new(x - other.x, y - other.y)
     end
+
+    def +@
+        dup                 # 自分の複製を返す
+    end
+
+    def -@
+        self.class.new(-x, -y)      # x,yのそれぞれの正負を逆にする
+    end
+
+    def ~@
+        self.class.new(-y, x)       # 90度反転させた座標を返す
+    end
 end
 
-point0 = Point.new(3, 6)
-point1 = Point.new(1, 8)
+point = Point.new(3, 6)
 
-p point0
-p point1
-p point0 + point1
-p point0 - point1
+p +point
+p -point
+p ~point
