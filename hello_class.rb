@@ -11,6 +11,11 @@ class HelloWorld                    # class文
     def greet
         puts "Hi, I am #{self.name}."
     end
+
+    def test_name
+        name = "Ruby"               # ローカル変数への代入
+        self.name = "Ruby"          # name=メソッドの呼び出し
+    end
 =begin
     def name                        # @nameを参照する
         @name
@@ -31,4 +36,6 @@ bob.hello()
 p bob.name
 bob.name = "Robert"
 p bob.name
+bob.greet
+bob.test_name
 bob.greet
