@@ -16,6 +16,13 @@ class HelloWorld                    # class文
         name = "Ruby"               # ローカル変数への代入
         self.name = "Ruby"          # name=メソッドの呼び出し
     end
+
+    # クラスメソッドの定義
+    class << self
+        def hello(name)
+            puts "#{name} said hello."
+        end
+    end
 =begin
     def name                        # @nameを参照する
         @name
@@ -26,6 +33,16 @@ class HelloWorld                    # class文
     end
 =end
 end
+
+=begin
+# このクラス定義の中にインスタンスメソッドの形式で記述するメソッドが
+# クラスメソッドになる
+class << HelloWorld
+    def hello(name)
+        puts "#{name} said hello."
+    end
+end
+=end
 
 bob = HelloWorld.new("Bob")
 alice = HelloWorld.new("Alice")
@@ -39,3 +56,4 @@ p bob.name
 bob.greet
 bob.test_name
 bob.greet
+HelloWorld.hello("ClassMethod")
