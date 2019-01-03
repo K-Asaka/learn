@@ -1,3 +1,3 @@
 array = ["Ruby", "Perl", "PHP", "Python"]
-sorted = array.sort
+sorted = array.sort{ |a, b| a <=> b }
 p sorted
