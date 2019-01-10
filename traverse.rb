@@ -1,14 +1,8 @@
 def traverse(path)
-    if File.directory?(path)        # ディレクトリの場合
-        dir = Dir.open(path)
-        while name = dir.read
-            next if name == "."     # ※
-            next if name == ".."    # ※
-            traverse(path + "/" + name)
+    Dir.glob(["#{path}/**/*", "#{path}/**/.*"]).each do |name|
+        unless File.directory?(name)
+            process_file(path)          # ファイルに対する処理
         end
-        dir.close
-    else
-        process_file(path)          # ファイルに対する処理
     end
 end
 
