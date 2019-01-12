@@ -33,4 +33,29 @@ class JZipCode
         end
         return true
     end
+
+    def find_by_code(code)
+        ret = []
+        SQLite3::Database.open(@dbfile) do |db|
+            db.execute(<<-SQL, code){|row| ret << row.join(" ") }
+                SELECT code, alladdr
+                    FROM zip_codes
+                WHERE code = ?
+            SQL
+        end
+        return ret.map{|line| line + "\n" }.join
+    end
+
+    def find_by_address(addr)
+        ret = []
+        SQLite3::Database.open(@dbfile) do |db|
+            like = "%#{addr}%"
+            db.execute(<<-SQL, like) {|row| ret << row.join(" ") }
+                SELECT code, alladdr
+                    FROM zip_codes
+                WHERE alladdr LIKE ?
+            SQL
+        end
+        return ret.map{|line| line + "\n" }.join
+    end
 end
