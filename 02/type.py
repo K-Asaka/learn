@@ -10,3 +10,6 @@ day = 24
 str_day = str(day)
 date = str_day + "日"
 print(date)
+
+print(int("200"))
+print(float("3.14159265358979"))
