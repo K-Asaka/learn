@@ -63,4 +63,24 @@ plt.plot(city_temps[1])
 plt.plot(city_temps[2])
 plt.show()
 
+# リストの合計を計算する
+monk_fish_team = [158, 157, 163, 157, 145]
+print(sum(monk_fish_team))
 
+# 最大値と最小値を出力する
+print(max(monk_fish_team))
+print(min(monk_fish_team))
+
+# リストの長さを調べる
+print(len(monk_fish_team))
+
+# 平均を計算する
+monk_sum = sum(monk_fish_team)
+monk_len = len(monk_fish_team)
+monk_mean = monk_sum / monk_len
+print(monk_mean)
+
+# グラフを表示する
+plt.bar([0, 1, 2, 3, 4], monk_fish_team)
+plt.plot([0, len(monk_fish_team)], [monk_mean, monk_mean], color='red')
+plt.show()
