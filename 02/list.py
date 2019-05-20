@@ -26,3 +26,19 @@ tokyo_temps2 = e_tokyo_temps + tokyo_temps
 plt.plot(tokyo_temps2)
 plt.show()
 
+# リスト「mcz」の作成
+mcz = ["れに", "あかり", "かなこ", "しおり", "あやか", "ゆきな"]
+print(mcz)
+# 5番目の要素を書き換える
+mcz[5] = 'ももか'
+print(mcz)
+
+# 要素の削除
+del mcz[0]
+print(mcz)
+
+# スライスの使用例
+momotamai = mcz[1:3]
+print(momotamai)
+print(mcz[:2])
+print(mcz[1:])
