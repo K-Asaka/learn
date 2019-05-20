@@ -42,3 +42,25 @@ momotamai = mcz[1:3]
 print(momotamai)
 print(mcz[:2])
 print(mcz[1:])
+
+# リストのリスト - 2次元配列
+# 各都市の平均気温のリスト
+city_temps = [
+    [14.8, 14.8, 15.1, 15.4, 15.2, 15.4, 17.0, 16.9],
+    [10.0, 10.4, 11.5, 11.2, 10.9, 10.6, 11.8, 12.2],
+    [16.0, 15.5, 15.9, 16.4, 15.9, 15.6, 17.5, 17.1]
+]
+
+# 秋田市の平均気温リストを表示する
+print(city_temps[1])
+
+# 平均気温の比較
+print(city_temps[2][7] - city_temps[2][0])
+
+# 3都市の平均気温のグラフを描画する
+plt.plot(city_temps[0])
+plt.plot(city_temps[1])
+plt.plot(city_temps[2])
+plt.show()
+
+
