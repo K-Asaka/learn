@@ -18,3 +18,11 @@ print(tokyo_temps[5] - tokyo_temps[0])
 
 # リストの最後の要素を指定する
 print(tokyo_temps[-1] - tokyo_temps[0])
+
+# リストの足し算
+e_tokyo_temps = [13.6, 13.5, 14.2, 14.8, 14.8]
+tokyo_temps2 = e_tokyo_temps + tokyo_temps
+# グラフの表示
+plt.plot(tokyo_temps2)
+plt.show()
+
