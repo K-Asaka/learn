@@ -10,3 +10,6 @@ print(purple)
 
 purple["キャッチフレーズ"] = "鋼少女"
 print(purple)
+
+purple["生年月日"] = "1993年6月21日"
+print(purple)
