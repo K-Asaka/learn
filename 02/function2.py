@@ -1,26 +1,27 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
+def calc_variance(a_list):
+    total = sum(a_list)
+    length = len(a_list)
+    mean = total / length
+    variance = 0
+
+    for height in a_list:
+        variance += (height - mean) ** 2
+    variance = variance / len(a_list)
+
+    return variance
+
+
 monk_fish_team = [158, 157, 163, 157, 145]
-
-total = sum(monk_fish_team)
-length = len(monk_fish_team)
-mean = total / length
-variance = 0
-
-for height in monk_fish_team:
-    variance += (height - mean) ** 2
-
-variance = variance / length
-
 volleyball_team = [143, 167, 170, 165]
+pravda_team = [127, 172, 140, 160, 174]
 
-total2 = sum(volleyball_team)
-length2 = len(volleyball_team)
-mean2 = total2 / length2
-variance2 = 0
+monk_team_variance = calc_variance(monk_fish_team)
+volley_team_variance = calc_variance(volleyball_team)
+pravda_team_variance = calc_variance(pravda_team)
 
-for height in volleyball_team:
-    variance2 += (height - mean) ** 2
-
-variance2 = variance2 / length2
+print(monk_team_variance ** 0.5)
+print(volley_team_variance ** 0.5)
+print(pravda_team_variance ** 0.5)
