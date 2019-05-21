@@ -30,3 +30,11 @@ def convert_number(num):
 
 print(convert_number(3))
 print(convert_number(15))
+
+purple = {"ニックネーム": "れにちゃん",
+          "出身地": "神奈川県",
+          "キャッチフレーズ": "感電少女",
+          "生年月日": "1993年6月21日"}
+
+for key in purple:
+    print(key, purple[key])
