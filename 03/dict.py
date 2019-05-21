@@ -7,3 +7,6 @@ purple = {"ニックネーム": "れにちゃん",
 
 print(purple["出身地"])
 print(purple)
+
+purple["キャッチフレーズ"] = "鋼少女"
+print(purple)
