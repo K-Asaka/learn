@@ -32,3 +32,12 @@ print(pref_cap2)
 codon = ['ATG', 'GGC', 'TCC', 'AAG', 'TTC', 'TGG', 'GAC', 'TCC']
 s_codon = set(codon)
 print(len(codon), len(s_codon))
+
+prime = {2, 3, 5, 7, 13, 17}
+fib = {1, 1, 2, 3, 5, 8, 13}
+
+prime_fib = prime & fib
+if 13 in prime_fib:
+    print("13は素数で、フィボナッチ数でもある")
+if {2, 3} <= prime_fib:
+    print("2, 3は素数で、フィボナッチ数でもある")
