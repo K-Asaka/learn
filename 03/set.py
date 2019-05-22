@@ -28,3 +28,7 @@ print(pref_cap)
 pref_cap2 = prefs ^ capitals
 print(pref_cap2)
 
+# リストをsetに変換する
+codon = ['ATG', 'GGC', 'TCC', 'AAG', 'TTC', 'TGG', 'GAC', 'TCC']
+s_codon = set(codon)
+print(len(codon), len(s_codon))
