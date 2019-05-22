@@ -41,3 +41,14 @@ if 13 in prime_fib:
     print("13は素数で、フィボナッチ数でもある")
 if {2, 3} <= prime_fib:
     print("2, 3は素数で、フィボナッチ数でもある")
+
+month_names = ("January", "February", "March", "April",
+               "May", "June", "July")
+print(month_names[1])
+
+# タプルは要素の変更ができない
+#month_names[0] = "睦月"
+
+month_names = month_names + ("August", "September", "October",
+                             "November", "December")
+print(month_names[11])
