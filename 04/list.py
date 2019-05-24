@@ -4,3 +4,6 @@
 monk_fish_team = [158, 157, 163, 157, 145]
 monk_fish_team.sort()
 print(monk_fish_team)
+
+monk_fish_team.sort(reverse=True)
+print(monk_fish_team)
