@@ -21,3 +21,10 @@ print(evaluate_tankdata(tank_data[4]))
 
 tank_data.sort(key=evaluate_tankdata, reverse=True)
 print(tank_data)
+
+# スライスのステップ数
+a = [1, 2, 3, 4, 5]
+print(a)
+print(a[1:4])
+print(a[2:100])
+print(a[::2])
