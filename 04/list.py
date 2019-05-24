@@ -28,3 +28,12 @@ print(a)
 print(a[1:4])
 print(a[2:100])
 print(a[::2])
+
+# スライスを使った要素の代入と削除
+a = [1, 2, 3, 4, 5]
+a[2:4] = ['Three', 'Four', 'Five']
+print(a)
+
+a = [1, 2, 3, 4, 5]
+del a[2:]
+print(a)
