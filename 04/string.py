@@ -24,3 +24,16 @@ for idx in range(len(speeds)):
 plt.show()
 
 # IV号戦車(o) LT-38(v) 八九式中戦車(^) III号突撃砲(<) M3中戦車(>)
+
+str_speeds = "38 42 20 40 39"
+speeds = str_speeds.split()
+csep_speeds = ",".join(speeds)
+print(csep_speeds)
+
+# replace()とjoin()の違い
+str_speeds2 = " 38  42 20 40 39"
+print(str_speeds2.replace(" ", ","))
+
+speeds2 = str_speeds2.split()
+csep_speeds2 = ",".join(speeds2)
+print(csep_speeds2)
