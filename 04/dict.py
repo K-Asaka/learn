@@ -8,3 +8,14 @@ rssitem.update({"title"      : "Pythonを勉強中",
                 "dc:creator" : "someone"})
 print(rssitem.keys())
 print(rssitem)
+
+line = "I have a pen. you have a pen. Can you speak English?"
+wordcount = {}
+for word in line.split():
+    wordcount[word] = wordcount.get(word, 0) + 1
+#    if word in wordcount:
+#        wordcount[word] = wordcount[word] + 1
+#    else:
+#        wordcount[word] = 1
+
+print(wordcount)
