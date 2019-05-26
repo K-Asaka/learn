@@ -23,3 +23,8 @@ tz = {"GMT" : "+000", "BST" : "+100",
       "EET" : "+200", "JST" : "+900"}
 revtz = {off:zone for zone, off in tz.items()}
 print(revtz)
+
+# set内包表記
+names = ["BOB", "burton", "dave", "bob"]
+unames = {x.lower() for x in names}
+print(unames)
