@@ -8,3 +8,8 @@ foo(1, 2, 3, 4, 5)
 
 # 以下はエラーになる
 #foo(1, 2, c=3)
+
+def bar(a, b, **args):
+    print(a, b, args)
+
+bar(1, 2, c=3, d=4)
