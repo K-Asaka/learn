@@ -2,13 +2,17 @@
 # -*- coding: utf-8 -*-
 
 class Prism:
-    def __init__(self, width, height, depth):
+    def __init__(self, width, height, depth, unit = 'cm'):
         self.width = width
         self.height = height
         self.depth = depth
+        self.unit = unit
     
     def content(self):
         return self.width * self.height * self.depth
+    
+    def unit_content(self):
+        return str(self.content()) + self.unit
 
 p1 = Prism(10, 20, 30)
 print(p1.content())
@@ -32,3 +36,7 @@ class Cube(Prism):
 
 c = Cube(20)
 print(c.content())
+
+# 追加したアトリビュートの確認
+c2 = Cube(10)
+print(c2.unit_content)
