@@ -8,3 +8,8 @@ mean = total / length
 # variance = variance / length
 variance = sum([(height - mean ) ** 2 for height in monk_fish_team]) / length
 print(variance)
+print([(h - mean) ** 2 for h in monk_fish_team])
+
+str_speeds = "38 42 20 40 39"
+speeds = [int(s) for s in str_speeds.split()]
+print(speeds)
