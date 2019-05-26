@@ -7,10 +7,8 @@ class Prism:
         self.height = height
         self.depth = depth
         self.unit = unit
-    
     def content(self):
         return self.width * self.height * self.depth
-    
     def unit_content(self):
         return str(self.content()) + self.unit
 
@@ -32,11 +30,12 @@ print(p.content())
 
 class Cube(Prism):
     def __init__(self, length):
-        self.width = self.height = self.depth = length
+        super().__init__(length, length, length)
+
 
 c = Cube(20)
 print(c.content())
 
 # 追加したアトリビュートの確認
 c2 = Cube(10)
-print(c2.unit_content)
+print(c2.unit_content())
