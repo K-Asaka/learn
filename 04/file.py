@@ -19,3 +19,7 @@ imgfile = open('./04/someimage.png', 'rb')
 imgsrc = imgfile.read()
 if imgsrc[1:4] == b'PNG':
     print('image/png')
+
+import sys
+print(sys.getfilesystemencoding())
+
