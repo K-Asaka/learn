@@ -14,3 +14,8 @@ s = "ファイルにデータを書き込む"
 f = open("./04/newfile.txt", "w", encoding="utf-8")
 f.write(s)
 f.close()
+
+imgfile = open('./04/someimage.png', 'rb')
+imgsrc = imgfile.read()
+if imgsrc[1:4] == b'PNG':
+    print('image/png')
