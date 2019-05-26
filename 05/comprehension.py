@@ -17,3 +17,9 @@ print(speeds)
 str_speeds = "38 42 20 40 a1 39"
 speeds = [int(s) for s in str_speeds.split() if s.isdigit()]
 print(speeds)
+
+# ディクショナリ内包表記
+tz = {"GMT" : "+000", "BST" : "+100",
+      "EET" : "+200", "JST" : "+900"}
+revtz = {off:zone for zone, off in tz.items()}
+print(revtz)
