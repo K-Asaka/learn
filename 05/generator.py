@@ -13,3 +13,9 @@ def get_primes(x = 2):
 i = get_primes()
 for c in range (10):
     print(next(i))
+
+# ジェネレータ式の例
+i = (x ** 2 for x in range(1, 10))
+print(next(i))
+print(next(i))
+print(next(i))
