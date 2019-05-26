@@ -26,3 +26,9 @@ print(p.width)
 p.depth = "30"
 print(p.content())
 
+class Cube(Prism):
+    def __init__(self, length):
+        self.width = self.height = self.depth = length
+
+c = Cube(20)
+print(c.content())
