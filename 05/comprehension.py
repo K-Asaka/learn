@@ -13,3 +13,7 @@ print([(h - mean) ** 2 for h in monk_fish_team])
 str_speeds = "38 42 20 40 39"
 speeds = [int(s) for s in str_speeds.split()]
 print(speeds)
+
+str_speeds = "38 42 20 40 a1 39"
+speeds = [int(s) for s in str_speeds.split() if s.isdigit()]
+print(speeds)
