@@ -11,3 +11,6 @@ td = datetime.timedelta(days=100)
 d2 = d1 + td
 print(d2)
 
+td = datetime.timedelta(days=5)
+print(td * 2)
+print(td / 3)
