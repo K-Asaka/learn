@@ -14,3 +14,8 @@ print(d2)
 td = datetime.timedelta(days=5)
 print(td * 2)
 print(td / 3)
+
+d1 = datetime.date(2016, 6, 28)
+d2 = datetime.date(2016, 6, 28)
+print(d1 > d2)
+print(d1 == d2)
