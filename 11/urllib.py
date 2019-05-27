@@ -26,5 +26,9 @@ for k, v in animals:
         d[k] = [v]
     else:
         d[k].append(v)
+print(d)
 
+d = {}
+for k, v in animals:
+    d.setdefault(k, []).append(v)
 print(d)
