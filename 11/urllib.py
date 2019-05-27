@@ -32,3 +32,9 @@ d = {}
 for k, v in animals:
     d.setdefault(k, []).append(v)
 print(d)
+
+from collections import defaultdict
+dd = defaultdict(list)
+for k, v in animals:
+    dd[k].append(v)
+print(dd)
