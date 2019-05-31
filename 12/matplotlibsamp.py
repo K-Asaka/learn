@@ -25,3 +25,9 @@ plt.show()
 s = np.sin(np.pi * np.arange(0.0, 2.0, 0.01))
 t = plt.plot(s, linestyle='--', linewidth=4)
 plt.show()
+
+# 表示用フォントの指定
+plt.rcParams['font.family'] = 'Osaka'
+
+import matplotlib.font_manager as fm
+print(fm.findSystemFonts())
