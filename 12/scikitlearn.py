@@ -54,3 +54,23 @@ for ax, deg in zip(axs.ravel(), [0, 1, 3, 9]):
 plt.tight_layout()
 plt.show()
 
+from sklearn.metrics import mean_squared_error
+
+# 実データとの誤差を保存するarray
+train_error = np.empty(10)
+test_error = np.empty(10)
+# 次数0から9について調べる
+for deg in range(10):
+    # モデルを作る
+    e = make_pipeline(PolynomialFeatures(deg), LinearRegression())
+    e.fit(x_train, y_train)
+    # テストデータを使って、予測値と実際の値の誤差を調べる
+    train_error[deg] = mean_squared_error(y_train, e.predict(x_train))
+    test_error[deg] = mean_squared_error(y_test, e.predict(x_test))
+
+# グラフを描く
+plt.plot(np.arange(10), train_error, ls=':', label='train')
+plt.plot(np.arange(10), test_error, ls='-', label='test')
+plt.ylim((0, 1))
+plt.legend(loc='upper left')
+plt.show()
