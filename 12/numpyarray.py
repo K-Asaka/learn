@@ -13,3 +13,7 @@ print(b.dtype)
 
 b2 = np.zeros(9).reshape(3, 3)
 print(b2)
+
+c = np.arange(9).reshape(3, 3)
+print(c)
+print(c.T)
