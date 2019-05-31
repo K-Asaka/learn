@@ -21,3 +21,7 @@ m, c = np.linalg.lstsq(a, y)[0]
 t = plt.plot(x, y, 'o')
 t = plt.plot(x, (m * x + c))
 plt.show()
+
+s = np.sin(np.pi * np.arange(0.0, 2.0, 0.01))
+t = plt.plot(s, linestyle='--', linewidth=4)
+plt.show()
