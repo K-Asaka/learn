@@ -52,3 +52,13 @@ print(np.hstack((a, b)))
 a = np.arange(4).reshape(2, 2)
 b = np.arange(5, 9).reshape(2, 2)
 print(np.vstack((a, b)))
+
+a = np.zeros(4)
+b = a
+b += 1
+print(a)
+
+a = np.zeros(4)
+b = a.copy()
+b += 1
+print(a)
