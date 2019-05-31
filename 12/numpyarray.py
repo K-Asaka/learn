@@ -44,3 +44,11 @@ print(a[1:, 1:3])
 
 d = np.arange(1, 10)
 print(d[[1, 3, 5, 7]])
+
+a = np.arange(4).reshape(2, 2)
+b = np.arange(5, 9).reshape(2, 2)
+print(np.hstack((a, b)))
+
+a = np.arange(4).reshape(2, 2)
+b = np.arange(5, 9).reshape(2, 2)
+print(np.vstack((a, b)))
