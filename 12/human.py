@@ -42,4 +42,11 @@ def show_pgraph(year, arr1, arr2, arr3, ymin, ymax, ydim=1):
     ax[2].plot([year, year], [0, 140000])
     plt.show()
 
+# Jupyter Notebookのウィジェット機能
+# from ipywidgets import interact, IntSlider, fixed
+# t = interact(show_pgraph, year=IntSlider(min=1944, max=2014, step=5),
+#              arr1=fixed(p_male), arr2=fixed(p_female), arr3=fixed(p_yearly),
+#              ymin=fixed(1944), ymax=fixed(2014), ydim=fixed(1))
+
 show_pgraph(1950, p_male, p_female, p_yearly, 1944, 2014)
+
