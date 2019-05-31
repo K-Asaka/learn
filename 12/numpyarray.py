@@ -10,3 +10,6 @@ print(b.ndim)
 print(b.shape)
 print(b.size)
 print(b.dtype)
+
+b2 = np.zeros(9).reshape(3, 3)
+print(b2)
