@@ -27,3 +27,30 @@ plt.plot(x_orig, f(x_orig), ls=':')
 plt.scatter(x_train, y_train)
 plt.xlim((0, 1))
 plt.show()
+
+from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.pipeline import make_pipeline
+
+# 2x2のグラフを描く準備をする
+fig, axs = plt.subplots(2, 2, figsize=(8, 5))
+
+# 次数0、1、3、9について学習した結果を表示
+for ax, deg in zip(axs.ravel(), [0, 1, 3, 9]):
+    # パイプラインを作る
+    e = make_pipeline(PolynomialFeatures(deg), LinearRegression())
+
+    # 学習セットで学習をする
+    e.fit(x_train, y_train)
+
+    # 元のxを与えて予測
+    px = e.predict(x_orig[:, np.newaxis])
+    # 予測結果のグラフとテストデータの点を描画
+    ax.scatter(x_train, y_train)
+    ax.plot(x_orig, px)
+    ax.set(xlim=(0, 1), ylim=(-2, 2), ylabel='y', xlabel='x',
+           title='degree={}'.format(deg))
+    
+plt.tight_layout()
+plt.show()
+
