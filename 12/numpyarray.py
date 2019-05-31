@@ -17,3 +17,10 @@ print(b2)
 c = np.arange(9).reshape(3, 3)
 print(c)
 print(c.T)
+
+a = np.arange(1, 10)
+print(a + 1)
+
+a = np.arange(1, 10)
+b = np.arange(1, 10)
+print(a + b)
