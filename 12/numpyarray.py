@@ -36,3 +36,11 @@ print(np.sum(a))
 
 a = np.arange(9).reshape(3, 3)
 print(np.sum(a, axis = 0))
+
+a = np.arange(9).reshape(3, 3)
+print(a[1, 2])
+
+print(a[1:, 1:3])
+
+d = np.arange(1, 10)
+print(d[[1, 3, 5, 7]])
