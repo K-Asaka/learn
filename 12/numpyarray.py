@@ -30,3 +30,9 @@ b = np.arange(1, 4)
 print(a * b)
 
 print(np.zeros((3, 1)) * np.zeros((1, 3)))
+
+a = np.arange(9).reshape(3, 3)
+print(np.sum(a))
+
+a = np.arange(9).reshape(3, 3)
+print(np.sum(a, axis = 0))
