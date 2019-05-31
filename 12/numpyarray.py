@@ -24,3 +24,9 @@ print(a + 1)
 a = np.arange(1, 10)
 b = np.arange(1, 10)
 print(a + b)
+
+a = np.ones(9).reshape(3, 3)
+b = np.arange(1, 4)
+print(a * b)
+
+print(np.zeros((3, 1)) * np.zeros((1, 3)))
