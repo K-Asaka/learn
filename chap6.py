@@ -6,6 +6,8 @@ def draw_map():
         for x in range(0, MAX_WIDTH):
             p = map_data[y][x]
             canvas.create_image(x * 62 + 31, y * 62 + 31, image=images[p])
+    # 主人公表示
+    canvas.create_image(brave_x * 62 + 31, brave_y * 62 + 31, image=images[4], tag="brave")
 
 # ウィンドウ作成
 root = tkinter.Tk()
@@ -35,6 +37,10 @@ map_data = [[1, 0, 1, 1, 1, 1, 1, 1, 1, 1],
             [1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
             [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
+
+# 主人公の位置
+brave_x = 1
+brave_y = 0
 
 draw_map()
 root.mainloop()
