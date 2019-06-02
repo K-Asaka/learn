@@ -9,6 +9,27 @@ def draw_map():
     # 主人公表示
     canvas.create_image(brave_x * 62 + 31, brave_y * 62 + 31, image=images[4], tag="brave")
 
+# 上ボタンが押された
+def click_button_up():
+    global brave_y
+    brave_y = brave_y - 1
+    canvas.coords("brave", brave_x * 62 + 31, brave_y * 62 + 31)
+# 下ボタンが押された
+def click_button_down():
+    global brave_y
+    brave_y = brave_y + 1
+    canvas.coords("brave", brave_x * 62 + 31, brave_y * 62 + 31)
+# 左ボタンが押された
+def click_button_left():
+    global brave_x
+    brave_x = brave_x - 1
+    canvas.coords("brave", brave_x * 62 + 31, brave_y * 62 + 31)
+# 右ボタンが押された
+def click_button_right():
+    global brave_x
+    brave_x = brave_x + 1
+    canvas.coords("brave", brave_x * 62 + 31, brave_y * 62 + 31)
+
 # ウィンドウ作成
 root = tkinter.Tk()
 root.title("ダンジョン＆パイソン")
@@ -19,6 +40,20 @@ root.option_add("*font", ["メイリオ", 14])
 canvas = tkinter.Canvas(width=620, height=434)
 canvas.place(x=10, y=10)
 canvas.create_rectangle(0, 0, 620, 434, fill="gray")
+
+# ボタン配置
+button_up = tkinter.Button(text="↑")
+button_up.place(x=720, y=150)
+button_up["command"] = click_button_up
+button_down = tkinter.Button(text="↓")
+button_down.place(x=720, y=210)
+button_down["command"] = click_button_down
+button_left = tkinter.Button(text="←")
+button_left.place(x=660, y=180)
+button_left["command"] = click_button_left
+button_right = tkinter.Button(text="→")
+button_right.place(x=780, y=180)
+button_right["command"] = click_button_right
 
 # 画像データを読み込み
 images = [tkinter.PhotoImage(file="img6/chap6-mapfield.png"),
