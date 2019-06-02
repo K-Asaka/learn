@@ -30,8 +30,9 @@ for k in range(len(list) - 1, 0, -1):
             list[j + 1] = temp
         x = start_x
         y = start_y
+        canvas.delete("graph")
         for i in list:
-            canvas.create_rectangle(x, y, x + i * width_px, y + height_px, fill="blue", outline="blue")
+            canvas.create_rectangle(x, y, x + i * width_px, y + height_px, fill="blue", outline="blue", tag="graph")
             y = y + height_px + distance_px
             # disp = disp + str(i) + " "
         # print(disp)
