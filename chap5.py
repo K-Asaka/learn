@@ -1,6 +1,20 @@
 import tkinter
 import time
 
+# グラフ表示関数
+def draw_graph():
+    x = start_x
+    y = start_y
+    root.update()
+    time.sleep(0.5)
+    canvas.delete("graph")
+    for i in list:
+        canvas.create_rectangle(x, y, x + i * width_px, y + height_px, fill="blue", outline="blue", tag="graph")
+        y = y + height_px + distance_px
+        # disp = disp + str(i) + " "
+    # print(disp)
+    # disp = ""
+
 # ウィンドウ作成
 root = tkinter.Tk()
 root.title("棒グラフをソートして表示する")
@@ -29,16 +43,6 @@ for k in range(len(list) - 1, 0, -1):
             temp = list[j]
             list[j] = list[j + 1]
             list[j + 1] = temp
-        x = start_x
-        y = start_y
-        root.update()
-        time.sleep(0.5)
-        canvas.delete("graph")
-        for i in list:
-            canvas.create_rectangle(x, y, x + i * width_px, y + height_px, fill="blue", outline="blue", tag="graph")
-            y = y + height_px + distance_px
-            # disp = disp + str(i) + " "
-        # print(disp)
-        # disp = ""
+        draw_graph()
 
 root.mainloop()
