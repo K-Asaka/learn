@@ -18,6 +18,11 @@ def ending():
     だが、君の戦いはまだ始まったばかりだ。
     
     　　　　　　　　　　　　　　　　……つづく？""")
+    # ボタンを無効化
+    button_up["state"] = "disabled"
+    button_down["state"] = "disabled"
+    button_left["state"] = "disabled"
+    button_right["state"] = "disabled"
 
 # 移動先のチェック
 def check_move(x, y):
