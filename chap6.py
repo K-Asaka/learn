@@ -9,13 +9,33 @@ def draw_map():
     # 主人公表示
     canvas.create_image(brave_x * 62 + 31, brave_y * 62 + 31, image=images[4], tag="brave")
 
+# エンディング表示
+def ending():
+    canvas.delete("all")
+    canvas.create_rectangle(0, 0, 620, 434, fill="black")
+    canvas.create_text(300, 200, fill="white", font=("MS　ゴシック", 15), text="""ゴールおめでとう。
+    
+    だが、君の戦いはまだ始まったばかりだ。
+    
+    　　　　　　　　　　　　　　　　……つづく？""")
+
 # 移動先のチェック
 def check_move(x, y):
-    global brave_x, brave_y
+    global brave_x, brave_y, flag_key
     if x >= 0 and x < MAX_WIDTH and y >= 0 and y < MAX_HEIGHT:
         p = map_data[y][x]
         if p == 1:
             return
+        elif p == 3:
+            flag_key = True
+            map_data[y][x] = 0
+            canvas.delete("all")
+            draw_map()
+        elif p == 2:
+            if flag_key == True:
+                ending()
+            else:
+                return
         brave_x = x
         brave_y = y
         canvas.coords("brave", brave_x * 62 + 31, brave_y * 62 + 31)
@@ -79,6 +99,8 @@ map_data = [[1, 0, 1, 1, 1, 1, 1, 1, 1, 1],
 # 主人公の位置
 brave_x = 1
 brave_y = 0
+# 鍵取得フラグ
+flag_key = False
 
 draw_map()
 root.mainloop()
