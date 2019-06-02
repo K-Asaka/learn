@@ -11,5 +11,9 @@ canvas.place(x=0, y=0)
 img = tkinter.PhotoImage(file="img3/chap3-back.png")
 canvas.create_image(320, 240, image=img)
 
+# テキスト表示
+question = tkinter.Label(text="知りたいのは何分かな？")
+question.place(x=100, y=40)
+
 # メインループ
 root.mainloop()
