@@ -13,6 +13,9 @@ def draw_map():
 def check_move(x, y):
     global brave_x, brave_y
     if x >= 0 and x < MAX_WIDTH and y >= 0 and y < MAX_HEIGHT:
+        p = map_data[y][x]
+        if p == 1:
+            return
         brave_x = x
         brave_y = y
         canvas.coords("brave", brave_x * 62 + 31, brave_y * 62 + 31)
