@@ -1,4 +1,5 @@
 import tkinter
+import time
 
 # ウィンドウ作成
 root = tkinter.Tk()
@@ -30,6 +31,8 @@ for k in range(len(list) - 1, 0, -1):
             list[j + 1] = temp
         x = start_x
         y = start_y
+        root.update()
+        time.sleep(0.5)
         canvas.delete("graph")
         for i in list:
             canvas.create_rectangle(x, y, x + i * width_px, y + height_px, fill="blue", outline="blue", tag="graph")
