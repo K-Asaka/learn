@@ -12,10 +12,12 @@ img = tkinter.PhotoImage(file="img4/chap4-1-1.png")
 
 # 座標用変数
 x = 100
+y = 180
 
 # 繰り返し処理
-while x < 1600:
-    canvas.create_image(x, 180, image=img)
+while x < 1600 and y < 480:
+    canvas.create_image(x, y, image=img)
     x = x + 200
+    y = y + 50
 
 root.mainloop()
