@@ -30,4 +30,32 @@ entry.place(x=200, y=350)
 button = tkinter.Button(text="決定")
 button.place(x=380, y=350)
 
+# ボタンクリックイベント関数
+def btn_click():
+    val = float(entry.get())
+    if val == 1:
+        res_text = tkinter.Label(text="王様が仲間になりました。")
+        res_text.place(x=200, y=60)
+        canvas.delete("illust")
+        canvas.create_image(320, 220, image=king_img, tag="illust")
+    elif val == 2:
+        res_text = tkinter.Label(text="魔物Aが仲間に鳴りました。")
+        res_text.place(x=200, y=60)
+        canvas.delete("illust")
+        canvas.create_image(320, 220, image=monsterA_img, tag="illust")
+    elif val == 3:
+        res_text = tkinter.Label(text="魔物Bが仲間に鳴りました。")
+        res_text.place(x=200, y=60)
+        canvas.delete("illust")
+        canvas.create_image(320, 220, image=monsterB_img, tag="illust")
+    else:
+        res_text = tkinter.Label(text="誰も仲間になりませんでした。")
+        res_text.place(x=160, y=60)
+        canvas.delete("illust")
+    button["state"] = "disabled"
+    entry["state"] = "disabled"
+
+# ボタンクリックイベントと関数の関連付け
+button["command"] = btn_click
+
 root.mainloop()
