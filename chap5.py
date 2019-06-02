@@ -15,9 +15,11 @@ x = 100
 y = 180
 
 # 繰り返し処理
-while x < 1600 and y < 480:
+while True:
     canvas.create_image(x, y, image=img)
     x = x + 200
     y = y + 50
+    if x >= 1600 or y >= 480:
+        break;
 
 root.mainloop()
