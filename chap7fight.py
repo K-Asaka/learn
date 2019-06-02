@@ -49,9 +49,17 @@ class FightManager:
         self.label["text"] = self.monster.name + "が現れた"
     # 攻撃ボタン
     def click_fight(self):
-        pass
+        self.fbutton["state"] = "disabled"
+        self.rbutton["state"] = "disabled"
+        self.do_turn(self.brave.get_atk())
     # 力をためるボタン
     def click_reserve(self):
+        self.fbutton["state"] = "disabled"
+        self.rbutton["state"] = "disabled"
+        self.brave.reserve()
+        self.do_turn(-1)
+    # 戦闘処理
+    def do_turn(self, brave_atk):
         pass
     # 勝利
     def fight_win(self):
