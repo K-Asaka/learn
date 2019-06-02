@@ -36,9 +36,14 @@ button.place(x=420, y=420)
 def btn_click():
     gold = float(entry.get())
     if gold >= 5000:
-        canvas.delete("illust")
-        canvas.create_image(320, 220, image=img2, tag="illust")
-        serihu_text["text"] = "勇者「よーし、私に任せなさい！」"
+        if gold >= 100000:
+            canvas.delete("illust")
+            canvas.create_image(320, 220, image=img3, tag="illust")
+            serihu_text["text"] = "勇者「そんな大金、よっぽど危険なんだ……。\n関わらないでおこう。」"
+        else:
+            canvas.delete("illust")
+            canvas.create_image(320, 220, image=img2, tag="illust")
+            serihu_text["text"] = "勇者「よーし、私に任せなさい！」"
     else:
         serihu_text["text"] = "志願者は誰も来ませんでした。"
     sys_text.destroy()
