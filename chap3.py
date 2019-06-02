@@ -16,5 +16,13 @@ canvas.create_image(320, 240, image=img)
 question = tkinter.Label(text="知りたいのは何分かな？", bg="white")
 question.place(x=100, y=40)
 
+# テキストボックス表示
+entry = tkinter.Entry(width=12, bd=4)
+entry.place(x=50, y=133)
+
+# 質問ボタン表示
+askbutton = tkinter.Button(text="聞く")
+askbutton.place(x=260, y=125)
+
 # メインループ
 root.mainloop()
