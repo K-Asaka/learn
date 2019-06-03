@@ -39,6 +39,13 @@ def decode_line(event):
             canvas.delete("center")
             ccharimg = tkinter.PhotoImage(file=params[1])
             canvas.create_image(450, 160, image=ccharimg, tag="center")
+    elif params[0] == "#delChar":
+        if params[1] == "L":
+            canvas.delete("left")
+        elif params[1] == "R":
+            canvas.delete("right")
+        else:
+            canvas.delete("center")
     # 再帰呼び出し
     decode_line(None)
 
