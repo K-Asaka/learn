@@ -83,6 +83,12 @@ class FightManager:
         labeltext = labeltext + "\nモンスターの残り体力は" + str(self.monster.hp)
         self.label["text"] = labeltext
         self.dialog.update()
+        if self.monster.hp < 1:
+            time.sleep(2)   # 2秒待ち
+            self.fbutton["state"] = "normal"
+            self.rbutton["state"] = "normal"
+            self.fight_win()
+            return
         # モンスターのターン
         time.sleep(2)   # 2秒待ち
         brave_dfs = self.brave.get_dfs()
@@ -109,6 +115,13 @@ class FightManager:
         labeltext = labeltext + "\n勇者の残り体力は" + str(self.brave.hp)
         self.label["text"] = labeltext
         self.dialog.update()
+        if self.brave.hp < 1:
+            time.sleep(2)   # 2秒待ち
+            self.fight_lose()
+        else:
+            # ボタンを有効化して次のターンへ
+            self.fbutton["state"] = "normal"
+            self.rbutton["state"] = "normal"
     # 勝利
     def fight_win(self):
         self.map_data[self.brave_y][self.brave_x] = 0
