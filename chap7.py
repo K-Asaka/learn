@@ -42,6 +42,7 @@ def check_move(x, y):
         elif p == 2:
             if flag_key == True:
                 ending()
+                return
             else:
                 return
         elif p >= 5:
