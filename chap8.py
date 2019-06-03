@@ -13,4 +13,13 @@ message = tkinter.Label(width=70, height=5, wraplength=840, bg="white", justify=
 message.place(x=28, y=284)
 message["text"] = "あいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえお"
 
+# ファイル読み込み
+file = open("img8/scenario.txt", "r", encoding="utf-8")
+while True:
+    line = file.readline()
+    print(line)
+    if not line:
+        file.close()
+        break
+
 root.mainloop()
