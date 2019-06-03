@@ -1,8 +1,16 @@
 import tkinter
 
+# 現在の行数
+current_line = 0
+# 画像
+bgimg = None
+lcharimg = None
+ccharimg = None
+rcharimg = None
+
 # 解読関数
 def decode_line(event):
-    global current_line, bgimg
+    global current_line, bgimg, lcharimg, ccharimg, rcharimg
     if current_line >= len(scenario):
         return
     # 1行読み込み
@@ -13,10 +21,26 @@ def decode_line(event):
     # 分岐
     if line[0] != "#":
         message["text"] = line
+        return
     elif params[0] == "#back":
         canvas.delete("all")
         bgimg = tkinter.PhotoImage(file=params[1])
         canvas.create_image(450, 230, image=bgimg)
+    elif params[0] == "#putChar":
+        if params[2] == "L":
+            canvas.delete("left")
+            lcharimg = tkinter.PhotoImage(file=params[1])
+            canvas.create_image(700, 160, image=lcharimg, tag="left")
+        elif params[2] == "R":
+            canvas.delete("right")
+            rcharimg = tkinter.PhotoImage(file=params[1])
+            canvas.create_image(200, 160, image=rcharimg, tag="right")
+        else:
+            canvas.delete("center")
+            ccharimg = tkinter.PhotoImage(file=params[1])
+            canvas.create_image(450, 160, image=ccharimg, tag="center")
+    # 再帰呼び出し
+    decode_line(None)
 
 # ウィンドウ作成
 root = tkinter.Tk()
@@ -37,19 +61,11 @@ file = open("img8/scenario.txt", "r", encoding="utf-8")
 while True:
     line = file.readline()
     scenario.append(line)
-    print(line)
     if not line:
         file.close()
         break
 
-# 現在の行数
-current_line = 0
 # イベント設定
 message.bind("<Button-1>", decode_line)
-# 画像
-bgimg = None
-lcharimg = None
-ccharimg = None
-rcharimg = None
 
 root.mainloop()
