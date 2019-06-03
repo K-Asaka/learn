@@ -1,5 +1,9 @@
 import tkinter
 
+# 解読関数
+def decode_line(event):
+    print("クリックされた")
+
 # ウィンドウ作成
 root = tkinter.Tk()
 root.title("よろしくアドベンチャー")
@@ -14,12 +18,19 @@ message.place(x=28, y=284)
 message["text"] = "あいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえお"
 
 # ファイル読み込み
+scenario = []
 file = open("img8/scenario.txt", "r", encoding="utf-8")
 while True:
     line = file.readline()
+    scenario.append(line)
     print(line)
     if not line:
         file.close()
         break
+
+# 現在の行数
+current_line = 0
+# イベント設定
+message.bind("<Button-1>", decode_line)
 
 root.mainloop()
