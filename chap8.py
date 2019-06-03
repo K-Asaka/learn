@@ -2,11 +2,6 @@ import tkinter
 
 # 現在の行数
 current_line = 0
-# 画像
-bgimg = None
-lcharimg = None
-ccharimg = None
-rcharimg = None
 
 # 解読関数
 def decode_line(event):
@@ -46,8 +41,48 @@ def decode_line(event):
             canvas.delete("right")
         else:
             canvas.delete("center")
+    elif params[0] == "#branch":
+        message.unbind("<Button-1>")
+        btn = tkinter.Button(text=params[2], width=20)
+        branch.append(btn)
+        btn["command"] = lambda : jump_to_line(int(params[1]) - 1)
+        btn.place(x=300, y=60+int(params[1])*60)
+        jumplabel.append(params[3])
+        if params[4] == "n":
+            return
+    elif params[0] == "#jump":
+        label = params[1].strip()
+        # ジャンプ先を探す
+        for l in range(len(scenario)):
+            if scenario[l].strip() == "## " + label:
+                current_line = l
+                decode_line(None)
+                return
+    elif params[0].strip() == "#end":
+        message["text"] = "終わり"
+        message.unbind("<Button-1>")
+        current_line = 999999999
+
     # 再帰呼び出し
     decode_line(None)
+
+# ジャンプ関数
+def jump_to_line(branchID):
+    global current_line
+    # ボタンを消す
+    for btn in branch:
+        btn.place_forget()
+        btn.destroy()
+    branch.clear()
+    label = jumplabel[branchID]
+    jumplabel.clear()
+    message.bind("<Button-1>", decode_line)
+    # ジャンプ先を探す
+    for l in range(len(scenario)):
+        if scenario[l].strip() == "## " + label:
+            current_line = l
+            decode_line(None)
+            return
 
 # ウィンドウ作成
 root = tkinter.Tk()
@@ -74,5 +109,13 @@ while True:
 
 # イベント設定
 message.bind("<Button-1>", decode_line)
+# 画像
+bgimg = None
+lcharimg = None
+ccharimg = None
+rcharimg = None
+# 選択肢
+branch = []
+jumplabel = []
 
 root.mainloop()
