@@ -12,7 +12,7 @@ try:
     # 元画像の座標
     pts1 = np.float32([[0, 0], [cols, 0], [0, rows], [cols, rows]])
     # 変換後の座標
-    pts2 = np.float32([[0, 0], [cols, 100], [0, rows], [cols, rows - 100]])
+    pts2 = np.float32([[200, 200], [cols, 100], [0, rows - 100], [cols - 200, rows - 200]])
 
     # 透視変換行列を求める
     M = cv2.getPerspectiveTransform(pts1, pts2)
