@@ -10,7 +10,7 @@ try:
         raise FileNotFoundError('ファイルが見つかりません。')
     
     # 2つの画像の加算
-    add56 = cv2.add(img1, img2)
+    add56 = img1 + img2
     cv2.imshow('sample56', add56)
 
     cv2.waitKey(0)
