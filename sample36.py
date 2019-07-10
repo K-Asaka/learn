@@ -8,7 +8,7 @@ try:
     
     # 顔認証用のXMLファイル
     # 環境に応じてパスを書き換える
-    filename = 'haarcascade_frontalface_default.xml'
+    filename = 'haarcascade_eye.xml'
     cascade = cv2.CascadeClassifier(filename)
     if cascade is None:
         raise FileNotFoundError('ファイルが見つかりません。')
