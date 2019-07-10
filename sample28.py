@@ -22,7 +22,7 @@ try:
     img_mask = cv2.fillConvexPoly(img_mask, rectangle, (255, 255, 255))
 
     # マスクを使って加算
-    add1 = cv2.add(img1, img2, mask=img_mask)
+    add1 = cv2.add(img1, img2, dst=img1, mask=img_mask)
     cv2.imshow('sample01', add1)
 
     cv2.waitKey(0)
