@@ -1,0 +1,8 @@
+from bottle import route, run, request
+
+@route("/")
+def index(q=""):
+    kw = request.query.get("q")
+    return "<h1>Keyword is {name}</h1>".format(name=kw)
+
+run(host="0.0.0.0", port=80)
