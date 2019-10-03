@@ -6,3 +6,8 @@ wsw = wbw['Sheet1']
 for row in wsw.values:
     for value in row:
         print(value)
+
+print("Cellオブジェクトを使って表示")
+for rowobj in wsw:
+    for cellobj in rowobj:
+        print(cellobj.value)
