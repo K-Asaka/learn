@@ -33,3 +33,17 @@ new_wbk.save('new_kaikei.xlsx')
 wsk17_in['B6'] = Translator('=SUM(B4:B7)', 'B8').translate_formula('B6')
 # ファイルを再生成
 new_wbk.save('new_kaikei.xlsx')
+
+good_wbk = px.Workbook()
+wsk_in = good_wbk.create_sheet('収入', 0)
+wsk_in.append(['項目', '2017年度', '2018年度'])
+for row in wsk['A4:B8']:
+    wsk_in.append([row[i].value for i in range(len(row))])
+in18row = 17
+for col in wsk_in.iter_cols(min_row=2, max_row=6, min_col=3, max_col=3):
+    for cell in col:
+        cell.value = wsk['B' + str(in18row)].value
+        in18row += 1
+wsk_in.move_range('C3:C5', rows=1)
+wsk_in['C3'] = 0
+good_wbk.save('good_kaikei.xlsx')
