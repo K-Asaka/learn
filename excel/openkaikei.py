@@ -24,3 +24,7 @@ wsk17_out.append(["項目", "金額"])
 for row in wsk['D4:E11']:
     wsk17_out.append([row[i].value for i in range(len(row))])
 new_wbk.save('new_kaikei.xlsx')
+
+wsk17_in['B6'] = '=SUM(B2:B5)'
+# ファイルを再生成
+new_wbk.save('new_kaikei.xlsx')
