@@ -1,4 +1,5 @@
 import openpyxl as px
+from openpyxl.formula.translate import Translator
 
 wbk = px.load_workbook('kaikei.xlsx', data_only=True)
 wsk = wbk['Sheet1']
@@ -25,6 +26,10 @@ for row in wsk['D4:E11']:
     wsk17_out.append([row[i].value for i in range(len(row))])
 new_wbk.save('new_kaikei.xlsx')
 
-wsk17_in['B6'] = '=SUM(B2:B5)'
+#wsk17_in['B6'] = '=SUM(B2:B5)'
+# ファイルを再生成
+#new_wbk.save('new_kaikei.xlsx')
+
+wsk17_in['B6'] = Translator('=SUM(B4:B7)', 'B8').translate_formula('B6')
 # ファイルを再生成
 new_wbk.save('new_kaikei.xlsx')
