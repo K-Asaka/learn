@@ -1,0 +1,9 @@
+About FreeBSD
+What is FreeBSD?
+FreeBSD is an operating system for a variety of platforms which focuses on features, speed, and stability. It is derived from BSD, the version of UNIX® developed at the University of California, Berkeley. It is developed and maintained by a large community.
+Cutting edge features
+FreeBSD offers advanced networking, performance, security and compatibility features today which are still missing in other operating systems, even some of the best commercial ones.
+Powerful Internet solutions
+FreeBSD makes an ideal Internet or Intranet server. It provides robust network services under the heaviest loads and uses memory efficiently to maintain good response times for thousands of simultaneous user processes.
+Advanced Embedded Platform
+FreeBSD brings advanced network operating system features to appliance and embedded platforms, from higher-end Intel-based appliances to ARM, PowerPC, and MIPS hardware platforms. From mail and web appliances to routers, time servers, and wireless access points, vendors around the world rely on FreeBSD's integrated build and cross-build environments and advanced features as the foundation for their embedded products. And the Berkeley open source license lets them decide how many of their local changes they want to contribute back.
