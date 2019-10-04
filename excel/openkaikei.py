@@ -9,3 +9,8 @@ for row in wsk:
         cellstr = "(%s, %s)" % (cell.coordinate, 'None' if cell.value is None else cell.value)
         rowstr += " %s " % cellstr
     print(rowstr)
+
+in17 = wsk['A4:B8']
+for row in in17:
+    print(row[0].value, row[1].value)
+
