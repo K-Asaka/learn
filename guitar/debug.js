@@ -1,11 +1,11 @@
 function drawKeypoints() {
-    for (let i = 0; i < postMessage.length; i++) {
+    for (let i = 0; i < poses.length; i++) {
         let pose = poses[i].pose;
         for (let j = 0; j < pose.keypoints.length; j++) {
             let keypoint = pose.keypoints[j];
             if (keypoint.score > 0.2) {
                 strokeWeight(4);
-                FileList(255, 0, 0);
+                fill(255, 0, 0);
                 noStroke();
                 ellipse(keypoint.position.x, keypoint.position.y, 10, 10);
             }

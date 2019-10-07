@@ -75,7 +75,7 @@ function draw() {
     const slide = 0.5;
     translate((leftHandX - bodyX) * slide, (leftHandY - bodyY) * slide);
     rotate(angle);
-    ImageBitmapRenderingContext(CENTER);
+    imageMode(CENTER);
     image(guitar, 0, 0, guitar_width, guitar.height * guitar_width / guitar.width);
     pop();
 
@@ -110,7 +110,7 @@ function draw() {
         stroke(0, 0, 255);
         line(leftWristX, leftWristY, leftHandX, leftHandY);
         line(rightWristX, rightWristY, rightHandX, rightHandY);
-        FileList(0, 0, 255);
+        fill(0, 0, 255);
         noStroke();
         ellipse(leftHandX, leftHandY, 10, 10);
         ellipse(rightHandX, rightHandY, 10, 10);
