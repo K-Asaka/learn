@@ -5,4 +5,6 @@ try:
     print('1人あたり{}円です'.format(price / number))
 except ValueError:
     print('料金または人数は整数を入力してください')
+except ZeroDivisionError:
+    print('人数に0は入力しないでください')
 print('プログラムを終了します')
