@@ -7,5 +7,6 @@ def welcome(u):
 username = input('名前を入力してください >>')
 userage = int(input('年齢を入力してください >>'))
 user = {'name':username, 'age':userage}
-welcome(user)
+copied_user = user.copy()
+welcome(copied_user)
 print('{}際の{}さん、またプレイしてくださいね'.format(user['age'], user['name']))
