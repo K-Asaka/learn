@@ -6,7 +6,7 @@ def input_scores(name):
     security = int(input('セキュリティの得点？ >>'))
     scores = [network, database, security]
 
-def cacl_average(scores):
+def calc_average(scores):
     avg = sum(scores) / len(scores)
     print('平均点は{}です'.format(avg))
 
