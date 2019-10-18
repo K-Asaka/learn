@@ -8,3 +8,5 @@ def change_name():
 def hello():
     print('こんにちは' + name + 'さん')
 
+change_name()
+hello()
