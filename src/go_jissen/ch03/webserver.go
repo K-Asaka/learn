@@ -6,7 +6,7 @@ import (
 )
 
 func headers(w http.ResponseWriter, r *http.Request) {
-	h := r.Header
+	h := r.Header["Accept-Encoding"]
 	fmt.Fprintln(w, h)
 }
 
