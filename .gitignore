@@ -2,4 +2,5 @@ bin/
 pkg/
 project-compmgmt/
 src/github.com/
+src/golang.org/
 *.pem
