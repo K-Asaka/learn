@@ -6,6 +6,7 @@ import (
 )
 
 func process(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("X-XSS-Protection", "0")
 	t, _ := template.ParseFiles("src/go_jissen/ch05/tmpl.html")
 	t.Execute(w, template.HTML(r.FormValue("comment")))
 }
