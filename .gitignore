@@ -4,3 +4,5 @@ project-compmgmt/
 src/github.com/
 src/golang.org/
 *.pem
+data1
+data2
