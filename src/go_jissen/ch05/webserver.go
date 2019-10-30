@@ -2,15 +2,13 @@ package main
 
 import (
 	"html/template"
-	"math/rand"
 	"net/http"
-	"time"
 )
 
 func process(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("src/go_jissen/ch05/tmpl.html")
-	rand.Seed(time.Now().Unix())
-	t.Execute(w, rand.Intn(10) > 5)
+	daysOfWeek := []string{"月", "火", "水", "木", "金", "土", "日"}
+	t.Execute(w, daysOfWeek)
 }
 
 func main() {
