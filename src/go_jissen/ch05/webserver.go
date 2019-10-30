@@ -6,19 +6,8 @@ import (
 )
 
 func process(w http.ResponseWriter, r *http.Request) {
-	tmpl := `<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<title>Go Web Programming</title>
-</head>
-<body>
-	{{ . }}
-</body>
-</html>
-`
-	t := template.New("tmpl.html")
-	t, _ = t.Parse(tmpl)
+	t, _ := template.ParseFiles("src/go_jissen/ch05/t1.html", "src/go_jissen/ch05/t2.html")
+	t.Execute(w, "Hello World!")
 }
 
 func main() {
