@@ -3,11 +3,19 @@ package main
 import (
 	"html/template"
 	"net/http"
+	"time"
 )
 
+func formatDate(t time.Time) string {
+	layout := "2006-01-02"
+	return t.Format(layout)
+}
+
 func process(w http.ResponseWriter, r *http.Request) {
-	t, _ := template.ParseFiles("src/go_jissen/ch05/tmpl.html")
-	t.Execute(w, "Hello World!")
+	funcMap := template.FuncMap{"fdate": formatDate}
+	t := template.New("tmpl.html").Funcs(funcMap)
+	t1, _ := t.ParseFiles("src/go_jissen/ch05/tmpl.html")
+	t1.Execute(w, time.Now())
 }
 
 func main() {
