@@ -13,7 +13,7 @@ func process(w http.ResponseWriter, r *http.Request) {
 		t, _ := template.ParseFiles("src/go_jissen/ch05/layout.html", "src/go_jissen/ch05/red_hello.html")
 		t.ExecuteTemplate(w, "layout", "")
 	} else {
-		t, _ := template.ParseFiles("src/go_jissen/ch05/layout.html", "src/go_jissen/ch05/blue_hello.html")
+		t, _ := template.ParseFiles("src/go_jissen/ch05/layout.html")
 		t.ExecuteTemplate(w, "layout", "")
 	}
 }
