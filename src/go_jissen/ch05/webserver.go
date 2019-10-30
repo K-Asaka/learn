@@ -6,8 +6,8 @@ import (
 )
 
 func process(w http.ResponseWriter, r *http.Request) {
-	t, _ := template.ParseFiles("src/go_jissen/ch05/tmpl.html")
-	t.Execute(w, "hello")
+	t, _ := template.ParseFiles("src/go_jissen/ch05/t1.html", "src/go_jissen/ch05/t2.html")
+	t.Execute(w, "Hello World!")
 }
 
 func main() {
