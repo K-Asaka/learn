@@ -5,14 +5,6 @@
     <title>Go Web Programming</title>
 </head>
 <body>
-    <div>ドットの値は{{ . }}です</div>
-    <div>
-        {{ with "" }}
-            ドットは今、{{ . }}に設定されています
-        {{ else }}
-            ドットの値はやはり{{ . }}です
-        {{ end }}
-    </div>
-    <div>ドットの値は{{ . }}に戻りました</div>
+    {{ 12.3456 | printf "%.2f" }}
 </body>
 </html>
