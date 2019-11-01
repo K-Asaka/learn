@@ -46,7 +46,7 @@ func main() {
 	Db.Model(&post).Association("Comments").Append(comment)
 
 	var readPost Post
-	Db.Where("author = $1", "Sau Sheoug").First(&readPost)
+	Db.Where("author = $1", "Sau Sheong").First(&readPost)
 	var comments []Comment
 	Db.Model(&readPost).Related(&comments)
 	fmt.Println(comments[0])
