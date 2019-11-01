@@ -2,46 +2,52 @@ package main
 
 import (
 	"fmt"
+	"time"
 
-	"github.com/jmoiron/sqlx"
+	"github.com/jinzhu/gorm"
 	_ "github.com/lib/pq"
 )
 
-var Db *sqlx.DB
+type Post struct {
+	Id        int
+	Content   string
+	Author    string `sql:"not null"`
+	Comments  []Comment
+	CreatedAt time.Time
+}
+
+type Comment struct {
+	Id        int
+	Content   string
+	Author    string `sql:"not null"`
+	PostId    int
+	CreatedAt time.Time
+}
+
+var Db *gorm.DB
 
 func init() {
 	var err error
-	Db, err = sqlx.Open("postgres", "host=172.16.199.249 user=db dbname=db password=db sslmode=disable")
+	Db, err = gorm.Open("postgres", "host=172.16.199.249 user=db dbname=db password=db sslmode=disable")
 	if err != nil {
 		panic(err)
 	}
-}
-
-func GetPost(id int) (post Post, err error) {
-	post = Post{}
-	err = Db.QueryRowx("select id, content, author from posts where id = $1", id).StructScan(&post)
-	if err != nil {
-		return
-	}
-	return
-}
-
-func (post *Post) Create() (err error) {
-	err = Db.QueryRow("insert into posts (content, author) values($1, $2) returning id", post.Content, post.AuthorName).Scan(&post.Id)
-	return
-}
-
-type Post struct {
-	Id         int
-	Content    string
-	AuthorName string `db:"author"`
+	Db.AutoMigrate(&Post{}, &Comment{})
 }
 
 func main() {
-	post := Post{Content: "Hello World!", AuthorName: "Sau Sheong"}
-	post.Create()
+	post := Post{Content: "Hello World!", Author: "Sau Sheong"}
 	fmt.Println(post)
-	readPost := Post{}
-	readPost, _ = GetPost(post.Id)
-	fmt.Println(readPost)
+
+	Db.Create(&post)
+	fmt.Println(post)
+
+	comment := Comment{Content: "いい投稿だね！", Author: "Joe"}
+	Db.Model(&post).Association("Comments").Append(comment)
+
+	var readPost Post
+	Db.Where("author = $1", "Sau Sheoug").First(&readPost)
+	var comments []Comment
+	Db.Model(&readPost).Related(&comments)
+	fmt.Println(comments[0])
 }
