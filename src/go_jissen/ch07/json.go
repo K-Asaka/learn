@@ -15,13 +15,13 @@ type Post struct {
 
 type Author struct {
 	Id   int    `json:"id"`
-	Name string `jsont:"name"`
+	Name string `json:"name"`
 }
 
 type Comment struct {
 	Id      int    `json:"Id"`
 	Content string `json:"content"`
-	Author  string `json:"authro"`
+	Author  string `json:"author"`
 }
 
 func main() {
