@@ -43,3 +43,9 @@ func TestParallel_3(t *testing.T) {
 	t.Parallel()
 	time.Sleep(3 * time.Second)
 }
+
+func BenchmarkDecode(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		decode("post.json")
+	}
+}
