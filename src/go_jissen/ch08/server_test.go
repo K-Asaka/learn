@@ -44,3 +44,15 @@ func (s *PostTestSuite) TestPutPost(c *C) {
 	c.Check(s.post.Id, Equals, 1)
 	c.Check(s.post.Content, Equals, "Updated post")
 }
+
+func (s *PostTestSuite) TearDownTest(c *C) {
+	c.Log("Finished test - ", c.TestName())
+}
+
+func (s *PostTestSuite) SetUpSuite(c *C) {
+	c.Log("Starting Post Test Suite")
+}
+
+func (s *PostTestSuite) TearDownSuite(c *C) {
+	c.Log("Finishing Post Test Suite")
+}
