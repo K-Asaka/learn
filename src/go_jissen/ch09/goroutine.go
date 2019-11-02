@@ -43,10 +43,10 @@ func printLetters2(w chan bool) {
 	w <- true
 }
 
-func main() {
-	w1, w2 := make(chan bool), make(chan bool)
-	go printNumbers2(w1)
-	go printLetters2(w2)
-	<-w1
-	<-w2
-}
+// func main() {
+// 	w1, w2 := make(chan bool), make(chan bool)
+// 	go printNumbers2(w1)
+// 	go printLetters2(w2)
+// 	<-w1
+// 	<-w2
+// }
