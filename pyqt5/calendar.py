@@ -4,6 +4,7 @@ from PyQt5.QtCore import QDate
 def myfunc():
     dt = calendar.selectedDate()
     print(dt.toPyDate())
+    calendar.close()
 
 # カレンダー作成
 app = QApplication.instance()
