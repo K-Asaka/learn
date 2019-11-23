@@ -3,7 +3,7 @@ from PyQt5.QtCore import QDate
 
 def myfunc():
     dt = calendar.selectedDate()
-    print(dt)
+    print(dt.toPyDate())
 
 # カレンダー作成
 app = QApplication.instance()
