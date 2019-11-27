@@ -1,3 +1,4 @@
+from matplotlib import pyplot as plt
 import random
 
 class Agent:
@@ -14,12 +15,17 @@ def giving_money(agents):
         agent1.wealth -= 1
 
 
-n = 10      # エージェント数(人数)
-time = 5    # 取引回数
+n = 30      # エージェント数(人数)
+time = 100    # 取引回数
 
 agents = [Agent(i, 1) for i in range(n)]
+histories = [[1] * n]       # 資産履歴の初期値
 
 for i in range(time):
     giving_money(agents)
+    histories.append([agent.wealth + 0.1 * random.random() for agent in agents])
 
 print([agent.wealth for agent in agents])
+plt.figure(figsize=(10, 5), dpi=150)
+plt.plot(histories)
+plt.show()
