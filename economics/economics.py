@@ -26,6 +26,16 @@ def gini(y):
     
     return ((2 * nume)/deno - (n + 1)/(n)) * (n / (n - 1))
 
+def making_value(agents):
+    agent1 = random.choice(agents)
+    agent2 = random.choice(agents)
+
+    a = random.random()     # 0から1の乱数を生成
+
+    if agent1.wealth >= 1:
+        agent2.wealth = agent2.wealth + 1 + a
+        agent1.wealth = agent1.wealth - 1 + a
+
 
 n = 300      # エージェント数(人数)
 time = 1000    # 取引回数
@@ -33,12 +43,10 @@ time = 1000    # 取引回数
 agents = [Agent(i, 1) for i in range(n)]
 
 for i in range(time):
-    if i % 200 == 0 or i == time - 1:
-        agent_wealth = [a.wealth for a in agents]
-        G = gini(agent_wealth)
-        print("G = " + str(G) + ", time = " + str(i))
-        plt.hist(agent_wealth, bins=50)
-        plt.show()
-    giving_money(agents)
+    making_value(agents)
 
-print([agent.wealth for agent in agents])
+agent_wealth = [a.wealth for a in agents]
+G = gini(agent_wealth)
+print("G = " + str(G))
+plt.hist(agent_wealth, bins=50)
+plt.show()
