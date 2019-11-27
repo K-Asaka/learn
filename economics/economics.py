@@ -26,6 +26,12 @@ for i in range(time):
     histories.append([agent.wealth + 0.1 * random.random() for agent in agents])
 
 print([agent.wealth for agent in agents])
+
 plt.figure(figsize=(10, 5), dpi=150)
 plt.plot(histories)
+plt.show()
+
+# ヒストグラムで表示
+agent_wealth = [a.wealth for a in agents]
+plt.hist(agent_wealth, bins=50)
 plt.show()
