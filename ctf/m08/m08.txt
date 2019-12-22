@@ -1,0 +1,290 @@
+What do you type?
+
+パケットキャプチャの結果を記録したpcapファイルは、TCP/IPのプロトコルに則った通信パケットを記録される目的で使用されることがほとんど。そのようなファイルが問題として出題されている場合、pcapファイルを見ると多くの人がネットワークのトラフィックが記録されていると思うことだろう。
+しかし、いざこのようなpcapファイルを開いてみると、TCP/IPプロトコルではないパケットが記録されていることがある。USBプロトコルやBluetoothプロトコルを使った通信が記録されたパケットだ。
+代表的なプロトコルアナライザであるWiresharkは、これらのパケットにも対応しており解析は可能。ただし、各デバイスとPC間でどのようなデータが転送されているかまではWiresharkでは解析できないため、どのようなフォーマットでデータが転送されているか調べる必要がある。
+ここでは、USBプロトコルが記録されたpcapファイルが与えられた問題とその解き方を紹介する。
+
+
+問題
+Find the flag!!
+※FLAGの文字列フォーマットはflag{}。
+https://book.mynavi.jp/files/user/support/9784839962135/mondai8.zip
+
+
+ZIPファイルを展開して得られる「problem.pcap」の拡張子からpcapファイルであると思われる。
+Wiresharkを使ってファイルの中身を見てみる。
+
+Wiresharkは、一般的にはネットワークに流れているTCP/IPのパケットの内容を見るために使われることが多いが、今回のProtocolの部分を見るとUSBやUSBHIDとなっている。
+USB(Universal Serial Bus)は世の中で広く使われれているが、多くの人はどのようにUSBからコンピュータにデータが転送されているかまでは知らないだろう。しかし、USBのデータ転送も通常のネットワークプロトコルと同様にプロトコルが決まっている。
+このような問題の場合、Flagとなる文字列が隠されているのは多くの場合USBのプロトコルによって運ばれているデータの中。データの中を調べるには、次のことを明らかにする必要がある。
+
+・USB周辺機器の種類(キーボード、マウス、USBメモリなど)
+・その周辺機器はどのようなプロトコル、フォーマットでデータ転送をしているか
+
+これを明らかにするために、まずはUSBパケットのキャプチャ方法から見ていく。
+
+
+USBパケットのキャプチャ方法を知る
+USBで転送されているデータをキャプチャし、今回の問題のようにpcapファイルとして保存する方法には、以下の2通りの方法が考えられる。
+
+1.Linux 2.6.11、Wireshark 1.2.0、libpcap 1.0.0以降の環境でLinuxのkernel moduleであるusbmonを有効にし、tcpdumpやWiresharkから使用してキャプチャする
+2.Windows XP以降の環境にUSBpcapをインストールし、USBpcapのコマンドラインツールやWiresharkを使用してキャプチャする
+
+
+上記の2つの方法は異なるライブラリを使っており、キャプチャのしくみも異なるため互換性がなく、キャプチャした時のパケットヘッダ(WiresharkのPacket DetailsでUSB URBと表示された項目)のフォーマットが異なる。そのため、どのような方法でキャプチャしているのかを把握することは重要。
+2つのうちどちらの方法でキャプチャしたかは、Wiresharkを使えば判別することは難しくない。
+Wiresharkで、問題ファイルの先頭に記録されているパケットのFrameを見てみる。
+
+Encapsulation typeを見ると、USB packets with USBPcap headerと表示されている。
+この結果から、このパケットはUSBpcapを用いてキャプチャされたことがわかる。
+
+
+USBパケットヘッダのフォーマットを知る
+USBパケットヘッダのフォーマットは、1の方法であればlibpcap、2の方法であればUSBpcapのソースコード内で定義されている構造体が使用される。
+構造体は、libpcapではpcap/usb.hで、USBpcapではUSBPcapDriver/USBPcapBUffer.hでそれぞれ定義されている。
+
+
+usb.h(抜粋)
+typedef struct _usb_header {
+	u_int64_t id;
+	u_int8_t event_type;
+	u_int8_t transfer_type;
+	u_int8_t endpoint_number;
+	u_int8_t device_address;
+	u_int16_t bus_id;
+	char setup_flag;
+	char data_flag;
+	int64_t ts_sec;
+	int32_t ts_usec;
+	int32_t status;
+	u_int32_t urb_len;
+	u_int32_t data_len;
+	pcap_usb_setup setup;
+} pcap_usb_header;
+
+
+USBPcapBuffer.h(抜粋)
+typedef struct
+{
+	USHORT		headerLen;	/* This header length */
+	UINT64		irpId;		/* I/O Request packet ID */
+	USBD_STATUS 	status;		/* USB status code (on return from host controller) */
+	USHORT		function; 	/* URB Function */
+	UCHAR 		info;		/* I/O Request info */
+
+	USHORT		bus;		/* bus (RootHub) number */
+	USHORT		device;		/* device address */
+	UCHAR		endpoint;	/* endpoint number and transfer direction */
+	UCHAR		transfer;	/* transfer type */
+	UINT32		dataLength;	/* Data length */
+} USBPCAP_BUFFER_PACKET_HEADER, *PUSBPCAP_BUFFER_PACKET_HEADER;
+
+https://github.com/the-tcpdump-group/libpcap/blob/master/pcap/usb.h
+https://github.com/desowin/usbpcap/blob/master/USBPcapDriver/USBPcapURB.c
+
+
+それぞれのコードを見比べるとわかるように、定義されている構造体は全く異なる。
+今回の問題はUSBpcapでキャプチャしたもの。
+これを確認するべく、WiresharkのPacket Detailsで各パケットのヘッダ(USB URBの部分)を見てみる。
+
+構造体のメンバ名とWiresharkのフィールド名の表記は異なるものの、同様のフォーマットでパケットを分析してくれている。
+
+
+USBパケットヘッダを解析する
+USBパケットヘッダのフォーマットを知ったところで、Wiresharkを使って記録されているUSBパケットヘッダの各フィールド値を見ていく。
+すべてが重要というわけではないため、一部のフィールドに着目する。
+
+
+1.URB bus id, Device address, endpoint
+URB bus id、Device addressは、USBデバイスのアドレス情報で、ホスト(USBを接続しているPCなど)がどの機器とデータをやりとりしているかを識別できる。
+例のパケットは、URB bus idが1、Device addressが4。これが一致するパケットはすべて同じデバイスとの通信になる。
+また、endpointはUSBデバイス内に設けられたバッファ(エンドポイント)の情報。USBデバイスとホストは物理的には1つの線で接続されているが、論理的にはUSBデバイスに設けられたエンドポイントとホストに設けられたバッファの間で通信経路(パイプ)を複数作成して基本的には片方向の通信を行う。
+endpointのフィールドは、エンドポイントの番号とホストから見たデータの転送方向を表している。例のパケットの場合は、Endpoint:0、Direction: OUTとなっているため、ホストからUSB機器の番号0のエンドポイントに向けてデータを送信していることになる。
+
+これらの情報はWiresharkのPacket ListのSourceやDestinationの列に表示される情報に反映される。この列に表示されているhostは、USB機器が接続されているホストのことを示しているため、ここに表示されている情報により、どのUSB機器がホストと通信し、どの方向へデータ転送されているか識別可能。
+
+
+2.URB transfer type
+このフィールドは、ホストとUSBデバイスで使われている転送の方式を示す。
+フィールドの値には次のような種類、特徴がある。
+
+1.URB_ISOCHRONOUS (0x00)
+・Isochronous転送が使われている
+・一定時間内に一定の量のデータが転送されることが保証されるが、データの正確性は保証しない転送方式
+・スピーカーやマイク、ビデオなど音や動画などをリアルタイムに扱う機器が使う
+
+2.URB_INTERRUPT (0x01)
+・Interrupt転送が使われている
+・一定間隔でデータをホスト側からUSB機器側へポーリングし、データ転送を行う方式
+・キーボードやマウスなど少量のデータを一定間隔で効率よく転送する機器が使う
+
+3.URB_CONTROL (0x02)
+・Control転送が使われている
+・USB機器を制御するために必要な情報を交換するために使用される方式
+・この方式のみ双方向通信可能なパイプが作成され、エンドポイント番号は0が使われる
+・この転送方式は、すべてのUSB機器でサポートされる必要がある
+
+4.URB_BULK (0x03)
+・Bulk転送が使われている
+・時間的な制約がなく、正確に大量のデータを転送可能な方式
+・USBメモリやプリンタなどの機器でデータを転送するのに使われる
+
+
+上記のように各転送方式にはそれぞれ特徴があり、USB機器により使われる転送方式はある程度決まってくる。このフィールドを見ることで、ある程度どのようなUSB機器のパケットであるか推測できる。
+今回記録されているパケットのURB transfer type部分を見ると、前半はURB_CONTROLとなっており、後半はURB_INTERRUPTとなっているため、キーボードやマウスのUSBパケットであることが推測できる。あくまで推測であるため、正確に機器の種類を特定するためには、Control転送で送受信されている制御用のデータを確認する必要がある。
+
+
+転送されたデータを解析する
+Control転送でホストとUSB機器間で送受信されているDescriptorの内容を紐解き、使用されているUSB機器の種類、およびURB_INTERRUPTが使われているパケットで転送されているデータが、どのようなフォーマットであるか明確にしていく。
+Descriptorは、USB機器がどのような機器か知るための情報。USB機器が接続されるホストは、USB機器が接続されたタイミングでDescriptorを機器に対して問い合わせる。
+問題ファイルに記録されているパケットの中では1〜19番目のパケットがこれに該当し、具体的には以下のようなDescriptorの転送が行われている。
+
+DEVICE Descriptor (2パケット目)
+・USB機器をホストに接続した際に、ホストが最初に問い合わせる
+・Vendor idやProduct idなど、機器の基本的な情報を入手可能
+・今回の場合、Vendor idはTopre Corporation、Product idはHHKB Professionalであることを示している
+
+CONFIGURATION Descriptor (5,8パケット目)
+・機器の設定情報を取得するために使用
+・最初に9byte分のDescriptorを読み込み、そこに含まれるTotalLengthの値の分のDescriptorの問い合わせを行う(CONFIGURATION Descriptorの問合せが2回発生)
+・2回目で読み込んだDescriptorにはINTERFACE Descriptor、HID Descriptor、ENDPOINT Descriptorが同時に転送されている
+
+INTERFACE Descriptor (8パケット目)
+・使用されるInterfaceの情報が記録されている
+・今回の場合、機器では、USB HID(Human Interface Device)クラスの中のKeyboardが使われていることを示している
+
+HID Descriptor (8パケット目)
+・HID Descriptorの後に転送されるHID Reportのサイズなどの情報が含まれる
+
+ENDPOINT Descriptor (8パケット目)
+・データ転送時に使用するendpoint、方向、方式、最大データ量、間隔の情報が含まれる
+・今回の場合、番号1のendpointを使用して、Interrupt転送でIN(USB端末->ホスト)方向に最大8バイトのデータを転送、10ms間隔でポーリングが行われることを示している
+
+
+以上の情報をまとめると、この問題ファイルに記録されているUSBパケットは次のようなものであることがわかる。
+
+・HHKB Professionalというキーボードの入力時のパケット
+・転送されるデータは最大8バイト
+・USB HIDクラスを使用
+
+
+USB HIDクラスでは、Reportという単位でデータを転送される。今回の場合、URB_INTERRUPTのパケットで転送されているデータがこれに該当する。
+このレポート形式を決めるのが、HID Descriptorの後に転送されるHID Report Descriptor。今回の場合は、15番目のパケットに含まれている。
+
+
+HID Report DescriptorはUSBで転送されるデータのフォーマットを決めているため、この中身を紐解ければ今回転送されたデータのフォーマットがわかる。
+このHID Report Descriptorについては、usb.orgで公開されているUSB仕様書の中のDevice Class Definition for Human Interface Devices (HID)に記載されている。
+
+これに従いReport Descriptorを構文解析すると、入力に関連するReportは次のようなフォーマットとなる。
+
+
+Input Report
+1 R-GUI  R-Alt  R-Shift R-Ctrl L-GUI  L-Alt  L-Shift L-Ctrl  bit
+  (0xe7) (0xe6) (0xe5)  (0xe4) (0xe3) (0xe2) (0xe1)  (0xe0)
+2                       0x00(constant)
+3               Key1(Usage ID: 0x00 - 0xff)
+4               Key2(Usage ID: 0x00 - 0xff)
+5               Key3(Usage ID: 0x00 - 0xff)
+6               Key4(Usage ID: 0x00 - 0xff)
+7               Key5(Usage ID: 0x00 - 0xff)
+8               Key6(Usage ID: 0x00 - 0xff)
+byte
+
+1行で1byte分のデータを表している。
+8bytesのデータが一度に送信される。
+まず、1byte目のデータは、特定のキーが押されている場合に値が変化する。
+特定のキーとは、キーボードの「左右Ctrlキー」、「左右Shiftキー」、「左右Altキー」、「左右GUIキー(Windowsの場合、Windowsキー)」。1つの列で1bitを表しており、特定のキーが押されている場合には値が1、押されていない場合には0となる。
+例えば左Shiftキーが押された状態であれば、左シフトキーに対応しているbitは1bit目なので、1byte目のデータは2進数で00000010、16進数で0x02となる。
+
+次に2byte目のデータは、常に一定で16進数で表すと、0x00となる。
+最後に、3〜8byte目のデータはキーボードで押されたキーの情報。なお、複数バイト使用してキー情報が送信できるようになっているのは、同時にキーを押した場合に対応できるようにするため。
+ここでデータとして転送されるのは、KeyboardのUsage IDと呼ばれる値。
+Usage IDとキーボードの各キーとの対応は、usb.orgで公開されているUSB仕様書の中のHID Usage Tablesで定義されている。
+
+http://www.usb.org/developers/hidpage/Hut1_12v2.pdf
+
+したがって、この対応表を使うことでどのようなキーを打ったかということがわかる。ちなみに、この表は英字配列キーボードの場合であり、キーボードによっては正しい対応ではない。
+しかし、今回使用されたHHKB Professionalは、英字配列のため問題なく使える。
+これで転送データのフォーマットがわかった。これをもとに、問題ファイルの後半部分にあるURB_INTERRUPTのデータを解析していく。
+
+試しにパケットに含まれるデータ02 00 0b 00 00 00 00 00 を解析してみる。
+1byte目は02であるので左のShiftキーが押されており、3byte目は0bとなっているので、Hという文字が入力されたことがわかる。
+
+これで転送されたデータの法則性が明らかになり、キーボードで入力された文字がわかるようになる。データを1つずつ解析していけば、どのようなメッセージが入力されたか調べることができる。人出で調べていくのは骨が折れる作業なので、プログラムを書いて自動でデータを解析する。
+
+ここまで明らかにしてきたUSBプロトコルのフォーマットや、Pythonでpcapを扱うことが可能なライブラリScapyを用いて、以下のような解析用コードを作成する。
+
+[solver.py]
+#! /usr/bin/env python
+#! -*- coding: utf-8 -*-
+
+from scapy.all import *
+
+keymap = { 0x04: ('a', 'A'), 0x05: ('b', 'B'), 0x06: ('c', 'C'),
+	   0x07: ('d', 'D'), 0x08: ('e', 'E'), 0x09: ('f', 'F'),
+	   0x0a: ('g', 'G'), 0x0b: ('h', 'H'), 0x0c: ('i', 'I'),
+	   0x0d: ('j', 'J'), 0x0e: ('k', 'K'), 0x0f: ('l', 'L'),
+	   0x10: ('m', 'M'), 0x11: ('n', 'N'), 0x12: ('o', 'O'),
+	   0x13: ('p', 'P'), 0x14: ('q', 'Q'), 0x15: ('r', 'R'),
+	   0x16: ('s', 'S'), 0x17: ('t', 'T'), 0x18: ('u', 'U'),
+	   0x19: ('v', 'V'), 0x1a: ('w', 'W'), 0x1b: ('x', 'X'),
+	   0x1c: ('y', 'Y'), 0x1d: ('z', 'Z'), 0x1e: ('1', '!'),
+	   0x1f: ('2', '@'), 0x20: ('3', '#'), 0x21: ('4', '$'),
+	   0x22: ('5', '%'), 0x23: ('6', '^'), 0x24: ('7', '&'),
+	   0x25: ('8', '*'), 0x26: ('9', '('), 0x27: ('0', ')'),
+	   0x28: ('\x0a', '\x0a'), 0x29: ('\x1b', '\x1b'),
+	   0x2a: ('\x08', '\x08'), 0x2b: ('\x09', '\x09'),
+	   0x2c: ('\x20', '\x20'), 0x2d: ('-', '_'),
+	   0x2e: ('=', '+'), 0x2f: ('[', '{'), 0x30: (']', '}'),
+	   0x31: ('\\', '|'), 0x33: (';', ':'), 0x34: ("\'", '\"'),
+	   0x35: ('`', '~'), 0x36: (',', '<'), 0x37: ('.', '>'),
+	   0x38: ('/', '?') }
+
+def read_usbdata_from_pcap():
+	pcap = rdpcap("problem.pcap")
+	usb_data = []
+	for pkt in pcap:
+		buf = pkt['Raw'].load
+		if buf[22] == '\x01':
+			usb_data.append(buf[27:])
+	return usb_data
+
+def analyze_usb_data(usb_data):
+	flag = ""
+	for d in usb_data:
+		if d[2] == '\x00' or not('\x00' in d[3:8]):
+			# No Event
+			continue
+		if d[0] == '\x02' or d[0] == '\x20':
+			# press shift-key
+			# binary -> int
+			c = keymap[ord(d[2])][1]
+			flag += c
+		else:
+			# Not press shift-key
+			# binary -> int
+			c = keymap[ord(d[2])][0]
+			flag += c
+	print flag
+
+def main():
+	data = read_usbdata_from_pcap()
+	analyze_usb_data(data)
+
+if __name__ == '__main__':
+	main()
+
+solver.pyは、read_usbdata_from_pcap()とanalyze_usb_data(usb_data)の2つの部分に大きく分かれている。
+read_usbdata_from_pcap()では、pcapファイルからUSBでInterrupt転送しているデータを抽出する。scapyのrdpcap()を使用したとき、通常のTCP/IPパケットであれば正しくparseされて、パケットに含まれる各フィールドを取得できる。
+しかし、USBのパケットはparseができないため、次のように正しくparseされない。そこで、まずread_usbdata_from_pcap()では、pkt['Raw'].loadとすることで、生のUSBパケットデータを変数bufに保存する。
+データを保存したら、そのデータの中からInterrupt転送であるかを判別している場所を探す。この判別している部分は、URB transufer typeであることがわかっており、このフィールドの位置は基本的に変わらないため、Wiresharkでデータの先頭から何バイト目であるかを数える。
+数えると、22byte目にあることがわかるので、22byte目が0x01のパケットを抽出する。そして、USBヘッダ部分を除いた27byte目以降の部分を抽出することで、USBのデータ部のみ抽出できる。
+
+analyze_usb_data(usb_data)では、抽出したデータリストを渡すと解析して入力した文字を表示する。まず、Usage IDとUsage Nameを対応づける辞書を定義しておく。
+そして、キーが1つ押された場合のみ変換を行うために、2byte目が0x00出ない場合と3〜8byte目が0x00ではない場合を排除し、0byte目でshiftキーが押されている場合とそうでない場合で出力する文字を変更している。
+
+
+Hello Bob. Let you know your password. Your password is "flag{Alic3_is_cut3!!}"
+
+

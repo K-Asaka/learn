@@ -1,0 +1,238 @@
+▫️情報収集
+
+●ファイルの種類を確認
+file ./SelfReference
+
+次のことが確認できる
+・主にLinuxやBSDベースのOSで用いられる実行ファイル形式である
+・アーキテクチャはi386である
+・実行ファイル内のシンボル情報は削除されている
+
+●ファイルに含まれる表示可能な文字
+strings ./SelfReference
+
+●ファイルの実行
+64bit上で確認するには、lib32z1パケージをインストールする必要がある。
+chmod u+x ./SelfReference
+
+次のことがわかる。
+・フラグの形式は{...}である
+・フラグは何かしらの方法で暗号化されている
+・暗号化されたフラグは7d 56 18 43 15 67 0f 0a 1c 28 3b 76 05 30 00 50 54 0c 59 09 1f 7d 0d 3a 02 7a 08 7e 01 40 57 60 11 3e 05 2d 05 0f 00 00 06 55 30である
+・暗号化されたフラグは16進数で表示されている
+・問題ファイルには復号を行う関数が実装されていない
+
+また、問題ファイルは次のように実行できることがわかった。
+./SelfReference -encrypt <str>
+
+問題ファイルを実行して、表示される文字列からヒントを得られないか調べる。
+./SelfReference -encrypt abcd
+
+次のことがわかる。
+・-encryptという文字列を第1引数に指定して問題ファイルを実行すると第2引数に指定した文字列が暗号化される
+・abcdを暗号化すると03 13 28 3eとなる
+・暗号化された文字列は16進数で表示される
+
+
+▫️解析
+radare2を用いて解析を行う。
+インストール
+/etc/apt/sources.listに以下を追記
+deb http://ftp.jp.debian.org/debian testing main contrib non-free
+deb-src http://ftp.jp.debian.org/debian testing main contrib non-free
+
+sudo apt update
+NO_PUBKEYのエラーが出たら
+
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys NO_PUBKEYの後ろのキー
+
+でキーを追加する。
+sudo apt update
+でエラーが出なくなればインストールできる。
+sudo apt install -y radare2
+
+
+●radare2の実行
+問題ファイルを逆アセンブルする。
+radare2 ./SelfReference
+
+インタラクティブシェルが起動する。
+aaコマンドとaacコマンドを使って解析する。
+解析して得られた関数の一覧を表示する。aflコマンドを使う。
+逆アセンブルした結果を表示するために、pdfコマンドを使う。
+main関数を逆アセンブルした結果を表示する。
+pdf @ main
+
+
+※radare2が起動しているターミナルとは別のターミナルで実行する
+▫️暗号化を行う関数の特定
+radare2を使って解析する前に、暗号化関数がどこに位置しているのかを特定する。
+問題ファイルが呼び出している共通ライブラリの関数をトレースして、おおよその位置を特定する。
+共通ライブラリの関数をトレースするには、ltraceコマンドを使う。
+暗号化を行う関数が実行される時の関数呼び出しをトレースするため、問題ファイルの第1引数に-encryptを指定して問題ファイルを実行する。
+
+ltrace ./SelfReference -encrypt abcd
+
+問題ファイルの第1引数に指定した文字列と-encryptをstrcmp関数で比較して、一致していた場合の経路に位置していることがわかる。
+次に、問題ファイルの第1引数に指定した文字列と-encryptをstrcmp関数で比較している箇所を逆アセンブルした結果から探して、位置を絞り込むが時間がかかるため、-encryptという文字列が問題ファイルのどこのアドレスに位置するのかを調べることで探す。
+
+rabin2 -z ./SelfReference
+
+結果から、-encryptは0x08048d03であることがわかる。
+
+
+※radare2のターミナルで操作する
+radare2に戻り、0x08048d03を参照しているアドレスを調べる。
+指定したアドレスを参照しているアドレスを調べるには、axtコマンドを使う。
+axt 0x08048d03
+0x08048d03を参照しているアドレスは、0x804880aであることがわかる。
+
+sコマンドで指定のアドレスへ移動し、pdコマンドで現在位置のアドレスから逆アセンブルした結果を表示する。
+
+s 0x804880a
+pd
+
+この結果から、問題ファイルの第1引数に指定した文字列と-encryptをstrcmp関数で比較している箇所のアドレスは、0x08048810であることがわかる。
+0x08048810で比較し、一致していた場合の経路で、かつ、問題ファイルが正常終了する経路では次の2つの関数が実行されることがわかる。
+
+fcn.080486eb
+fcn.08048be1
+
+
+●fcn.080486ebの解析
+radare2を用いて解析する。
+fcn.080486ebが実行されるときの引数を確認する。fcn.080486ebの引数となるのは直前にpushされている次の2つの値。
+
+・第2引数：eaxレジスタの格納されている値→問題ファイルを実行した時の第0引数の値(問題ファイル自身のファイルパス)
+・第1引数：local_40hが示すアドレスに格納されている値→calloc関数で確保した1024バイトの領域のアドレス
+
+次に、fcn.080486ebの内部を解析する
+
+s fcn.080486eb
+pdf
+
+この結果から、次のような順序で実行されることがわかる。
+1.[0x080486fc]：fopen関数を用いて問題ファイル自身をバイナリ読み取りモードで開く
+2.[0x08048721]：fseek関数を用いてファイルポインタを最後尾から0xfffffc00バイトの位置に移動する
+3.[0x08048749]：fgets関数を用いて現在のファイルポインタの位置から1024バイト取得して、calloc関数で確保した1024バイトの領域に格納する
+
+これをCで表すと次のようになる。
+
+#include <stdio.h>
+
+int fcn_080486eb(char *ebp_8, char *ebp_c {
+	int local_14h;
+	FILE *local_10h;
+	char *local_ch;
+
+	local_14h = 1;
+	if ((local_10h = fopen(ebp_c, "rb")) == 0) {
+		local_14h = 0;
+	}
+	if ((fseek(local_10h, 0xfffffc00, 2)) != 0) {
+		local_14h = 0;
+	}
+	local_ch = fgets(ebp_8, 0x400, local_10h);
+	return local_14h;
+}
+
+●fcn.08048be1の解析
+fcn.08048be1の引数は直前にpushされている次の3つの値。
+
+・第3引数：local_40hが示すアドレスに格納されている値→calloc関数で確保した1024バイトの領域のアドレス(fcn.080486ebで格納された値)
+・第2引数：local_4hが示すアドレスに格納されている値→calloc関数で確保した128バイトの領域のアドレス(問題ファイルを実行したときに指定した第2引数の文字列)
+・第1引数：local_48hが示すアドレスに格納されている値→calloc関数で確保した256バイトの領域のアドレス
+
+次に、fcn.08048be1の内部を解析する
+s fcn.08048be1
+pdf
+
+1.[0x08048bee]：strlen関数を用いて問題ファイルを実行したときに指定した第2引数の文字列の長さを取得する
+2.[0x08048bf6]：0x08048beeで取得した値をlocal_10hに格納する
+3.[0x08048c00]：0x08048beeで取得した値を引数にしてsrand関数を用いて擬似乱数の発生系列を変更する
+4.[0x08048c08]：local_14hに0を格納する
+5.[0x08048c5b]：local_14hの値がlocal_10hより小さい場合、0x8048c11に移動する
+6.[0x08048c11]：rand関数を用いて擬似乱数を生成する
+7.[0x08048c1a]：0x08048c11で取得した値を0x1f右算術シフトする
+8.[0x08048c1d]：0x08048c1aで得られた値を0x16右論理シフトする
+9.[0x08048c20]：0x08048c11で取得した値に0x08048c1dで得られた値を加算する
+10.[0x08048c22]：0x08048c20で得られた値と0x3ffの論理積をとる
+11.[0x08048c28]：0x08048c22で得られた値から0x08048c1dで得られた値を減算する
+12.[0x08048c2c]：0x08048c28で得られた値をlocal_chに格納する
+13.[0x08048c2f〜0x08048c4f]：
+	calloc関数で確保した256バイトの領域のアドレス + local_14hのアドレスに
+	問題ファイルを実行した時に指定した第2引数の文字列のlocal_14h番目の値と
+	fcn.080486ebで格納された値のlocal_ch番目の値の排他的論理をとった値を格納する
+14.[0x08048c51]：local_14hに1を加算する
+・これらの処理を繰り返し条件から外れるまで繰り返す。
+C言語では次のように表せる。
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+void fcn_08048be1(char *arg_8h, char *arg_c, char *art_10h) {
+	int local_10h;
+	int local_14h;
+
+	int eax;
+	int edx;
+
+	local_10h = strlen(arg_ch);
+	srand(local_10h);
+
+	for (local_14h = 0; local_14h < local_10h; local_14h++) {
+		eax = rand();
+		edx = eax;
+		eax = eax / 31;
+		eax = eax >> 22;
+		edx = edx + eax;
+		edx = edx & 1023;
+		edx = edx - eax;
+
+		arg_8h[local_14h] = arg_ch[local_14h] ^ arg_10h[edx];
+	}
+}
+fcn.08048be1では問題ファイル実行時の第2引数に指定した文字列を加工しているため、この関数が暗号化関数であることがわかる。
+
+▫️フラグの入手
+●復号を行う関数の再現
+復号を行う関数を再現する前に暗号化を行う関数について整理する。
+前の解析結果より、暗号化された文字列は問題ファイルを実行した時に指定した第2引数の文字列のlocal_14h番目の値とfcn.080486ebで格納された値のlocal_ch番目の値の排他的論理和をとった値であることがわかった。
+排他的論理和をとった値は再度同じ値と排他的論理和をとることで元に戻るため、問題ファイルを実行したときに指定した第2引数の文字列が暗号化される前のフラグだったときのfcn.080486ebで格納された値のlocal_ch番目の値と暗号化されたフラグの排他的論理和をとることでフラグを入手することができる。
+また、local_chの値はrand関数を用いて生成した擬似乱数を加工した値であるため、実行ごとに異なる値になるように思えるが、擬似乱数の生成系列を問題ファイルを実行したときに指定した第2引数の文字列の長さを用いて変更しているため、実行ごとに必ず同じ値になる。
+C言語を用いて復号関数を行う関数を再現する。
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char *argv[]) {
+	char arg_ch[] = { 0x7d, 0x56, 0x18, 0x43, 0x15, 0x67, 0x0f,
+0x0a, 0x1c, 0x28, 0x3b, 0x76, 0x05, 0x30, 0x00, 0x50, 0x54, 0x0c,
+0x59, 0x09, 0x1f, 0x7d, 0x0d, 0x3a, 0x02, 0x7a, 0x08, 0x7e, 0x01,
+0x40, 0x57, 0x60, 0x11, 0x3e, 0x05, 0x2d, 0x05, 0x0f, 0x00, 0x00,
+0x06, 0x55, 0x30 };	// 暗号化されたフラグ
+	char arg_8h[256] = {};
+	char arg_10h[1024] = "XV5xxMLwKP8KaayCSG04vQVv0kMSA3ZTRyZ4bCyet8VXaceow53CkC3JA0ZAg5wBx86kHvlCYhdeVPSCeEYy3rFVyOJdZTNgwxSgcRYZV6E28DqXMm5aYnfm3Z4uEDUz1FpmneQcuwOPwrMdx9Gy4Q3MKZIaalSHHKvpuQn5zbTtmgPfwpWVMSnuP0fV43mfuPQGX6ryJk2ANuuXxctZ03CNj5U6wF3X2cor5baXfZzFRltlMM5cl8BHAptzDkPMYFBWUg56usLpnq9gawM0XWMOIbx8z99logD8nCzj4QsjHAsnWf1EfrGZs1JCyF8fsHKzSWXUp8QWLUfgtPWWwI6ae3f5eEE9eqKAAqqp8s05HMAnEltRpFAe5jq25LW71BdnMVlP8p9EkD3ICugWJzZSo2saKenlJiMa7kOvCVc1qPAvEl0G2Txv79FSK2req4wpfoEv9u5ZwzqrSn2n8z3e8T3SfbzwKFDvr5Izhh1Ndt6w91CNqwGWwdDzb3VpAU7yn9RJrTWTZKKYc21WmKaetofqNwSYFPT4jdl3bM6Fe0NFClMqXcuC1LnCeVWy1OVvDUGw8g7lqO6Sfa9flHv0HkBt5WwANXpS1ddDQONQTSt4keGlBYAq9bzBBTKO9gy3agaT2GmKWt6rYacOM2kFq9rjWaZgSrhjxCOMO83jOixVfyEIQwDF5LUNc679WWtTFk0LLLYXuP1iZwnqs0PXrXwaqtfGO4GuqiU9ciDpBTHbxCql4WLrbMSSpqVvAmazvOAJnFvmcIdBfp7fZEd16i6h47IW7wPquyWQL5x9ePrJWZx6skvq2Gt0AcPBMMg5bSYGvcN43g34UjFmAuj9WDITQ6Z6bde8grMMpyyAJYQwr4ycZJN0vaJp9WGr6DaZB98THfQPhgiRvOGW3GLT03HgnR3kZXW0zt38b790Uvkj7yjAAX6ItBQb0zMt95hK8eyPkP1cgHSapReU2G6I6UJjQ0pFUgHfpK6pmkmJbrinid5WqgImMunLrwR0";	// `fcn.080486eb`で格納された値
+
+	int eax;
+	int edx;
+	int local_ch;
+	int local_14h;
+
+	srand(43);	// 暗号化されたフラグにはNULL文字が含まれるため、文字列の長さは固定する
+	for (local_14h = 0; local_14h < 43; local_14h++) {
+		eax = rand();
+		edx = eax;
+		eax = eax / 31;
+		eax = eax >> 22;
+		edx = edx + eax;
+		edx = edx & 1023
+		edx = edx - eax;
+		arg_8h[local_14h] = arg_ch[local_14h] ^ arg_10h[edx];
+	}
+
+	printf("%s\n", arg_8h);
+	return 0;
+}
+

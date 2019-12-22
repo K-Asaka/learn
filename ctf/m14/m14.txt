@@ -1,0 +1,127 @@
+Binary, EncryptedPPTX.
+
+問題ファイルの中には、confidential.pptxというパスワードが掛かったファイルと、2つの公開鍵のファイルが入っている。
+この問題は、この2つの公開鍵から秘密鍵を求め、その鍵を用いてconfidential.pptxを開くということが求められる。
+
+https://book.mynavi.jp/files/user/support/9784839962135/mondai14.zip
+
+
+必要な知識
+Microsoft Officeの知識
+・エスクローキートして公開鍵を事前に設定しておくと、パスワード以外に秘密鍵を用いて複合可能になる仕様があるということ
+・DocRecryptというツールを用いることで、秘密鍵を用いて任意のパスワードの値に変更することが可能ということ
+
+RSAの公開鍵の知識
+・"p"と"q"という2つの素数が存在しているということ
+・公開鍵"n"は先述の"p"と"q"の積となっているということ
+・"p"と"q"と公開鍵のその他の情報があれば、秘密鍵が生成できるということ
+
+最大公約数の求め方
+・ユークリッドの互除法の計算のやり方
+
+
+現時点で考えうる解法としては2つがある。
+・pptxファイルをパスワード総当たりで求める
+・2つの公開鍵ファイルを用いてファイルを解く
+
+CTFにおいて「パスワード総当たり」はあまり解法として用いられない。
+公開鍵を用いてどのように解いていくかを検討していく。
+
+
+まずは素直にconfidential.pptxを開いてみる。
+ファイルを開くとパスワードを聞かれる。
+パスワードを聞かれるということは、ファイル自体はPowerPointによって認識できる方式であり、OpenSSLや別のソフトウェアによって暗号化されたファイルでは無いということが推測できる。
+
+次にメモ帳でファイルを開いてみる。
+ファイル先頭の文字から、OLE形式のファイルになっていることが確認できる。
+続いて末尾を確認する。ここには"keyEncryptor"というパラメータがXML形式で書かれているのが見える。
+このパラメータは、一般にパスワードによる暗号化を設定すると挿入されるパラメータではある。しかし、通常は短いパラメータになる。
+中には「cipherAlgorithm="AES"」というような記述も見受けられる。
+
+Officeにはパスワードを紛失した際に事前に設定してあった秘密鍵を用いてファイルを戻せる機能が存在する。
+
+・Remove or reset file passwords in Office2013
+https://technet.microsoft.com/en-us/library/jj923033.aspx
+
+クライアントPCに公開鍵を事前にインストールしておき、それを"EscrowKey"として設定しておくと、Officeにて文章を暗号化して保存する際にその鍵を用いて文章が復元できるように追加の処理が行われる。
+またそのような設定の上で保存された暗号化ファイルは、秘密鍵が存在しているコンピュータにおいてDocRecryptを使うとファイルのパスワードを後から自由に変更可能となる。
+
+RSA暗号は大きな合成数の素因数分解が困難であることを使用した公開鍵暗号。これらは2つの大きな素数(一般に"p"と"q"を用いて表現される)を用いて生成されており、特に公開鍵として公開される値"n"はその素数の積となっている。
+つまり、この2つの素数を求めることができれば秘密鍵を作り出すことができる。
+今回の問題の鍵長は2048bitとなっておいr、普通に求まる値ではない。
+
+CTFで長時間CPUリソースを用いて解く問題はあまりない。
+ここは"p"もしくは"q"の値が共有となっている問題と仮定して問題を解いてみる。
+
+
+ここまでの情報を元に、次の方針で解いていく。
+・2つの公開鍵の最大公約数を求め、そこからそれぞれのpおよびqの値を求める
+・求めた"p"および"q"を元に秘密鍵を生成する
+・その鍵でDocRecryptが実行可能かを試す
+
+
+公開鍵の情報を元に、秘密鍵の生成に必要な値を求めていく。
+公開鍵として公開される値"n"は、"p"と"q"の積になっている。
+また"p"および"q"は素数。
+もしここで一方の値が共有されている状態であれば、お互いの値の最大公約数を求めることで、共有されている値を割り出すことができる。
+
+この前提に立って求めてみる。
+プログラムで実装して算出する場合は、ユークリッドの互除法を用いて実装すると、コンピュータリソースも最適化されるため、一般的なコンピュータにおいても難なく求めることができる。
+参考までにC#で書かれたコードの当該部分を抜粋する。
+コードでは公開鍵の値に対してユークリッドの互除法を実行し、共通の値とその値でそれぞれを割った値を計算している。
+これでお互いの公開鍵のp、qの値が求まる。この値を元に秘密鍵をそれぞれの公開鍵に対して1つずつ、計2つ作成する。
+
+
+program.cs(抜粋)
+var c1 = new X509Certificate2(X509Certificate.CreateFromCertFile(first)).PublicKey.Key as RSACryptoServiceProvider;
+var c2 = new X509Certificate2(X509Certificate.CreateFromCertFile(second)).PublicKey.Key as RSACryptoServiceProvider;
+
+var cred1Mod = new BigInteger(c1.ExportParameters(false).Modulus.Reverse().Concat(new byte[] {0}).ToArray());
+var cred2Mod = new BigInteger(c2.ExportParameters(false).Modulus.Reverse().Concat(new byte[] {0}).ToArray());
+
+var k = BigInteger.One;
+
+var i = BigInteger.Max(cred1Mod, cred2Mod);
+var j = BigInteger.Min(cred1Mod, cred2Mod);
+
+while (k != 0)
+{
+    k = i % j;
+    i = j;
+    j = k;
+}
+
+return new BigInteger[] {i, (cred1Mod/i), (cred2Mod/i)};
+
+
+DocRecryptで使用する前に、先に作成した秘密鍵をWindowsシステムへ登録する。
+まずはプログラムで作成した鍵をPFXファイルに変換してインポートできる形にする。
+
+
+・DERファイルをPEM形式に変換
+# openssl x509 -inform der -in 01.der -out 01.der.pem
+# openssl x509 -inform der -in 02.der -out 02.der.pem
+
+・PFXファイルに変換(01.pem、02.pemが先に求めた秘密鍵)
+# openssl pkcs12 -export -out 01.pfx -inkey 01.pem -in 01.der.pem
+# openssl pkcs12 -export -out 02.pfx -inkey 02.pem -in 02.der.pem
+
+変換が完了したらダブルクリックしてインポートする。
+インポートが完了したら、DocRecryptの出番。次のようにしてパスワードの修正が完了するか確認する。
+
+
+# DOCRECRYPT.EXE -p 12345 -i confidential.pptx
+
+
+ここで"Input File:confidential.pptx (inplace) Error: Error_NoCertToUse Last Result: 0x80004005"というような表示が出る場合は鍵の生成に失敗している可能性がある。
+PowerPointで開く。
+
+ファイルを開くと、2ページ目に猫の画像が見つかる。
+猫の画像をどかし、壁紙と同化している小さい文字を探すと、フラグが見つかる。
+
+ctf4b{OFFICE_ESCROW_KEY_SSL_GCD}
+
+
+秘密鍵を生成するプログラムコード
+https://gist.github.com/mimura1133/0fc3a43df72043053be4fea43dc7e731
+

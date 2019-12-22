@@ -1,0 +1,104 @@
+Re:Build
+
+
+タイトル：Re:Build
+ファイルからフラグを入手せよ！
+問題ファイル：mondai7.zip
+※FLAGのフォーマットはFLAG{}
+https://book.mynavi.jp/files/user/support/9784839962135/mondai7.zip
+
+mondai7.zipを展開すると2つのjpgファイルが得られる。
+cat1.jpgとcat2.jpgの両方を画像ビューアで確認しても違いはなさそうに見える。
+
+見た目で違いがなければ、メタ情報などに違いがある。
+ファイルのサイズに注目すると、42314バイトの差があることが確認できる。
+
+i$ ls -al
+-rw-r--r-- 1 ctf ctf 32796  6月 29  2017 cat1.jpg
+-rw-r--r-- 1 ctf ctf 75110  6月 29  2017 cat2.jpg
+
+このサイズの違いは何なのか確認していく。
+2つのファイルの違いを見つける際はdiffコマンドを使って確認する。
+
+$ diff cat1.jpg cat2.jpg
+Binary files cat1.jpg and cat2.jpg differ
+$ xxd cat1.jpg > cat1.txt
+$ xxd cat2.jpg > cat2.txt
+$ diff cat1.txt cat2.txt
+2050c2050,4695
+< 00008010: 2020 2020 2020 2020 2020 2020
+---
+> 00008010: 2020 2020 2020 2020 2020 2020 d4c3 b2a1              ....
+
+
+cat2.jpgの方にはファイル末尾に別のファイルが結合されている。
+結合されているファイルの先頭バイトはd4c3b2a1というシグネチャから始まっている。
+このシグネチャはpcapファイルのシグネチャ。つまり、cat2.jpgにはpcapファイルが末尾についていることがわかる。
+
+
+pcapファイルの抽出
+
+ファイルからファイルを取り出す場合、binwalkやforemostのようなツールが有用だが、今回は単純に連結されているだけなのでddコマンドを使用する。
+pcapファイルは32796バイト目から始まっているため、先頭32796バイト分をスキップする。
+
+$ dd if=cat2.jpg bs=1 skip=32796 of=hidden.pcap
+$ file hidden.pcap
+hidden.pcap: tcpdump capture file (little-endian) - version 2.4 (Ethernet, capture length 26
+2144)
+
+
+pcapファイルの解析
+抽出したpcapをWiresharkで確認してみると、flag.pngへのHTTPリクエストが複数あることが確認できる。とりあえず全て取り出してみる。
+WiresharkでHTTP通信中の全てのファイルを取り出すには[File]→[Export Objects]→[HTTP]→[Save All]と辿る。
+保存されたファイルを確認してみると、破損しているようで開くことができない。
+
+
+Range Requests
+なぜ壊れているのか。再度pcapファイルを確認してみる。
+flag.pngのリクエストに対するレスポンスに注目する。全て「206 Partial Content」というステータスが返っている。
+このステータスコードはRFC 2616によるとRangeヘッダーを付与したGETリクエストを送信すると、コンテンツを指定した範囲だけ取り出せる。
+そして、レスポンスにはContent-Rangeヘッダーが付与され、要求のあった範囲と全体のバイト数が記載されている。
+以上から、flag.pngは分割してダウンロードされているということがわかる。
+正しいバイトの順序で結合し直せば元のflag.pngを得られる。
+
+
+flag.pngを再構築する
+Wiresharkにて分割されたpngファイルを抽出し、1つずつ適切な順番で手動で結合し直すというアプローチでもフラグを得ることができるが、数が多いため簡単なPythonスクリプトを書いてフラグを入手してみる。
+
+
+[solver.py]
+from scapy.all import *
+import re
+from operator import itemgetter
+
+# pcapファイルの読み込み
+packets = rdpcap('hidden.pcap').filter(lambda p: Raw in p and TCP in p and p[TCP].sport == 80)
+sessions = packets.sessions()
+sessions_list = [sessions[s] for s in sessions]
+
+contents = []
+d = {}
+for session in sessions_list:
+  for i, p in enumerate(session):
+    data = p[Raw].load
+    if i == 0:
+      m = re.search(b'(?P<bytes>(\d+)-(\d+))/(\d+)\r\n\r\n(?P<payload>(.*))', data, flags=(re.MULTILINE | re.DOTALL))
+      if m is not None:
+        d = m.groupdict()
+    else:
+      d['payload'] += data
+  contents.append(d)
+
+new_contents = sorted(contents, key=itemgetter('bytes'))
+f = open('flag.png', 'wb')
+for i in new_contents:
+  f.write(i['payload'])
+f.close()
+
+
+行なっていることは単純で、取り出したpcapファイルをscapyで操作する。
+送信元ポートが80番、つまりHTTPレスポンスだけを集め、正規表現でデータ部を抜き出す。
+このとき、正しい順番でデータを結合し直さなければいけないため、Content-Rangeヘッダーに記載されているバイト範囲も抜き出す。
+最後に正しい順番で結合することでflag.pngが生成され、フラグを入手することができる。
+
+

