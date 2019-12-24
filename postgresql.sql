@@ -66,3 +66,31 @@ FROM
         "売上日"
         , "商品名"
 ) AS "集計"
+
+
+-- JSONB型を使ったデータ登録の例
+CREATE TABLE public.users
+(
+    id serial NOT NULL,
+    name character varying(128) NOT NULL,
+    properties jsonb NOT NULL,
+    CONSTRAINT users_pkey PRIMARY KEY (id)
+);
+
+-- 閉じカッコのない不正なJSONを指定
+--INSERT INTO users (name, properties) VALUES ('hoge', '{"age": 18, "nickname": "hoge"');
+-- 修正してINSERT
+INSERT INTO users (name, properties) VALUES ('test', '{}');
+INSERT INTO users (name, properties) VALUES ('test', '{}');
+INSERT INTO users (name, properties) VALUES ('test', '{"age": 18, "nickname": "test"}');
+INSERT INTO users (name, properties) VALUES ('hoge', '{"age": 18, "nickname": "hoge"}');
+INSERT INTO users (name, properties) VALUES ('fuga', '{"age": 20, "nickname": "fuga"}');
+INSERT INTO users (name, properties) VALUES ('bar',  '{"age": 40, "gender": "man", "nickname": "foo"}');
+
+SELECT * FROM users;
+-- JSONのkeyと値を指定した検索
+SELECT * FROM users WHERE properties->>'nickname' = 'hoge';
+-- JSONのkeyと値の組を指定した検索
+SELECT * FROM users WHERE properties @> '{"age":18}'::jsonb;
+-- 指定したkeyがJSONの中に存在するかの検索
+SELECT * FROM users WHERE properties ? 'gender';
