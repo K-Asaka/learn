@@ -35,3 +35,34 @@ VALUES(
 
 SELECT * FROM "売上" ORDER BY random() LIMIT 5;
 
+
+-- ランキングデータ集計
+SELECT "売上日時" ::date AS "売上日"
+    , "商品名"
+    , count(*) AS "件数"
+FROM
+    "売上"
+GROUP BY
+    "売上日"
+    , "商品名"
+ORDER BY
+    "件数" DESC
+LIMIT
+    5;
+
+-- window関数を使ったランキングデータ集計
+SELECT
+    *,
+    rank() OVER (PARTITION BY "商品名" ORDER BY "件数" DESC) AS "順位"
+FROM
+(
+    SELECT
+        "売上日時" ::date AS "売上日"
+        , "商品名"
+        , count(*) AS "件数"
+    FROM
+        "売上"
+    GROUP BY
+        "売上日"
+        , "商品名"
+) AS "集計"
