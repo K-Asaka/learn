@@ -1,0 +1,7 @@
+version: '3'
+services:
+  pg:
+    image: postgres:12.1-alpine
+    env_file: .pgenv
+    ports:
+      - "5432:5432"
