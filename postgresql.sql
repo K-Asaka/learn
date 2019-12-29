@@ -94,3 +94,15 @@ SELECT * FROM users WHERE properties->>'nickname' = 'hoge';
 SELECT * FROM users WHERE properties @> '{"age":18}'::jsonb;
 -- 指定したkeyがJSONの中に存在するかの検索
 SELECT * FROM users WHERE properties ? 'gender';
+
+-- 1000万件以上のテストデータがある想定
+-- psqlの実行結果と一緒に実行時間を出力する
+\timing
+SELECT * FROM users WHERE properties->>'nickname' = 'hogefuga';
+-- 検索対象で式INDEXを作成する
+CREATE INDEX demo_json_index
+ON public.users
+USING btree
+((properties->>'nickname'::text));
+
+SELECT * FROM users WHERE properties->>'nickname' = 'hogefuga';
