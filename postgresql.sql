@@ -162,3 +162,19 @@ DELETE FROM hoge WHERE id = 2;
 VACUUM;
 -- 対象が1件もないためエラーになる
 SELECT lp, t_xmin, t_xmax FROM heap_page_items(get_raw_page('hoge', 0));
+
+
+-- WITH句+RETURNING句でMERGE文を再現
+CREATE TABLE tbl (id integer PRIMARY KEY, v integer);
+
+-- 対象のデータベースからUPDATEの対象を抽出
+-- UPDATEの対象を更新
+-- 更新予定の一覧からUPDATE外のデータを作成し、INSERT
+WITH val AS (SELECT ((1, 1235)::tbl).*),
+     upd AS (UPDATE tbl SET v = val.v FROM val
+             WHERE tbl.id = val.id RETURNING tbl.id)
+
+INSERT INTO tbl SELECT * FROM val
+    WHERE id NOT IN (SELECT id FROM upd);
+
+SELECT * FROM tbl;
