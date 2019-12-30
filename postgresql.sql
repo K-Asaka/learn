@@ -106,3 +106,24 @@ USING btree
 ((properties->>'nickname'::text));
 
 SELECT * FROM users WHERE properties->>'nickname' = 'hogefuga';
+
+
+-- 拡張機能
+-- PGXN
+-- http://pgxn.org/
+-- postgresql.confに追記
+-- shared_preload_libraries = 'pg_stat_statements'
+
+-- スーパーユーザー権限でExtensionのインストール
+CREATE EXTENSION pg_stat_statements;
+-- 利用可能なcontribの一覧表示
+SELECT * FROM pg_available_extensions;
+
+\x
+SELECT * FROM users WHERE properties->>'nickname' = 'hoge';
+SELECT pg_stat_statements_reset();
+SELECT * FROM pg_stat_statements ORDER BY total_time LIMIT 4;
+
+-- クエリを実行してから確認する
+SELECT query, calls, total_time FROM pg_stat_statements ORDER BY total_time DESC LIMIT 4;
+
