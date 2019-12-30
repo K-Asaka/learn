@@ -127,3 +127,38 @@ SELECT * FROM pg_stat_statements ORDER BY total_time LIMIT 4;
 -- クエリを実行してから確認する
 SELECT query, calls, total_time FROM pg_stat_statements ORDER BY total_time DESC LIMIT 4;
 
+
+-- 追記型アーキテクチャの確認
+-- データベースページの内容を調べるためpageinspectを追加
+CREATE EXTENSION pageinspect;
+
+CREATE TABLE hoge(
+      id   SERIAL PRIMARY KEY
+    , name VARCHAR(100)
+);
+-- データの更新操作
+INSERT INTO hoge(name) VALUES('insert 1');
+SELECT * FROM hoge;
+-- lp:ブロック内のアイテムのオフセットID
+-- t_xmin:そのレコードを作成したトランザクションのトランザクションID
+-- t_xmax:そのレコードを削除したトランザクションのトランザクションID
+SELECT lp, t_xmin, t_xmax FROM heap_page_items(get_raw_page('hoge', 0));
+-- INSERTした行が見えなくなる
+UPDATE hoge SET name = 'update 1' WHERE id = 1;
+SELECT lp, lp_off, lp_flags, lp_len, t_xmin, t_xmax FROM heap_page_items(get_raw_page('hoge', 0));
+-- UPDATEで追記された行が見えなくなる
+UPDATE hoge SET name = 'update 2' WHERE id = 1;
+SELECT lp, t_xmin, t_xmax FROM heap_page_items(get_raw_page('hoge', 0));
+-- DELETEで最後のUPDATEで追記された行が見えなくなる
+DELETE FROM hoge WHERE id = 1;
+SELECT lp, t_xmin, t_xmax FROM heap_page_items(get_raw_page('hoge', 0));
+-- INSERTで行の追加
+INSERT INTO hoge(name) VALUES('insert 1');
+SELECT lp, t_xmin, t_xmax FROM heap_page_items(get_raw_page('hoge', 0));
+-- VACUUMにより参照されていなかった行が削除される
+VACUUM;
+SELECT lp, t_xmin, t_xmax FROM heap_page_items(get_raw_page('hoge', 0));
+DELETE FROM hoge WHERE id = 2;
+VACUUM;
+-- 対象が1件もないためエラーになる
+SELECT lp, t_xmin, t_xmax FROM heap_page_items(get_raw_page('hoge', 0));
