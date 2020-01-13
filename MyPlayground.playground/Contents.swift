@@ -223,3 +223,25 @@ do {
 } catch MyError.InvalidValue {
     print("エラー発生")
 }
+
+// 必ず処理するdefer処理
+// 時間がかかる処理の時間を計測する例
+// エラーをthrowする可能性がある関数
+func longMethod() throws {
+    // 時間がかかる処理
+    // エラーが発生すると処理終了時間が表示されない
+    // deferを利用するとエラーが発生しても必ず処理が行われる
+    throw MyError.InvalidValue
+}
+// エラーハンドリングが必要なlongMethod関数を利用
+do {
+    // 処理終了時に必ず行う処理
+    defer {
+        print("処理終了時間: \(Date())")
+    }
+    print("処理開始時間: \(Date())")
+    try longMethod()        // try句を付ける必要がある
+    //print("処理終了時間: \(Date())")
+} catch {
+    print("エラー発生")
+}
