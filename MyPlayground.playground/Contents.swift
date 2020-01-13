@@ -142,3 +142,30 @@ let dic2: [String:String] = [String:String]()
 //dic2["りんご"] = "1個"      // 要素を追加できない
 // イミュータブル(不変)の宣言例
 let dic3: [String:String] = ["りんご":"1個", "ごりら":"1匹"]
+
+// 何もないことを意味する値nilとOptional型
+// Optional型変数を暗ラップして利用する
+var value10: String?     // OptionalのString型変数の宣言
+value10 = "こんにちは"     // 値の設定
+print(value10)           // 「Optional("こんにちは")」というアンラップ前の値が出力されてしまう
+if let value10 = value10 {    // アンラップ処理
+    print(value10)           // 「こんにちは」というアンラップ語の値が出力される
+}
+
+// アンラップ処理後の変数を利用しない場合は変数名を省略できる
+var value11: String?    // OptionalのString型変数の宣言
+value11 = "こんにちは"    // 値の設定
+if let _ = value11 {    // アンラップ処理
+    print("value11はnilではない")
+}
+
+// アンラップしたあとの変数名をアンラップ前の変数名と違う名前にした場合、
+// アンラップ前の変数の値がアンラップ後の処理で使われてしまう可能性がある。
+// それを防ぐために、アンラップ前の変数名とアンラップ後の変数名には同名を指定したほうがよい
+var value12: String?
+value12 = "こんにちは"
+//if let unwrappedValue = value12 {
+if let value12 = value12 {
+    //print(unwrappedValue)
+    print(value12)
+}
