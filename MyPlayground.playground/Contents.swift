@@ -11,3 +11,5 @@ var str = "Hello, playground"
 "こんにちは"
 
 "Hello, " + "playground"
+
+print("Hello, " + "playground")
