@@ -334,3 +334,12 @@ for index in 0..<9 {
 for _ in 0..<9 {
     print("index")
 }
+
+// for-in-enumerated文
+// カウンタと項目名の両方を出力する例
+// 配列
+let values = ["りんご", "ごりら", "らくだ"]
+// カウンタの変数名と項目名を記述する
+for (index, value) in values.enumerated() {
+    print("\(index) : \(value)")
+}
