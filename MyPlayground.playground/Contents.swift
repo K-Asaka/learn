@@ -257,3 +257,17 @@ var radio = UISwitch()
 radio.isOn = true
 // メソッドによるプロパティの設定
 radio.setOn(false, animated: false)
+
+// 独自クラスを作成する
+class Dog {
+    // プロパティ・メソッドを記述
+    var name = ""       // プロパティ
+    // 吠えるメソッド
+    func bark() {
+        
+    }
+}
+// 独自クラスのインスタンス化
+var dog = Dog()
+dog.name = "キング"        // 名前を付ける
+dog.bark()                // 吠える
