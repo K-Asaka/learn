@@ -251,3 +251,9 @@ typealias ColorCode = UInt8
 // R(赤色)の値設定
 let r = ColorCode.max
 
+// クラスのインスタンス化
+var radio = UISwitch()
+// プロパティの設定
+radio.isOn = true
+// メソッドによるプロパティの設定
+radio.setOn(false, animated: false)
