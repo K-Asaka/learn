@@ -67,3 +67,27 @@ var value5 = "りんごを\(a)個、みかんを\(b)個、きゅうりを\(c)本
 var a1 = 10                                        // りんごの数を宣言
 var aString1 = String(a1)                           // 文字列に変換
 var value6 = "りんごを" + aString1 + "個買いました"    // 文字列を結合する
+
+// 符号付き整数の値の範囲を確認
+var value1_1: Int       = Int.max       // Intの最大値(9,223,372,036,854,775,807)
+var value1_2: Int       = Int.min       // Intの最小値(-9,223,372,036,854,775,808)
+var value2_1: Int8      = Int8.max      // Int8の最大値(127)
+var value2_2: Int8      = Int8.min      // Int8の最小値(-128)
+var value3_1: Int16     = Int16.max     // Int16の最大値(32,767)
+var value3_2: Int16     = Int16.min     // Int16の最小値(-32,768)
+var value4_1: Int32     = Int32.max     // Int32の最大値(2,147,483,647)
+var value4_2: Int32     = Int32.min     // Int32の最小値(-2,147,483,648)
+var value5_1: Int64     = Int64.max     // Int64の最大値(9,223,372,036,854,775,807)
+var value5_2: Int64     = Int64.min     // Int64の最小値(-9,223,372,036,854,775,808)
+
+// 符号なし整数の値の範囲
+var value1_3: UInt      = UInt.max       // UIntの最大値(18,446,744,073,709,551,615)
+var value1_4: UInt      = UInt.min       // UIntの最小値(0)
+var value2_3: UInt8     = UInt8.max      // UInt8の最大値(255)
+var value2_4: UInt8     = UInt8.min      // UInt8の最小値(0)
+var value3_3: UInt16    = UInt16.max     // UInt16の最大値(65,535)
+var value3_4: UInt16    = UInt16.min     // UInt16の最小値(0)
+var value4_3: UInt32    = UInt32.max     // UInt32の最大値(4,294,967,295)
+var value4_4: UInt32    = UInt32.min     // UInt32の最小値(0)
+var value5_3: UInt64    = UInt64.max     // UInt64の最大値(18,446,744,073,709,551,615)
+var value5_4: UInt64    = UInt64.min     // UInt64の最小値(0)
