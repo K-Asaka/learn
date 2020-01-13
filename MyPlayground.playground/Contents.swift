@@ -245,3 +245,9 @@ do {
 } catch {
     print("エラー発生")
 }
+
+// typealiasで型名に別名を付ける
+typealias ColorCode = UInt8
+// R(赤色)の値設定
+let r = ColorCode.max
+
