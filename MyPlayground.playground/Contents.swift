@@ -313,3 +313,24 @@ let minAndMax = requestMinAndMax()
 let minValue = minAndMax.min    // 最小値を取り出す。minAndMax.0でも取り出し可能
 let maxValue = minAndMax.max    // 最大値を取り出す。minAndMax.1でも取り出し可能
 
+// for-in文
+// 0〜9の繰り返し処理
+for index in 0...9 {
+    print("index:\(index)")
+}
+// 配列を利用した繰り返し処理の例
+let values = ["りんご", "ごりら", "らくだ"]
+for value in values {
+    print(value)
+}
+
+// ..<は境界の値を含まない
+for index in 0..<9 {
+    print("index:\(index)")
+}
+
+// カウンタの数字を引用しない場合は、_で省略できる
+// 次のプログラムの実行結果は「index」の文字列が9回出力されるのみとなる
+for _ in 0..<9 {
+    print("index")
+}
