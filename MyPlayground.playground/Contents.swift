@@ -95,3 +95,9 @@ var value5_4: UInt64    = UInt64.min     // UInt64の最小値(0)
 // Bool型の利用例
 var flag1: Bool = true
 var flag2 = false
+
+// 浮動小数点数を扱う型
+var fvalue1_1: Float    = 12.34     // 32ビットの範囲で値の保持が可能
+var fvalue1_2: Float    = -12.34    // 32ビットの範囲で負の値の保持が可能
+var fvalue2_1: Float    = 123.45    // 64ビットの範囲で値の保持が可能
+var fvalue2_2: Float    = -123.45   // 64ビットの範囲で負の値の保持が可能
