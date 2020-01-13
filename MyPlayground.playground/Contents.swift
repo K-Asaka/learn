@@ -261,13 +261,25 @@ radio.setOn(false, animated: false)
 // 独自クラスを作成する
 class Dog {
     // プロパティ・メソッドを記述
-    var name = ""       // プロパティ
-    // 吠えるメソッド
+    var name = ""       // 名前
+    var type = ""       // 種類
+    var birthday = ""   // 誕生日
+    
+    // 吠える
     func bark() {
-        
+        print("わんわん")
+    }
+}
+// 盲導犬クラス
+class GuideDog: Dog {
+    override func bark() {
+        super.bark()        // 継承元のクラスのbarkメソッドが呼び出される
+        print("きゃんきゃん")
     }
 }
 // 独自クラスのインスタンス化
 var dog = Dog()
-dog.name = "キング"        // 名前を付ける
 dog.bark()                // 吠える
+var guideDog = GuideDog()
+guideDog.bark()           // 吠える
+
