@@ -37,3 +37,7 @@ print("みかんです")
 // 変数の値を変更
 st = "あなたの好きな食べ物は何ですか？"
 
+
+let value2: String = "Hello, playground"
+// value2 = "みかんが好きです"     // エラー
+
