@@ -131,3 +131,14 @@ let second = array[1]       // ごりら
 let third = array[2]        // らくだ
 // JavaのGenericsのように<>を利用した型宣言も可能
 // let array: Array<String> = Array<String>()
+
+// 辞書
+// ミュータブル(可変)な辞書
+var dic1: [String:String] = [String:String]()
+dic1["りんご"] = "1個"
+dic1["ごりら"] = "1匹"
+// イミュータブル(不変)な辞書
+let dic2: [String:String] = [String:String]()
+//dic2["りんご"] = "1個"      // 要素を追加できない
+// イミュータブル(不変)の宣言例
+let dic3: [String:String] = ["りんご":"1個", "ごりら":"1匹"]
