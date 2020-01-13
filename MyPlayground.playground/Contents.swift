@@ -302,3 +302,14 @@ enum Fruit {
     case Apple
     case Orange
 }
+
+// 複数の値をまとめるタプル
+// 最小値と最大値を返却する
+func requestMinAndMax() -> (min: Int, max: Int) {
+    // 値はタプルで返却する
+    return (1, 100)
+}
+let minAndMax = requestMinAndMax()
+let minValue = minAndMax.min    // 最小値を取り出す。minAndMax.0でも取り出し可能
+let maxValue = minAndMax.max    // 最大値を取り出す。minAndMax.1でも取り出し可能
+
