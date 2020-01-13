@@ -283,3 +283,15 @@ dog.bark()                // 吠える
 var guideDog = GuideDog()
 guideDog.bark()           // 吠える
 
+// 構造体の記述例
+// 構造体の定義
+struct MyStruct {
+    // 構造体内でのプロパティの宣言
+    var value: String?
+    // 構造体内でのメソッドの宣言
+    func method(value: Int) -> Int {
+        let resultValue: Int = 0
+        // 処理は省略
+        return resultValue
+    }
+}
