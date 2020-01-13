@@ -295,3 +295,10 @@ struct MyStruct {
         return resultValue
     }
 }
+
+// 列挙した値の管理に適したenum
+// enumの定義
+enum Fruit {
+    case Apple
+    case Orange
+}
