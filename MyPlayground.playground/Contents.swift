@@ -203,3 +203,23 @@ func addValue(_ value: Int) {
 // 引数名を指定して関数呼び出し
 //addValue(value: 100)
 addValue(100)
+
+// エラーを通知するthrow処理
+// throwを利用した処理例
+enum MyError: Error {
+    case InvalidValue
+}
+// エラーをthrowする可能性がある関数
+func doubleUp(value: Int) throws -> Int {
+    if value < 0 {
+        throw MyError.InvalidValue
+    }
+    return value * 2
+}
+// エラーハンドリングが必要なdoubleUp関数を利用
+do {
+    var doubleResultValue = try doubleUp(value: 10) // try句を付ける必要がある
+    print("正常終了")
+} catch MyError.InvalidValue {
+    print("エラー発生")
+}
