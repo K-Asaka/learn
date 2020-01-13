@@ -91,3 +91,7 @@ var value4_3: UInt32    = UInt32.max     // UInt32の最大値(4,294,967,295)
 var value4_4: UInt32    = UInt32.min     // UInt32の最小値(0)
 var value5_3: UInt64    = UInt64.max     // UInt64の最大値(18,446,744,073,709,551,615)
 var value5_4: UInt64    = UInt64.min     // UInt64の最小値(0)
+
+// Bool型の利用例
+var flag1: Bool = true
+var flag2 = false
