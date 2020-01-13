@@ -169,3 +169,37 @@ if let value12 = value12 {
     //print(unwrappedValue)
     print(value12)
 }
+
+// 関数の記述と利用方法
+// 関数の記述例
+// Int型の引数Valueと、Int型の戻り値を持つmyFunc関数
+func myFunc(value: Int) -> Int {
+    var resultValue: Int = 0
+    // 処理は省略
+    return resultValue
+}
+
+// 引数を指定して関数呼び出し
+myFunc(value: 100)
+
+// 引数の別名
+// テストの点数を表示する関数
+func showTestScore(score: Int) -> String {
+    return "数学の点数は\(score)点"
+}
+// 引数名をmathematicsTestScoreとするが関数内ではscoreで扱う
+func showTestScore(mathematicsTestScore score: Int) -> String {
+    return "数学の点数は\(score)点"
+}
+showTestScore(mathematicsTestScore: 80)
+
+// 引数名の省略
+// 値を追加する関数
+//func addValue(value: Int) {
+// 引数名を省略
+func addValue(_ value: Int) {
+    // 処理省略
+}
+// 引数名を指定して関数呼び出し
+//addValue(value: 100)
+addValue(100)
