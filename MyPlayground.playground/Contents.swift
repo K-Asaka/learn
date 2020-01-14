@@ -338,8 +338,29 @@ for _ in 0..<9 {
 // for-in-enumerated文
 // カウンタと項目名の両方を出力する例
 // 配列
-let values = ["りんご", "ごりら", "らくだ"]
+let values2 = ["りんご", "ごりら", "らくだ"]
 // カウンタの変数名と項目名を記述する
-for (index, value) in values.enumerated() {
+for (index, value) in values2.enumerated() {
     print("\(index) : \(value)")
+}
+
+let value13 = 5
+if value13 < 10 {
+    print("valueが10より小さいです")
+}
+
+let value14 = 10
+if value14 < 10 {
+    print("valueが10より小さいです")
+} else {
+    print("valueが10以上です")
+}
+
+let value15 = 101
+if value15 < 10 {       // 条件文その1
+    print("valueが10より小さいです")
+} else if value15 > 100 {   // 条件文その2
+    print("valueが100より大きいです")
+} else {        // 上記の条件を満たさないとき
+    print("どちらでもない")
 }
