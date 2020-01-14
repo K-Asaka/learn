@@ -422,3 +422,18 @@ while count <= 10 {     // countの値が10以下の場合は処理を繰り返�
     count += 1          // 1をcountの値に加算する
 }
 print("合計は\(result)")
+
+// guard文
+// 商品を購入する
+func buyItem(myMoney: Int?) {
+    // 所持金があるかチェック
+    guard let money = myMoney else {
+        // 処理終了
+        print("所持金がありません")
+        return
+    }
+    print("所持金\(money)円で商品を購入します")
+    // 商品を購入する処理
+}
+buyItem(myMoney: nil)
+buyItem(myMoney: 1000)
