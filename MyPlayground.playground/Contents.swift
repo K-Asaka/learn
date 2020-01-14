@@ -412,3 +412,13 @@ case "みかん":
 default:
     print("どちらでもない")
 }
+
+// while文
+// 1〜10の数をすべて足す
+var count = 1
+var result = 0
+while count <= 10 {     // countの値が10以下の場合は処理を繰り返す
+    result += count     // countの値をresultに加算する
+    count += 1          // 1をcountの値に加算する
+}
+print("合計は\(result)")
