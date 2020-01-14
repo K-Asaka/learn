@@ -437,3 +437,78 @@ func buyItem(myMoney: Int?) {
 }
 buyItem(myMoney: nil)
 buyItem(myMoney: 1000)
+
+// Swiftでより簡潔にコードを記述する方法
+// filter
+var values3 = [11, 4, 25, 16, 5]
+// filterを利用して対象を絞り込む
+let results3 = values3.filter { (x: Int) -> Bool in
+    // 10より小さい値のみにする
+    if x < 10 {
+        return true
+    }
+    return false
+}
+print(results3)     // 出力結果は[4, 5]
+
+// 引数に「$0」を利用して簡潔に記述した例
+let results4 = values3.filter { $0 < 10 }
+
+// map
+// mapを利用して値を変化させる
+let results5 = values3.map { (x: Int) -> Int in
+    return x * 2
+}
+print(results5)
+// 引数に「$0」を利用して簡潔に記述した例
+let results6 = values3.map { $0 * 2 }
+
+// reduce
+// reduceを利用して配列内の値を順次処理する。合計値の初期値は0
+let total = values3.reduce(0) { (nowTotal: Int, value: Int) -> Int in
+    return nowTotal + value
+}
+print(total)    // 出力結果は61
+// 引数を$0、$1で表現
+let total2 = values3.reduce(0) { $0 + $1 }
+print(total2)
+
+// sort
+// sortを利用して配列内の値を並べ替える
+values3.sort { (value1:Int, value2:Int) -> Bool in
+    value1 < value2
+}
+print(values3)       // 出力結果は[4, 5, 11, 16, 25]
+// 引数を$0、$1で表現
+values3.sort { $0 < $1 }
+print(values3)
+
+// for-in-where(フィルタリング)
+// カウンタが5のときだけ処理を行わないようにする
+for value in 0..<9 where value != 5 {
+    print("index\(value)")
+}
+
+// case-let-where(パターンマッチング)
+// switch文の条件式に「み」ではじまる文字列を指定する例
+let value20 = "みかん"
+switch value20 {
+case let x where x.hasPrefix("み"):      // 定数valueが「み」ではじまるかどうか
+    print("みかんです")
+case "りんご":
+    print("りんごです")
+default:
+    print("どちらでもない")
+}
+
+// for-case-in(繰り返し処理中のパターンマッチング)
+// enumの値がAppleのときだけ処理を行う
+enum Fruit3 {
+    case Apple, Orange
+}
+// Fruit3の配列を登録
+let fruits :[Fruit] = [.Apple, .Orange, .Apple, .Apple]
+// Appleのときのみ処理を行う
+for case .Apple in fruits {
+    print("Appleです")
+}
