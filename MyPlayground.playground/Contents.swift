@@ -364,3 +364,51 @@ if value15 < 10 {       // 条件文その1
 } else {        // 上記の条件を満たさないとき
     print("どちらでもない")
 }
+
+// switch文
+let value16 = 100
+switch value16 {
+case 0:             // 0のとき
+    print("valueが0のとき")
+case 1...100:       // 1〜100のとき
+    print("valueが1〜100のとき")
+default:
+    print("上記以外")
+}
+
+// switchの文の値に文字列を指定した例
+let value17 = "みかん"
+switch value17 {
+case "りんご":
+    print("りんごです")
+case "みかん":
+    print("みかんです")
+default:
+    print("どちらでもない")
+}
+
+// switch文の値にenum値を使用した例
+enum Fruit2 {
+    case Apple
+    case Orange
+}
+
+let value18 = Fruit2.Orange
+switch value18 {
+case .Apple:
+    print("Appleです")
+case .Orange:
+    print("Orangeです")
+}
+
+// 複数の処理を続けて行えるfallthrough
+let value19 = "りんご"
+switch value19 {
+case "りんご":
+    print("りんごです")
+    fallthrough             // 次のcase文の処理も実行する
+case "みかん":
+    print("みかんです")
+default:
+    print("どちらでもない")
+}
