@@ -131,6 +131,9 @@
                                 <rect key="frame" x="16" y="400" width="288" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="10%引きするボタン"/>
+                                <connections>
+                                    <segue destination="kGE-sj-abv" kind="modal" id="7FH-Fa-fQe"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -152,7 +155,7 @@
                         <viewControllerLayoutGuide type="bottom" id="bKf-gm-bjH"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="DPv-Vw-4Ai">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="計算結果" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rv3-Pc-47f">
@@ -172,6 +175,9 @@
                                 <rect key="frame" x="16" y="150" width="288" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="別の計算をする"/>
+                                <connections>
+                                    <segue destination="hS1-HR-un7" kind="unwind" unwindAction="restart:" id="0Gc-ja-wrN"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -181,8 +187,9 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dLT-ZS-yFU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="hS1-HR-un7" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="743" y="189"/>
+            <point key="canvasLocation" x="923" y="193"/>
         </scene>
     </scenes>
 </document>

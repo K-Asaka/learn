@@ -89,5 +89,21 @@ class ViewController: UIViewController {
         priceField.text = "0"                   // 数字の0を直接入れてクリアする
     }
     
+    // 最後の画面から戻ってきたときの処理
+    @IBAction func restart(_ segue: UIStoryboardSegue) {
+        priceField.text = "0"       // 金額フィールドを0でクリアする
+    }
+    
+    // 画面遷移時の処理
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // 次の画面を取り出す
+        let viewController = segue.destination as! ResultViewController
+        
+        // 金額フィールドの文字列を数値に変換する
+        if let price = Int(priceField.text!) {
+            // 数値に変換した金額を次の画面に設定する
+            viewController.price = price
+        }
+    }
 }
 
