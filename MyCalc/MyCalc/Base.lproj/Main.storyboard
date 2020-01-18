@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
@@ -132,7 +132,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="10%引きするボタン"/>
                                 <connections>
-                                    <segue destination="kGE-sj-abv" kind="modal" id="7FH-Fa-fQe"/>
+                                    <segue destination="kGE-sj-abv" kind="presentation" id="7FH-Fa-fQe"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -144,7 +144,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="95.625" y="193.30985915492957"/>
+            <point key="canvasLocation" x="179.296875" y="204.20055544534813"/>
         </scene>
         <!--Result View Controller-->
         <scene sceneID="GOT-2R-6Fb">
@@ -189,7 +189,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dLT-ZS-yFU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="hS1-HR-un7" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="923" y="193"/>
+            <point key="canvasLocation" x="1730.625" y="203.87323943661971"/>
         </scene>
     </scenes>
 </document>
