@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Gt-Ef-wWd">
-                                <rect key="frame" x="139" y="89" width="42" height="21"/>
+                                <rect key="frame" x="139" y="273.5" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -25,7 +25,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="2Gt-Ef-wWd" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ajm-lU-cRI"/>
-                            <constraint firstItem="2Gt-Ef-wWd" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="89" id="UtV-TR-Tiv"/>
+                            <constraint firstItem="2Gt-Ef-wWd" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Pww-Vv-qpR"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
