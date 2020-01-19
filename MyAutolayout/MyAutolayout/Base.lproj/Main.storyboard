@@ -15,28 +15,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cVb-dj-H6C">
-                                <rect key="frame" x="100" y="94" width="200" height="30"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3aT-SQ-GDf">
+                                <rect key="frame" x="100" y="94" width="180" height="34"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="5Kv-qz-TQA"/>
-                                    <constraint firstAttribute="width" constant="200" id="pkM-K3-t98"/>
+                                    <constraint firstAttribute="width" constant="180" id="4iT-6g-Yy1"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mGR-iV-qIJ">
-                                <rect key="frame" x="100" y="174" width="200" height="34"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dyH-Du-kM2">
+                                <rect key="frame" x="100" y="210" width="180" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="180" id="pvj-Ue-BK3"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="cVb-dj-H6C" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="50" id="6rP-nn-gTq"/>
-                            <constraint firstItem="cVb-dj-H6C" firstAttribute="width" secondItem="mGR-iV-qIJ" secondAttribute="width" id="Cuc-Cu-hLj"/>
-                            <constraint firstItem="mGR-iV-qIJ" firstAttribute="top" secondItem="cVb-dj-H6C" secondAttribute="bottom" constant="50" id="MmK-VD-x9R"/>
-                            <constraint firstItem="cVb-dj-H6C" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="100" id="dqD-sQ-5Bs"/>
-                            <constraint firstItem="mGR-iV-qIJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="100" id="ocu-aA-NAP"/>
+                            <constraint firstItem="3aT-SQ-GDf" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="50" id="5qe-Un-Hr4"/>
+                            <constraint firstItem="dyH-Du-kM2" firstAttribute="top" secondItem="3aT-SQ-GDf" secondAttribute="bottom" constant="82" id="9IU-xa-jcf"/>
+                            <constraint firstItem="dyH-Du-kM2" firstAttribute="leading" secondItem="3aT-SQ-GDf" secondAttribute="leading" id="XUy-Bg-iyc"/>
+                            <constraint firstItem="3aT-SQ-GDf" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="100" id="bWZ-Xi-o1m"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
