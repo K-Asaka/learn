@@ -37,6 +37,10 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="ryE-pi-jfj"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="DnW-iP-y9r"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -49,8 +53,15 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="HYA-ED-6N9">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="dBG-Na-Mcv"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="dBG-Na-Mcv">
+                            <connections>
+                                <action selector="tapAddButton:" destination="BYZ-38-t0r" id="yiK-N7-cij"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="wMr-xl-JHE" id="rr2-Zp-Lqe"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
