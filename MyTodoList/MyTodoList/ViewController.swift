@@ -17,6 +17,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // 保存しているToDoの読み込み処理
+        let userDefaults = UserDefaults.standard
+        if let storedTodoList = userDefaults.array(forKey: "todoList") as? [String] {
+            todoList.append(contentsOf: storedTodoList)
+        }
     }
 
     // +ボタンをタップした時に呼ばれる処理
@@ -36,6 +42,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 // テーブルに行が追加されたことをテーブルに通知
                 self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)],
                                           with: UITableView.RowAnimation.right)
+                // ToDoの保存処理
+                let userDefaults = UserDefaults.standard
+                userDefaults.set(self.todoList, forKey: "todoList")
+                userDefaults.synchronize()
             }
         }
         // OKボタンがタップされたときの処理
