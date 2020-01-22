@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AudioToolbox
 
 class ViewController: UIViewController {
 
@@ -16,5 +17,12 @@ class ViewController: UIViewController {
     }
 
 
+    @IBAction func tapSystemSound(_ sender: Any) {
+        // システムサウンド1000番を鳴らしつつバイブレーションを振動させる
+        // マナーモードの場合はバイブレーションのみとなる
+        AudioServicesPlaySystemSoundWithCompletion(1000) {
+                // ここにはサウンドが鳴り終わったあとに呼ばれる処理を記述する
+        }
+    }
 }
 
