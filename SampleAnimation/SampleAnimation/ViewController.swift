@@ -30,6 +30,12 @@ class ViewController: UIViewController {
         targetView.layer.add(animation, forKey: "cornerRadius")
         // 変更後も角丸を維持
         targetView.layer.cornerRadius = 20
+        
+        self.targetView.alpha = 1
+        UIView.animate(withDuration: 1.0) {
+            self.targetView.alpha = 0
+        }
+        
     }
 }
 
