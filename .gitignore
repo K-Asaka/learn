@@ -1,5 +1,6 @@
 playground.xcworkspace/
 .DS_Store
+*.mp3
 
 # Xcode
 #
@@ -91,4 +92,5 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
+
 
