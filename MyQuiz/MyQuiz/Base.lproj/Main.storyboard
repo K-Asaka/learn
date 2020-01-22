@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -9,16 +10,116 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MyQuiz" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MyQuiz" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ijl-Nt-OnW">
+                                <rect key="frame" x="121" y="82" width="133" height="48"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cv1-w8-9Cn">
+                                <rect key="frame" x="151" y="183" width="74" height="42"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <state key="normal" title="START"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="cv1-w8-9Cn" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="5Th-bu-A5y"/>
+                            <constraint firstItem="Ijl-Nt-OnW" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="82" id="EtN-LI-Slv"/>
+                            <constraint firstItem="cv1-w8-9Cn" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="151" id="jsI-1r-JgZ"/>
+                            <constraint firstItem="cv1-w8-9Cn" firstAttribute="top" secondItem="Ijl-Nt-OnW" secondAttribute="bottom" constant="53" id="oxW-6K-Wth"/>
+                            <constraint firstItem="Ijl-Nt-OnW" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="uPb-gu-tnU"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="139" y="130"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="8nF-7z-2Ph">
+            <objects>
+                <viewController id="2Mz-VG-T0l" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="rAn-yT-dFh">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Q1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kNs-6a-lGB">
+                                <rect key="frame" x="16" y="34" width="20.5" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="ヤフオク!にて過去最高額で落札された商品は何でしょう？" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="LQE-SJ-RtL">
+                                <rect key="frame" x="16" y="62.5" width="343" height="107.5"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="6Mh-HV-CmO">
+                                <rect key="frame" x="7" y="169" width="361" height="489"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yuo-ZP-xnR">
+                                        <rect key="frame" x="0.0" y="0.0" width="361" height="115"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" title="恐竜の化石">
+                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7bh-ed-2oh">
+                                        <rect key="frame" x="0.0" y="125" width="361" height="114.5"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" title="スペースシャトル">
+                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5jp-po-6sI">
+                                        <rect key="frame" x="0.0" y="249.5" width="361" height="115"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" title="タイムマシン">
+                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qlP-YV-h85">
+                                        <rect key="frame" x="0.0" y="374.5" width="361" height="114.5"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" title="無人島">
+                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="6Mh-HV-CmO" firstAttribute="top" secondItem="rAn-yT-dFh" secondAttribute="top" constant="169" id="2HM-Wy-eHu"/>
+                            <constraint firstItem="LQE-SJ-RtL" firstAttribute="trailing" secondItem="rAn-yT-dFh" secondAttribute="trailingMargin" id="Fr2-zz-DdM"/>
+                            <constraint firstItem="kNs-6a-lGB" firstAttribute="top" secondItem="aBI-xd-gVv" secondAttribute="top" constant="34" id="HJD-D6-xuG"/>
+                            <constraint firstItem="aBI-xd-gVv" firstAttribute="bottom" secondItem="6Mh-HV-CmO" secondAttribute="bottom" constant="9" id="IQx-dI-7T1"/>
+                            <constraint firstItem="aBI-xd-gVv" firstAttribute="bottom" secondItem="LQE-SJ-RtL" secondAttribute="bottom" constant="497" id="Sei-g8-q0K"/>
+                            <constraint firstItem="kNs-6a-lGB" firstAttribute="leading" secondItem="LQE-SJ-RtL" secondAttribute="leading" id="TmA-O6-Udd"/>
+                            <constraint firstItem="LQE-SJ-RtL" firstAttribute="top" secondItem="kNs-6a-lGB" secondAttribute="bottom" constant="8" id="bxw-E8-DYQ"/>
+                            <constraint firstItem="aBI-xd-gVv" firstAttribute="trailing" secondItem="6Mh-HV-CmO" secondAttribute="trailing" constant="7" id="hS6-dL-w2C"/>
+                            <constraint firstItem="LQE-SJ-RtL" firstAttribute="centerX" secondItem="6Mh-HV-CmO" secondAttribute="centerX" id="iXP-rv-9yC"/>
+                            <constraint firstItem="kNs-6a-lGB" firstAttribute="leading" secondItem="rAn-yT-dFh" secondAttribute="leadingMargin" id="uPt-Tk-835"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="aBI-xd-gVv"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xR9-PI-uFq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="828" y="129.98500749625188"/>
         </scene>
     </scenes>
 </document>
