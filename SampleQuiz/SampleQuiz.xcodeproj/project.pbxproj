@@ -14,6 +14,7 @@
 		472E3E5D23D880F100ECEC4D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 472E3E5C23D880F100ECEC4D /* Assets.xcassets */; };
 		472E3E6023D880F100ECEC4D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 472E3E5E23D880F100ECEC4D /* LaunchScreen.storyboard */; };
 		472E3E6A23D8816100ECEC4D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 472E3E6823D8812A00ECEC4D /* AudioToolbox.framework */; };
+		472E3E6E23D8874200ECEC4D /* custom.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 472E3E6D23D8874200ECEC4D /* custom.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		472E3E5F23D880F100ECEC4D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		472E3E6123D880F100ECEC4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		472E3E6823D8812A00ECEC4D /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		472E3E6D23D8874200ECEC4D /* custom.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = custom.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 		472E3E5223D880EE00ECEC4D /* SampleQuiz */ = {
 			isa = PBXGroup;
 			children = (
+				472E3E6D23D8874200ECEC4D /* custom.mp3 */,
 				472E3E5323D880EE00ECEC4D /* AppDelegate.swift */,
 				472E3E5523D880EE00ECEC4D /* SceneDelegate.swift */,
 				472E3E5723D880EE00ECEC4D /* ViewController.swift */,
@@ -140,6 +143,7 @@
 				472E3E6023D880F100ECEC4D /* LaunchScreen.storyboard in Resources */,
 				472E3E5D23D880F100ECEC4D /* Assets.xcassets in Resources */,
 				472E3E5B23D880EE00ECEC4D /* Main.storyboard in Resources */,
+				472E3E6E23D8874200ECEC4D /* custom.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
