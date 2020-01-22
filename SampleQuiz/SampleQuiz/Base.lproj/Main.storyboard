@@ -25,6 +25,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3cz-0q-zb5">
                                 <rect key="frame" x="107" y="254" width="200" height="30"/>
                                 <state key="normal" title="バイブレーション"/>
+                                <connections>
+                                    <action selector="tapVibration:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HWV-hv-jR0"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cXn-fc-BZm">
                                 <rect key="frame" x="107" y="94" width="200" height="30"/>

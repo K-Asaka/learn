@@ -37,5 +37,12 @@ class ViewController: UIViewController {
             // ここにはサウンドが鳴り終わったあとに呼ばれる処理を記述する
         }
     }
+    
+    @IBAction func tapVibration(_ sender: Any) {
+        // バイブレーションのみを発生させる
+        AudioServicesPlaySystemSoundWithCompletion(kSystemSoundID_Vibrate) {
+            // ここにはバイブレーションの振動が終わったあとに呼ばれる処理を記述する
+        }
+    }
 }
 
