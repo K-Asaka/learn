@@ -1,6 +1,7 @@
 playground.xcworkspace/
 .DS_Store
 *.mp3
+*.png
 
 # Xcode
 #
