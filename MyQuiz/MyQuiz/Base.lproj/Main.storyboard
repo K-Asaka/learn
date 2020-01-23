@@ -131,6 +131,61 @@
             </objects>
             <point key="canvasLocation" x="828" y="129.98500749625188"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="aOO-lA-65G">
+            <objects>
+                <viewController id="a0X-5S-4Uh" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1Lu-hp-xrE">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="8Id-ck-Itc">
+                                <rect key="frame" x="107" y="96" width="161" height="150"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="正解率は" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RtP-sN-cBv">
+                                        <rect key="frame" x="0.0" y="0.0" width="161" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i6z-we-qkd">
+                                        <rect key="frame" x="0.0" y="60" width="161" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="ZuZ-4V-INI"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="でした" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k0t-38-myc">
+                                        <rect key="frame" x="0.0" y="120" width="161" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="17K-Rh-K4I">
+                                <rect key="frame" x="80" y="332" width="214" height="40"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <state key="normal" title="タイトルへ戻る"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="8Id-ck-Itc" firstAttribute="centerX" secondItem="xap-aF-CoC" secondAttribute="centerX" id="GAP-eR-wwd"/>
+                            <constraint firstItem="17K-Rh-K4I" firstAttribute="centerX" secondItem="1Lu-hp-xrE" secondAttribute="centerX" id="Km5-Qb-bQE"/>
+                            <constraint firstItem="8Id-ck-Itc" firstAttribute="top" secondItem="xap-aF-CoC" secondAttribute="top" constant="96" id="p2p-DE-mZ0"/>
+                            <constraint firstItem="17K-Rh-K4I" firstAttribute="centerY" secondItem="1Lu-hp-xrE" secondAttribute="centerY" constant="18.5" id="t6N-v2-6E1"/>
+                            <constraint firstItem="17K-Rh-K4I" firstAttribute="top" secondItem="8Id-ck-Itc" secondAttribute="bottom" constant="86" id="wQ6-Ga-DkU"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="xap-aF-CoC"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zGr-Sb-UeE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1543.2" y="129.98500749625188"/>
+        </scene>
     </scenes>
     <resources>
         <image name="correct" width="202" height="202"/>
