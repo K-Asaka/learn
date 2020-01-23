@@ -13,6 +13,7 @@
 		472E3EA323D88EE400ECEC4D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 472E3EA123D88EE400ECEC4D /* Main.storyboard */; };
 		472E3EA523D88EE600ECEC4D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 472E3EA423D88EE600ECEC4D /* Assets.xcassets */; };
 		472E3EA823D88EE600ECEC4D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 472E3EA623D88EE600ECEC4D /* LaunchScreen.storyboard */; };
+		47969AAD23D9F428005F2011 /* question.csv in Resources */ = {isa = PBXBuildFile; fileRef = 47969AAC23D9F428005F2011 /* question.csv */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		472E3EA423D88EE600ECEC4D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		472E3EA723D88EE600ECEC4D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		472E3EA923D88EE600ECEC4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		47969AAC23D9F428005F2011 /* question.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = question.csv; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 				472E3E9D23D88EE400ECEC4D /* SceneDelegate.swift */,
 				472E3E9F23D88EE400ECEC4D /* ViewController.swift */,
 				472E3EA123D88EE400ECEC4D /* Main.storyboard */,
+				47969AAC23D9F428005F2011 /* question.csv */,
 				472E3EA423D88EE600ECEC4D /* Assets.xcassets */,
 				472E3EA623D88EE600ECEC4D /* LaunchScreen.storyboard */,
 				472E3EA923D88EE600ECEC4D /* Info.plist */,
@@ -127,6 +130,7 @@
 			files = (
 				472E3EA823D88EE600ECEC4D /* LaunchScreen.storyboard in Resources */,
 				472E3EA523D88EE600ECEC4D /* Assets.xcassets in Resources */,
+				47969AAD23D9F428005F2011 /* question.csv in Resources */,
 				472E3EA323D88EE400ECEC4D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
