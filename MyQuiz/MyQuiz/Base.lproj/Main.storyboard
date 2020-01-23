@@ -100,19 +100,29 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="correct" translatesAutoresizingMaskIntoConstraints="NO" id="fVQ-U7-33c">
+                                <rect key="frame" x="86.5" y="232.5" width="202" height="202"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="incorrect" translatesAutoresizingMaskIntoConstraints="NO" id="abH-AL-OmM">
+                                <rect key="frame" x="87" y="233" width="201" height="201"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="6Mh-HV-CmO" firstAttribute="top" secondItem="rAn-yT-dFh" secondAttribute="top" constant="169" id="2HM-Wy-eHu"/>
+                            <constraint firstItem="fVQ-U7-33c" firstAttribute="centerX" secondItem="rAn-yT-dFh" secondAttribute="centerX" id="Cwo-am-GKH"/>
+                            <constraint firstItem="abH-AL-OmM" firstAttribute="centerY" secondItem="rAn-yT-dFh" secondAttribute="centerY" id="Ddx-hd-ik9"/>
                             <constraint firstItem="LQE-SJ-RtL" firstAttribute="trailing" secondItem="rAn-yT-dFh" secondAttribute="trailingMargin" id="Fr2-zz-DdM"/>
                             <constraint firstItem="kNs-6a-lGB" firstAttribute="top" secondItem="aBI-xd-gVv" secondAttribute="top" constant="34" id="HJD-D6-xuG"/>
                             <constraint firstItem="aBI-xd-gVv" firstAttribute="bottom" secondItem="6Mh-HV-CmO" secondAttribute="bottom" constant="9" id="IQx-dI-7T1"/>
                             <constraint firstItem="aBI-xd-gVv" firstAttribute="bottom" secondItem="LQE-SJ-RtL" secondAttribute="bottom" constant="497" id="Sei-g8-q0K"/>
                             <constraint firstItem="kNs-6a-lGB" firstAttribute="leading" secondItem="LQE-SJ-RtL" secondAttribute="leading" id="TmA-O6-Udd"/>
+                            <constraint firstItem="fVQ-U7-33c" firstAttribute="centerY" secondItem="rAn-yT-dFh" secondAttribute="centerY" id="WMU-uC-78G"/>
                             <constraint firstItem="LQE-SJ-RtL" firstAttribute="top" secondItem="kNs-6a-lGB" secondAttribute="bottom" constant="8" id="bxw-E8-DYQ"/>
                             <constraint firstItem="aBI-xd-gVv" firstAttribute="trailing" secondItem="6Mh-HV-CmO" secondAttribute="trailing" constant="7" id="hS6-dL-w2C"/>
                             <constraint firstItem="LQE-SJ-RtL" firstAttribute="centerX" secondItem="6Mh-HV-CmO" secondAttribute="centerX" id="iXP-rv-9yC"/>
                             <constraint firstItem="kNs-6a-lGB" firstAttribute="leading" secondItem="rAn-yT-dFh" secondAttribute="leadingMargin" id="uPt-Tk-835"/>
+                            <constraint firstItem="abH-AL-OmM" firstAttribute="centerX" secondItem="rAn-yT-dFh" secondAttribute="centerX" id="w4X-9f-SJu"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="aBI-xd-gVv"/>
                     </view>
@@ -122,4 +132,8 @@
             <point key="canvasLocation" x="828" y="129.98500749625188"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="correct" width="202" height="202"/>
+        <image name="incorrect" width="201" height="201"/>
+    </resources>
 </document>
