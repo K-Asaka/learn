@@ -25,6 +25,9 @@
                                 <rect key="frame" x="151" y="183" width="74" height="42"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <state key="normal" title="START"/>
+                                <connections>
+                                    <segue destination="2Mz-VG-T0l" kind="presentation" id="GSc-Sa-BxC"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -45,9 +48,9 @@
         <!--View Controller-->
         <scene sceneID="8nF-7z-2Ph">
             <objects>
-                <viewController id="2Mz-VG-T0l" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="question" id="2Mz-VG-T0l" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="rAn-yT-dFh">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Q1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kNs-6a-lGB">
@@ -57,17 +60,17 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="ヤフオク!にて過去最高額で落札された商品は何でしょう？" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="LQE-SJ-RtL">
-                                <rect key="frame" x="16" y="62.5" width="343" height="107.5"/>
+                                <rect key="frame" x="16" y="62.5" width="343" height="87.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="6Mh-HV-CmO">
-                                <rect key="frame" x="7" y="169" width="361" height="489"/>
+                                <rect key="frame" x="7" y="169" width="361" height="469"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yuo-ZP-xnR">
-                                        <rect key="frame" x="0.0" y="0.0" width="361" height="115"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="361" height="110"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <state key="normal" title="恐竜の化石">
@@ -75,7 +78,7 @@
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7bh-ed-2oh">
-                                        <rect key="frame" x="0.0" y="125" width="361" height="114.5"/>
+                                        <rect key="frame" x="0.0" y="120" width="361" height="109.5"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <state key="normal" title="スペースシャトル">
@@ -83,7 +86,7 @@
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5jp-po-6sI">
-                                        <rect key="frame" x="0.0" y="249.5" width="361" height="115"/>
+                                        <rect key="frame" x="0.0" y="239.5" width="361" height="110"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <state key="normal" title="タイムマシン">
@@ -91,7 +94,7 @@
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qlP-YV-h85">
-                                        <rect key="frame" x="0.0" y="374.5" width="361" height="114.5"/>
+                                        <rect key="frame" x="0.0" y="359.5" width="361" height="109.5"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <state key="normal" title="無人島">
@@ -101,10 +104,10 @@
                                 </subviews>
                             </stackView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="correct" translatesAutoresizingMaskIntoConstraints="NO" id="fVQ-U7-33c">
-                                <rect key="frame" x="86.5" y="232.5" width="202" height="202"/>
+                                <rect key="frame" x="86.5" y="222.5" width="202" height="202"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="incorrect" translatesAutoresizingMaskIntoConstraints="NO" id="abH-AL-OmM">
-                                <rect key="frame" x="87" y="233" width="201" height="201"/>
+                                <rect key="frame" x="87" y="223" width="201" height="201"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -129,7 +132,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xR9-PI-uFq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="828" y="129.98500749625188"/>
+            <point key="canvasLocation" x="862" y="130"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="aOO-lA-65G">
@@ -184,7 +187,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zGr-Sb-UeE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1543.2" y="129.98500749625188"/>
+            <point key="canvasLocation" x="1574" y="130"/>
         </scene>
     </scenes>
     <resources>
