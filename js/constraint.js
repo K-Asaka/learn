@@ -10,7 +10,10 @@ let app = new Vue ({
         // 3000ミリ秒後にプロパティを追加
         this.timer = setTimeout(function() {
             // that.author.name = 'Y.YAMADA';
-            Vue.set(that.author, 'company', 'WINGSプロジェクト');
+            //Vue.set(that.author, 'company', 'WINGSプロジェクト');
+            // 複数のプロパティを追加する
+            that.author = Object.assign({}, that.author, 
+                { company: 'WINGSプロジェクト', sex: 'male', age: 18 });
         }, 3000);
     },
     beforeDestroy: function() {
