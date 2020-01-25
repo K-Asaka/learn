@@ -6,7 +6,6 @@
 //  Copyright © 2020 Katsuhiro Asaka. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 class StartViewController: UIViewController {
