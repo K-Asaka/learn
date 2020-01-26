@@ -15,6 +15,7 @@
 		4784A2E623DDBF8200BAC87F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4784A2E423DDBF8200BAC87F /* LaunchScreen.storyboard */; };
 		4784A2EE23DDC98F00BAC87F /* ItemSearchResultSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4784A2ED23DDC98F00BAC87F /* ItemSearchResultSet.swift */; };
 		4784A2F023DDCE3600BAC87F /* ItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4784A2EF23DDCE3600BAC87F /* ItemTableViewCell.swift */; };
+		4784A2F223DDD50D00BAC87F /* SearchItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4784A2F123DDD50D00BAC87F /* SearchItemTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		4784A2E723DDBF8200BAC87F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4784A2ED23DDC98F00BAC87F /* ItemSearchResultSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemSearchResultSet.swift; sourceTree = "<group>"; };
 		4784A2EF23DDCE3600BAC87F /* ItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTableViewCell.swift; sourceTree = "<group>"; };
+		4784A2F123DDD50D00BAC87F /* SearchItemTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchItemTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				4784A2DF23DDBF8100BAC87F /* Main.storyboard */,
 				4784A2ED23DDC98F00BAC87F /* ItemSearchResultSet.swift */,
 				4784A2EF23DDCE3600BAC87F /* ItemTableViewCell.swift */,
+				4784A2F123DDD50D00BAC87F /* SearchItemTableViewController.swift */,
 				4784A2E223DDBF8200BAC87F /* Assets.xcassets */,
 				4784A2E423DDBF8200BAC87F /* LaunchScreen.storyboard */,
 				4784A2E723DDBF8200BAC87F /* Info.plist */,
@@ -148,6 +151,7 @@
 				4784A2DE23DDBF8100BAC87F /* ViewController.swift in Sources */,
 				4784A2F023DDCE3600BAC87F /* ItemTableViewCell.swift in Sources */,
 				4784A2DA23DDBF8100BAC87F /* AppDelegate.swift in Sources */,
+				4784A2F223DDD50D00BAC87F /* SearchItemTableViewController.swift in Sources */,
 				4784A2DC23DDBF8100BAC87F /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

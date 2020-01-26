@@ -22,10 +22,10 @@
             </objects>
             <point key="canvasLocation" x="64" y="130"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Search Item Table View Controller-->
         <scene sceneID="ESW-7t-4au">
             <objects>
-                <tableViewController id="kkV-oZ-aXw" sceneMemberID="viewController">
+                <tableViewController id="kkV-oZ-aXw" customClass="SearchItemTableViewController" customModule="MySearchApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="120" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Jgw-b6-1Cl">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
