@@ -156,10 +156,10 @@
             </objects>
             <point key="canvasLocation" x="862" y="130"/>
         </scene>
-        <!--View Controller-->
+        <!--Result View Controller-->
         <scene sceneID="aOO-lA-65G">
             <objects>
-                <viewController id="a0X-5S-4Uh" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="result" id="a0X-5S-4Uh" customClass="ResultViewController" customModule="MyQuiz" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1Lu-hp-xrE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -194,6 +194,9 @@
                                 <rect key="frame" x="80" y="332" width="214" height="40"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <state key="normal" title="タイトルへ戻る"/>
+                                <connections>
+                                    <segue destination="GwE-N4-hIa" kind="unwind" unwindAction="goToTitle:" id="brB-nn-CZq"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -206,8 +209,12 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="xap-aF-CoC"/>
                     </view>
+                    <connections>
+                        <outlet property="correctPercentLabel" destination="i6z-we-qkd" id="jhI-n7-FZO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zGr-Sb-UeE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="GwE-N4-hIa" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1574" y="130"/>
         </scene>
