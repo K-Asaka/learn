@@ -16,6 +16,7 @@
 		47969AAD23D9F428005F2011 /* question.csv in Resources */ = {isa = PBXBuildFile; fileRef = 47969AAC23D9F428005F2011 /* question.csv */; };
 		47969AAF23D9F4EC005F2011 /* QuestionDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47969AAE23D9F4EC005F2011 /* QuestionDataManager.swift */; };
 		47F8B9B323DBD57F005AF3C4 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F8B9B223DBD57F005AF3C4 /* StartViewController.swift */; };
+		47F8B9B523DBDA66005AF3C4 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F8B9B423DBDA66005AF3C4 /* QuestionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		47969AAC23D9F428005F2011 /* question.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = question.csv; sourceTree = "<group>"; };
 		47969AAE23D9F4EC005F2011 /* QuestionDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionDataManager.swift; sourceTree = "<group>"; };
 		47F8B9B223DBD57F005AF3C4 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
+		47F8B9B423DBDA66005AF3C4 /* QuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 				47969AAC23D9F428005F2011 /* question.csv */,
 				47969AAE23D9F4EC005F2011 /* QuestionDataManager.swift */,
 				47F8B9B223DBD57F005AF3C4 /* StartViewController.swift */,
+				47F8B9B423DBDA66005AF3C4 /* QuestionViewController.swift */,
 				472E3EA423D88EE600ECEC4D /* Assets.xcassets */,
 				472E3EA623D88EE600ECEC4D /* LaunchScreen.storyboard */,
 				472E3EA923D88EE600ECEC4D /* Info.plist */,
@@ -150,6 +153,7 @@
 			files = (
 				47F8B9B323DBD57F005AF3C4 /* StartViewController.swift in Sources */,
 				472E3EA023D88EE400ECEC4D /* ViewController.swift in Sources */,
+				47F8B9B523DBDA66005AF3C4 /* QuestionViewController.swift in Sources */,
 				47969AAF23D9F4EC005F2011 /* QuestionDataManager.swift in Sources */,
 				472E3E9C23D88EE400ECEC4D /* AppDelegate.swift in Sources */,
 				472E3E9E23D88EE400ECEC4D /* SceneDelegate.swift in Sources */,
