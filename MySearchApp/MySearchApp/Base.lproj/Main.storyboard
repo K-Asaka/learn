@@ -100,10 +100,10 @@
             </objects>
             <point key="canvasLocation" x="1742.0289855072465" y="129.91071428571428"/>
         </scene>
-        <!--View Controller-->
+        <!--Web View Controller-->
         <scene sceneID="E6v-Jy-50Y">
             <objects>
-                <viewController id="DOz-Hh-w1J" sceneMemberID="viewController">
+                <viewController id="DOz-Hh-w1J" customClass="WebViewController" customModule="MySearchApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Nv4-1R-LiI">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -127,6 +127,9 @@
                         <viewLayoutGuide key="safeArea" id="0ZU-fl-oLM"/>
                     </view>
                     <navigationItem key="navigationItem" id="RQt-FV-n6e"/>
+                    <connections>
+                        <outlet property="webView" destination="RKD-BF-A7C" id="HF2-Su-Pex"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lmR-9f-dLZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
