@@ -40,3 +40,18 @@ int | 整数 | 100、-100
 float | 小数 | 3.14、-0.5
 str | 文字列 | "Hello"、'カレー'
 bool | 真偽値 | True、False
+
+
+### PyPDF2の導入
+
+```
+    git clone https://github.com/mstamy2/PyPDF2
+```
+
+PyPDF2フォルダに移動してインストールする。
+管理権限が必要。
+```
+    python setup.py install
+```
+
+`import PyPDF2`のコードを実行してエラーが出なければインストールは成功している。
