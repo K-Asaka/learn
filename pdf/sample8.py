@@ -1,7 +1,7 @@
 from PyPDF2 import PdfFileReader
 from PyPDF2 import PdfFileWriter
 
-fp = open("pdffiles/s20_GUIプログラム.pdf", 'rb')
+fp = open("pdffiles/sample2.pdf", 'rb')
 input = PdfFileReader(fp)
 
 pgnum = input.getNumPages()
