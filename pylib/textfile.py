@@ -1,3 +1,2 @@
-f = open('txtfiles/sample1.txt')
-print(f.read())
-f.close()
+with open('txtfiles/sample1.txt') as f:
+    print(f.read())
