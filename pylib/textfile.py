@@ -1,5 +1,2 @@
-with open('txtfiles/sample1.txt', 'a') as f:
-    f.write('書き込みもできます')
-
-with open('txtfiles/sample1.txt') as f:
+with open('txtfiles/sample2.txt', encoding='utf-8') as f:
     print(f.read())
