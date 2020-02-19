@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>Vue.js</title>
+</head>
+<body>
+<div id="app">
+    <form>
+        <label for="memo">メモ：</label>
+        <input type="text" id="memo" v-model.trim="memo" v-on:change="onchange">
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>   
+<script>window.Vue || docuemnt.write('<script src="lib/vue.min.js"><\/script>');</script>
+<script src="js/model_trim.js"></script>
+
+</body>
+</html>
