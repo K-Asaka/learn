@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>Vue.js</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div id="app">
+    <template v-for="s in songs">
+        <header>{{ s.title }}</header>
+        <div>{{ s.lyrics }}</div>
+        <footer>{{ s.composer }} 作曲</footer>
+    </template>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>   
+<script>window.Vue || docuemnt.write('<script src="lib/vue.min.js"><\/script>');</script>
+<script src="js/for_multi.js"></script>
+
+</body>
+</html>
