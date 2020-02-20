@@ -6,7 +6,7 @@ new Vue({
     methods: {
         // ボタンクリック時に2番目の要素を変更
         onclick: function () {
-            this.list[1] = '茶パジャマ';
+            Vue.set(this.list, 1, '茶パジャマ');
         }
     }
 });
