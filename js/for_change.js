@@ -6,8 +6,8 @@ new Vue({
     methods: {
         // ボタンクリック時に2番目の要素を変更
         onclick: function () {
-            //Vue.set(this.list, 1, '茶パジャマ');
-            this.list.splice(1, 1, '茶パジャマ');
+            // 配列の先頭要素を削除
+            this.list.shift();
         }
     }
 });
