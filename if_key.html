@@ -16,11 +16,11 @@
         <!-- 支払方法に応じて、入力ボックスを切り替え -->
         <div v-if="pay === 'credit'">
             カード番号：
-            <input type="text">
+            <input type="text" key="credit">
         </div>
         <div v-else-if="pay === 'bank'">
             口座番号：
-            <input type="text">
+            <input type="text" key="bank">
         </div>
     </fieldset>
 </div>
