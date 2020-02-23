@@ -6,7 +6,7 @@
 </head>
 <body>
 <div id="app">
-    <div id="main" v-on:click.left="onleftclick" v-on:click.right.prevent="onrightclick">
+    <div id="main" v-on:click.left="onleftclick" v-on:click.ctrl.exact.right.prevent="onrightclick">
         ボタンの右クリックでコンテキストメニューを表示します。
     </div>
     <!-- コンテキストメニューの定義 -->
