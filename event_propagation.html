@@ -10,7 +10,7 @@
         親要素
         <div id="my" v-on:click.capture="onMyClick">
             現在要素
-            <div id="child" v-on:click.capture="onChildClick">
+            <div id="child" v-on:click.capture.stop="onChildClick">
                 子要素
             </div>
         </div>
