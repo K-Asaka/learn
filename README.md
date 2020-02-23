@@ -272,3 +272,38 @@ https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanh
 * Firefox拡張  
 https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/
 
+## コンポーネント
+
+### コンポーネントの定義
+
+``` Vue.js
+Vue.component(id, def)
+```
+
+id: コンポーネントの名前。ケバブケース記法かPascalケース記法。HTMLタグとの名前のバッティングに気をつける  
+def: コンポーネントの定義情報。「オプション名: 値,...」形式のオブジェクトとして指定する
+
+コンポーネントでは、Vueコンストラクタでは利用しなかったオプションも登場する。templateなどは、コンポーネントによって描画されるテンプレートを表す。テンプレート内では、これまでと同じく{{ ... }}構文やディレクティブも使えるが、**単一のルート要素をもたなければならない**点は注意。
+
+以下のようなテンプレートはエラーとなる。
+
+``` Vue.js
+template: `
+  <div>こんにちは、{{ name }}！</div>
+  <div>こんばんは、{{ name }}！</div>
+`,
+```
+
+この例であれば、複数の要素を<div>要素で束ね、ルート要素はひとつになるようにすればよい。
+
+``` Vue.js
+template: `<div>
+  <div>こんにちは、{{ name }}！</div>
+  <div>こんばんは、{{ name }}！</div>
+</div>`,
+```
+
+### データオブジェクトの定義
+
+Vueコンストラクタと同じく、内部データの管理はdataオプションで行う。ただし、**オブジェクトリテラルを返す関数**でなければならない。
+
