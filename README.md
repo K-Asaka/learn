@@ -233,3 +233,31 @@ div … ターゲットフェーズ(イベントの発生元(要素)を特定)
 
 伝播の過程で、対応するハンドラが存在する場合は、それらも順に実行される。
 
+## キーコードのエイリアス
+* .enter
+* .tab
+* .delete(delete、Backspaceいずれにも対応)
+* .esc
+* .space
+* .up
+* .down
+* .left
+* .right
+
+### KeyboardEvent.keyの値をケバブケース記法に変換
+
+key値 | ケバブケース | キー
+---|---|---
+Escape | escape | Escキー
+NumLock | num-lock | Num Lockキー
+Backspace | backspace | Backspaceキー
+Insert | insert | Insertキー
+Delete | delete | Deleteキー
+PrintScreen | print-screen | Print Screenキー
+Home | home | homeキー
+End | end | endキー
+PageUp | page-up | Page Upキー
+PageDown | page-down Page Downキー
+ScrollLock | scroll-lock | Scroll Lockキー
+AudioVolumeUp | audio-volume-up | 音量上昇キー
+AudioVolumeDown | audio-volume-down | 音量減少キー
