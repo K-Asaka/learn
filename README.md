@@ -311,4 +311,88 @@ Vueコンストラクタと同じく、内部データの管理はdataオプシ�
 
 componentメソッド側からPascalケース記法で名前を定義した場合、呼び出し側ではPascalケース記法、ケバブケース記法のどちらでも呼び出しが可能。一方、ケバブケース記法で定義された名前は、呼び出し側でもケバブケース記法でしか呼び出せない。
 
+## プロパティ値の型を制限する
+
+検証ルールは「ルール名: 値,...」形式のオブジェクトとして指定できる。ルール名として指定できるのは、以下の表のもの。
+
+ルール名 | 概要
+---|---
+type | データ型(String, Number, Boolean, Function, Object, Array, Date, Symbolのいずれか)
+required | プロパティが必須か
+default | 値が指定されなかった場合の既定値
+validator | カスタムの検証関数
+
+### 検証ルールのさまざまな表現方法
+
+#### (1) データ型だけを指定する
+
+``` Vue.js
+props: {
+    // yourNameプロパティはString/Number型のいずれか
+    yourName: [ String, Number ]
+}
+```
+
+#### (2) 任意の型を検証する
+
+typeオプションは、内部的にはinstanceof演算子で型を判定している。よってカスタムの型を指定できる。
+
+``` Vue.js
+props: {
+    // userプロパティはUser型
+    user: User
+}
+```
+
+この場合、内部的には「user instanceof User」でプロパティ値が検証される。
+
+
+#### (3) 既定値の指定方法に注意
+
+文字列や数値、真偽型などの基本型については、defaultオプションに値を渡すだけ。以下の例で呼び出し側のyour-name属性を省略したときに「名無権兵衛」が適用される。
+
+``` Vue.js
+props: {
+    yourName: {
+        type: String,
+        default: '名無権兵衛'
+    }
+}
+```
+
+ただし、既定値が配列やオブジェクトである場合は、値そのものではなく、以下のように既定値を返す関数を渡す。
+
+``` Vue.js
+props: {
+    details: {
+        type: Object,
+        default: function () {
+            return { value: 'Hoge' }
+        }
+    }
+}
+```
+
+#### (4) 自作の検証ルールも指定できる
+
+validatorオプションを利用することで、自作の検証ルールを指定することもできる。以下はyourNameプロパティが文字列で、文字数が5文字以内であることをチェックする。検証関数は、引数としてプロパティ値を受け取り、戻り値として検証の成否をtrueまたはfalseで返すようにする。
+
+``` Vue.js
+props: {
+    yourName: {
+        type: String,
+        required: true,
+        // 文字数が5文字以内であれば成功
+        validator: function () {
+            return value.length <= 5;
+        }
+    }
+}
+```
+
+yourNameプロパティが5文字より大きい場合には、デベロッパーツールの[Console]タブに「Invalid prop: custom validator check failed for prop "yourName".」のようなエラーが表示される。
+
+### 子コンポーネント->親コンポーネントの伝達
+
+子コンポーネントでなんらかの処理を実行したときに、親コンポーネントに対して、「なんらかの変化が起こったこと」(イベント)を通知する。その際に、関連するデータ(任意のオブジェクト)を添付できる。
 
