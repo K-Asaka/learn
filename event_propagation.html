@@ -8,7 +8,7 @@
 <div id="app">
     <div id="parent" v-on:click="onParentClick">
         親要素
-        <div id="my" v-on:click.stop.self="onMyClick">
+        <div id="my" v-on:click.self.stop="onMyClick">
             現在要素
             <div id="child" v-on:click="onChildClick">
                 子要素
