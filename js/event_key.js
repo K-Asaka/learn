@@ -10,3 +10,8 @@ new Vue({
         }
     }
 });
+
+Vue.config.keyCodes = {
+    'zen-han': 243,
+    'no-change': 29
+};
