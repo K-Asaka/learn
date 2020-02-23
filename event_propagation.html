@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>Vue.js</title>
+</head>
+<body>
+<div id="app">
+    <div id="parent" v-on:click="onParentClick">
+        親要素
+        <div id="my" v-on:click="onMyClick">
+            現在要素
+            <div id="child" v-on:click="onChildClick">
+                子要素
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>   
+<script>window.Vue || docuemnt.write('<script src="lib/vue.min.js"><\/script>');</script>
+<script src="js/event_propagation.js"></script>
+
+</body>
+</html>
