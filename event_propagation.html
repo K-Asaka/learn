@@ -6,11 +6,11 @@
 </head>
 <body>
 <div id="app">
-    <div id="parent" v-on:click.capture="onParentClick">
+    <div id="parent" v-on:click="onParentClick">
         親要素
-        <div id="my" v-on:click.capture="onMyClick">
+        <div id="my" v-on:click.stop.self="onMyClick">
             現在要素
-            <div id="child" v-on:click.capture.stop="onChildClick">
+            <div id="child" v-on:click="onChildClick">
                 子要素
             </div>
         </div>
