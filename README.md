@@ -261,3 +261,14 @@ PageDown | page-down Page Downキー
 ScrollLock | scroll-lock | Scroll Lockキー
 AudioVolumeUp | audio-volume-up | 音量上昇キー
 AudioVolumeDown | audio-volume-down | 音量減少キー
+
+## Vue.jsアプリ開発を支援するブラウザ拡張「Vue.js devtools」
+
+* Chrome拡張  
+https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd
+
+※ChromeでファイルシステムからVue.jsを実行する場合には、拡張機能の設定画面を開き、[ファイルのURLへのアクセスを許可する]を有効にする必要がある。
+
+* Firefox拡張  
+https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/
+
