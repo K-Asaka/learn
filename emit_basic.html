@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>Vue.js</title>
+</head>
+<body>
+<div id="app">
+    <p>現在値：{{ current }}</p>
+    <!-- 増分値の異なるボタンを配置 -->
+    <my-counter step="1" v-on:plus="onplus"></my-counter>
+    <my-counter step="2" v-on:plus="onplus"></my-counter>
+    <my-counter step="-1" v-on:plus="onplus"></my-counter>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>   
+<script>window.Vue || docuemnt.write('<script src="lib/vue.min.js"><\/script>');</script>
+<script src="js/emit_basic.js"></script>
+
+</body>
+</html>
