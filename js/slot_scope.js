@@ -10,7 +10,7 @@ Vue.component('my-book', {
         };
     },
     template: `<div>
-        <slot>{{ book.title }} ({{ book.publish}} ) </slot>
+        <slot v-bind:book="book">{{ book.title }} ({{ book.publish}} ) </slot>
     </div>`
 });
 
