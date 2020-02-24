@@ -422,3 +422,23 @@ v-slotにも省略構文が用意されている。「#」で表記できる。
 
 <component>要素は「コンポーネントの入れ物」で、あらかじめ用意したコンポーネントをインポートし、動的な切り替えを可能にする。
 
+### <keep-alive>要素の属性
+
+#### (1) max属性
+
+キャッシュするコンポーネントの最大数を指定する。キャッシュの個数が、この値を超えた場合、その時点で最近一番アクセスされていないコンポーネントから破棄される。
+
+``` Vue.js
+<keep-alive v-bind:max="5">...</keep-alive>
+```
+
+#### (2) include、exclude属性
+
+キャッシュすべきコンポーネントをinclude属性で、キャッシュすべきでないコンポーネントをexclude属性で、文字列(カンマ区切り)、配列、正規表現のいずれかで指定する。
+
+``` Vue.js
+<keep-alive include="com1,com2">...</keep-alive>
+<keep-alive v-bind:include="['com1', 'com2']">...</keep-alive>
+<keep-alive v-bind:include="/com[12]/">...</keep-alive>>
+```
+
