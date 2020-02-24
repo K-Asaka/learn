@@ -6,7 +6,7 @@
 </head>
 <body>
 <div id="app">
-    <my-book v-slot:default="slotProp">
+    <my-book v-slot="slotProp">
         {{ slotProp.book.title }} ({{ slotProp.book.price }}円)
     </my-book>
 </div>
