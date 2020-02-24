@@ -1,6 +1,6 @@
 // <input>お嘘を出力するだけのコンポーネント
 Vue.component('my-input', {
-    template: `<input type="text">`
+    template: `<label>名前：</label><input type="text"></label>`
 });
 
 new Vue({
