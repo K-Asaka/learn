@@ -3,12 +3,24 @@
     width: 350px;
     overflow: hidden;
 }
-/* アニメーション全体の設定 */
-.v-enter-active, .v-leave-active {
-    transition:opacity 5s;
+/* キーフレームを定義 */
+@keyframes slide-in {
+    0% {
+        transform: translateX(100%);
+    }
+    10% {
+        transform: translateX(20%);
+    }
+    100% {
+        transform: translateX(0);
+    }
 }
 
-/* アニメーション前後のスタイルを設定 */
-.v-enter, .v-leave-to {
-    opacity: 0.0;
+/* アニメーションの方法を宣言 */
+.v-enter-active {
+    animation: slide-in 1.5s;
+}
+
+.v-leave-active {
+    animation: slide-in 1.5s reverse;
 }
