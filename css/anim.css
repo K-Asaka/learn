@@ -5,22 +5,22 @@
 }
 /* アニメーション全体の設定 */
 .v-enter-active, .v-leave-active {
-    transition: height 1s;
+    transition:opacity 5s;
 }
 
 /* アニメーション前後のスタイルを設定 */
 .v-enter {
-    height: 0px;
+    opacity: 0.0;
 }
 
 .v-enter-to {
-    height: 200px;
+    opacity: 1.0;
 }
 
 .v-leave {
-    height: 200px;
+    opacity: 1.0;
 }
 
 .v-leave-to {
-    height: 0xp;
+    opacity: 0.0;
 }
