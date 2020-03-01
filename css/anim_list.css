@@ -5,11 +5,15 @@
 }
 
 /* 追加／削除時にTransitionを適用 */
-.v-enter-active, .v-leave-active {
+.v-enter-active, .v-leave-active, .v-move {
     transition: transform 1s;
 }
 
 /* 追加前／削除後の位置を宣言 */
 .v-enter, .v-leave-to {
     transform: translateX(80%)
+}
+
+.v-leave-active {
+    position: absolute;
 }
