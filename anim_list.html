@@ -13,6 +13,7 @@
             <input id="todo" type="text" size="40" v-model="todo"><br>
             <input type="button" value="追加" v-on:click="onadd">
             <input type="button" value="削除" v-on:click="onremove">
+            <input type="button" value="ソート" v-on:click="onsort">
         </form>
         <!-- リストにアニメーション効果を適用 -->
         <transition-group tag="ul">
