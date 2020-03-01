@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/anim_js.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/velocity/2.0.3/velocity.min.js"></script>
+    <title>Vue.js</title>
+</head>
+<body>
+<div id="app">
+    <input type="button" value="表示／非表示" v-on:click="onclick">
+    <transition v-bind:css="false" v-on:enter="onenter" v-on:leave="onleave">
+        <div id="panel" v-show="flag">
+            WINGSプロジェクトで一緒に執筆の仕事をしてみませんか？<br />
+            ただいまメンバー募集中！<br />
+            是非、ご応募ください。
+        </div>
+    </transition>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>   
+<script>window.Vue || docuemnt.write('<script src="lib/vue.min.js"><\/script>');</script>
+<script src="js/anim_js.js"></script>
+
+</body>
+</html>
