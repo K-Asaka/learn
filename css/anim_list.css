@@ -1,0 +1,15 @@
+#panel {
+    border: 1px solid #000;
+    width: 350px;
+    overflow: hidden;
+}
+
+/* 追加／削除時にTransitionを適用 */
+.v-enter-active, .v-leave-active {
+    transition: transform 1s;
+}
+
+/* 追加前／削除後の位置を宣言 */
+.v-enter, .v-leave-to {
+    transform: translateX(80%)
+}
