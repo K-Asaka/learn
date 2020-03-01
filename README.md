@@ -491,3 +491,22 @@ leave-active-class | v-leave-active
 leave-class | v-leave
 leave-to-class | v-leave-to
 
+### JavaScriptによるアニメーションの制御
+
+<transition>要素が、次のイベント属性を提供している。
+イベント属性で紐付いたイベントハンドラのことを、トランジションフックと言う。
+
+属性 | 概要
+---|---
+before-enter | 要素が挿入される前
+before-leave | 要素が非表示になる前
+before-appear | 要素の初回描画の前
+enter | 要素挿入後、アニメーション開始前
+leave | before-leaveの後で、非表示アニメーション開始前
+appear | 要素の初回描画時
+after-enter | 要素が挿入された後
+after-appear | 要素の初回描画の後
+enter-cancelled | 要素の挿入をキャンセルしたとき
+leave-cancelled | 要素の非表示をキャンセルしたとき(v-showのみ)
+appear-cancelled | 要素の初回描画をキャンセルしたとき
+
