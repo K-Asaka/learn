@@ -478,3 +478,16 @@ cubic-bezier(x1,y1,x2,y2) | 制御点(x1,y1) (x2,y2)からできるベジェ曲�
 
 n個の制御点をもとに描かれるn-1次曲線。
 
+### トランジションクラスを置き換える
+
+トランジションクラスを置き換えるための属性
+
+属性 | 既定のスタイル
+---|---
+enter-active-class | v-enter-active
+enter-class | v-enter
+enter-to-class | v-enter-to
+leave-active-class | v-leave-active
+leave-class | v-leave
+leave-to-class | v-leave-to
+
