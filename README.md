@@ -510,3 +510,44 @@ enter-cancelled | 要素の挿入をキャンセルしたとき
 leave-cancelled | 要素の非表示をキャンセルしたとき(v-showのみ)
 appear-cancelled | 要素の初回描画をキャンセルしたとき
 
+### createElementメソッドの構文
+```
+createElement(name [,data] [,nodes])
+
+name：要素名
+data：データオブジェクト(指定できるオプションは以下の表の通り)
+nodes：子要素(複数の場合は配列)
+```
+
+オプション | 概要
+---|---
+attrs | 属性 (class / style 以外)
+class | class属性
+style | style属性
+props | コンポーネントのプロパティ
+domProps | DOMプロパティ (textContentなど)
+on | イベントハンドラ
+nativeOn | イベントハンドラ (ブラウザネイティブ)
+
+### JSX
+
+大雑把に言えば、JavaScriptコードにHTMLを埋め込むためのしくみ。
+temp_render.jsは以下のように表せる。
+
+```
+switch (this.type) {
+    case 'text':
+      return <p>...Now Loading...</p>;
+    case 'image':
+      return <img src="loading.gif" alt="loading" />;
+    ...中略...
+}
+```
+
+JSXはそのままHTMLではない。
+最低限おさえておきたい制約は以下の通り。
+
+* 空要素は「～ />」で終える
+* 名前の異なる属性がある (class、for、tabindexなどはclassName、htmlFor、tabIndexで置き換え)
+* コメント構文 &lt;!-- ～ --&gt;は利用できない
+* JSXにJavaScriptの式を埋め込むには {...} でくくる
