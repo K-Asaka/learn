@@ -7,6 +7,11 @@ Vue.use(VeeValidate, {
                 required: function (field, param) {
                     return field + 'を入力してください';
                 }
+            },
+            attributes: {
+                name: '氏名',
+                age: '年齢',
+                sex: '性別'
             }
         }
     }
