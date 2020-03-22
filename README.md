@@ -927,3 +927,19 @@ root(プロジェクトフォルダ)
 ルーティングに関わるコンポーネントは`/views`フォルダに、より細かな部品は`/components`フォルダに、それぞれ格納するのが慣例。
 小規模なアプリならば、`/components`にまとめても良い。
 
+#### ルーティング情報の定義
+
+ルータを利用するには、Routerオブジェクトを生成する。
+
+
+ルータコンストラクタの主なオプション
+オプション | 概要 | 既定値
+--- | --- | ---
+mode | 動作モード(hash | history) | hash
+routes | ルーティング情報 | -
+base | アプリの基底URL | /
+fallback | ブラウザがHistory APIに未対応の場合、hashモードにフォールバックするか | true
+linkActiveClass | 現在ページを表すリンクに適用されるスタイルクラス | router-link-active
+linkExactActiveClass | 完全一致な現在ページを表すリンクに適用されるスタイルクラス | router-link-exact-active
+scrollBehavior | ページ移動時のスクロールの方法 | -
+
