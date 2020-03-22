@@ -843,3 +843,45 @@ methods: {
     onclick(e) { ... },
 }
 ```
+
+### TypeScript
+
+#### TypeScriptの導入
+
+Vue CLIを利用している場合、プロジェクト作成時に`[Manually select features]`(カスタムインストール)を選択することで、TypeScript利用のためのコンパイラから設定、テンプレートを組み込むことが可能。
+カスタムインストール時に`TypeScript`を選択することで利用することが可能になる。
+
+#### TypeScriptプロジェクトのフォルダ構造
+
+root(プロジェクトフォルダ)
+├─ src
+│   ├─ components
+│   │    └─ HelloWorld.vue (HelloWorldコンポーネント)
+│   ├─ App.vue (Appコンポーネント)
+│   ├─ main.ts (起動スクリプト)
+│   ├─ shims-txs.d.ts (型定義ファイル)
+│   └─ shims-vue.d.ts (型定義ファイル (.vueファイル))
+├─ tsconfig.json (TypeScriptの設定ファイル)
+└─ tslint.json (TSLintの設定ファイル)
+
+
+tsconfig.jsonで書かれている設定内容
+
+* compilerOptionsオプション：コンパイラの動作オプション
+サブオプション | 概要
+--- | ---
+target | JavaScriptのバージョン(es5、es2015～2017、esnext)
+module | JavaScriptモジュールの形式(none、commonjs、amd、system、umd、es2015、esnext)
+strict | すべての厳密な型チェックオプションを有効にするか
+jsx | JSXのモード(React、Preserve)
+moduleResolution | モジュールの解決方法(none、classic)
+experimentalDecorators | デコレーターを有効にするか
+allowSyntheticDefaultImports | default export無しでもdefault importを許可するか
+sourceMap | ソースマップを作成するか
+baseUrl | 非相対パスの基準となる場所
+types | コンパイラに含める宣言ファイルのリスト
+paths | モジュールのパス
+lib | コンパイルに含めるライブラリ
+
+* includeオプション：コンパイル対象となるファイルパターン
+* excludeオプション：コンパイル対象から除外するファイルパターン
