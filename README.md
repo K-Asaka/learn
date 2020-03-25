@@ -930,7 +930,36 @@ root(プロジェクトフォルダ)
 #### ルーティング情報の定義
 
 ルータを利用するには、Routerオブジェクトを生成する。
+どのURLに対して、どのコンポーネントを紐付けるかを準備しておく必要がある。
+ルーティング設定を表すのは、/src/router.jsの役割。
 
+```router.js
+import Vue from 'vue'
+import Router from 'vue-router'
+import Home from './views/Home.vue'
+
+// Vue Routerを有効化
+Vue.use(Router)
+
+// Routerオブジェクト
+export default new Router({
+    mode: 'history',
+    base: process.env.BASE_URL,
+    // ルーティングテーブルを定義
+    routes: [
+        {
+            path: '/',
+            name: 'home',
+            component: Home
+        },
+        {
+            path: '/about',
+            name: 'about',
+            component: () => import('./views/About.vue')
+        }
+    ]
+})
+```
 
 ルータコンストラクタの主なオプション
 オプション | 概要 | 既定値
@@ -959,6 +988,165 @@ alias | エイリアス
 meta | ルートのメタ情報(「キー名:値,...」形式)
 caseSensitive | 大文字小文字を無視するか
 
+pathやcomponentの組み合わせで「/～にアクセスしたら、、xxxxコンポーネントを呼び出す」のように表すのが最低限の構成。
+先にあげたソースコードでは、次のようなルートを定義したことになる。
+
+* 「/」でHomeコンポーネントを呼び出す(実体はHome.vue)
+* 「/about」でAboutコンポーネントを呼び出す(実体はAbout.vue)
+
+いずれの.vueファイルも、既定では/src/viewsフォルダに用意されている。ルート定義に利用するコンポーネントは、`import コンポーネント名 from './views/ファイル名'`形式であらかじめインポートしておく。
+
+#### コンポーネントの非同期ロード
+
+Vue CLIの既定の設定では、すべてのコードはapp.jsにバンドルされたうえで実行される。しかし、アプリの規模が大きくなれば、.jsファイルも肥大化し、比例して起動時間も増加する。そこで、巨大なコンポーネント、そもそもアクセス頻度の低いコンポーネントは、非同期ロードさせるようにすることで、app.jsから分割し、必要になったところでロードできるようになる。
+非同期ロードをしているコードは以下の部分。
+
+`component: () => import('./views/About.vue')`
+
+componentオプションに、コンポーネントを取得するための関数を渡す。
+import命令そのものを渡すのではなく、import命令を呼び出すための関数である点に注意。
+
+#### ルートの有効化
+
+定義されたルートは、/src/main.jsでVueインスタンスに紐付けられている。
+
+```main.js
+import Vue from 'vue'
+import App from './App.vue'
+import router from './router'
+
+Vue.config.productionTip = false
+
+new VUe({
+    router,
+    render: h => h(App)
+}).$mount('#app')
+```
+
+`router,`は`router: router,`としても同じ。
+プロパティ名と値とが同じ場合には、このような省略表記が可能。
+
+### メインコンポーネント(App.vuew)
+
+ルーティングによる表示領域、画面遷移の方法を見ていく。
+
+```App.vue
+<template>
+    <div id="app">
+        <div id="nav">
+            <router-link to="/">Home</router-link>
+            <router-link to="/about">About</router-link>
+        </div>
+        <router-view />
+    </div>
+</template>
+```
+
+ルータ経由でページを遷移する場合には、標準的なアンカータグ(`<a>`)の代わりに、`<router-link>`要素を利用する。
+v-bindディレクティブ経由で、文字列、オブジェクトとして移動先の情報を渡すこともできる。
+以下はすべて同じ意味。
+
+```
+<router-link to="/about">About</router-link>
+<router-link v-bind:to="'/about'">About</router-link>
+<router-link v-bind:to="{ path: '/about' }">About</router-link>
+<router-link v-bind:to="{ name: 'about' }">About</router-link>
+```
+
+最後のnameプロパティは、ルーティング情報で定義されたコンポーネント名。Vue Routerでは、このように名前で移動先を表すこともできる。これを**名前付きルート**という。
+ルータ経由で呼び出されたコンポーネントは、<router-link>要素で確保された領域に反映される。ルーティングを利用するには、router-viewによる表示領域の宣言は必須。
+
+#### オブジェクトで指定できるプロパティ
+
+オブジェクト形式で移動先のパスを指定する場合、pathやnameの他にも、以下のようなパラメータ情報を指定できる。
+
+* params：ルートパラメータ
+* query：クエリ情報
+
+#### プログラムからページ遷移
+
+標準的なJavaScriptであれば`location.href`プロパティなどを利用する。
+しかし、これはページ全体を差し替える命令のため、ルータ環境では使えない。
+ルータ経由でのページの移動には、`$router.push`メソッドを利用する。
+次のコードの場合、ボタンクリック時に「/」(トップ画面)に移動する例。
+
+```About.vue
+<template>
+    <div class="about">
+        ...中略...
+        <button v-on:click="onclick">トップ</button>
+    </div>
+</template>
+
+<script>
+export default {
+    methods: {
+        // ボタンクリックで「/」に移動
+        onclick(): {
+            this.$router.push('/')
+        }
+    }
+}
+</script>
+```
+<router-link>要素に対する場合と同じく、pushメソッドにもオブジェクトを引き渡せる。
+
+### ルータ経由で情報を渡す方法
+
+#### パスの一部をパラメータとして引き渡す ～ルートパラメータ
+
+たとえば「～/article/108」「～/books/978-4-7981-5757-3」のようなパスで、コンポーネントに対して「108」「978-4-7981-5757-3」のような値を引き渡すことができる。
+パラメータ値をパスの一部として表現できるため、視認性にも優れ、ルータ経由での値の引き渡しとしては、よく利用されるアプローチ。このようなパラメータのことをルートパラメータと言う。
+
+##### [1] ルートを追加する
+
+```router.js
+import Article from './components/Article.vue'
+...中略...
+export default new Router({
+    ...中略...
+    routes: [
+        ...中略...
+        // :aidパラメータを受け取るArticleルート
+        {
+            path: '/article/:aid',
+            name: 'article',
+            component: Article
+        }
+    ]
+})
+```
+
+ポイントとなるのは、pathパラメータに含まれた「:名前」の表記。
+これはパラメータの置き場所(プレイスホルダー)で、「:名前」の部分に「～/article/108」「～/article/1」のように、任意の値を埋め込めることを意味する。
+ここでは、:aidパラメータをひとつだけ配置しているが、「/blog/:year/:month/:day」のように、複数のパラメータを埋め込むことも可能。
+
+##### [2] ルートパラメータを受け取る
+
+```Article.vue
+<template>
+    <span>記事コード:{{ $route.params.aid}}</span>
+</template>
+```
+
+ルートパラメータは`this.$route.param.パラメータ`で参照できる(テンプレート内であれば、単に`$route.params.パラメータ`)。
+
+##### [3] リンク文字列を生成する
+
+Appコンポーネントからのリンクの用意。
+```App.vue
+<template>
+    <div id="app">
+        <div id="nav">
+            <router-link to="/">Home</router-link>
+            <router-link to="/about">About</router-link>
+            <router-link to="/article/108">記事:No.108</router-link>
+        </div>
+        <router-view>
+    </div>
+</template>
+```
+
 #### $routeオブジェクトで取得できる情報
 
 プロパティ | 概要
@@ -970,4 +1158,603 @@ query | クエリ情報(?～以降の情報)。「キー名:値,...」形式
 hash | ハッシュ(#～以降の文字列)
 matched | すべてのルート情報(ネストまで含む)
 redirectFrom | リダイレクト元の名前
+
+
+##### クエリ情報、ハッシュ
+
+ルートで明示的に宣言しなくてもよい分、クエリ情報、ハッシュは手軽な情報受け渡しの手段に見える。しかし、ルート経由で受け渡しする情報があいまいになり、なにより独自の記法である分、ルートパラメータに比べるとパスは読みにくくなる。
+SMO(Social Media Optimization)などの観点から、それ自体が意味を持った、ユーザーにとって視認しやすいURLが好まれる傾向にある。
+
+### ルートパラメータのさまざまな表現
+
+#### 任意のパラメータ
+
+パラメータの末尾に`?`で表す。
+
+`/article/:aid?`
+
+このルートは、
+
+* /article      (undefined)
+* /article/108  (108)
+
+のようなパスにマッチする(カッコ内はaidの値)。
+パラメータ値がundefinedになる可能性があるため、一般的にはコンポーネント側でなんらかの規定値を用意すべき。
+
+#### 可変長のパラメータ
+
+パラメータの末尾に`*`を付与することで、`/`をまたいで残りのパスをすべて取得できる。
+
+`/article/:aid*`
+
+このルートは、
+
+* /article              (undefined)
+* /article/108          (108)
+* /article/vue/router   (vue/router)
+
+のようなパスにマッチする。複数値はそのまま`/`区切りで返される。
+値を分割するのはコンポーネント側の役割。
+`*`は正しくは「0個以上の値にマッチ」(=値を省略できる)。もしも最低限一つ以上の値を持たせたい場合には`+`を利用する。
+
+`/article/:aid+`
+
+このルートは`/article/108`、`/article/vue/router`にはマッチするが、`/article`にはマッチしない。
+
+##### 可変長パラメータの注意点
+
+可変長パラメータは、パスの末尾で利用する。
+そうでなくてもエラーにはならないが、パラメータの振り分けがあいまいになる。
+以下、可変長パラメータを末尾にしなかった場合の例と、パラメータへの反映結果をまとめたもの。
+
+ルート | :aid | :num
+--- | --- | ---
+/article/:aid*/:num | 108 | 10
+/article/:aid*/:num? | 108/10 | undefined
+/article/:aid*/:num* | 108/10 | undefined
+/article/:aid*/:num+ | 108 | 10
+
+後続のパラメータによって、可変長パラメータへの反映のされ方も変化する。
+予測できないほどではないが、誤解を招きやすいルートを好んで利用すべきではない。
+
+#### 値の形式をチェック
+
+パラメータの末尾に`(...)`の形式で、正規表現を付与することもできる。その場合、正規表現に合致した値だけがマッチする。
+
+`/article/:aid(\\d{2,3})`
+
+`\d{2,3}`は2～3桁の数値を表す。
+このルートは、
+
+* /article/10   (10)
+* /article/108  (108)
+
+にはマッチするが、以下のようなパスにはマッチしない。
+
+* /article/vue  (文字列なので不可)
+* /article/1    (1桁なので不可)
+
+##### ルートの優先順位
+
+ルートパラメータを利用するようになると、ルートそのものの優先順位も意識しておく必要がある。ルートは定義順に判定され、最初にマッチした条件でルートが決定する。
+たとえば以下のようなルートが列記されている場合。
+
+1./:type/:grade
+2./books/:isbn
+
+この場合、`/books/978-4-7981-5757-3`のようなリクエストは、最初に定義されたルート1.にマッチし(:type=books、:grade=978-4-7981-5757-3)、2.へはマッチングを試みることすらない。
+このことから、ルートを定義する際には、特殊なルートを先に、一般的なルートを後に記述する。
+
+### ルートパラメータをプロパティとして受け渡す
+
+パラメータを$routeオブジェクト経由で受け渡し宇sるのは、あまり良いことではない。
+コンポーネントが特定のルート経由で呼び出される前提となり再利用性を損なう。
+一般的には、パラメータはプロパティ(props)経由で受け渡しする。
+以下のようにコードを書き換える。
+
+```rouer.js
+routes: [
+    ...中略...
+    {
+        path: '/article/:aid',
+        name: 'article'
+        component: Article,
+        props: true,
+    }
+]
+```
+
+```Article.vue
+<template>
+    <span>記事コード: {{ aid }}</span>
+</template>
+
+<script>
+export default {
+    name: 'Article',
+    props: {
+        aid: String
+    }
+}
+</script>
+```
+
+ルートパラメータをコンポーネントのプロパティに引き渡すには、ルーティング定義にpropsオプション(値はtrue)を追加するだけ。これでpathオプションで定義されたルートパラメータが、そのままプロパティに引き継がれる。
+Articleコンポーネント側ではプロパティを定義しておく。これでテンプレート側でも($route.params.aidではなく)aidだけでアクセスできる。
+
+##### パラメータの型変換
+
+`props: true`オプションは、ルートパラメータをそのままプロパティに引き渡すだけ。たとえば、ArticleコンポーネントがaidプロパティをNumberとして受け取る場合、`type check failed for prop "adi".`のようなエラーとなる。`$route.params`の戻り値は文字列であるため。
+このような場合には、型を変換しておく。
+
+```router.js
+{
+    path: '/article/:aid',
+    ...中略...
+    props: routes => ({
+        aid: Number(routes.params.aid)
+    })
+},
+```
+
+propsオプションに変換ルール(=関数)を渡す。変換関数のルールは以下2点。
+
+* 引数として$routeオブジェクトを受け取る
+* 戻り値として、プロパティ情報を「名前: 値, ...」形式のオブジェクトとして返す
+
+戻り値全体を丸カッコでくくっているのは、アロー関数ではオブジェクトリテラルを表す`{...}`が、関数ブロックと誤認識されてしまうから。丸カッコによって、リテラルであることを明示する。
+また、この例では型変換に利用しているが、関数構文を利用すれば、一般的な値の変換や加工に利用できる。また、クエリ情報やハッシュなどの値をプロパティに割り当てることも可能。固定値をプロパティに引き渡しても構わない。
+
+##### propsオプションにオブジェクトを渡す
+値の演算が不要なのであれば、propsオプションに(関数ではなく)オブジェクトリテラルを直接渡すこともできる。固定値でプロパティを指定するならば、関数形式よりもシンプルに表現できる。
+
+`props: { aid: 108 }`
+
+
+### マルチビュー、入れ子のビュー、ガードなど
+
+#### 複数のビュー領域を設置する
+
+Vue Routerでは、テンプレートに複数の`<router-view>`要素を配置することで、複数のビューを同時に配置できる。ただし、個々のビューを区別するために、それぞれの領域に任意の名前(name属性)を付ける必要がある。
+
+```App.vue
+<template>
+    <div id="app">
+        <img src="./assets/logo.png">
+        <router-view>
+        <hr>
+        <router-view name="sub">
+    </div>
+</template>
+```
+
+また、ルート定義も、複数の領域にコンポーネントを割り当てられるよう、componentsパラメータ(複数形)で表す。
+
+```router.js
+export default new Router({
+...中略...
+    routes: [
+        {
+            path: '/',
+            name: 'main',
+            components: {
+                default: Main,
+                sub: Article
+            }
+        }
+    ]
+})
+```
+
+componentsパラメータは「領域名: コンポーネント」の形式で指定する。defaultは、`<router-view>`要素にname属性を指定しなかった場合の、既定の領域名。
+
+#### 入れ子のビューを設置する
+
+Vue Routerでは、ビュー同士を入れ子に配置することもできる。
+たとえば「/article/108」で記事のリード文を表示し、「/article/108/pages/1」「/article/108/pages/2」のようにすることで、それぞれ各ページの内容を表示するといったケース。
+このようなルートを想定しているのが、以下のルーティング定義。
+
+```router.js
+export default new Router({
+...中略...
+    routes: [
+        {
+            path: '/article/:aid',
+            name: 'article',
+            component: Article,
+            props: true,
+            children: [
+                {
+                    path: 'pages/:page_num',
+                    name: 'page',
+                    component: Page,
+                    props: true,
+                }
+            ]
+        }
+    ]
+});
+```
+
+ルートの入れ子はchildrenパラメータで表す。この例であれば、「/article/:aid」ルート配下に子ルート「pages/:page_num」が連なり、「/article/:aid/pages/:page_num」のようなパスが生成される。
+children(複数形)となっていることからもわかるように、子ルートは複数列記することも可能。ルートの準備ができたら、配下のArticleやPageコンポーネントも確認しておく。
+
+```Article.vue
+<template>
+<div>
+    <div>記事コード: {{ aid }}</div>
+    <span><router-link v-bind:to="'/article/' + aid + '/pages/1'">Page: 1</router-link></span> |
+    <span><router-link v-bind:to="'/article/' + aid + '/pages/2'">Page: 2</router-link></span>
+    <hr>
+    <router-view>
+</div>
+</template>
+
+<script>
+export default {
+    name: 'Article',
+    props: {
+        aid: String
+    }
+}
+</script>
+```
+
+```Page.vue
+<template>
+    <div>{{ page_num }} ページ</div>
+</template>
+
+<script>
+export default {
+    props: {
+        page_num: String
+    }
+}
+</script>
+```
+
+ルートを入れ子にする場合、親テンプレートの側でも子コンポーネントを埋め込むための領域を、`<router-view>`要素で確保しておかなければならない。
+なお、「/article/108」のようなパスでアクセスした場合には、Page.vueの内容は表示されない。「pages/:page_num」にはマッチしていないからである。
+
+### ルート遷移時に処理を差し挟む ～ ナビゲーションガード
+
+ルーティングに際して、たとえばユーザーの権限を判定して、決められた権限を持たない場合にはガードしたい、といった状況がある。このように画面遷移時に処理を挟むためのしくみがある。**ナビゲーションガード**機能である。
+Vue Routerでは、それぞれの目的に応じて、以下のようなガードを用意している。
+
+分類 | ガード | 概要
+--- | --- | ---
+グローバル | beforeEach | すべてのルートへの移動前／コンポーネントガード処理前
+グローバル | beforeResolve | すべてのルートへの移動前／コンポーネントガード処理後
+グローバル | afterEach | すべてのルートへの移動後
+コンポーネント | beforeRouteEnter | コンポーネントへの移動前
+コンポーネント | beforeRouteUpdate | コンポーネント上でルート情報が変化したとき
+コンポーネント | beforeRouteLeave | コンポーネントから移動する前
+ルート | beforeEnter | ルートへの移動前
+
+グローバルガードはVueRouterインスタンスに対して、コンポーネントガードはコンポーネントに対して、ルートガードはルート定義に対して、それぞれ宣言する。
+
+```
+const router = new Router({ ... })
+router.beforeEach((to, from, next) => { ... })  // グローバルガード(router.js)
+export default router
+```
+
+```
+export default {
+    template: `...`,
+    beforeRouteEnter(to, from, next) { ... }    // コンポーネントガード(.vue)
+}
+```
+
+```
+const router = new Router({
+    routes: [
+        {
+            path: 'hoge',
+            component: hoge,
+            beforeEnter: (to, from, next) => { ... }    // ルートガード(router.js)
+        }
+    ], ...
+})
+```
+
+違いは宣言する位置だけで、用法はほぼ共通しているので、以降ではコンポーネントガードを例にする。以下は、Articleコンポーネントに対して、指定の記事が公開期限を過ぎていたら、アクセスをガードするサンプル。公開期限は「aid値: 期限, ...」形式のオブジェクトで管理しているものとする。
+
+#### [1] コンポーネントガードを実装する
+
+まず、コンポーネントガード本体を定義する。
+
+```Article.vue
+<template>
+    <div class="about">
+        <h1>記事コード: {{ aid }}</h1>
+    </div>
+</template>
+
+<script>
+// ナビゲーションガードを定義
+let timeGuard = function (to, from, next) {
+    // 有効期限を設定
+    let data = {
+        13: new Date(2019, 10, 30),
+        108: new Date(2018, 10, 30)
+    }
+
+    // 移動先のaid値から有効期限を取得
+    let limit = data[to.params.aid] ? data[to.params.aid] : new Date(2999, 12, 31)
+
+    // 現在日時
+    let current = new Date()
+    // 有効期限内であればそのまま記事を表示
+    if (limit && limit.getTime() > current.getTime()) {
+        next()
+        // さもなくば移動をキャンセル
+    } else {
+        window.alert('記事の公開期限が過ぎています。')
+        next(false)
+    }
+}
+
+export default {
+    name: 'ArticleU,
+    // ナビゲーションガードを紐付け
+    beforeRouteEnter: timeGuard,
+    beforeRouteUpdate: timeGuard,
+    props: {
+        aid: String
+    }
+}
+</script>
+```
+
+コンポーネントガードは、コンポーネント定義の中で宣言する。
+ここで、`beforeRouteEnter`や`beforeRouteUpdate`双方に同じガードを紐付けている点に注目する。`beforeRouteEnter`だけでは不十分。
+`beforeRouteEnter`はコンポーネントそのものが変化したときにだけ発生する。つまり、/article/13から/artile/108のようなルートパラメータだけの変化を検知できない。ルート情報の変化を検知するには、beforeRouteUpdateを利用する。ただし、`beforeRouteUpdate`だけでは、今度はコンポーネントの移動を検知できないため、双方のガードを宣言している。
+
+例のコンポーネントガードの引数
+引数 | 概要
+--- | ---
+to | 移動先のルート情報
+from | 移動前のルート情報
+next | ナビゲーションのためのコールバック関数
+
+ルート情報は$routeと等価。ここでは、aidパラメータをキーに、記事の公開期限を取得＆判定している。
+ガードでは、判定の結果、ナビゲーション(ルート移動)を進めてよいかどうかをnext関数で支持する(戻り値はない)。next呼び出しのパターンには、以下のようなものがある。
+
+```
+next()                                  // 移動を許可
+next(false)                             // 移動をキャンセル
+next('/')                               // 指定のパスに振り替え
+next({ path: '/' })                     // 指定のパスに振り替え(オブジェクト形式)
+next(new Error('Error is occured.'))    // エラーを発生
+```
+
+ルートの移動をそのまま進めてよい場合には、引数なしでnext関数を呼び出す。正常パターン。
+ルート移動をキャンセルし、現在のルートにとどまるならば、falseを渡す。
+強制的に異なるパスに振り分けたいならば、引数にパスを指定する。パスは、文字列、オブジェクトいずれの形式で指定しても構わない。
+エラーを発生させると、移動時エラーをルーターに通知する。ここで投げられたエラー情報はVueRouter#onErrorメソッドで受け、処理することが可能。
+
+```
+const router = new Router({ .... })
+// エラー情報をログに出力
+router.onError(err => console.log('Error::' + str.message))
+export default router
+```
+
+#### ルーターによるリンクの制御
+
+`<router-link>`要素は、to属性以外にも、さまざまな属性を提供しており、ルーティング時の制御を細かく実装できる。
+
+##### active-class属性
+
+リンク先が現在のアドレスと同じである場合に、適用されるスタイルクラス(アクティブスタイル)を指定する。スタイルそのものは`<style>`要素などであらかじめ準備しておく。規定値は、`router-link-active`。
+
+```App.vue
+<router-link to="/about" active-class="current">About</router-link>
+
+.current {
+    color: red;
+    font-weight: bold;
+}
+```
+
+アクティブスタイルは、RouterクラスのlinkActiveClassオプションでグローバルに設定できるため、一般的にはこちらでアプリ全体の設定を、リンク固有のスタイルを指定したい場合にだけactive-class属性を利用する。
+
+##### exact属性
+active-class属性の既定の適用ルールは、前方一致。よって、/hogeというリンクは/hogeはもちろん、/hoge/123、/hoge/aboutなどにもマッチし、アクティブスタイルを適用する。
+ただし、この挙動が望ましくない場合がある。
+
+`<router-link to="/">Home</router-link>`
+
+「/」は「/about」「/hoge」「/hoge/foo」など、すべてのパスにマッチする。このような状態は一般的には望ましくない。exact属性を指定する。
+以下のように設定することで、アクティブスタイルは厳密に「/」のみに適用され、「/about」「/hoge」「/hoge/foo」などには適用されない。
+
+`<router-link to="/" exact>Home</router-link>`
+
+なお、完全一致した場合に適用されるスタイルクラスは、exact-active-class属性で指定できる(既定値はrouter-link-exact-active)。
+
+
+##### replace属性
+
+既定では、ルータによるページ遷移はブラウザ履歴にも記録される(つまり、[戻る]ボタンで前の状態に戻ることができる)。しかし、replace属性を付与した場合は、履歴は記録されず、[戻る]ボタンで前の状態に戻ることはできなくなる。$router.replaceメソッドに相当する属性。
+
+`<router-link to="/about" replace>About</router-link>`
+
+##### append属性
+
+append属性を付与することで、to属性は現在のパスからの相対パスと見なされる。
+たとえば、現在のパスが「～/about」の場合、以下のリンクは「～/about/hoge」に移動する(append属性がない場合は、「～/hoge」)。
+
+`<router-link to="hoge" append>Hoge</router-link>`
+
+##### tag属性
+
+`<router-link>`要素は、既定でアンカータグを生成するが、時として、別のタグを割り当てたいこともある。その場合には、tag属性を利用することで、任意のタグをリンクにできる。たとえば以下は、リンクをボタン形式で生成する例。
+
+`<router-link to="/about" tag="button">About</router-link>`
+
+clickイベントの処理は、`<router-link>`要素が内部的に補う。ボタンに限らず、`<div>`、`<span>`、`<li>`など、任意のタグを割り当て可能。
+さらに、以下のようにリンクを他の要素でラップすることも可能。この場合、リンク先は配下のアンカータグに反映される。
+
+```
+<router-link tag="div" to="/about">
+    <a>About</a>
+</router-link>
+```
+
+##### event属性
+
+`<router-link>`要素は、既定でclickイベントを補足する。この挙動を変更するのがevent属性。たとえば以下は、mouseoverイベントで画面遷移を発生させる。
+
+`<router-link to="/about" event="mouseover">About</router-link>`
+
+### ルーティングにかかわるその他のテクニック
+
+#### ルートパラメーター変化にかかわる注意点
+
+Vue Routerでは、ルートパラメーターだけが異なるページ遷移では、**同一コンポーネントインスタンスを再利用する**点に注意する。これは同じインスタンスを破棄→再生成するよりも効率的だが、思わぬ落とし穴の原因にもなる。
+具体的な例として、:aidパラメーター(記事コード)を受け取って、これをライフサイクルフック(created)でaidプロパティに反映させる例。
+
+```Article.vue
+<template>
+    <span>記事コード: {{ aid }}</span>
+</template>
+<script>
+export default {
+    name: 'Article',
+    data() {
+        return {
+            aid: 0
+        }
+    },
+    created() {
+        // 初期化時にルートパラメーターを取得
+        this.aid = this.$route.params.aid
+    }
+}
+</script>
+```
+
+このようなコンポーネントで、たとえば「/article/10」から「/article/108」にページ移動してみる。これはまさにルートパラメーターだけが変化するページ遷移だが、記事番号が変化しない。
+インスタンスを再利用しているため、ライフサイクルフックが呼び出されない。これを回避するには、ウォッチャーを利用する。
+
+```
+export default {
+    ...中略...
+    watch: {
+        '$route'(to, from) {
+            this.aid = to.params.aid
+        }
+    }
+}
+```
+
+$route(ルート情報)の変更時にaidを詰め直している。
+同じページ移動で、今度は記事番号が正しく反映されるか確認する。
+
+##### ルーティング時にアニメーションを適用する
+
+`<router-view>`要素(表示領域)を`<transition>`要素でくくることで、ルーティング時にアニメーションを適用することも可能。
+
+``` App.vue
+<transition>
+    <router-view>
+</transition>
+```
+
+トランジションのためのスタイルシートが必要。
+もしもページ(ルート)単位にアニメーションを変更したいならば、コンポーネントのルート要素を`<transition>`要素でくくっても構わない。
+この場合は、コンポーネント単位にアニメーション定義を区別するために、name属性は必須。
+
+```About.vue
+<template>
+    <transition name="about" appear>
+        <div class="about">...</div>
+    </transition>
+</template>
+```
+
+##### ルーティング時のスクロールを制御する
+
+Router(VueRouter)オブジェクトのscrollBehaviorオプションを利用することで、ルーティング時のスクロール状態を制御できる。
+
+```router.js
+export default new Router({
+    ...中略...
+    scrollBehavior(to, from, savedPosition) {
+        // [戻る]ボタンでの移動は以前の位置を保持
+        if (savedPosition) {
+            return savedPosition
+        } else {
+            // ハッシュ(#～)がある場合は、指定の要素位置へ
+            if (to.hash) {
+                return { selector: to.hash }
+            // さもなくば先頭位置に移動
+            } else {
+                return { x: 0, y: 0 }
+            }
+        }
+    }
+})
+```
+
+scrollBehaviorメソッドは、
+
+* 引数として「遷移先のルート情報(to)」「遷移元のルート情報(from)」「スクロール情報(savedPosition)」を受け取り、
+* 戻り値として、遷移後のスクロール位置を返す。
+
+引数savedPositionは、ブラウザネイティブな[戻る]ボタンを利用したときにだけ有効な情報で、前回のスクロール位置を返す。
+サンプルでもsavedPositionが存在する場合はその位置に移動し、そうでない場合にはハッシュ(#～)の有無によって、指定の要素か、先頭位置に移動する。
+戻り値のスクロール位置(オブジェクト)は、以下のような形式で洗わす。
+
+戻り値の形式 | 概要
+--- | ---
+savedPosition | 前回のスクロール位置
+{ x: number, y: number } | 指定のX／Y座標
+{ selector: string } | セレクター式が表す要素位置
+{ selector: string, offset: { x: number, y: number }} | セレクター位置が表す要素からの相対位置
+falsyな値 | スクロールしない
+
+##### ルート単位の認証
+
+ナビゲーションガードを利用することで、当k帝のページ(ルート)に認証を課すこともできる。認証すべきページには、以下のようなmeta - isRequestAuthオプション(trueで認証を要求)を宣言しておく。
+
+```router.js
+routes: [
+    ...中略...
+    // ログインページへのルート
+    {
+        path: '/signin',
+        name: 'signin',
+        component: Signin
+    },
+    // 認証を要求するルート
+    {
+        path: '/about',
+        name: 'about',
+        component: About,
+        meta: {
+            isRequestAuth: true
+        }
+    }
+]
+```
+
+後は、グローバルガード(beforeEach)でisRequestAuthオプションの有無を判定し、値がtrueで、かつ、未認証である場合にログインページにリダイレクトするようにする。
+
+```router.js
+router.beforeEach((to, from, next) => {
+    // 認証を要求しており、認証済みでない場合にログインページに移動
+    if (to.matched.some(route => route.meta.isRequestAuth) && !isAuthed()) {
+        next({ path: '/signin', query: { path: to.fullPath }})
+    } else {
+        // 認証済み、または認証を要求しないページはそのまま表示
+        next()
+    }
+});
+```
+
+matchedプロパティはマッチしたすべてのルートを表す(入れ子になったルートでは、すべての親ルートを取得する)。ここでは、someメソッドでマッチしたルートを順に取り出し、いずれかのルートが認証を要求しているか(=meta.isRequestAuthプロパティがtrueであるか)を確認している。
+認証を要求している場合にログインページ(/signin)に移動するのはnext関数の役割。その際、ログインページから本来要求されたページに移動できるよう、クエリ情報(query)として本来の移動先(to.fullPath)を渡しておく。
 
