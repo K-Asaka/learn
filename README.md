@@ -1758,3 +1758,1429 @@ router.beforeEach((to, from, next) => {
 matchedプロパティはマッチしたすべてのルートを表す(入れ子になったルートでは、すべての親ルートを取得する)。ここでは、someメソッドでマッチしたルートを順に取り出し、いずれかのルートが認証を要求しているか(=meta.isRequestAuthプロパティがtrueであるか)を確認している。
 認証を要求している場合にログインページ(/signin)に移動するのはnext関数の役割。その際、ログインページから本来要求されたページに移動できるよう、クエリ情報(query)として本来の移動先(to.fullPath)を渡しておく。
 
+
+## Vuex
+
+Vuexは、アプリで扱う状態(データ)を集中的に管理するためのライブラリ。状態管理ライブラリとも呼ばれる。
+
+### Vuexとは
+
+Vuexを導入することで、以下のようなメリットがある。
+
+* アプリに散在するデータを一元的なストアで管理できる
+* コンポーネント階層にかかわらずストアを直接参照できるので、出たの受け渡しコードが現象する
+* ストア上のデータはリアクティブなので、コンポーネントとも自動で同期される
+* データの更新フローが一貫するので、コードの見通しが改善する
+
+状態管理ライブラリは、サーバーサイドでのデータベースと同じで、後から導入するとなると、データにかかわるコードに影響が及ぶ。
+
+
+### Vuexの準備
+
+Vue CLIを利用する場合、プロジェクト作成時に[Manually, select features](カスタムインストール)を選択してVuexを有効にするか、後から`vue add`コマンドでVuexを組み込む。
+Vuexを有効にした場合、プロジェクト配下の`/src`フォルダには`store.js`というファイルが追加される。`store.js`は、ストア本体に加えて、ストア操作のためのメソッドを管理するためのファイル。
+
+### Vuexの基本
+
+#### Vuexを利用したカウンターアプリ
+
+##### [1] ストアを準備する
+
+データを格納するストアと、出し入れのためのメソッドを準備する。
+Vue CLIを利用しているなら、`/src/store.js`にVuexストアのための骨組みが生成されている。
+
+```store.js
+// Vuexを有効化する
+import Vue from 'vue'
+import Vuex from 'vuex'
+
+Vue.use(Vuex)
+
+// ストアを作成する
+export default new Vuex.Store({
+    // 厳密モードを有効にする
+    // ステートをミューテーション以外で更新するのはVuexの思想に反している。
+    // そこでミューテーション以外からのステート更新を監視し、反したコードを警告するのがこのモードの役割。オーバーヘッドが大きくなる。
+    strict: true,
+    // ストアにデータの初期値を定義する
+    state: {
+        count: 0
+    },
+    // ステート操作のためのメソッドを定義する
+    // ステート操作のメソッドのことをミューテーションと呼ぶ
+    mutations: {
+        minus(state) {
+            state.count--
+        },
+        plus(state) {
+            state.count++
+        }
+    },
+    actions: {
+    }
+})
+```
+
+##### [2] ストアをアプリに登録する
+
+[1]で定義したストアをアプリに登録しているのは以下のコード。Vue CLIでVuexをインストールした場合には、このコードは自動で登録されている。
+
+```main.js
+import store from './store'
+...中略...
+new Vue({
+    // Vueコンストラクタのstoreオプションとして引き渡す
+    // これでApp配下のすべてのコンポーネントで、「this.$store.～」でVuexストアにアクセスできるようになる
+    store,
+    render: h => h(App)
+}).$mount('#app')
+```
+
+##### [3] コンポーネントからストアを呼び出す
+
+```App.vue
+<template>
+    <div>
+        <input type="button" value="-" v-on:click="minus">
+        {{ count }}
+        <input type="button" value="*" v-on:click="plus">
+    </div>
+</template>
+
+<script>
+export default {
+    name: 'app',
+    computed: {
+        // 現在のカウント値を取得
+        count() {
+            return this.$store.state.count
+        }
+    },
+    methods: {
+        // [-] ボタンでカウント値をデクリメント
+        minus() {
+            this.$store.commit('minus')
+        },
+        // [+] ボタンでカウント値をインクリメント
+        plus() {
+            this.$store.commit('plus')
+        }
+    }
+}
+</script>
+```
+
+ストア本体のプロパティにアクセスするならば、`this.$store.state.count`のように表す。
+定義済みのミューテーションは、commitメソッド経由で呼び出す。引数はそれぞれミューテーションの型(名前)。
+
+##### 補足: mapStateヘルパー
+
+Vuexでは、ステートと算出プロパティとを紐付けるためのヘルパー関数としてmapStateを提供している。
+mapStateヘルパーには、ステートのプロパティを文字列配列として渡すだけ。
+
+```App.vue
+import { mapState } from 'vuex'
+...中略...
+export default {
+    ...中略...
+    computed: mapState([ 'count' ]),
+    ...中略...
+}
+```
+
+mapStateヘルパーを利用することで、ストア上のプロパティを同名の算出プロパティに紐付けられる。複数のプロパティを列挙しても構わない。
+別名を付与したい場合は、以下のように「別名: 元の名前, ...」のオブジェクト形式でマッピングを定義することもできる。以下であれば、counプロパティにcountNumber算出プロパティでアクセスできるようにする。
+
+```
+mapState({
+    countNumber: 'count'
+})
+```
+
+さらに、他の(ストアと関係ない)算出プロパティとまとめたい、配列／オブジェクト形式のmapStateを混在させたい、などのケースでは、スプレッド演算子(`...`)を利用する。
+
+```
+// ストア以外の算出プロパティとマージ
+computed: {
+    otherProp() {   /* 他の算出プロパティ */ },
+    ...mapState([ 'count' ])
+}
+
+// 配列／オブジェクト形式のマッピングを統合
+computed: {
+    ...mapState([ 'count' ]),
+    ...mapState({ countNumber: 'count' })
+}
+```
+
+##### スプレッド演算子
+
+配列／オブジェクトを個々の値に分解できる。個々の値とは、配列であればそのまま個々の要素、オブジェクトであれば「キー: 値」のペア。
+ES2015で導入された構文で、複数の配列／オブジェクトをまとめるような用途で利用する。
+
+```
+let data1 = [ ...[1, 2], 3, 4];
+console.log(data1);     // 結果: [ 1, 2, 3, 4 ]
+let data2 = { ...{a: 1, b: 2 }, c: 3, d: 4 };
+console.log(data2);     // 結果: { a: 1, b: 2, c: 3, d: 4 }
+```
+
+### Vuexストアを構成する要素
+
+#### ステートの内容を加工＆取得する ～ ゲッター
+
+コンポーネントでいうところの算出プロパティとメソッドの中間のような仕組み。
+引数は渡せるが、セッターを設置することはできない。
+
+```store.js
+export default new Vuex.Store({
+    state: {
+        books: [
+            {
+                isbn: '9784-8222-5389-9',
+                title: '作って楽しむプログラミング HTML5超入門',
+                price: 2000
+            },
+           ...中略...
+        ]
+    },
+    getters: {
+        booksCount(state) {
+            return state.books.length
+        },
+        getBooksByPrice(state) {
+            return price => {
+                return state.books.filter(book => book.price < price)
+            }
+        }
+    },
+    ...中略...
+})
+```
+
+ゲッターは、gettersオプションで定義する。
+state/mutationsと並列の関係になるように追記する。
+引数を受け取らないゲッターは、引数として受け取ったステート(state)を介して、`state.books`のように配下のプロパティにアクセスできる(ミューテーションと同じ)。
+引数を受け取るゲッター関数は、ゲッターによる取得値ではなく「取得値を返すための関数」を返さなければならない。
+例では、配下のアロー関数では本来の引数(price)を受け取り、その値をもとに書籍情報(store.books)の内容を絞り込んでいる。filterメソッドは、JavaScript標準のメソッドで、条件式(ここでは「book.price < price」)を満たす要素だけ取得する。ステート(state)には、ゲッター本体が引数として受け取っているため、配下のアロー関数でもアクセスできる。
+
+##### 他のゲッターを参照する
+
+ゲッターは、第2引数としてゲッター群を受け取ることで、他のゲッターを参照することも可能。たとえば以下は、getBooksByPriceゲッターを経由して3000円未満の書籍数を取得する。
+
+```
+BooksCount3000(state, getters) {
+    return getters.getBooksByPrice(3000).length
+}
+```
+#### コンポーネントからゲッターを参照する
+
+ゲッターを参照するAppコンポーネントの例。
+
+```
+<template>
+    <div>
+        <p>書籍は全部で{{ booksCount }}冊あります。
+        <ul v-for="b of getBooksByPrice(2500)" v-bind:key="b.isbn">
+            <li>{{ b.title }} ({{ b.price}}円) <br>ISBN: {{ b.isbn }}</li>
+        </ul>
+    </div>
+</template>
+
+<script>
+import { mapGetters } from 'vuex'
+
+export default {
+    name: 'app',
+    computed: mapGetters([ 'booksCount' , 'getBooksByPrice' ])
+}
+</script>
+```
+
+ゲッターは、算出プロパティに登録しておく。無条件に同名の算出プロパティに紐付けるならば、mapGetters関数を利用するだけ。mapGetter関数の用法はmapState関数と同じ。
+`computed`は以下のように表しても同じ。
+
+```
+computed: {
+    booksCount() {
+        return this.$store.getters.booksCount
+    }
+},
+methods: {
+    getBooksByPrice(price) {
+        return this.$store.getters.getBooksByPrice(price)
+    }
+}
+```
+
+ゲッターには`this.$store.getters.～`でアクセスできる。引数なしのゲッターであればプロパティ(変数)形式で表し、引数ありのゲッターであればメソッド形式で表す。
+
+##### 補足: ゲッターのキャッシュルール
+
+ゲッターでは、引数を受け取るかどうかによって、キャッシュの挙動が変化する。
+**引数を受け取らないゲッターはキャッシュされるが、引数を受け取るゲッターはキャッシュの対象外**になる。
+よって、引数を受け取るゲッターは、極力、算出プロパティを介してキャッシュするのが望ましい。
+
+```
+computed: {
+    ...中略...
+    getBooksByPrice() {
+        return this.$store.getters.getBooksByPrice(this.price)
+    }
+}
+```
+
+mapGetters関数による登録では、理屈上はメソッド(methods)になる。キャッシュ対象にはならない。
+
+### ストアの状態を操作する ～ ミューテーション
+
+#### 呼び出し時に引数を渡す
+
+普通のメソッドと同じく、ミューテーションも引数を持つことが可能。この引数のことを**ペイロード**と呼ぶ。
+
+```store.js
+export default new Vuex.Store({
+    ...中略...
+    mutations: {
+        addBook(state, payload) {
+            state.books.push(payload.book)
+        }
+    },
+    ...中略...
+})
+```
+
+引数payloadがペイロード。複数の情報を渡せるように、ペイロードは「名前: 値, ...」のオブジェクト形式で表すのが基本。
+このようなミューテーションを呼び出しているのが以下の例。
+
+```
+<form v-on:submit.prevent="onclick">
+    <label for="isbn">ISBN:</label>
+    <input type="text" id="isbn" v-model="isbn"><br>
+    <label for="title">書名:</label>
+    <input type="text" id="title" v-model="title"><br>
+    <label for="price">価格:</label>
+    <input type="number" id="price" v-model="price"><br>
+    <input type="submit" value="登録">
+</form>
+<hr>
+...中略...
+// フォーム内で扱う情報を準備
+data() {
+    return {
+        isbn: '',
+        title: '',
+        price: 0
+    }
+},
+methods: {
+    // [登録] ボタンクリックでストアに反映
+    onclick() {
+        this.$store.commit('addBook', {
+            book: {
+                isbn: this.isbn, title: this.title, price: this.price
+            }
+        })
+    }
+}
+```
+
+ペイロードは、commitメソッドの第2引数として渡す。第1引数がミューテーションのタイプ(型)を表すのに対して、ペイロード(荷物=データ本体)。
+
+#### オブジェクト形式でのcommitメソッド呼び出し
+
+別解として、commitメソッドでは、ミューテーション型とペイロードとを、ひとつのオブジェクトにまとめて渡すこともできる。
+
+```
+this.$store.commit({
+    type: 'addBook'',
+    book: {
+        isbn: this.isbn, title: this.title, price: this.price
+    }
+})
+```
+
+この場合、ミューテーションの型は、typeプロパティとして渡す。
+
+#### Vuexストアでの双方向バインディング
+
+Vuexストアに対して双方向バインディングを実施する場合、そのままステートをv-modelに渡すことはできない。
+
+```App.vue
+<form>
+    <label for="name">氏名:</label>
+    <input id="name" type="text" v-model="$store.state.name">
+</form>
+```
+
+```store.js
+export default new Vuex.Store({
+    strict: true,
+    state: {
+        name: ''
+    },
+    ...中略...
+}
+```
+
+厳密モードにおいて、ミューテーション以外での値の更新は「do not mutate vuex store state outside mutation handlers.」のようなエラーとなる。
+このような状況では、ステートを取得／更新するための算出プロパティを準備する。
+
+```App.vue
+<input id="name" type="text" v-model="name">
+...中略...
+computed: {
+    name: {
+        get() {
+            return this.$store.state.name
+        },
+        set (value) {
+            this.$store.commit('updateName', value)
+        }
+    }
+}
+```
+
+```store.js
+mutations: {
+    updateName(state, name) {
+        state.name = name
+    }
+},
+```
+
+これでステート(name)への値の出し入れをv-model経由で行えるようになる。
+
+#### ミューテーション型を定数化する
+
+定数化することで、以下のようなメリットがある。
+
+* 定数を1カ所にまとめることで、アプリで利用できる操作が一望できる
+* エディターのコード補完機能を利用すれば、入力が容易になる
+* 同じく、型のタイプミスも減る
+
+型は、定数専用の別ファイルを用意して、列挙しておく(store.jsと同じく、/srcフォルダの直下に配置する)。
+
+```mutation-types.js
+export const ADD_BOOK = 'addBook';
+```
+
+あとは、store.jsを定数対応に書き換える。
+
+```store.js
+import { ADD_BOOK } from './mutation-types'
+...中略...
+export default new Vuex.Store({
+    ...中略...
+    export default new Vuex.Store({
+        ...中略...
+        mutations: {
+            [ADD_BOOK] (state, payload) { ... }
+        }
+    },
+    ...中略...
+)
+```
+
+[ADD_BOOK]の記述は、ES2015のcomputed property nameという昨日。ブラケットで囲まれた式の値を解釈して、メソッド名とする。
+
+#### ミューテーションの呼び出しを簡単化する
+
+mapState、mapGettersと同じく、ミューテーションにも、コンポーネントのメソッドとの紐付けを簡単化するために、mapMutations関数が用意されている。
+
+```App.vue
+import {mapMutations } from 'vuex'
+...中略...
+methods: mapMutations([ 'plus', 'minus' ]),
+```
+
+### 非同期処理を実装する ～ アクション
+
+ミューテーションには非同期処理を含んではいけない。
+非同期処理と状態(ステート)の更新とが絡み合うことで、状態の追跡が難しくなるため。  
+そこで、ミューテーションは常に同期処理として表し、非同期処理はアクションとして切り出す。非同期処理(アクション)で得た結果で、関連するミューテーションを呼び出す(=コミットする)ことで、状態(値)を意図した順序で更新できる。
+値の変化も追跡しやすくなる。
+
+
+ミューテーションをボタンクリックから5秒後に(=非同期に)実行してみる。
+
+```store.js
+actions: {
+    addAsync(context, payload) {
+        // 5000ミリ秒後にミューテーション(ADD_BOOK)をコミット
+        setTimeout(function () {
+            context.commit(ADD_BOOK, payload)
+        }, 5000)
+    }
+}
+```
+
+アクションでは、引数としてコンテキストオブジェクト(context)を受け取る。コンテキストオブジェクトは、Vuexストアのインスタンスによく似たオブジェクトで、ストアは以下の主な要素にアクセスするために、以下のようなメンバーを提供している。
+
+メンバー | 概要
+--- | ---
+commit | ミューテーションをコミット
+dispatch | アクションをディスパッチ
+getters | ゲッターを取得
+rootGetters | ルートのゲッターを取得
+state | ステートを取得
+rootState | ルートステートを取得
+
+
+次の例では、setTimeoutメソッドの中でcommitメソッドを呼び出して、ミューテーションをコミットしているが、同じようにステート、ゲッターにアクセスすることも可能。
+アクションの第2引数(ここではpayload)では、ミューテーションと同じく、任意の引数を受け取れる。
+
+##### ES2015の分割代入
+
+ES2015の分割代入を利用すれば、少しだけアクション内のコードを簡単化できる。
+
+```
+addAsync({ commit }, payload) {
+    setTimeout(function () {
+        commit(ADD_BOOK, payload)
+    }, 5000)
+}
+```
+
+`{ commit }`が分割代入。渡されたオブジェクト(コンテキスト)からプロパティ(ここではcommit)を取り出して、同名の変数に再割り当てする。これで、アクション内では(context.commitではなく)単なるcommitと書けるようになる。
+
+#### コンポーネントからアクションを呼び出す
+
+準備したaddAsyncアクションを、コンポーネントから呼び出してみる。
+
+```App.vue
+export default {
+    ...中略...
+    methods: {
+        onclick() {
+            ...中略...
+            this.$store.dispatch('addAsync', {
+                book: {
+                    isbn: this.isbn, title: this.title, price: this.price
+                }
+            })
+        }
+    }
+}
+```
+
+アクションを呼び出すことをディスパッチすると言い、dispatchメソッドを利用する。
+dispatchメソッドの用法は、commitメソッドにも似ており、
+
+* アクションの型
+* ペイロード(追加の引数)
+
+の順で指定するだけ。すべての引数をオブジェクトリテラルにまとめて、以下のように表してもよい。
+
+```
+this.$store.dispatch({
+    type: 'addAsync',
+    book: {
+        isbn: this.isbn, title: this.title, price: this.price
+    }
+})
+```
+
+#### アクションを紐付けるmapAction関数
+
+アクションをコンポーネントに紐付けるためのmapActions関数がある。addAsyncアクションを同名のaddAsyncメソッドに、同じくaddAsyncアクションをaddメソッドに、それぞれ紐付けるならば、以下のように表せる。
+
+```
+import { mapActions } from 'vuex'
+...中略...
+methods: {
+    // this.$store.dispatch('addAsync', ...)をthis.addAsync(...)に紐付け
+    ...mapActions([ 'addAsync ']),
+    // this.$store.dispatch('addAsync', ...)をthis.add(...)に紐付け
+    ...mapActions({ add: 'addAsync' })
+}
+```
+
+上のように紐付けられたコードは、以下のように呼び出せる。
+
+```
+this.addAsync({
+    book: { isbn: this.isbn, title: this.title, price: this.price }
+})
+```
+
+## 巨大なストアを分割管理する ～ モジュール
+
+### モジュールの定義
+
+```main-store.js
+export default {
+    state: {
+        // 現在の時刻で初期化
+        updated: (new Date()).toTimeString(),
+    },
+    mutations: {
+        // updatedを現在時刻で更新
+        setUpdated(state) {
+            state.updated = (new Date()).toTimeString()
+        }
+    },
+    getters: {
+        // updatedを取得
+        localUpdated(state) {
+            return state.updated
+        }
+    }
+}
+```
+
+```sub-store.js
+export default {
+    state: {
+        // 現在の時刻
+        updated: (new Date()).toLocaleTimeString(),
+    },
+    mutations: {
+        // updatedを現在時刻で更新
+        setUpdated(state) {
+            state.updated = (new Date()).toLocaleTimeString()
+        }
+    }
+}
+```
+
+```store.js
+import MainModule from './main-store'
+import SubModule from './sub-store'
+...中略...
+// 複数のモジュールを束ねたルートモジュール
+export default new Vuex.Store({
+    modules: {
+        main: MainModule,
+        sub: SubModule
+    }
+})
+```
+
+モジュール化されたストアは、それぞれ「オプション名: 値, ...」形式のオブジェクトとして定義する。
+オブジェクトの内容は、これまでVuex.Storeコンストラクタで指定していたものと同じ。
+準備したモジュールは、最終的にVuex.Storeコンストラクタのmodulesオプションに登録することで、Vuexストアに統合される。
+ここでは、MainModule、SubModuleモジュールを、それぞれmain、subという名前で登録しているが、同名で登録するならば、以下のように表してもよい。
+
+```
+modules: {
+    MainModule,
+    SubModule
+}
+```
+
+これでルートストアの配下に、main、subモジュールストアが配置されたことになる。
+
+### モジュールへのアクセス
+
+```App.vue
+<template>
+    <div id="app">
+    メイン: {{ mainUpdated }}<br>
+    サブ: {{ subUpdated }}<br>
+    <input type="button" value="更新" v-on:click="setUpdated">
+    </div>
+</template>
+
+<script>
+export default {
+    name: 'app',
+    computed: {
+        // mainモジュールの時刻を取得
+        mainUpdated() {
+            return this.$store.state.main.updated
+        },
+        // subモジュールの時刻を取得
+        subUpdated() {
+            return this.$store.state.sub.updated
+        }
+    },
+    methods: {
+        // main／subモジュールの時刻(updated)を更新
+        setUpdated() {
+            this.$store.commit('setUpdated79)
+        }
+    }
+}
+</script>
+```
+
+モジュール内のステートには、「$store.state.モジュール名.ステート名」でアクセスできる。
+一方、ゲッターやミューテーション、アクションは、既定ではグローバルな名前空間に登録される。つまり、呼び出しに際しても、非モジュールなストアと同じ構文でアクセスできる。
+このため、モジュール間で同名のミューテーションやアクションが存在する場合には、合致するものすべてが呼び出される。
+
+### 名前空間を分離する
+
+Vuexでは、名前空間(ネームスペース)を明確に分離することができる。
+これには、個々のモジュールでnamespacedオプションをtrueに設定する。
+
+```
+export default {
+    namespaced: true,
+    ...中略...
+}
+```
+
+名前空間を分離した場合、ミューテーションなどへのアクセスは「名前空間/型名」の形式で表す。
+
+```App.vue
+methods: {
+    setUpdated() {
+        this.$store.commit('main/setUpdated')
+        this.$store.commit('sub/setUpdated')
+    }
+}
+```
+
+モジュールをネストしている場合には、スラッシュを連ねて、「store.commit('main/child/setUpdated')」のようにも表せる。
+
+### 名前空間付きモジュールから他のモジュールへアクセスする
+
+モジュールに名前空間を付けた場合にも、配管ゲッター、アクションなどの記述は変化しない。
+たとえば、以下はupdatedプロパティ(ステート)を取得するlocalUpdatedゲッターの例。
+
+```main-store.js
+getters: {
+    localUpdated(state) {
+        return state.updated
+    }
+}
+```
+
+ゲッター関数が受け取る引数`state`は、厳密には、現在のモジュールは以下のステート(ローカルステート)を表すから。もしもルートモジュールのステートやゲッターにアクセスしたい場合には、以下のように第3引数(rootState)、第4引数(rootGetters)を利用する。
+以下は、ルートモジュールからhogeプロパティを取得する例。
+
+```
+getters: {
+    hoge(state, getters, rootState, rootGetters) {
+        return rootState.hoge
+    }
+}
+```
+
+同じくアクションであれば、コンテキストオブジェクトがrootState.rootGettersプロパティを提供している。同じく、これらを介してルートモジュールにアクセスできる。
+ただし、ルートモジュールのアクションやミューテーションにアクセスするには、rootCommit、rootDispatchなどのメソッドがあるわけではないため注意が必要。代わりにcommit、dispatchメソッドの第3引数に対して、`{ root: true }`オプションを追加する。これで(ローカルのアクション、ミューテーションではなく)ルートモジュールのアクション、ミューテーションをディスパッチ、コミットする。
+
+```
+actions: {
+    hogeAction(context) {
+        // ルートモジュールのhogeミューテーションをコミット
+        context.commit('hoge', null, { root: true })
+    }
+}
+```
+
+第2引数にはペイロード(=ミューテーションで利用する実データ)を渡す。rootオプションを利用する場合には、第2引数も省略できないため、ペイロードがなくとも仮にnullを渡しておく。
+
+#### mapXxxxx関数によるストアのマッピング
+
+名前空間付きモジュールを呼び出す場合、mapXxxxx関数の記法も変化する。
+
+```App.vue
+computed: mapState({
+    updated: state => state.main.updated
+}),
+methods: {
+    ...中略...
+    ...mapMutations([ 'main/setUpdated', 'sub/setUpdated' ])
+}
+```
+
+ただし、この場合、ミューテーションの呼び出しは`this['main/setUpdated']()`のようになり、見た目にもあまり美しくない。明示的に、
+
+```
+...mapMutations({
+    setUpdated: 'main/setUpdated',
+    ...中略...
+})
+```
+
+としても構わないが、紐付けるべき要素が増えてくれば冗長になる。そのような場合には、mapXxxxx関数の第1引数にモジュール名を宣言するのがシンプル。
+
+```
+...mapMutations('main', [ 'setUpdated', ... ]),
+```
+
+この場合、呼び出し側も`this.setUpdated()`となる。さらに第1引数でのモジュール指定すら略記したいならば、createNamespacedHelpers関数で名前空間対応のmapXxxxx関数を作成しても構わない。
+
+```
+import { createNamespacedHelpers } from 'vuex'
+// mainモジュール対応のmapState/mapMutationsを準備
+const { mapState, mapMutations } = createNamespacedHelpers('main')
+...中略...
+// main/setUpdatedに紐付け
+methods: {
+    ...中略...
+    ...mapMutations([ 'setUpdated', .. ]),
+}
+```
+
+コンポーネントの中で複数のmapXxxxx関数を呼び出している場合には、この方法がより便利。
+
+
+## テスト
+
+Vue CLIでも以下のようなテストをサポートしている。
+
+テストの種類 | 概要
+--- | ---
+単体テスト | ユニットテストとも言う。コンポーネント、JavaScriptオブジェクト(メソッド)など要素単体の動作をテスト
+E2E(End to End)テスト | シナリオテスト、インテグレーションテストとも言う。複数のコンポーネントにまたがって、エンドユーザーの実際の操作に沿った挙動の正否をテスト
+
+### 単体テスト
+
+**単体テスト(ユニットテスト)**とは、アプリを構成する個々の要素が、それ単体として正しく動作するかどうかを確認するためのテスト。
+
+#### 単体テストの準備
+
+Vue CLIを利用している場合、プロジェクト作成時に`[Manually select features](カスタムインストール)`を選択することで、単体テストのためのライブラリや設定を組み込むことが可能。
+カスタムインストールの途中で、まず`Unit Testing`を有効にする。すると、以下のように組み込むべき単体ライブラリを訊かれる。
+ここではJestを選択する。
+
+Jest(https://jestjs.io/ja/)は、Facebook社が開発を進めているテスティングフレームワーク。初期設定などの手間をかけずに、即座にテストを書き始められる。
+Vue.jsでは、Vueコンポーネントをテストするためのvue-test-utilsと、このJestを組み合わせてテストするのが一般的。
+Jestを有効にした場合、Vue CLI1プロジェクトには、以下のようなフォルダー／ファイルが追加される。
+
+```
+root(プロジェクトルート)
+ └─ tests
+      ├─ unit
+      │   ├─ .eslintrc.js       ESLintの設定ファイル
+      │   └─ example.spec.js    既定で用意されたテストコード
+      └─ jest.config.js         Jestの設定ファイル
+```
+
+jest.config.jsから設定を加えることも可能。詳細は本家サイトから「Configuring Jest」(https://jestjs.io/docs/ja/configuration)を参照。
+
+
+#### テストスクリプトの基本
+
+##### [1] テストコードを準備する
+
+テストコードは、/tests/unitフォルダ配下にintro.spec.jsのような名前で保存する。「intro」の部分は、一般的には、テスト対象のファイル名とするのが見た目にもわかりやすい。
+
+```intro.spec.js
+describe('Jestの基本', () => {
+    beforeEach(() => {
+        console.log(new Date().toLocaleString())
+    })
+
+    it('はじめてのテスト', () => {
+        expect(1 + 1).toBe(2)
+    })
+})
+```
+
+Jestによるテストコードでは、まず全体をdescribeメソッドで囲む。
+
+```
+describe(name, specs)
+
+name: テストスイートの名前
+specs: テストケース(群)
+```
+
+テストスイートとは、関連するテストを束ねる入れ物のようなもの。具体的なテスト(=テストケース)は、引数specs(関数オブジェクト)の配下で宣言する。
+beforeEachメソッドは、個々のテストケースが実行される前に呼び出されるべき初期化処理を表す。今回の例では、現在時刻を表示しているだけ。一般的には、テストで利用するリソース(たとえばテスト対象のオブジェクト)を準備するのに利用する。初期化すべきものがない場合には、省略しても構わない。終了処理には同じようにafterEachメソッドを利用する。
+
+```
+it(name, test)
+
+name: テストケースの名前
+test: テストの内容
+```
+
+ここでは「はじめてのテスト」という名前で、テストケースをひとつだけ定義している。もちろん、必要に応じて、複数のテストを列記しても構わない。その場合、itメソッドも複数記述する。
+引数testの中では、以下の構文でコードの結果を検査していく。
+
+```
+expect(resultValue).matcher(expectValue)
+
+resultValue: テスト対象のコード(式)
+matcher: 検証メソッド
+expectValue: 期待する値
+```
+
+この例では「1 + 1」の結果が2に等しい(toBe)ことを確認している。実際のテストでは、「1 + 1」の部分がテスト対象コードの呼び出しになる。
+toBeはMatcherとも呼ばれ、expectメソッドで示された結果値(resultValue)が期待したものであるかを確認するためのメソッド。Jestでは、標準で以下の表のようなMatcherを用意している。
+
+分類 | Matcher | 概要
+--- | --- | ---
+一般 | toBe(value) | 値がvalueと等しいか
+一般 | toEqual(value) | 値がvalueと等しいか(配列、オブジェクト配下の要素も再帰的に判定)
+真偽 | toBeNull() | 値がnullであるか
+真偽 | toBeUndefined() | 値がundefinedであるか
+真偽 | toBeDefined() | 値がなんらかの値を持つか(=undefinedでないか)
+真偽 | toBeTruthy() | 値がtrueと評価できるか
+真偽 | toBeFalsy() | 値がfalseと評価できるか
+数値 | toBeCloseTo(value, digits) | 値がvalueと等しいか(小数点以下digits桁までを比較)
+数値 | toBeGreaterThan(value) | 値がvalueよりも大きいか
+数値 | toBeGreaterThanOrEqual(value) | 値がvalue以上か
+数値 | toBeLessThan(value) | 値がvalue未満か
+数値 | toBeLessThanOrEqual(value) | 値がvalue以下か
+文字列 | toMatch(reg) | 値が正規表現regにマッチするか
+配列 | toContain(value) | 値に候補地valueが含まれるか
+例外 | toThrow([err]) | 指定されたコードが例外を発生するか(引数errは例外オブジェクト、文字列、正規表現のいずれか。文字列／正規表現はエラーメッセージにマッチするか)
+
+否定を表現するならば、notメソッドを利用する。
+
+`expect(1 + 1).not.toBe(2)`
+
+##### [2] テストを準備する
+
+準備したテストコードを実行するには、プロジェクトルートで`npx vue-cli-service test:unit`コマンドを実行する。以下では引数としてintro.spec.jsを指定しているため、intro.spec.jsだけを実行するが、引数なしですべてのテストをまとめて実行することもできる。
+
+```
+> npx vue-cli-service test:unit intro.spec.js
+```
+
+テストスイートやテストケースともにひとつのうちひとつが成功した(=1 passed, 1 total)ことを確認する。
+あえてテストが失敗するように、以下のように修正して試す。
+
+`expect(1 + 1).toBe(15)`
+
+テストを再実行した結果、15を期待しているのに、受け取った結果は2となることが通知される。
+
+#### コンポーネントのテスト
+
+Vueアプリを構成する要素(コンポーネント)をテストする方法を学ぶ。以下は、Vue CLI標準で用意されたHelloWorldコンポーネントをテストするためのexample.spec.js。Jest組み込み時に、既定で用意されたサンプルテスト。
+
+```example.spec.js
+import { shallowMount } from '@vue/test-utils'
+import HelloWorld from '@/components/HellowWorld.vue'
+
+describe('HelloWorld.vue', () => {
+    it('renders props.msg when passed', () => {
+        const msg = 'new message'
+        const wrapper = shallowMount(HelloWorld, {
+            propsData: { msg }
+        })
+        expect(wrapper.text()).toMatch(msg)
+    })
+})
+```
+
+コンポーネントのテストには、まず、vue-test-utilsモジュール(配下のshallowMountメソッド)と、テスト対象のコンポーネント(ここではHelloWorld.vue)をインポートしておく。
+コンポーネントを描画(マウント)するのは、shallowMountメソッドの役割。
+
+```
+shallowMount(comp, opts)
+
+comp: マウントすべきコンポーネント
+opts: コンポーネントに流すオプション
+```
+
+オプション | 概要
+--- | ---
+context | コンテキスト情報(関数型コンポーネントのみ)
+slots | スロット情報(「名前: コンテンツ, ...」形式)
+scopedSlots | スコープ付きスロット情報
+stubs | スタブ
+mocks | 追加のインスタンスプロパティ(「名前: 値, ...」形式)
+localVue | createLocalVueで作成されたVueのローカルコピー
+attrs | コンポーネントの属性($attrs)情報
+propsData | コンポーネントのプロパティ(props)情報
+parentComponent | 親として利用するコンポーネント
+sync | コンポーネントを同期的に描画するか(既定はtrue)
+
+例では、HelloWorldコンポーネントを「msg="new message"」属性を指定してマウントしなさい、という意味になる。
+shallowMountメソッドの戻り値は、名前のとおり、Vueコンポーネントのラッパー(Wrapper)で、コンポーネントを取得／テストするための種々のメソッドを提供する。
+以下は、その主なメンバー。
+
+分類 | メンバー | 概要
+基本 | vm | Vueインスタンス(データオブジェクトなどへのアクセスに利用)
+基本 | element | ルート要素
+基本 | attributes() | 要素の属性情報を取得
+基本 | classes() | 要素のclass名を取得(配列)
+基本 | emitted() | カスタムイベントの情報を取得(「イベント名: [値, ...], ...」形式)
+基本 | html() | DOMノードをHTML文字列で取得
+基本 | name() | コンポーネント名、またはタグ名を取得
+基本 | props() | propsオブジェクトを取得
+基本 | text() | テキストを取得
+検索 | find(selector) | 指定されたセレクターで配下の要素を取得(単一)
+検索 | findAll(selector) | 指定されたセレクターで配下の要素を取得(複数)
+判定 | contains(selector) | 指定されたセレクターに合致する要素を含んでいるか
+判定 | exists() | 中身が空でないか
+判定 | is(selector) | セレクターと一致しているか
+判定 | isEmpty() | 子ノードを含んでいないか
+判定 | isVisible() | 表示状態にあるか
+判定 | isVueInstance() | Vueインスタンスか
+設定 | setChecked() | チェックボックス、ラジオボタンをチェック状態に
+設定 | setData(data) | データオブジェクトを設定
+設定 | setMethods(methods) | メソッドを設定、更新
+設定 | setProps(props) | プロパティを設定、更新
+設定 | setValue(value) | テキスト、選択要素の値を設定、更新
+その他 | trigger(event [, opts]) | イベントを発生(引数optsはイベント情報)
+その他 | destroy() | インスタンスを破棄
+
+例であれば、textメソッドで配下のテキストを取得し、そこにmsg(new message)が含まれているかを判定している。
+より限定的に、配下のコンポーネントから`<h1>`要素を取り出し、そのテキストがmsgに等しいかを確認することもできる。以下のようにfindメソッドを利用する。
+
+`expect(wrapper.find('h1').text()).toMatch(msg)`
+
+findメソッドには任意のセレクター式を指定できる。コンポーネントの特定の要素を確認したい場合に、よく用いる。
+コンポーネントのテストでは、まず、
+
+* コンポーネントをマウント
+* 値を取り出し
+* その値を検証
+
+という流れが基本。
+
+##### setPropsメソッド
+
+コンポーネントのプロパティ(属性)は、マウント時にpropsDataオプションで設定するばかりではない。sePropsメソッドで、属性値を変更し、結果の変化を確認することも可能。
+例に以下のようなコードを追加する。setPropsメソッドには、propsDataオプションと同じく、「プロパティ名: 値, ...」形式のオブジェクトを引き渡す。
+
+```example.spec.js
+describe('HelloWorld.vue', () => {
+    it('renders props.msg when passed', () => {
+        ...中略...
+        const new_msg = 'こんにちは、Vue!!'
+        wrapper.setProps({msg: new_msg })
+        expect(wrapper.find('h1').text()).toBe(new_msg)
+    })
+})
+```
+
+#### shallowMountメソッドとmountメソッド
+vue-test-utilsモジュールは、コンポーネントをマウントするためにshallowMountとmountの、2種類のメソッドを提供している。具体的な例を示すために、標準で用意されているAppコンポーネントをshallowMount、mountメソッドそれぞれでアクセスし、コンソールに出力してみる。
+
+```mount.spec.js
+import { shallowMount, mount } from '@vue/test-utils'
+import App from '@/App.vue'
+
+describe('Mountの基本', () => {
+    it('shallowMount vs mount', () => {
+        let shallow = shallowMount(App)
+        let deep = mount(App)
+        // それぞれのマウント結果を確認
+        console.log(shallow.html())
+        console.log(deep.html())
+    })
+})
+```
+
+`> npx vue-cli-service test:unit mount.spec.js`
+
+shallowMount、mountメソッドの結果は、子コンポーネントの描画で現れる。
+mountメソッドの挙動は直。子コンポーネントもそのまま解釈し、その結果を描画する。
+shallowMountメソッドは、子コンポーネントが`<helloworld-stub>`で置き換わって、そのまま描画される。スタブ(stub)とは、テストのための「ダミーのオブジェクト」という意味。
+親コンポーネントをテストするうえで、子コンポーネントの解釈は必ずしも必要とは限らない。むしろ、子コンポーネントが他のサービスに依存しているなどの理由で、
+
+* テストが無用に複雑になる
+* 結果、思わぬエラーの原因となる(その対処にテストコードがさらに複雑化する)
+* テストの処理時間が長くなる
+
+など、種々のデメリットが想定される。
+子コンポーネントとの連携に着目したいのでなければ、子コンポーネントはスタブ化し、親コンポーネントだけを描画するのがスマート。
+
+##### 独自のスタブで置き換える
+
+shallowMountメソッドは、子コンポーネントを既定で`<helloworld-stub>`のようなスタブで置き換える(既定のスタブは、そこにあるだけでなにもしない)。
+しかし、テストのためにスタブそのものを自分で用意しても構わない。たとえば、HelloWorld.vueのスタブとして、以下のような.vueファイルを用意してみる。
+
+```HelloStub.vue
+<template>
+    <div class="hello">
+        <h1>{{ msg }}</h1>
+    </div>
+</template>
+
+<script>
+export default {
+    name: 'hello-stud',
+    props: {
+        msg: String
+    }
+}
+</script>
+
+<style scoped>
+h3 {
+    margin: 40px 0 0
+}
+</style>
+```
+
+スタブとは言っても、オリジナルの.vueファイルを簡単化しただけで、特筆すべき点はない。一般的にも、コード部分を取り払って(または簡単化して)、簡単な出力を生成することになる。
+このようなスタブを組み込むのは、shallowMountメソッドのstubsオプションの役割。
+
+```mount.spec.js
+import { shallowMount, mount } from '@vue/test-utils'
+import HelloStub from './HelloStub.vue'
+import App from '@/App.vue'
+
+describe('Mountの基本', () => {
+    ...中略...
+    it('Custom Stub', () => {
+        le shallow = shallowMount(App, {
+            stubs: {
+                'HelloWorld': HelloStub
+            }
+        })
+        // コンポーネントの処理結果を出力
+        console.log(shallow.html())
+    })
+})
+```
+
+stubsオプションには「コンポーネント名: スタブ, ...」形式のハッシュとして、スタブを指定する。これまでと同じく、既定のスタブを割り当てるだけであれば、
+
+`'HelloWorld': true`
+
+とするだけ。
+テストを実行してみると、HelloStubの結果が、本来のHelloWorldコンポーネントの代わりに反映されていることが見て取れる。
+
+#### 算出プロパティのテスト
+
+算出プロパティをテストする際にも、マウントして、要素を取得、結果判定という流れは同じ。ただし、算出プロパティの値を確認するだけであれば、算出プロパティを直接実行し、結果を確認することもできる。
+以下は、email属性で与えられたメールアドレスからローカル部分を取得し、すべて小文字で表示するMyComputeコンポーネントの例。
+
+```MyCompute.vue
+<template>
+    <div id="email">{ localEmail }}</div>
+</template>
+<script>
+export default {
+    // 文字列型のemail属性
+    props: {
+        email: String
+    },
+    // メールアドレスの「@」以前を取得
+    computed: {
+        localEmail: function() {
+            return this.email.split('@')[0].toLowerCase()
+        }
+    }
+}
+</script>
+```
+
+このlocalEmail算出プロパティをテストするためのコードが以下。
+
+```compute.spec.js
+import MyCompute from '@/components/MyCompute.vue'
+...中略...
+it('Computed Test', () => {
+    const that = { email: 'HOGE@example.com' }
+    expect(MyCompute.computed.localEmail.call(that)).toBe('hoge')
+})
+```
+
+ポイントは`MyCompute.computed.localEmail.call(that)`。算出プロパティには「コンポーネント名.computed.プロパティ名」でアクセスできる。そのcallメソッドを呼び出すということは、変数thatがthisになるようにlocalEmailメソッドを呼び出すという意味。that(this)には、props/dataオプションに渡すべき内容を列挙しておく。
+これでlocalEmailプロパティの結果を得られる。後は、Matcherで結果を判定するだけ。
+
+#### イベントを伴うテスト
+
+vue-test-utilsモジュールでは、ユーザー操作(イベント)を伴うテストも可能。
+メールアドレスを登録すると、登録完了メッセージが表示される例。
+
+```MyEvent.vue
+<template>
+    <div id="event">
+        <form v-on:submit.prevent="onsubmit">
+            <label>メールアドレス:
+            <input id="email" v-model="email"></label>
+            <input type="submit" value="登録">
+        </form>
+        <div id="result">{{ result }}</div>
+    </div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            email: '',      // メールアドレス
+            result: ''      // 結果メッセージ
+        }
+    },
+
+    methods: {
+        // サブミット時にメッセージを生成
+        onsubmit() {
+            this.result = '登録完了: ' + this.email
+        }
+    }
+}
+</script>
+```
+
+このイベントハンドラーをテストするためのコード。
+
+```event.spec.js
+import MyEvent from '@/components/MyEvent.vue'
+...中略...
+it('Event Test', () => {
+    const email = 'hoge@example.com'
+    const wrapper = shallowMount(MyEvent)
+
+    // テキストボックスへの入力＆サブミット
+    wrapper.find('#email").setValue(email)
+    wrapper.find("form").trigger('submit.prevent')
+
+    // 結果の確認
+    expect(wrapper.find('#result').text()).toContain('登録完了: ' + email)
+})
+```
+
+findメソッドでテキストボックス、フォームを取得し操作する。
+値を設定するのがsetValue、イベントを発生させるのがtriggerメソッドの役割。
+triggerメソッドの引数には「submit.prevent」のような修飾子も含んだ形式で、イベント名を指定できる。
+
+#### カスタムイベントを伴うテスト
+
+親から子方向への情報の伝播を表すPropsに対して、子から親方向の伝播を担うのが$emit(カスタムイベント)だった。vue-test-utilsモジュール(Wrapperオブジェクト)では、これらカスタムイベントの情報を監視し、その発生回数、授受されたデータの内容などをテストすることもできる。
+以下は、ボタンをクリックすると、カスタムイベントupdateが発生するようなコンポーネントの例。
+
+```MyEmit.vue
+<template>
+    <div id="emit">
+        <input type="button" value="送信" v-on:click="onupdate">
+    </div>
+</template>
+
+<script>
+export default {
+    methods: {
+        // ボタンクリック時にカスタムイベントを生成
+        onupdate() {
+            this.$emit('update')
+            this.$emit('update', { name: 'Vue.js', version: '2.6.10' })
+        }
+    }
+}
+</script>
+```
+
+このようなコンポーネントで、ボタンクリック時に意図したイベントが発生しているかどうかを判定するのは、以下のテストコード。
+
+```emit.spec.js
+import MyEmit from '@/components/MyEmit.vue'
+...中略...
+it('$emit Test', () => {
+    const wrapper = shallowMount(MyEmit)
+    // ボタンをクリック
+    wrapper.find('input').trigger('click')
+    // カスタムイベントを取得
+    const emit = wrapper.emitted()
+    console.log(emit)       // 結果:{ update: [ [], [ [Object] ] ] }
+
+    // updateイベントが発生しているか
+    expect(emit.update).toBeTruthy()
+    // updateイベントが何回発生したか
+    expect(emit.update.length).toBe(2)
+    // 2回目のupdateイベントのデータを確認
+    expect(emnit.update[1][0].version).toBe('2.6.10')
+})
+```
+
+ボタンクリックをシミュレートするのはtriggerメソッド。このタイミングで、my-emitコンポーネントのonupdateメソッドが呼び出され、カスタムイベントの情報がWrapperオブジェクトに格納される。カスタムイベント情報を取得するのは、emittedメソッドの役割。
+イベント情報が取得できたら、後はこれまでと同じく、その内容を検証していく。
+emittedメソッドの戻り値は「イベント名: 送信された値, ...」。「送信された値」は配列形式で、ひとつの要素がひとつのイベントで送信された値を表し、さらに、個々の要素が「引数, ...」の配列となっている点に注目する。
+
+### E2Eテスト
+**E2E (End to End)**テストは、複数のコンポーネントにまたがって、エンドユーザーの実際の操作をシミュレートするような用途で利用する。
+ユニットテストで個々のコンポーネントの動作を確認した後、アプリをより本番環境に近い環境(クライアントサイドからサーバーサイドまで通して(End to End))で、最終的な動作を確認する。
+**インテグレーションテスト**、**シナリオテスト**とも呼ばれ、リリース前の最終段階のテスト。
+
+#### E2Eテストの準備
+
+Vue CLIを利用している場合、プロジェクト作成時に`[Manually select features](カスタムインストール)`を選択することで、E2Eテストのためのライブラリ、設定を組み込むことが可能。
+カスタムインストールの途中で、まず「E2E Testing」を有効にする。
+すると後で組み込むべきE2Eライブラリを訊かれる。`Nightwatch`を選択する。
+
+Nightwatch(https://nightwatchjs.org/)は、内部的にWebDriver API(https://www.w3.org/TR/webdriver/)を利用しており、ブラウザに文字を入力する、ボタンをクリックする、ページを遷移する、などといった操作の仕組みを標準で備えている。
+
+Nightwatchをインストールした場合、Vue CLIのプロジェクトには以下のようなフォルダ／ファイルが追加される。
+
+```
+root (プロジェクトルート)
+ └─ tests
+      └─ e2e
+          ├─ custom-assertions
+          │        └─ elementCount.js   追加のアサーション      
+          └─ specs
+               └─ test.js   既定で用意されたテストコード
+```
+
+Nightwatchそのものの設定は、Vue CLIのNightwatchプラグインが既定で用意している。特別な設定なく、テストを実施できる。
+
+#### テストコードの基本
+
+既定で用意されたテストコードを読み解く。
+
+```test.js
+module.exports = {
+    'default e2e tests': browser => {
+        browser
+            .url(process.env.VUE_DEV_SERVER_URL)
+            .waitForElementVisible('#app', 5000)
+            .assert.elementPresent('.hello')
+            .assert.containsText('h1', 'Welcome to Your Vue.js App')
+            .assert.elementCount('img', 1)
+            .end()
+    }
+}
+```
+
+テストコードは、`module.exports = {...}`の配下に記述するのが基本。`module.exports`はNode.jsのモジュール定義の構文だが、Nightwatchではこれをひとつのテストスイートとして扱う。
+個々のテストケースは、配下のメソッドとして表す。テストケースは必要に応じて複数列記しても構わない。
+
+```
+'name': browser => { test }
+
+name: テストケースの名前
+test: テストコード
+```
+
+引数browserはNightwatchオブジェクトで、ブラウザ操作、テスト実施のためのメソッドを提供する。urlメソッドは、その中でもよく利用する機能で、指定されたURLにアクセスしてページを開く。
+その他、browserオブジェクト経由でアクセスできるメソッドには、以下の表のようなものがある。
+
+分類 | メソッド | 概要
+--- | --- | ---
+基本 | url(url) | 指定のページに移動
+基本 | back() | ひとつ前のページに戻る
+基本 | forward() | ひとつ次のページに進む
+基本 | refresh()) | 現在のページを更新
+基本 | end() | セッションを終了
+要素 | waitForElementVisible(selector, wait) | 指定の要素が有効になるまでwaitミリ秒待機
+要素 | waitForElementPresent(selector, wait) | 指定の要素が存在するかをwaitミリ秒待機
+要素 | element(selector) | セレクターに合致する要素を取得
+要素　| title() | 現在のページタイトルを取得
+マウス、キーボード | click(selector) | 指定された要素をクリック
+マウス、キーボード | setValue(selector, value) | 指定された入力要素に値を設定
+マウス、キーボード | clearValue(selector) | 指定された入力要素の値をクリア
+マウス、キーボード | submit(id) | 指定のフォームをサブミット
+
+ページの内容を検証するのは、assertメソッドの役割。`assert.name(...)`の形式で表す。nameには、以下のようなアサーションメソッドを指定できる。
+
+メソッド | 概要
+--- | ---
+attributeEquals(elem, attr, expected [,msg]) | 要素elemの属性attrに期待値expectedが含まれているか
+attributeEquals(elem, attr, expected [,msg]) | 要素elemの属性attrが期待値expectedと等しいか
+containsText(elem, text, [,msg]) | 要素elemが指定のテキストtextを含むか
+cssClassPresent(elem, clazz, [,msg]) | 要素elemが指定のクラスclazzを持っているか
+cssClassNotPresent(elem, clazz, [,msg]) | 要素elemが指定のクラスclazzを持っていないか
+cssProperty(elem, prop, expected [,msg]) | 要素elemのcssプロパティpropが期待値expectedを持っているか
+elementPresent(elem, [,msg]) | 指定の要素elemが存在するか
+elementNotPresent(elem, [,msg]) | 指定の要素elemが存在しないか
+hidden(elem [,msg]) | 要素elemが非表示状態か
+title(expected [,msg]) | ページタイトルが指定の値expectedと等しいか
+urlContains(expected [,msg]) | URLに指定の値expectedが含まれているか
+urlEquals(expected [,msg]) | URLが指定の値expectedと等しいか
+value(elem, expected [,msg]) | 要素elemの値が期待値expectedと等しいか
+valueContains(elem, expected [,msg]) | 要素elemの値が期待値expectedを含んでいるか
+visible(elem [,msg]) | 要素elemが表示されているか
+
+すべてのアサートが完了したら、最後にendメソッドでブラウザを閉じて、テストを終了する。
+
+#### E2Eテストの実行
+
+Vue CLI環境でE2Eテストを実行するには、`npx vue-cli-service test:e2e`コマンドを実行する。
+テストスイート内の、waitForElementVisibleを含むすべてのアサートが成功したことが確認できる。
+テスト失敗の場合も、test.jsをあえて失敗するように書き換えておく。
+
+`.assert.elementPresent('.bye')`
+
+`npx vue-cli-service test:e2e`でテストを再実行し、失敗結果を確認する。
+失敗したアサートが通知され、テストが中断していることが確認できる。
+アサートが失敗したときに中断せずに、そのまま後続のアサートを実施する場合には、`.assert`の代わりに`.verify`を利用する。
+
+`.verify.elementPresent('.bye')`
+
+アサート失敗の後もテストは継続することが確認できる。
+
+##### --test、--filterオプション
+
+--test、--filterオプションを利用することで特定のテストスイートだけを実行することも可能。
+
+```
+> npx vue-cli-service test:e2e --test ./tests/e2e/specs/test.js
+
+> npx vue-cli-service test:e2e --filter test*.js
+```
+
+#### expectアサーション
+
+Nightwatchでは、assertアサーションともうひとつ、expectアサーションも標準で提供している。
+assertに比べると、より英文に近い感覚で読めるメリットがある。assertのようにアサートを連結できない、カスタムのエラーメッセージを設定できない、などの制約もあるが、テストコードがそのまま自然言語に近い仕様を表せるというメリットは得難いもの。
+expectアサーションの一般的な構文は以下のとおり。
+
+```
+browser.expect.eement(selector).name(...)
+
+selector: セレクター
+name: アサーション
+```
+
+利用できるアサーションには、以下の表のようなものがある。
+
+分類 | メソッド | 概要
+文字列 | equal(value) | 指定された値と等しいか
+文字列 | contain(value) | 指定された値を含むか
+文字列 | match(regex) 指定された正規表現にマッチするか
+文字列 | startsWith(value) | 指定された値で開始するか
+文字列 | endsWith(value) | 指定された値で終了するか
+要素、属性 | a(type)、an(type) | 要素が指定の型であるか
+要素、属性 | attribute(name) | 指定された属性が存在するか
+要素、属性 | css(prop) | 指定されたスタイルプロパティが存在するか
+状態 | enabled | 要素が有効な常態か
+状態 | visible | 要素が表示状態にあるか
+状態 | present | 要素が存在するか
+状態 | selected | 選択状態にあるか (option)
+取得 | text | 配下のテキストを取得
+取得 | value | 要素の値を取得
+その他 | not | 後続のアサーションを否定
+その他 | before(ms) | 指定された時間(ミリ秒)で再試行
+
+expectアサーションでは、コードの読みやすさのためだけに用意されたLanguage Chainsと呼ばれるメソッドもある。
+指定できるのは以下のもの。これらはアサーション機能を持つものではなく、記述の順番も関係ない。
+
+* to
+* be
+* been
+* is
+* that
+* which
+* and
+* has
+* have
+* with
+* at
+* does
+* of
+
+これらのexpectアサーションを利用して作成したテストコード。
+テスト対象はVue Routerを利用したページ移動を伴うアプリ。
+
+```test.js
+module.exports = {
+    'Router tests': browser => {
+        browser
+        .url(process.env.VUE_DEV_SERVER_URL)
+        .pause(1000)
+        // id="app"である要素が存在するか
+        browser.expect.element('#app').to.be.present.before(1000)
+        // Aboutページへのリンクをクリック
+        browser
+        .click('a[href="/about"]')
+        .pause(1000)
+        // id="name"である要素が「class="search"」属性を持つか
+        browser.expect.element('#name').to.have.attribute('class')
+            .which.contains('search')
+        // テキストボックスへの入力&ボタンクリック(結果を検証)
+        browser
+            .setValue('#name', '山田')
+            .click('#send')
+        browser.expect.element('#result').text
+            .to.equal('こんにちは、山田さん！')
+        // 終了
+        browser.end()
+    }
+}
+```
+
+Language Chainsにあたるメソッドは省略しても挙動には影響しない。
+
