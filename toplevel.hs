@@ -1,4 +1,4 @@
-main = print (x + y)
-x = 10
-y = 20
+main = print (x + 20)
+    where
+        x = 10
 
