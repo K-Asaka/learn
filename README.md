@@ -1,4 +1,15 @@
 # 学習記録用リポジトリ
 
-いろんなものの、確認した内容の記録。
+Linux プログラミング
+
+gccがインストールされているか確認
+gcc -dumpversion
+
+インストール方法
+Ubuntu:
+sudo apt-get install build-essential
+
+CentOS:
+sudo yum groupinstall "Development Tools"
+
 
