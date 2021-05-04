@@ -7,3 +7,7 @@ data = {
 
 df = pd.DataFrame(data)
 print(df)
+
+print(type(df))
+print(df.shape)
+
