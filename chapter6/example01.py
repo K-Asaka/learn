@@ -21,3 +21,7 @@ for name in df.columns:
         continue
     df2.plot(kind = 'scatter', x = name, y = 'target')
 plt.show()
+
+# 練習6-7
+no = df2[(df2['x2'] < -2) & (df2['target'] > 100)].index
+df3 = df2.drop(no, axis = 0)
