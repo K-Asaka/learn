@@ -14,3 +14,9 @@ t = df['派閥']
 model = tree.DecisionTreeClassifier(random_state = 0)
 # 学習の実行(x、tは事前に定義済みの特徴量と正解ラベル)
 print(model.fit(x, t))
+
+# 身長170cm、体重70kg、年齢20代のデータ(新しいデータ)を2次元リストで作成
+taro = [[170, 70, 20]]
+
+# taroがどちらに分類されるか予測
+print(model.predict(taro))
