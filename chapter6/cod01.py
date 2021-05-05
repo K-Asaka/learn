@@ -34,3 +34,7 @@ print(df3.loc[2, 'SNS1'])
 index = [2, 4, 6]           # インデックス
 col = ['SNS1', 'actor']     # 列名
 print(df3.loc[index, col])
+
+# スライス構文で連続した要素を参照する
+sample = [10, 20, 30, 40]   # リストの作成
+print(sample[1:3])          # 添え字が1以上3未満の要素を取得
