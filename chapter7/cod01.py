@@ -48,3 +48,18 @@ for j in range(1, 15):  # jは木の深さ(1～14が入る)
 df2 = pd.read_csv('datafile/Survived.csv')
 print(df2['Age'].mean())
 print(df2['Age'].median())
+
+# ピボットテーブルによる集計
+# 小グループ作成の基準となる列(基準軸)を指定
+print(df2.groupby('Survived').mean()['Age'])
+
+# Pclass列で集計
+print(df2.groupby('Pclass').mean()['Age'])
+
+# ピボットテーブル機能を使う
+# Survived列とPclass列の2つの列を使った集計(クロス集計)
+# 平均値
+print(pd.pivot_table(df2, index = 'Survived', columns = 'Pclass', values = 'Age'))
+# 各グループの年齢の最大値
+print(pd.pivot_table(df2, index = 'Survived', columns = 'Pclass', values = 'Age', aggfunc = max))
+
