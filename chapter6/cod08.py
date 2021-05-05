@@ -8,3 +8,6 @@ test = pd.DataFrame(
 
 print(test[test['Acolumn'] < 2])
 print(test['Acolumn'] < 2)
+
+print(test.drop(0, axis = 0))
+print(test.drop('Bcolumn', axis = 1))
