@@ -26,3 +26,11 @@ df3 = df2.drop(no, axis = 0)
 col = ['SNS1', 'SNS2', 'actor', 'original']
 x = df3[col]        # 特徴量の取り出し
 t = df3['sales']    # 正解データの取り出し
+
+# インデックスが2、列がSNS1のマスの値のみ参照
+print(df3.loc[2, 'SNS1'])
+
+# 特定のデータのみを参照
+index = [2, 4, 6]           # インデックス
+col = ['SNS1', 'actor']     # 列名
+print(df3.loc[index, col])
