@@ -12,5 +12,12 @@ df2 = df.fillna(df.median())
 
 # 練習6-5
 import matplotlib.pyplot as plt
-df2.plot(kind = 'scatter', x = 'x0', y = 'target')
+#df2.plot(kind = 'scatter', x = 'x0', y = 'target')
+#plt.show()
+
+# 練習6-6
+for name in df.columns:
+    if name == 'target':
+        continue
+    df2.plot(kind = 'scatter', x = name, y = 'target')
 plt.show()
