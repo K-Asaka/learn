@@ -58,3 +58,5 @@ print(model.fit(x_train, y_train))
 
 new = [[150, 700, 300, 0]]
 print(model.predict(new))
+
+print(model.score(x_test, y_test))
