@@ -32,3 +32,29 @@ print(df2.tail(3))
 
 # 削除元のデータフレームを確認
 print(df.isnull().any(axis = 0))
+
+# fillnaメソッドで欠損値を指定した値に書き換える
+df['花弁長さ'] = df['花弁長さ'].fillna(0)
+print(df.tail(3))
+
+# 数値列の各平均値を計算(文字列の列は自動的に除外してくれる)
+print(df.mean())
+
+# 「がく片長さ」列の平均値を計算
+print(df['がく片長さ'].mean())
+
+# 標準偏差の計算
+print(df.std())
+
+
+# 欠損値を0で置き換えてしまったのでもう一度読み込み直し
+df = pd.read_csv('datafile/iris.csv')
+
+# 各列の平均値を計算して、colmeanに代入
+colmean = df.mean()
+
+# 平均値で欠損値を穴埋めしてdf2に代入
+df2 = df.fillna(colmean)
+
+# 欠損値があるか確認
+print(df2.isnull().any(axis = 0))
