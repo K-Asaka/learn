@@ -9,3 +9,5 @@ with open('irismodel.pkl', 'rb') as f:
 # 分岐条件の列を決める
 print(model.tree_.feature)
 
+# 分岐条件のしきい値を含む配列を返す
+print(model.tree_.threshold)
