@@ -11,9 +11,10 @@ df2 = df.fillna(df.mean())
 print(df2.isnull().any(axis = 0))
 
 # SNS2とsalesの散布図の作成
-df2.plot(kind = 'scatter', x = 'SNS1', y = 'sales')
-df2.plot(kind = 'scatter', x = 'SNS2', y = 'sales')
-df2.plot(kind = 'scatter', x = 'actor', y = 'sales')
-df2.plot(kind = 'scatter', x = 'original', y = 'sales')
-plt.show()
+for name in df.columns:     # for name in df: でも可
+    # X軸がcinema_id列とsales列の散布図は作っても意味がないので外す
+    if name == 'cinema_id' or name == 'sales':
+        continue
 
+    df2.plot(kind = 'scatter', x = name, y = 'sales')
+plt.show()
