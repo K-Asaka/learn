@@ -22,3 +22,8 @@ xcol = ['x0', 'x1', 'x2', 'x3']
 x = df2[xcol]
 t = df2['target']
 
+# 練習5-9
+from sklearn.model_selection import train_test_split
+
+x_train, x_test, y_train, y_test = train_test_split(x, t, test_size = 0.2, random_state = 0)
+
