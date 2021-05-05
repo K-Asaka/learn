@@ -1,6 +1,7 @@
 import pandas as pd
 from sklearn import tree
 from sklearn.model_selection import train_test_split
+import pickle
 
 df = pd.read_csv('datafile/iris.csv')
 
@@ -39,3 +40,6 @@ model.fit(x_train, y_train)
 
 # テストデータの予測結果と実際の答えが合致する正解率を計算
 print(model.score(x_test, y_test))
+
+with open('irismodel.pkl', 'wb') as f:
+    pickle.dump(model, f)
