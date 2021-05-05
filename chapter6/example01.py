@@ -2,4 +2,6 @@
 import pandas as pd
 
 df = pd.read_csv('datafile/ex3.csv')
-print(df.head(3))
+
+# 練習6-2
+print(df.head(5))
