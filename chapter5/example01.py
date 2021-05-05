@@ -32,3 +32,6 @@ from sklearn import tree
 
 model = tree.DecisionTreeClassifier(max_depth = 3, random_state = 0)
 model.fit(x_train, y_train)
+
+# 練習5-13
+print(model.score(x_test, y_test))
