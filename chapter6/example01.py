@@ -25,3 +25,7 @@ plt.show()
 # 練習6-7
 no = df2[(df2['x2'] < -2) & (df2['target'] > 100)].index
 df3 = df2.drop(no, axis = 0)
+
+# 練習6-8
+x = df3.loc[ : , :'x3']
+t = df3['target']
