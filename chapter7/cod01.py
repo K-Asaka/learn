@@ -21,3 +21,7 @@ df['Embarked'] = df['Embarked'].fillna(df['Embarked'].mode())
 col = ['Pclass', 'Age', 'SibSp', 'Parch', 'Fare']
 x = df[col]
 t = df['Survived']
+
+# 訓練データとテストデータに分割する
+x_train, x_test, y_train, y_test = train_test_split(x, t, test_size = 0.2, random_state = 0)
+print(x_train.shape)
