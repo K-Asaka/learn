@@ -8,3 +8,11 @@ print(df.head(2))
 
 # Survived列のデータ
 print(df['Survived'].value_counts())
+
+# 欠損値の処理
+print(df.isnull().sum())
+print(df.shape)
+
+# Age列とEmbarked列の穴埋め
+df['Age'] = df['Age'].fillna(df['Age'].mean())
+df['Embarked'] = df['Embarked'].fillna(df['Embarked'].mode())
