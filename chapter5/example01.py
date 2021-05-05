@@ -10,3 +10,6 @@ print(df.shape)
 
 # 練習5-4
 print(df['target'].value_counts())
+
+# 練習5-5
+print(df.isnull().sum())
