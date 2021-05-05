@@ -3,6 +3,16 @@ from sklearn import tree
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 
+# x:特徴量 t:正解データ depth:木の深さ
+def learn(x, t, depth = 3):
+    x_train, x_test, y_train, y_test = train_test_split(x, t, test_size = 0.2, random_state = 0)
+    model = tree.DecisionTreeClassifier(max_depth = depth, random_state = 0, class_weight = 'balanced')
+    model.fit(x_train, y_train)
+
+    score = model.score(X = x_train, y = y_train)
+    score2 = model.score(X = x_test, y = y_test)
+    return round(score, 3), round(score2, 3), model
+
 df = pd.read_csv('datafile/Survived.csv')
 print(df.head(2))
 
@@ -25,3 +35,4 @@ t = df['Survived']
 # 訓練データとテストデータに分割する
 x_train, x_test, y_train, y_test = train_test_split(x, t, test_size = 0.2, random_state = 0)
 print(x_train.shape)
+
