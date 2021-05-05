@@ -44,3 +44,7 @@ for j in range(1, 15):  # jは木の深さ(1～14が入る)
     sentence2 = 'テストデータの正解率{}'
     total_sentence = '深さ{}:' + sentence + sentence2
     print(total_sentence.format(j, train_score, test_score))
+
+df2 = pd.read_csv('datafile/Survived.csv')
+print(df2['Age'].mean())
+print(df2['Age'].median())
