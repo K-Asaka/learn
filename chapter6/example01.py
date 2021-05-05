@@ -29,3 +29,7 @@ df3 = df2.drop(no, axis = 0)
 # 練習6-8
 x = df3.loc[ : , :'x3']
 t = df3['target']
+
+# 練習6-9
+from sklearn.model_selection import train_test_split
+x_train, x_test, y_train, y_test = train_test_split(x, t, test_size = 0.2, random_state = 1)
