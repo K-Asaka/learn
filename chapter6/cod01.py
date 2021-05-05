@@ -55,3 +55,6 @@ from sklearn.linear_model import LinearRegression
 
 model = LinearRegression()
 print(model.fit(x_train, y_train))
+
+new = [[150, 700, 300, 0]]
+print(model.predict(new))
