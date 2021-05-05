@@ -6,3 +6,8 @@ scores = {
 }
 
 df = pd.DataFrame(scores)
+
+# 練習4-2
+df.index = ['一郎', '次郎', '三郎', '太郎']
+
+print(df)
