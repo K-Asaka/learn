@@ -25,3 +25,10 @@ print(df.sum())
 # 各列に欠損値がいくつあるか集計
 tmp = df.isnull()
 print(tmp.sum())
+
+# 欠損値が1つでもある行を削除した結果を、df2に代入
+df2 = df.dropna(how = 'any', axis = 0)
+print(df2.tail(3))
+
+# 削除元のデータフレームを確認
+print(df.isnull().any(axis = 0))
