@@ -35,3 +35,9 @@ model.fit(x_train, y_train)
 
 # 練習5-13
 print(model.score(x_test, y_test))
+
+# 練習5-14
+newdata = [[1.56, 0.23, -1.1, -2.8]]
+
+answer = model.predict(newdata)
+print(answer)
