@@ -16,3 +16,9 @@ print(df.isnull().sum())
 
 # 練習5-6
 df2 = df.fillna(df.median())
+
+# 練習5-7
+xcol = ['x0', 'x1', 'x2', 'x3']
+x = df2[xcol]
+t = df2['target']
+
