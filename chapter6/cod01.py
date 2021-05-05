@@ -45,3 +45,7 @@ print(df3.loc[0:3, :'actor'])
 # スライス構文で特徴量と正解データを取り出す
 x = df3.loc[ : , 'SNS1':'original'] # 特徴量の取り出し
 t = df3['sales']                    # 正解ラベルの取り出し
+
+# 訓練データとテストデータに分割する
+from sklearn.model_selection import train_test_split
+x_train, x_test, y_train, y_test = train_test_split(x, t, test_size = 0.2, random_state = 0)
