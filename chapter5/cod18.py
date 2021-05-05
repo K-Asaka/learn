@@ -1,5 +1,6 @@
 import pandas as pd
 from sklearn import tree
+from sklearn.model_selection import train_test_split
 
 df = pd.read_csv('datafile/iris.csv')
 
@@ -27,3 +28,14 @@ model.fit(x, t)
 # 学習済みモデルの正解率計算
 print(model.score(x, t))
 
+# 訓練データとテストデータに分割する
+x_train, x_test, y_train, y_test = train_test_split(x, t, test_size = 0.3, random_state = 0)
+
+print(x_train.shape)
+print(x_test.shape)
+
+# 訓練データで再学習
+model.fit(x_train, y_train)
+
+# テストデータの予測結果と実際の答えが合致する正解率を計算
+print(model.score(x_test, y_test))
