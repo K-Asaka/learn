@@ -5,3 +5,6 @@ df = pd.read_csv('datafile/ex1.csv')
 
 # 練習4-4
 print(df.index)
+
+# 練習4-5
+print(df.columns)
