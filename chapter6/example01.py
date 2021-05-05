@@ -38,3 +38,6 @@ x_train, x_test, y_train, y_test = train_test_split(x, t, test_size = 0.2, rando
 from sklearn.linear_model import LinearRegression
 model = LinearRegression()
 model.fit(x_train, y_train)
+
+# 練習6-12
+print(model.score(x_test, y_test))
