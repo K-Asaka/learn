@@ -36,3 +36,11 @@ t = df['Survived']
 x_train, x_test, y_train, y_test = train_test_split(x, t, test_size = 0.2, random_state = 0)
 print(x_train.shape)
 
+
+for j in range(1, 15):  # jは木の深さ(1～14が入る)
+    # xは特徴量、tは正解データ
+    train_score, test_score, model = learn(x, t, depth = j)
+    sentence = '訓練データの正解率{}'
+    sentence2 = 'テストデータの正解率{}'
+    total_sentence = '深さ{}:' + sentence + sentence2
+    print(total_sentence.format(j, train_score, test_score))
