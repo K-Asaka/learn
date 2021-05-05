@@ -27,3 +27,6 @@ asagi = [158, 48, 20]
 new_data = [matsuda, asagi]
 
 print(model.predict(new_data))
+
+# 正解率の計算
+print(model.score(x, t))
