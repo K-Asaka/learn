@@ -68,3 +68,9 @@ pred = model.predict(x_test)
 
 # 平均絶対誤差の計算
 print(mean_absolute_error(y_pred = pred, y_true = y_test))
+
+# モデルの保存
+import pickle
+
+with open('cinema.pkl', 'wb') as f:
+    pickle.dump(model, f)
