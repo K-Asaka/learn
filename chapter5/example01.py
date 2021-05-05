@@ -13,3 +13,6 @@ print(df['target'].value_counts())
 
 # 練習5-5
 print(df.isnull().sum())
+
+# 練習5-6
+df2 = df.fillna(df.median())
