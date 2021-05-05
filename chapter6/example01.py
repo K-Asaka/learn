@@ -33,3 +33,8 @@ t = df3['target']
 # 練習6-9
 from sklearn.model_selection import train_test_split
 x_train, x_test, y_train, y_test = train_test_split(x, t, test_size = 0.2, random_state = 1)
+
+# 練習6-10
+from sklearn.linear_model import LinearRegression
+model = LinearRegression()
+model.fit(x_train, y_train)
