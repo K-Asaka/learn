@@ -7,3 +7,6 @@ print(df.head(3))
 
 # 練習5-3
 print(df.shape)
+
+# 練習5-4
+print(df['target'].value_counts())
