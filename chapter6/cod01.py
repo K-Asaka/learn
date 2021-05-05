@@ -60,3 +60,11 @@ new = [[150, 700, 300, 0]]
 print(model.predict(new))
 
 print(model.score(x_test, y_test))
+
+# MAEを求める
+from sklearn.metrics import mean_absolute_error
+
+pred = model.predict(x_test)
+
+# 平均絶対誤差の計算
+print(mean_absolute_error(y_pred = pred, y_true = y_test))
