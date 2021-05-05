@@ -1,3 +1,4 @@
+import pickle
 from sklearn import tree
 import pandas as pd
 
@@ -30,3 +31,7 @@ print(model.predict(new_data))
 
 # 正解率の計算
 print(model.score(x, t))
+
+# モデルの保存
+with open ('KinokoTakenoko.pkl', 'wb') as f:
+    pickle.dump(model, f)
