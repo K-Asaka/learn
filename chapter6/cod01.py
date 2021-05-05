@@ -21,3 +21,8 @@ print(df2.isnull().any(axis = 0))
 
 no = df2[(df2['SNS2'] > 1000) & (df2['sales'] < 8500)].index
 df3 = df2.drop(no, axis = 0)
+
+# 特徴量の列の候補
+col = ['SNS1', 'SNS2', 'actor', 'original']
+x = df3[col]        # 特徴量の取り出し
+t = df3['sales']    # 正解データの取り出し
