@@ -16,3 +16,8 @@ print(df.shape)
 # Age列とEmbarked列の穴埋め
 df['Age'] = df['Age'].fillna(df['Age'].mean())
 df['Embarked'] = df['Embarked'].fillna(df['Embarked'].mode())
+
+# 特徴量として利用する列のリスト
+col = ['Pclass', 'Age', 'SibSp', 'Parch', 'Fare']
+x = df[col]
+t = df['Survived']
