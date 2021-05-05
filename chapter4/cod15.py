@@ -20,3 +20,10 @@ taro = [[170, 70, 20]]
 
 # taroがどちらに分類されるか予測
 print(model.predict(taro))
+
+# 複数の予測を一度に実行
+matsuda = [172, 65, 20]
+asagi = [158, 48, 20]
+new_data = [matsuda, asagi]
+
+print(model.predict(new_data))
