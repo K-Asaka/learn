@@ -8,3 +8,7 @@ print(df.index)
 
 # 練習4-5
 print(df.columns)
+
+# 練習4-6
+cols = ['x0', 'x2']
+print(df[cols])
