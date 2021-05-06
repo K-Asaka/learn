@@ -149,3 +149,12 @@ x = train_val3.loc[ : , ['RM', 'LSTAT', 'PTRATIO', 'INDUS']]
 t = train_val3[['PRICE']]
 s1, s2 = learn(x, t)
 print(s1, s2)
+
+# 多項式特徴量と多項式回帰
+# データフレームのRM列のデータを2乗する
+print(x['RM'] ** 2)
+# RM2乗のシリーズを新しい列として追加
+x['RM2'] = x['RM'] ** 2
+# 追加されているINDUS列を削除
+x = x.drop('INDUS', axis = 1)
+print(x.head(2))
