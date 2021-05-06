@@ -77,3 +77,13 @@ df2.loc[(df['Pclass'] == 2) & (df['Survived'] == 1) & (is_null), 'Age'] = 25
 # Pclass 3 に関する埋め込み
 df2.loc[(df['Pclass'] == 3) & (df['Survived'] == 0) & (is_null), 'Age'] = 26
 df2.loc[(df['Pclass'] == 3) & (df['Survived'] == 1) & (is_null), 'Age'] = 20
+
+# 特徴量として利用する列のリスト
+col = ['Pclass', 'Age', 'SibSp', 'Parch', 'Fare']
+x = df2[col]
+t = df2['Survived']
+
+for j in range(1, 15):
+    s1, s2, m = learn(x, t, depth = j)
+    sentence = '深さ{}:訓練データの精度{}::テストデータの精度{}'
+    print(sentence.format(j, s1, s2))
