@@ -120,3 +120,10 @@ print(x_tmp.head(2))
 # axis=0で縦方向に連結
 tmp = pd.concat([x, x], axis = 0)
 print(tmp.shape)
+
+x_new = x_tmp.drop('Sex', axis = 1)
+for j in range(1, 6):
+    # x_newは特徴量、tは目的変数
+    s1, s2, m = learn(x_new, t, depth = j)
+    s = '深さ{}:訓練データの精度{}::テストデータの精度{}'
+    print(s.format(j, s1, s2))
