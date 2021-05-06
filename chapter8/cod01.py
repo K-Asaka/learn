@@ -70,3 +70,27 @@ x = train_val4[col]
 t = train_val4[['PRICE']]
 # 訓練データと検証データに分割
 x_train, x_val, y_train, y_val = train_test_split(x, t, test_size = 0.2, random_state = 0)
+
+# データの標準化
+from sklearn.preprocessing import StandardScaler
+
+sc_model_x = StandardScaler()
+sc_model_x.fit(x_train)
+
+# 各列のデータを標準化してsc_xに代入
+sc_x = sc_model_x.transform(x_train)
+print(sc_x)     # 表示
+
+# 平均値0を確認する
+# array型だと見づらいのでデータフレームに変換
+tmp_df = pd.DataFrame(sc_x, columns = x_train.columns)
+# 平均値の計算
+print(tmp_df.mean())
+# 標準偏差1を確認する
+print(tmp_df.std())
+
+# 正解データを標準化する
+sc_model_y = StandardScaler()
+sc_model_y.fit(y_train)
+
+sc_y = sc_model_y.transform(y_train)
