@@ -22,3 +22,9 @@ print(train_val.isnull().sum())
 # 欠損値を平均値で穴埋めする
 train_val_mean = train_val.mean()   # 各列の平均値の計算
 train_val2 = train_val.fillna(train_val_mean)   # 平均値で穴埋め
+
+# 外れ値の処理
+colname = train_val2.columns
+for name in colname:
+    train_val2.plot(kind = 'scatter', x = name, y = 'PRICE')
+plt.show()
