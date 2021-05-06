@@ -48,3 +48,12 @@ print(train_val4.corr())
 # 各列とPRICE列との相関係数を見る
 train_cor = train_val4.corr()['PRICE']
 print(train_cor)
+
+# abs関数で絶対値に変換
+print(abs(1))
+print(abs(-2))
+
+# mapメソッドで要素に関数を適用する
+se = pd.Series([1, -2, 3, -4])  # シリーズの作成
+# seの各要素にabs関数を適応させた結果をシリーズ化
+print(se.map(abs))
