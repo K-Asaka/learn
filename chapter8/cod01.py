@@ -144,3 +144,8 @@ t = train_val3[['PRICE']]
 
 s1, s2 = learn(x, t)
 print(s1, s2)
+
+x = train_val3.loc[ : , ['RM', 'LSTAT', 'PTRATIO', 'INDUS']]
+t = train_val3[['PRICE']]
+s1, s2 = learn(x, t)
+print(s1, s2)
