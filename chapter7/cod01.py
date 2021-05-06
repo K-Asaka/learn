@@ -92,5 +92,12 @@ for j in range(1, 15):
 sex = df2.groupby('Sex').mean()
 print(sex['Survived'])
 
-sex['Survived'].plot(kind = 'bar')
-plt.show()
+#sex['Survived'].plot(kind = 'bar')
+#plt.show()
+
+# 特徴量として利用する列のリスト
+col = ['Pclass', 'Age', 'SibSp', 'Parch', 'Fare', 'Sex']
+x = df2[col]
+t = df2['Survived']
+
+train_score, test_score, model = learn(x, t)    # 学習
