@@ -193,3 +193,13 @@ print(x.head(2))
 
 s1, s2 = learn(x, t)
 print(s1, s2)
+
+# 訓練データと検証データを合わせて再学習させるため再度標準化する
+sc_model_x2 = StandardScaler()
+sc_model_x2.fit(x)
+sc_x = sc_model_x2.transform(x)
+sc_model_y2 = StandardScaler()
+sc_model_y2.fit(t)
+sc_y = sc_model_y2.transform(t)
+model = LinearRegression()
+model.fit(sc_x, sc_y)
