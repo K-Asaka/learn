@@ -94,3 +94,6 @@ sc_model_y = StandardScaler()
 sc_model_y.fit(y_train)
 
 sc_y = sc_model_y.transform(y_train)
+
+model = LinearRegression()
+model.fit(sc_x, sc_y)   # 標準化済みの訓練データで学習
