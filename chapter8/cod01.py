@@ -37,3 +37,8 @@ out_line2 = train_val2[(train_val2['PTRATIO'] > 18) & (train_val2['PRICE'] > 40)
 print(out_line1, out_line2)
 # 外れ値を削除する
 train_val3 = train_val2.drop([76], axis = 0)
+
+# 絞り込んだ列以外を取り除く
+col = ['INDUS', 'NOX', 'RM', 'PTRATIO', 'LSTAT', 'PRICE']
+train_val4 = train_val3[col]
+print(train_val4.head(3))
