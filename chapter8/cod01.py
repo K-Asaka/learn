@@ -139,3 +139,8 @@ def learn(x, t):
     val_score = model.score(sc_x_val, sc_y_val)
     return train_score, val_score
 
+x = train_val3.loc[ : , ['RM', 'LSTAT', 'PTRATIO']]
+t = train_val3[['PRICE']]
+
+s1, s2 = learn(x, t)
+print(s1, s2)
