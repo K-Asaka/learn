@@ -96,8 +96,15 @@ print(sex['Survived'])
 #plt.show()
 
 # 特徴量として利用する列のリスト
-col = ['Pclass', 'Age', 'SibSp', 'Parch', 'Fare', 'Sex']
-x = df2[col]
-t = df2['Survived']
+# col = ['Pclass', 'Age', 'SibSp', 'Parch', 'Fare', 'Sex']
+# x = df2[col]
+# t = df2['Survived']
 
-train_score, test_score, model = learn(x, t)    # 学習
+# train_score, test_score, model = learn(x, t)    # 学習
+
+# 文字列を数値に変換する
+male = pd.get_dummies(df2['Sex'], drop_first = True)
+print(male)
+# drop_firstを指定しない場合
+print(pd.get_dummies(df['Sex']))
+
