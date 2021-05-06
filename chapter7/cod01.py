@@ -63,3 +63,17 @@ print(pd.pivot_table(df2, index = 'Survived', columns = 'Pclass', values = 'Age'
 # 各グループの年齢の最大値
 print(pd.pivot_table(df2, index = 'Survived', columns = 'Pclass', values = 'Age', aggfunc = max))
 
+# Age列の欠損値の行を抜き出す(欠損であればTrue)
+is_null = df2['Age'].isnull()
+
+# Pclass 1 に関する埋め込み(値はクロス集計の平均値を利用)
+df2.loc[(df['Pclass'] == 1) & (df['Survived'] == 0) & (is_null), 'Age'] = 43
+df2.loc[(df['Pclass'] == 1) & (df['Survived'] == 1) & (is_null), 'Age'] = 35
+
+# Pclass 2 に関する埋め込み
+df2.loc[(df['Pclass'] == 2) & (df['Survived'] == 0) & (is_null), 'Age'] = 33
+df2.loc[(df['Pclass'] == 2) & (df['Survived'] == 1) & (is_null), 'Age'] = 25
+
+# Pclass 3 に関する埋め込み
+df2.loc[(df['Pclass'] == 3) & (df['Survived'] == 0) & (is_null), 'Age'] = 26
+df2.loc[(df['Pclass'] == 3) & (df['Survived'] == 1) & (is_null), 'Age'] = 20
