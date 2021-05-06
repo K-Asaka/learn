@@ -116,3 +116,7 @@ print(embarked.head(3))
 
 x_tmp = pd.concat([x, male], axis = 1)
 print(x_tmp.head(2))
+
+# axis=0で縦方向に連結
+tmp = pd.concat([x, x], axis = 0)
+print(tmp.shape)
