@@ -218,3 +218,13 @@ sc_x_test = sc_model_x2.transform(x_test)
 sc_y_test = sc_model_y2.transform(y_test)
 
 print(model.score(sc_x_test, sc_y_test))
+
+# モデルを保存
+import pickle
+with open('boston.pkl', 'wb') as f:
+    pickle.dump(model, f)
+with open('boston_scx.pkl', 'wb') as f:
+    pickle.dump(sc_model_x2, f)
+with open('boston_scy.pkl', 'wb') as f:
+    pickle.dump(sc_model_y2, f)
+
