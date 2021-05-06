@@ -97,3 +97,22 @@ sc_y = sc_model_y.transform(y_train)
 
 model = LinearRegression()
 model.fit(sc_x, sc_y)   # 標準化済みの訓練データで学習
+
+# 標準化前の検証データを使ってしまうと正しく評価できない
+print(model.score(x_val, y_val))
+
+# 訓練データの平均値や標準偏差の情報を元に変換する
+sc_x_val = sc_model_x.transform(x_val)
+sc_y_val = sc_model_y.transform(y_val)
+# 標準化した検証データで決定係数を計算
+print(model.score(sc_x_val, sc_y_val))
+
+# 以下、やってはいけない間違いのコード
+# 検証データでの平均値と標準偏差を調べて、その値で標準化してはいけない
+# sc_model_x2 = StandardScaler()
+# sc_model_x2.fit(x_val)    # ※
+# sc_x_val = sc_model_x2.transform(x_val)
+# sc_model_y2 = StandardScaler()
+# sc_model_y2.fit(y_val)    # ※
+# sc_y_val = sc_model_y2.transform(y_val)
+# print(model.score(sc_x_val, sc_y_val))
