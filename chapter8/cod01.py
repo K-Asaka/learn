@@ -169,3 +169,13 @@ x = x.drop(2000, axis = 0)
 # 新しい列が追加されたので再学習を行う
 s1, s2 = learn(x, t)
 print(s1, s2)
+
+# LSTAT列の2乗を追加
+x['LSTAT2'] = x['LSTAT'] ** 2
+s1, s2 = learn(x, t)
+print(s1, s2)
+
+# PTRATIO列の2乗を追加
+x['PTRATIO2'] = x['PTRATIO'] ** 2
+s1, s2 = learn(x, t)
+print(s1, s2)
