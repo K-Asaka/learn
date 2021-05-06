@@ -87,3 +87,10 @@ for j in range(1, 15):
     s1, s2, m = learn(x, t, depth = j)
     sentence = '深さ{}:訓練データの精度{}::テストデータの精度{}'
     print(sentence.format(j, s1, s2))
+
+# 性別ごとの生存率を調べる
+sex = df2.groupby('Sex').mean()
+print(sex['Survived'])
+
+sex['Survived'].plot(kind = 'bar')
+plt.show()
