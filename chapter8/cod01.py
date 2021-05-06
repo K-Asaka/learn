@@ -63,3 +63,10 @@ abs_cor = train_cor.map(abs)
 print(abs_cor)
 # 降順に並び替える
 print(abs_cor.sort_values(ascending = False))
+
+# 訓練データと検証データに分割する
+col = ['RM', 'LSTAT', 'PTRATIO']
+x = train_val4[col]
+t = train_val4[['PRICE']]
+# 訓練データと検証データに分割
+x_train, x_val, y_train, y_val = train_test_split(x, t, test_size = 0.2, random_state = 0)
