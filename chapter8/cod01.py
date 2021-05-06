@@ -15,3 +15,10 @@ print(df2.head(2))
 
 # 訓練データ&検証データとテストデータに分割する
 train_val, test = train_test_split(df2, test_size = 0.2, random_state = 0)
+
+# 欠損値を確認する
+print(train_val.isnull().sum())
+
+# 欠損値を平均値で穴埋めする
+train_val_mean = train_val.mean()   # 各列の平均値の計算
+train_val2 = train_val.fillna(train_val_mean)   # 平均値で穴埋め
