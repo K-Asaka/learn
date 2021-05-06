@@ -179,3 +179,17 @@ print(s1, s2)
 x['PTRATIO2'] = x['PTRATIO'] ** 2
 s1, s2 = learn(x, t)
 print(s1, s2)
+
+# 交互作用特徴量
+# 2つの列の対応する要素同士を掛け算して作成する
+# 2つのシリーズに算術演算を行う
+se1 = pd.Series([1, 2, 3])
+se2 = pd.Series([10, 20, 30])
+print(se1 + se2)
+
+# 交互作用特徴量を追加する
+x['RM * LSTAT'] = x['RM'] * x['LSTAT']
+print(x.head(2))
+
+s1, s2 = learn(x, t)
+print(s1, s2)
