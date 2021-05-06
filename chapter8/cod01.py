@@ -42,3 +42,9 @@ train_val3 = train_val2.drop([76], axis = 0)
 col = ['INDUS', 'NOX', 'RM', 'PTRATIO', 'LSTAT', 'PRICE']
 train_val4 = train_val3[col]
 print(train_val4.head(3))
+
+# 列同士の相関係数を調べる
+print(train_val4.corr())
+# 各列とPRICE列との相関係数を見る
+train_cor = train_val4.corr()['PRICE']
+print(train_cor)
