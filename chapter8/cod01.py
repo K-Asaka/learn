@@ -203,3 +203,18 @@ sc_model_y2.fit(t)
 sc_y = sc_model_y2.transform(t)
 model = LinearRegression()
 model.fit(sc_x, sc_y)
+
+# テストデータの前処理
+test2 = test.fillna(train_val.mean())   # 欠損値を平均値で補完
+x_test = test2.loc[ : , ['RM', 'LSTAT', 'PTRATIO']]
+y_test = test2[['PRICE']]
+
+x_test['RM2'] = x_test['RM'] ** 2
+x_test['LSTAT2'] = x_test['LSTAT'] ** 2
+x_test['PTRATIO2'] = x_test['PTRATIO'] ** 2
+x_test['RM * LSTAT'] = x_test['RM'] * x_test['LSTAT']
+
+sc_x_test = sc_model_x2.transform(x_test)
+sc_y_test = sc_model_y2.transform(y_test)
+
+print(model.score(sc_x_test, sc_y_test))
