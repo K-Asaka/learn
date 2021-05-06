@@ -57,3 +57,9 @@ print(abs(-2))
 se = pd.Series([1, -2, 3, -4])  # シリーズの作成
 # seの各要素にabs関数を適応させた結果をシリーズ化
 print(se.map(abs))
+
+# 相関行列のPRICE列との相関係数を絶対値に変換する
+abs_cor = train_cor.map(abs)
+print(abs_cor)
+# 降順に並び替える
+print(abs_cor.sort_values(ascending = False))
