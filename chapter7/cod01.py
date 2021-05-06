@@ -127,3 +127,11 @@ for j in range(1, 6):
     s1, s2, m = learn(x_new, t, depth = j)
     s = '深さ{}:訓練データの精度{}::テストデータの精度{}'
     print(s.format(j, s1, s2))
+
+# 木の深さを5に指定して改めて学習
+s1, s2, model = learn(x_new, t, depth = 5)
+
+# モデルの保存
+import pickle
+with open('survived.pkl', 'wb') as f:
+    pickle.dump(model, f)
