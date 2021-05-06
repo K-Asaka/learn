@@ -108,3 +108,8 @@ print(male)
 # drop_firstを指定しない場合
 print(pd.get_dummies(df['Sex']))
 
+# Embarked列をダミー変数化する
+print(pd.get_dummies(df2['Embarked'], drop_first = True))
+# drop_firstをFalseにした場合
+embarked = pd.get_dummies(df2['Embarked'], drop_first = False)
+print(embarked.head(3))
