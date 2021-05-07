@@ -67,10 +67,21 @@ pred = model.predict(x)
 iris_df.loc[condition, 'がく片長さ'] = pred
 print(iris_df.loc[condition, 'がく片長さ'])
 
-# DBの準備はしていないため、このコードはエラーになる
-dbname = 'Test.db'
-import sqlite3
-conn = sqlite3.connect(dbname)
-# test表のid列の値が2の行だけを抽出
-sql = 'SELECT * FROM test WHERE id = 2'
-df = pd.read_sql(sql, con = conn)
+# # DBの準備はしていないため、このコードはエラーになる
+# dbname = 'Test.db'
+# import sqlite3
+# conn = sqlite3.connect(dbname)
+# # test表のid列の値が2の行だけを抽出
+# sql = 'SELECT * FROM test WHERE id = 2'
+# df = pd.read_sql(sql, con = conn)
+
+from sklearn.covariance import MinCovDet
+# 試しに適当な数値列でマハラノビス距離を計算
+df4 = df3.loc[ : , 'atemp':'windspeed']
+df4 = df4.dropna()  # 欠損値を削除
+# マハラノビス距離を計算するための準備
+mcd = MinCovDet(random_state = 0, support_fraction = 0.7)
+mcd.fit(df4)
+# マハラノビス距離
+distance = mcd.mahalanobis(df4)
+print(distance)
