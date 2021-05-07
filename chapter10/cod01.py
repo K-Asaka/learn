@@ -87,8 +87,8 @@ distance = mcd.mahalanobis(df4)
 print(distance)
 
 distance = pd.Series(distance)  # シリーズに変換
-distance.plot(kind = 'box') # 箱ひげ図
-plt.show()
+#distance.plot(kind = 'box') # 箱ひげ図
+#plt.show()
 
 tmp = distance.describe()   # さまざまな基本統計量を計算
 print(tmp)
@@ -100,3 +100,8 @@ kagen = tmp['25%'] - 1.5 * (iqr)    # 下限値
 # 上限と下限の条件をもとに、シリーズで条件検索
 outliner = distance[(distance > jougen) | (distance < kagen)]
 print(outliner)
+
+se = pd.Series([1, 2, 3, 4])
+print(se.dtype)     # 型の確認
+se2 = se.astype(float)
+print(se2.dtype)    # 型の確認
