@@ -24,3 +24,8 @@ print(df2[df2['dteday'] == '2011-07-20'])
 
 df3 = df2.merge(temp, how = 'left', on = 'dteday')
 print(df3[df3['dteday'] == '2011-07-20'])
+
+import matplotlib.pyplot as plt
+df3['temp'].plot(kind = 'line')
+plt.show()
+
