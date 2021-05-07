@@ -39,3 +39,18 @@ ridgeModel = Ridge(alpha = 10)
 ridgeModel.fit(x_train, y_train)
 print(ridgeModel.score(x_train, y_train))
 print(ridgeModel.score(x_test, y_test))
+
+maxScore = 0
+maxIndex = 0
+# range関数により整数列を1～2000生成
+for i in range(1, 2001):
+    num = i / 100
+    ridgeModel = Ridge(random_state = 0, alpha = num)
+    ridgeModel.fit(x_train, y_train)
+
+    result = ridgeModel.score(x_test, y_test)
+    if result > maxScore:
+        maxScore = result
+        maxIndex = num
+
+print(maxIndex, maxScore)
