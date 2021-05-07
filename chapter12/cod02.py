@@ -16,3 +16,9 @@ t = train2['種類']
 from sklearn.preprocessing import StandardScaler
 sc = StandardScaler()
 new = sc.fit_transform(x)
+
+# 訓練データと検証用データに分割する
+x_train, x_val, y_train, y_val = train_test_split(new, t, test_size = 0.2, random_state = 0)
+
+from sklearn.linear_model import LogisticRegression
+model = LogisticRegression(random_state = 0, C = 0.1, multi_class = 'auto', solver = 'lbfgs')
