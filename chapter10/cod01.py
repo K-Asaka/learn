@@ -19,3 +19,5 @@ print(df2.groupby('weather').mean()['cnt'])
 
 temp = temp.T
 print(temp.loc[199:201])
+
+print(df2[df2['dteday'] == '2011-07-20'])
