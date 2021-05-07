@@ -89,3 +89,14 @@ print(distance)
 distance = pd.Series(distance)  # シリーズに変換
 distance.plot(kind = 'box') # 箱ひげ図
 plt.show()
+
+tmp = distance.describe()   # さまざまな基本統計量を計算
+print(tmp)
+
+iqr = tmp['75%'] - tmp['25%']   # IQR計算
+jougen = 1.5 * (iqr) + tmp['75%']   # 上限値
+kagen = tmp['25%'] - 1.5 * (iqr)    # 下限値
+
+# 上限と下限の条件をもとに、シリーズで条件検索
+outliner = distance[(distance > jougen) | (distance < kagen)]
+print(outliner)
