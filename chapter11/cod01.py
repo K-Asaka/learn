@@ -22,3 +22,12 @@ pf_x = pf.fit_transform(sc_x)
 print(pf_x.shape)
 
 print(pf.get_feature_names())
+
+from sklearn.linear_model import LinearRegression
+
+x_train, x_test, y_train, y_test = train_test_split(pf_x, sc_t, test_size = 0.3, random_state = 0)
+model = LinearRegression()
+model.fit(x_train, y_train)
+
+print(model.score(x_train, y_train))
+print(model.score(x_test, y_test))
