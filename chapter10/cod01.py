@@ -16,3 +16,6 @@ df2 = df.merge(weather, how = 'inner', on = 'weather_id')
 print(df2.head(2))
 
 print(df2.groupby('weather').mean()['cnt'])
+
+temp = temp.T
+print(temp.loc[199:201])
