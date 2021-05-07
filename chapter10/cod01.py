@@ -21,3 +21,6 @@ temp = temp.T
 print(temp.loc[199:201])
 
 print(df2[df2['dteday'] == '2011-07-20'])
+
+df3 = df2.merge(temp, how = 'left', on = 'dteday')
+print(df3[df3['dteday'] == '2011-07-20'])
