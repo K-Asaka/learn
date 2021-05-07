@@ -26,12 +26,22 @@ df3 = df2.merge(temp, how = 'left', on = 'dteday')
 print(df3[df3['dteday'] == '2011-07-20'])
 
 import matplotlib.pyplot as plt
-df3['temp'].plot(kind = 'line')
+# df3['temp'].plot(kind = 'line')
+# plt.show()
+
+# df3[['temp', 'hum']].plot(kind = 'line')
+# plt.show()
+
+# df3['temp'].plot(kind = 'hist')
+# df3['hum'].plot(kind = 'hist', alpha = 0.5)
+# plt.show()
+
+# インデックス220～240を抜き出して、折れ線グラフで表示
+df3['atemp'].loc[220:240].plot(kind = 'line')
 plt.show()
 
-df3[['temp', 'hum']].plot(kind = 'line')
-plt.show()
-
-df3['temp'].plot(kind = 'hist')
-df3['hum'].plot(kind = 'hist', alpha = 0.5)
+# atemp列の型をfloatに変換
+df3['atemp'] = df3['atemp'].astype(float)
+df3['atemp'] = df3['atemp'].interpolate()    # 欠損値を線形補間
+df3.loc[225:235, 'atemp'].plot(kind = 'line')
 plt.show()
