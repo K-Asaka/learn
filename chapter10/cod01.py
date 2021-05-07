@@ -8,3 +8,4 @@ print(df2.head(3))
 
 temp = pd.read_json('datafile/temp.json')
 print(temp.head(2))
+print(temp.T)
