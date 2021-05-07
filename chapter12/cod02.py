@@ -26,3 +26,5 @@ model = LogisticRegression(random_state = 0, C = 0.1, multi_class = 'auto', solv
 model.fit(x_train, y_train)
 print(model.score(x_train, y_train))
 print(model.score(x_val, y_val))
+
+print(model.coef_)
