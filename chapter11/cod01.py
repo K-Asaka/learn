@@ -54,3 +54,6 @@ for i in range(1, 2001):
         maxIndex = num
 
 print(maxIndex, maxScore)
+
+print(sum(abs(model.coef_)[0])) # 線形回帰の係数(絶対値)の合計
+print(sum(abs(ridgeModel.coef_)[0]))    # リッジ回帰の合計
