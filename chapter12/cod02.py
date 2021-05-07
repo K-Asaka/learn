@@ -28,3 +28,8 @@ print(model.score(x_train, y_train))
 print(model.score(x_val, y_val))
 
 print(model.coef_)
+
+x_new = [[1, 2, 3, 4]]
+print(model.predict(x_new))
+
+print(model.predict_proba(x_new))
