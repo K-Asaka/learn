@@ -31,3 +31,11 @@ model.fit(x_train, y_train)
 
 print(model.score(x_train, y_train))
 print(model.score(x_test, y_test))
+
+
+from sklearn.linear_model import Ridge
+# モデルの作成
+ridgeModel = Ridge(alpha = 10)
+ridgeModel.fit(x_train, y_train)
+print(ridgeModel.score(x_train, y_train))
+print(ridgeModel.score(x_test, y_test))
