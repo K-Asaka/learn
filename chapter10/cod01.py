@@ -85,3 +85,7 @@ mcd.fit(df4)
 # マハラノビス距離
 distance = mcd.mahalanobis(df4)
 print(distance)
+
+distance = pd.Series(distance)  # シリーズに変換
+distance.plot(kind = 'box') # 箱ひげ図
+plt.show()
