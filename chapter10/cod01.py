@@ -31,3 +31,7 @@ plt.show()
 
 df3[['temp', 'hum']].plot(kind = 'line')
 plt.show()
+
+df3['temp'].plot(kind = 'hist')
+df3['hum'].plot(kind = 'hist', alpha = 0.5)
+plt.show()
