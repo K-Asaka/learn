@@ -106,5 +106,15 @@ print(se.dtype)     # 型の確認
 se2 = se.astype(float)
 print(se2.dtype)    # 型の確認
 
-df4.plot(kind = 'scatter', x = 'atemp', y = 'hum')
-plt.savefig('test0.png')    # pngファイルとして保存
+#df4.plot(kind = 'scatter', x = 'atemp', y = 'hum')
+#plt.savefig('test0.png')    # pngファイルとして保存
+
+# 1枚の画像を2行2列に分割、サイズは縦が6、横が10
+fig, axs = plt.subplots(2, 2, figsize = (10, 6))
+
+# 画像内の0行0列の位置に配置
+df4.plot(kind = 'scatter', x = 'atemp', y = 'hum', ax = axs[0, 0])
+# 画像内の1行1列の位置に配置
+df4.plot(kind = 'scatter', x = 'temp', y = 'hum', ax = axs[1, 1])
+
+plt.savefig('test1.png')    # pngファイルとして保存
