@@ -105,3 +105,6 @@ se = pd.Series([1, 2, 3, 4])
 print(se.dtype)     # 型の確認
 se2 = se.astype(float)
 print(se2.dtype)    # 型の確認
+
+df4.plot(kind = 'scatter', x = 'atemp', y = 'hum')
+plt.savefig('test0.png')    # pngファイルとして保存
