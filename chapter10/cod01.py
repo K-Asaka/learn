@@ -54,3 +54,15 @@ x = non_df.loc[ : , 'がく片幅':'花弁幅']
 t = non_df['がく片長さ']
 model = LinearRegression()
 model.fit(x, t)     # 欠損値予測のためのモデルを予測
+
+# 欠損行の抜き出し
+condition = iris_df['がく片長さ'].isnull()
+non_data = iris_df.loc[condition]
+
+# 欠損行の入力に利用する特徴量だけを抜き出して、モデルで予測
+x = non_data.loc[ : , 'がく片幅':'花弁幅']
+pred = model.predict(x)
+
+# 欠損行のがく片長さのマスを抜き出して、predで代入
+iris_df.loc[condition, 'がく片長さ'] = pred
+print(iris_df.loc[condition, 'がく片長さ'])
