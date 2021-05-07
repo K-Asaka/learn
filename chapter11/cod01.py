@@ -70,3 +70,7 @@ model.fit(x_train, y_train)
 
 print(model.score(x_train, y_train))
 print(model.score(x_test, y_test))
+
+weight = model.coef_    # 係数抜き出す
+# 見やすいようにシリーズ変換
+print(pd.Series(weight, index = pf.get_feature_names()))
