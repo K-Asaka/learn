@@ -22,3 +22,7 @@ x_train, x_val, y_train, y_val = train_test_split(new, t, test_size = 0.2, rando
 
 from sklearn.linear_model import LogisticRegression
 model = LogisticRegression(random_state = 0, C = 0.1, multi_class = 'auto', solver = 'lbfgs')
+
+model.fit(x_train, y_train)
+print(model.score(x_train, y_train))
+print(model.score(x_val, y_val))
