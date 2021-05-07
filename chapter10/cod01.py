@@ -29,3 +29,5 @@ import matplotlib.pyplot as plt
 df3['temp'].plot(kind = 'line')
 plt.show()
 
+df3[['temp', 'hum']].plot(kind = 'line')
+plt.show()
