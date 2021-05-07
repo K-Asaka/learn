@@ -37,11 +37,20 @@ import matplotlib.pyplot as plt
 # plt.show()
 
 # インデックス220～240を抜き出して、折れ線グラフで表示
-df3['atemp'].loc[220:240].plot(kind = 'line')
-plt.show()
+# df3['atemp'].loc[220:240].plot(kind = 'line')
+# plt.show()
 
 # atemp列の型をfloatに変換
 df3['atemp'] = df3['atemp'].astype(float)
 df3['atemp'] = df3['atemp'].interpolate()    # 欠損値を線形補間
-df3.loc[225:235, 'atemp'].plot(kind = 'line')
-plt.show()
+# df3.loc[225:235, 'atemp'].plot(kind = 'line')
+# plt.show()
+
+# 「がく片弁長さ」列に2個の欠損がある
+iris_df = pd.read_csv('datafile/iris.csv')
+non_df = iris_df.dropna()   # 欠損値を含む行を削除
+from sklearn.linear_model import LinearRegression
+x = non_df.loc[ : , 'がく片幅':'花弁幅']
+t = non_df['がく片長さ']
+model = LinearRegression()
+model.fit(x, t)     # 欠損値予測のためのモデルを予測
