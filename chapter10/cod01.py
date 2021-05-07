@@ -66,3 +66,11 @@ pred = model.predict(x)
 # 欠損行のがく片長さのマスを抜き出して、predで代入
 iris_df.loc[condition, 'がく片長さ'] = pred
 print(iris_df.loc[condition, 'がく片長さ'])
+
+# DBの準備はしていないため、このコードはエラーになる
+dbname = 'Test.db'
+import sqlite3
+conn = sqlite3.connect(dbname)
+# test表のid列の値が2の行だけを抽出
+sql = 'SELECT * FROM test WHERE id = 2'
+df = pd.read_sql(sql, con = conn)
