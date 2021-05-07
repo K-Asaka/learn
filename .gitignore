@@ -1,3 +1,4 @@
 datafile/
 *.pkl
 *.db
+*.png
