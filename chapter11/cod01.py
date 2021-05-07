@@ -57,3 +57,16 @@ print(maxIndex, maxScore)
 
 print(sum(abs(model.coef_)[0])) # 線形回帰の係数(絶対値)の合計
 print(sum(abs(ridgeModel.coef_)[0]))    # リッジ回帰の合計
+
+
+# ラッソ回帰
+from sklearn.linear_model import Lasso
+
+x_train, x_test, y_train, y_test = train_test_split(pf_x, sc_t, test_size = 0.3, random_state = 0)
+
+# ラッソ回帰のモデル作成(alphaは正則化項につく定数)
+model = Lasso(alpha = 0.1)
+model.fit(x_train, y_train)
+
+print(model.score(x_train, y_train))
+print(model.score(x_test, y_test))
