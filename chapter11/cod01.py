@@ -20,3 +20,5 @@ from sklearn.preprocessing import PolynomialFeatures
 pf = PolynomialFeatures(degree = 2, include_bias = False)
 pf_x = pf.fit_transform(sc_x)
 print(pf_x.shape)
+
+print(pf.get_feature_names())
