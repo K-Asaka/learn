@@ -7,3 +7,10 @@ t = df['sales']
 from sklearn.linear_model import LinearRegression
 model = LinearRegression()
 model.fit(x, t)
+
+from sklearn.metrics import mean_squared_error
+# 訓練データでのMSE値
+pred = model.predict(x)
+
+mse = mean_squared_error(pred, t)
+print(mse)
