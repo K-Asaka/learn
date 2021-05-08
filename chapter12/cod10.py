@@ -10,7 +10,7 @@ jo2 = df['Survived'] == 0
 jo3 = df['Age'].isnull()
 df.loc[(jo1) & (jo2) & (jo3), 'Age'] = 43
 
-jo2 = df['Pclass'] == 1
+jo2 = df['Survived'] == 1
 df.loc[(jo1) & (jo2) & (jo3), 'Age'] = 35
 
 jo1 = df['Pclass'] == 2
@@ -58,3 +58,19 @@ print(model2.score(x_test, y_test))
 importance = model.feature_importances_     # 特徴量重要土
 # 列との対応がわかりやすいようにシリーズ変換
 print(pd.Series(importance, index = x_train.columns))
+
+# アダブーストのインポート
+from sklearn.ensemble import AdaBoostClassifier
+# ベースとなるモデル
+from sklearn.tree import DecisionTreeClassifier
+
+x_train, x_test, y_train, y_test = train_test_split(x, t, test_size = 0.2, random_state = 0)
+# 最大の深さ5の決定木を何個も作っていく
+base_model = DecisionTreeClassifier(random_state = 0, max_depth = 5)
+
+# 決定木を500個作成
+model = AdaBoostClassifier(n_estimators = 500, random_state = 0, base_estimator = base_model)
+model.fit(x_train, y_train)     # 学習
+
+print(model.score(x_train, y_train))
+print(model.score(x_test, y_test))
