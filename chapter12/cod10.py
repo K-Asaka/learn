@@ -74,3 +74,17 @@ model.fit(x_train, y_train)     # 学習
 
 print(model.score(x_train, y_train))
 print(model.score(x_test, y_test))
+
+# データの読み込み
+df = pd.read_csv('datafile/cinema.csv')
+df = df.fillna(df.mean())
+x = df.loc[ : , 'SNS1':'original']
+t = df['sales']
+x_train, x_test, y_train, y_test = train_test_split(x, t, test_size = 0.2, random_state = 0)
+
+# ランダムフォレスト回帰
+from sklearn.ensemble import RandomForestRegressor
+# 100個のモデルで並列学習
+model = RandomForestRegressor(random_state = 0, n_estimators = 100)
+model.fit(x_train, y_train)
+print(model.score(x_test, y_test))      # 決定木係数
