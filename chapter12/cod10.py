@@ -99,3 +99,8 @@ base = DecisionTreeRegressor(random_state = 0, max_depth = 3)
 model = AdaBoostRegressor(random_state = 0, n_estimators = 100, base_estimator = base)
 model.fit(x_train, y_train)
 print(model.score(x_test, y_test))      # 決定木係数
+
+# 不均衡データに対する処理：アンダーサンプリング
+# 少数派のデータ件数に合わせる手法
+df = pd.read_csv('datafile/cinema.csv')
+print(df.sample(n = 2, random_state = 100))     # ランダムに2件サンプリング
