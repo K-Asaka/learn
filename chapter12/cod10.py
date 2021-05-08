@@ -54,3 +54,7 @@ model2 = tree.DecisionTreeClassifier(random_state = 0)
 model2.fit(x_train, y_train)
 print(model2.score(x_train, y_train))
 print(model2.score(x_test, y_test))
+
+importance = model.feature_importances_     # 特徴量重要土
+# 列との対応がわかりやすいようにシリーズ変換
+print(pd.Series(importance, index = x_train.columns))
