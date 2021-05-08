@@ -88,3 +88,14 @@ from sklearn.ensemble import RandomForestRegressor
 model = RandomForestRegressor(random_state = 0, n_estimators = 100)
 model.fit(x_train, y_train)
 print(model.score(x_test, y_test))      # 決定木係数
+
+# アダブースト回帰
+from sklearn.ensemble import AdaBoostRegressor
+# ベースモデルとしての回帰木
+from sklearn.tree import DecisionTreeRegressor
+base = DecisionTreeRegressor(random_state = 0, max_depth = 3)
+
+# 100個のモデルで逐次学習
+model = AdaBoostRegressor(random_state = 0, n_estimators = 100, base_estimator = base)
+model.fit(x_train, y_train)
+print(model.score(x_test, y_test))      # 決定木係数
