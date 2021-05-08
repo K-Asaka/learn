@@ -44,3 +44,7 @@ print(x.head(2))
 from sklearn.ensemble import RandomForestClassifier
 x_train, x_test, y_train, y_test = train_test_split(x, t, test_size = 0.2, random_state = 0)
 model = RandomForestClassifier(n_estimators = 200, random_state = 0)
+
+model.fit(x_train, y_train)
+print(model.score(x_train, y_train))
+print(model.score(x_test, y_test))
