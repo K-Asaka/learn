@@ -48,3 +48,9 @@ model = RandomForestClassifier(n_estimators = 200, random_state = 0)
 model.fit(x_train, y_train)
 print(model.score(x_train, y_train))
 print(model.score(x_test, y_test))
+
+from sklearn import tree
+model2 = tree.DecisionTreeClassifier(random_state = 0)
+model2.fit(x_train, y_train)
+print(model2.score(x_train, y_train))
+print(model2.score(x_test, y_test))
