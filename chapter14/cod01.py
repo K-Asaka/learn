@@ -63,3 +63,5 @@ model = PCA(whiten = True)
 # 学習と新規軸へのデータの当てはめを一括で行う
 tmp = model.fit_transform(sc_df)
 print(tmp.shape)
+
+print(model.explained_variance_ratio_)  # 寄与率
