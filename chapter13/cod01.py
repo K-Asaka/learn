@@ -49,3 +49,7 @@ from sklearn.metrics import classification_report
 pred = model.predict(x)
 out_put = classification_report(y_pred = pred, y_true = t)
 print(out_put)
+
+out_put = classification_report(y_pred = pred, y_true = t, output_dict = True)
+# out_putをデータフレームに変換
+print(pd.DataFrame(out_put))
