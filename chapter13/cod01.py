@@ -69,3 +69,8 @@ result = cross_validate(model, x, t, cv = kf, scoring = 'r2', return_train_score
 print(result)
 
 print(sum(result['test_score']) / len(result['test_score']))
+
+from sklearn.model_selection import StratifiedKFold
+
+skf = StratifiedKFold(n_splits = 3, shuffle = True, random_state = 0)
+print(skf)
