@@ -67,3 +67,5 @@ from sklearn.model_selection import cross_validate
 model = LinearRegression()
 result = cross_validate(model, x, t, cv = kf, scoring = 'r2', return_train_score = True)
 print(result)
+
+print(sum(result['test_score']) / len(result['test_score']))
