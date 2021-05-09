@@ -44,3 +44,9 @@ df6 = pd.concat([df5, new_df], axis = 1)
 
 df_corr = df6.corr()    # 相関係数の計算
 print(df_corr.loc[ :'very_low', 'PC1': ])
+
+# わかりやすいように変数に代入
+pc_corr = df_corr.loc[ :'very_low', 'PC1': ]
+
+print(pc_corr['PC1'].sort_values(ascending = False))
+print(pc_corr['PC2'].sort_values(ascending = False))
