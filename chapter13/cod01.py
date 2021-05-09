@@ -14,3 +14,6 @@ pred = model.predict(x)
 
 mse = mean_squared_error(pred, t)
 print(mse)
+
+import math
+print(math.sqrt(mse))   # RMSEの計算
