@@ -53,3 +53,17 @@ print(out_put)
 out_put = classification_report(y_pred = pred, y_true = t, output_dict = True)
 # out_putをデータフレームに変換
 print(pd.DataFrame(out_put))
+
+df = pd.read_csv('datafile/cinema.csv')
+# 学習できないので欠損値処理だけ行う
+df = df.fillna(df.mean())
+x = df.loc[ : , 'SNS1':'original']
+t = df['sales']
+
+from sklearn.model_selection import KFold
+kf = KFold(n_splits = 3, shuffle = True, random_state = 0)
+
+from sklearn.model_selection import cross_validate
+model = LinearRegression()
+result = cross_validate(model, x, t, cv = kf, scoring = 'r2', return_train_score = True)
+print(result)
