@@ -17,3 +17,21 @@ df4 = df3.astype('float')
 # 標準化
 sc = StandardScaler()
 sc_df = sc.fit_transform(df4)
+
+from sklearn.decomposition import PCA
+
+model = PCA(n_components = 2, whiten = True)    # モデル作成
+
+# モデルに学習させる
+model.fit(sc_df)
+
+# 新規の第1軸(第1主成分とも呼ぶ)の固有ベクトル
+print(model.components_[0])
+print('-----')
+# 新規の第2軸(第2主成分とも呼ぶ)の固有ベクトル
+print(model.components_[1])
+
+new = model.transform(sc_df)
+
+new_df = pd.DataFrame(new)
+print(new_df.head(3))
