@@ -1,4 +1,6 @@
 import pandas as pd
+import matplotlib.pyplot as plt
+
 df = pd.read_csv('datafile/Boston.csv')     # CSVの読み込み
 print(df.head(2))
 
@@ -50,3 +52,9 @@ pc_corr = df_corr.loc[ :'very_low', 'PC1': ]
 
 print(pc_corr['PC1'].sort_values(ascending = False))
 print(pc_corr['PC2'].sort_values(ascending = False))
+
+# 都市の発展度合いと住環境の良さ
+col = ['City', 'Exclusive residential']
+new_df.columns = col    # 列名の変更
+new_df.plot(kind = 'scatter', x = 'City', y = 'Exclusive residential')  # 散布図
+plt.show()
