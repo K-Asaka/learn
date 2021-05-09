@@ -32,3 +32,20 @@ target = [3, 5, 8, 11, 16, 19, 23]
 mse = mean_squared_error(yosoku, target)
 print('rmse:{}'.format(math.sqrt(mse)))
 print('mae:{}'.format(mean_absolute_error(yosoku, target)))
+
+# データの準備
+df = pd.read_csv('datafile/Survived.csv')
+df = df.fillna(df.mean())
+
+x = df[['Pclass', 'Age']]
+t = df['Survived']
+
+# モデルの準備
+from sklearn import tree
+model = tree.DecisionTreeClassifier(max_depth = 2, random_state = 0)
+model.fit(x, t)
+
+from sklearn.metrics import classification_report
+pred = model.predict(x)
+out_put = classification_report(y_pred = pred, y_true = t)
+print(out_put)
