@@ -35,3 +35,12 @@ new = model.transform(sc_df)
 
 new_df = pd.DataFrame(new)
 print(new_df.head(3))
+
+new_df.columns = ['PC1', 'PC2']
+# 標準化済の既存データ(numpy)をデータフレーム化
+df5 = pd.DataFrame(sc_df, columns = df4.columns)
+# 2つのデータフレームを列方向に結合
+df6 = pd.concat([df5, new_df], axis = 1)
+
+df_corr = df6.corr()    # 相関係数の計算
+print(df_corr.loc[ :'very_low', 'PC1': ])
