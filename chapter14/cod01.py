@@ -58,3 +58,8 @@ col = ['City', 'Exclusive residential']
 new_df.columns = col    # 列名の変更
 new_df.plot(kind = 'scatter', x = 'City', y = 'Exclusive residential')  # 散布図
 plt.show()
+
+model = PCA(whiten = True)
+# 学習と新規軸へのデータの当てはめを一括で行う
+tmp = model.fit_transform(sc_df)
+print(tmp.shape)
