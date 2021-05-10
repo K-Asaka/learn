@@ -2,3 +2,4 @@ datafile/
 *.pkl
 *.db
 *.png
+*.csv
