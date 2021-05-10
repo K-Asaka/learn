@@ -78,3 +78,10 @@ for i in range(len(ratio)):
 # 第N列の累積寄与率を折れ線グラフ化
 pd.Series(array).plot(kind = 'line')
 plt.show()
+
+thred = 0.8     # 累積寄与率のしきい値
+for i in range(len(array)):
+    # 第(i + 1)列の累積寄与率がthredより大きいかチェック
+    if array[i] >= thred:
+        print(i + 1)
+        break
