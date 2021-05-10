@@ -27,3 +27,10 @@ plt.show()
 
 num = tmp[tmp > 10000].index
 df = df.drop(num)
+
+# 練習15-6
+from sklearn.preprocessing import StandardScaler
+
+sc = StandardScaler()
+sc_df = sc.fit_transform(df)
+df2 = pd.DataFrame(sc_df, columns = df.columns)
