@@ -16,3 +16,11 @@ sc_df = pd.DataFrame(sc_df, columns = df.columns)
 from sklearn.cluster import KMeans
 
 model = KMeans(n_clusters = 3, random_state = 0)
+
+# モデルに学習させる
+model.fit(sc_df)
+
+print(model.labels_)
+
+sc_df['cluster'] = model.labels_
+print(sc_df.head(2))
