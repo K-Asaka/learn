@@ -12,3 +12,7 @@ from sklearn.preprocessing import StandardScaler
 sc = StandardScaler()
 sc_df = sc.fit_transform(df)
 sc_df = pd.DataFrame(sc_df, columns = df.columns)
+
+from sklearn.cluster import KMeans
+
+model = KMeans(n_clusters = 3, random_state = 0)
