@@ -65,3 +65,16 @@ tmp = model.fit_transform(sc_df)
 print(tmp.shape)
 
 print(model.explained_variance_ratio_)  # 寄与率
+
+ratio = model.explained_variance_ratio_     # 寄与率のデータ集合
+
+array = []      # 第N列までの累積寄与率を格納するリスト
+
+for i in range(len(ratio)):
+    # 累積寄与率の計算
+    ruiseki = sum(ratio[0:(i + 1)])
+    array.append(ruiseki)
+
+# 第N列の累積寄与率を折れ線グラフ化
+pd.Series(array).plot(kind = 'line')
+plt.show()
