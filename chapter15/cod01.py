@@ -24,3 +24,10 @@ print(model.labels_)
 
 sc_df['cluster'] = model.labels_
 print(sc_df.head(2))
+
+print(sc_df.groupby('cluster').mean())
+
+import matplotlib.pyplot as plt
+cluster_mean = sc_df.groupby('cluster').mean()
+cluster_mean.plot(kind = 'bar')
+plt.show()
