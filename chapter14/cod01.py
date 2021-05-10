@@ -85,3 +85,16 @@ for i in range(len(array)):
     if array[i] >= thred:
         print(i + 1)
         break
+
+# もとデータの全情報の80%を賄うために、新規の列を6つに設定
+model = PCA(n_components = 6, whiten = True)
+model.fit(sc_df)        # 学習
+# 元データを新規の列(6列)に当てはめる
+new = model.transform(sc_df)
+
+# 主成分分析の結果をデータフレームに変換
+col = ['PC1', 'PC2', 'PC3', 'PC4', 'PC5', 'PC6']
+new_df2 = pd.DataFrame(new, columns = col)
+
+# データフレームをCSVファイルとして保存
+new_df2.to_csv('boston_pca.csv', index = False)
