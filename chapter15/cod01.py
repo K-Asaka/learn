@@ -47,3 +47,8 @@ num = range(2, 31)      # range関数で2～30の整数列を作る
 se.index = num          # シリーズのインデックスを変更
 se.plot(kind = 'line')
 plt.show()
+
+model = KMeans(n_clusters = 5, random_state = 0)
+model.fit(sc_df)
+sc_df['cluster'] = model.labels_
+sc_df.to_csv('clustered_Wholesale.csv', index = False)
