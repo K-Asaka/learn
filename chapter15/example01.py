@@ -34,3 +34,11 @@ from sklearn.preprocessing import StandardScaler
 sc = StandardScaler()
 sc_df = sc.fit_transform(df)
 df2 = pd.DataFrame(sc_df, columns = df.columns)
+
+# 練習15-7
+from sklearn.cluster import KMeans
+
+model = KMeans(n_clusters = 2, random_state = 0)
+model.fit(df2)
+
+df2['cluster'] = model.labels_
