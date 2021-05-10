@@ -8,3 +8,8 @@ df = df.drop(['PassengerId', 'Ticket', 'Cabin', 'Embarked'], axis = 1)
 
 # 練習15-3
 df = df.fillna(df.mean())
+
+# 練習15-4
+dummy = pd.get_dummies(df['Sex'], drop_first = True)
+df = pd.concat([df, dummy], axis = 1)
+df = df.drop('Sex', axis = 1)
