@@ -42,3 +42,8 @@ model = KMeans(n_clusters = 2, random_state = 0)
 model.fit(df2)
 
 df2['cluster'] = model.labels_
+
+# 練習15-8
+c = df2.groupby('cluster').mean()
+c.plot(kind = 'bar')
+plt.show()
