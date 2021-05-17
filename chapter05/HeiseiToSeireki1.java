@@ -8,5 +8,6 @@ public class HeiseiToSeireki1 {
         int heisei = Integer.parseInt(s);
         int seireki = heisei - 1988;
         System.out.println("西暦: " + seireki + "年");
+        scan.close();
     }
 }
