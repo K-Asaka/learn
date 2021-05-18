@@ -8,8 +8,9 @@ public class Janken1 {
         int pc = r.nextInt(3);
         Scanner scan = new Scanner(System.in);
         String s = scan.next();
-        int you = Integer.parseInt(s);
         scan.close();
-        System.out.println("あなた:" + you + "、コンピュータ:" + pc);
+        int you = Integer.parseInt(s);
+        String[] janken = {"グー", "チョキ", "パー"};
+        System.out.println("あなた:" + janken[you] + "、コンピュータ:" + janken[pc]);
     }
 }
