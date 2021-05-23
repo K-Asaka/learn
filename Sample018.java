@@ -11,9 +11,9 @@ public class Sample018 {
 
         // 演算を行う
         System.out.println("a += f は" + (a += f) + " です");
-        System.out.println("a -= f は" + (a -= f) + " です");
-        System.out.println("a *= f は" + (a *= f) + " です");
-        System.out.println("a /= f は" + (a /= f) + " です");
-        System.out.println("a %= f は" + (a %= f) + " です");
+        System.out.println("b -= f は" + (b -= f) + " です");
+        System.out.println("c *= f は" + (c *= f) + " です");
+        System.out.println("d /= f は" + (d /= f) + " です");
+        System.out.println("e %= f は" + (e %= f) + " です");
     }
 }
