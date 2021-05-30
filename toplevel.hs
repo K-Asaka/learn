@@ -1,3 +1,2 @@
-main = print (x + 20) -- 30を表示
-  where
-      x = 10
+main = print (x + y) -- 30を表示
+  where { x = 10; y = 20 }
