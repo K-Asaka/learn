@@ -26,3 +26,23 @@ Stackのダウンロードページより、自分の環境に合わせてイン
 stack setup
 ```
 
+## Haskellスクリプトの実行
+```
+stack runghc スクリプト名.hs
+```
+
+## REPLにスクリプトを読み込む
+```
+Prelude> :load スクリプト名.hs
+```
+REPLに読み込んだ後にスクリプトを変更した場合
+```
+Prelude> :reload
+```
+
+## グローバルプロジェクト
+グローバルプロジェクトの保存先の確認
+```
+stack path --project-root
+```
+グローバルプロジェクトの設定を変更するには、このディレクトリにある`stack.yaml`を編集する。
