@@ -1,3 +1,3 @@
-x = 10
-y = 20
-main = print (x + y)
+main = print (x + 20) -- 30を表示
+  where
+      x = 10
