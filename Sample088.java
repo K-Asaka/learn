@@ -1,17 +1,17 @@
-class airplane {
-    private double fuel;
-    private String iro;
-    public void dataset(double num, String str) {
-        fuel = num;
-        iro = str;
-    }
-    public double getfuel() {
-        return fuel;
-    }
-    public String getiro() {
-        return iro;
-    }
-}
+// class airplane {
+//     private double fuel;
+//     private String iro;
+//     public void dataset(double num, String str) {
+//         fuel = num;
+//         iro = str;
+//     }
+//     public double getfuel() {
+//         return fuel;
+//     }
+//     public String getiro() {
+//         return iro;
+//     }
+// }
 
 class Sample088 {
     public static void main(String[] args) {
