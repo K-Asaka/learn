@@ -1,20 +1,20 @@
-class airplane {
-    double fuel;
-    String iro;
-    // 引数を持つメソッドを宣言
-    void dataset(double num, String str) {
-        fuel = num;
-        iro = str;
-    }
-    // double型を返すメソッドを宣言
-    double getfuel() {
-        return fuel;
-    }    
-    // String型を返すメソッドを宣言
-    String getiro() {
-        return iro;
-    }
-}
+// class airplane {
+//     double fuel;
+//     String iro;
+//     // 引数を持つメソッドを宣言
+//     void dataset(double num, String str) {
+//         fuel = num;
+//         iro = str;
+//     }
+//     // double型を返すメソッドを宣言
+//     double getfuel() {
+//         return fuel;
+//     }    
+//     // String型を返すメソッドを宣言
+//     String getiro() {
+//         return iro;
+//     }
+// }
 
 public class Sample084 {
     public static void main(String[] args) {
