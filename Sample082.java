@@ -1,13 +1,13 @@
-class airplane {
-    double fuel;
-    String iro;
+// class airplane {
+//     double fuel;
+//     String iro;
 
-    // メソッドを宣言する
-    void dataset() {
-        fuel = 100;
-        iro = "赤";
-    }
-}
+//     // メソッドを宣言する
+//     void dataset() {
+//         fuel = 100;
+//         iro = "赤";
+//     }
+// }
 
 public class Sample082 {
     public static void main(String[] args) {
