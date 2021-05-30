@@ -1,7 +1,7 @@
-class airplane {
-    double fuel;
-    String iro;
-}
+// class airplane {
+//     double fuel;
+//     String iro;
+// }
 
 public class Sample080 {
     public static void main(String[] args) {
