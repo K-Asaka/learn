@@ -4,11 +4,11 @@ class ObjectClass {
     }
 }
 
-class DataClass {
-    public int num1 = 1;
-    public int num2 = 2;
-    public int num3 = 3;
-}
+// class DataClass {
+//     public int num1 = 1;
+//     public int num2 = 2;
+//     public int num3 = 3;
+// }
 
 class Sample098 {
     public static void main(String[] args) {
