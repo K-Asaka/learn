@@ -10,13 +10,13 @@ class intData {
     }
 }
 
-class compute {
-    public void add(intData i) {
-        // オブジェクトのメンバであるフィールドにアクセスしている
-        System.out.print("計算結果は");
-        System.out.println((i.num1 + i.num2 + i.num3) + "です");
-    }
-}
+// class compute {
+//     public void add(intData i) {
+//         // オブジェクトのメンバであるフィールドにアクセスしている
+//         System.out.print("計算結果は");
+//         System.out.println((i.num1 + i.num2 + i.num3) + "です");
+//     }
+// }
 
 public class Sample097 {
     public static void main(String[] args) {
