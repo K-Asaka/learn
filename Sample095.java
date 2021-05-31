@@ -1,7 +1,7 @@
-class hensu {
-    // クラス変数を宣言
-    public static int num = 0;
-}
+// class hensu {
+//     // クラス変数を宣言
+//     public static int num = 0;
+// }
 
 public class Sample095 {
     public static void main(String[] args) {
