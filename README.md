@@ -144,3 +144,25 @@ class airplane {
 
 ### 102　継承を理解する
 サブクラスがスーパークラスのフィールドとメソッドをすべて受け継ぐことを言う。
+
+### 107　メソッドのオーバーライドを禁止する
+クラスの先頭に`final`を指定すると、そのクラスの拡張はできなくなる。また、スーパークラスのメソッドの先頭にfinalを指定すると、そのメソッドをオーバーライドできなくなる。
+finalをフィールドの先頭に指定した場合は、定数を表す。
+
+```
+// このクラスは拡張できない
+final class airplane {
+    public void display() {
+        System.out.print("飛行機の燃料は" + fuel + "です ");
+        System.out.print("色は" + iro + "です");
+    }
+}
+
+public airplane {
+    // このメソッドはオーバーライドできない
+    public final void display() {
+        System.out.print("飛行機の燃料は" + fuel + "です");
+        System.out.println("色は" + iro + "です");
+    }
+}
+```
