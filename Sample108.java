@@ -12,14 +12,14 @@
 //         iro = str;
 //     }
 // }
-// ジャンボジェット機クラス(サブクラス)
-class jumbojet extends airplane {
-    // 抽象メソッドを宣言している
-    public void display() {
-        System.out.print("飛行機の燃料は" + fuel + "です ");
-        System.out.print("色は" + iro + "です ");
-    }
-}
+// // ジャンボジェット機クラス(サブクラス)
+// class jumbojet extends airplane {
+//     // 抽象メソッドを宣言している
+//     public void display() {
+//         System.out.print("飛行機の燃料は" + fuel + "です ");
+//         System.out.print("色は" + iro + "です ");
+//     }
+// }
 public class Sample108 {
     public static void main(String[] args) {
         jumbojet jumbo = new jumbojet();

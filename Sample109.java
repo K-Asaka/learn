@@ -1,15 +1,15 @@
-// 飛行機クラス
-class airplane {
-    private double fuel;
-    private String iro;
+// // 飛行機クラス
+// class airplane {
+//     private double fuel;
+//     private String iro;
 
-    public airplane() {
-        fuel = 100;
-        iro = "赤";
-        System.out.print("飛行機の燃料は" + fuel + "です ");
-        System.out.println("色は" + iro + "です");
-    }
-}
+//     public airplane() {
+//         fuel = 100;
+//         iro = "赤";
+//         System.out.print("飛行機の燃料は" + fuel + "です ");
+//         System.out.println("色は" + iro + "です");
+//     }
+// }
 
 // 自動車クラス
 class car {
