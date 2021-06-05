@@ -1,17 +1,17 @@
-// 飛行機クラス（スーパークラス)
-// 抽象クラス
-abstract class airplane {
-    protected double fuel;
-    protected String iro;
+// // 飛行機クラス（スーパークラス)
+// // 抽象クラス
+// abstract class airplane {
+//     protected double fuel;
+//     protected String iro;
 
-    // 抽象メソッド
-    public abstract void display();
+//     // 抽象メソッド
+//     public abstract void display();
 
-    public void setdata(double num, String str) {
-        fuel = num;
-        iro = str;
-    }
-}
+//     public void setdata(double num, String str) {
+//         fuel = num;
+//         iro = str;
+//     }
+// }
 // ジャンボジェット機クラス(サブクラス)
 class jumbojet extends airplane {
     // 抽象メソッドを宣言している
