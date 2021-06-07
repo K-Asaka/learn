@@ -1,4 +1,4 @@
-/*  <applet code="Sample138.class" width=310" height="100"></applet> */
+/*  <applet code="Sample138.class" width="310" height="100"></applet> */
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.Graphics;
