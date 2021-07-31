@@ -11,7 +11,8 @@ public class Hero {
 		System.out.println("敵に5ポイントのダメージをあたえた！");
 	}
 	
-	public Hero() {
+	public Hero(String name) {
 		this.hp = 100;
+		this.name = name;	// 引数の値でnameフィールドを初期化
 	}
 }
