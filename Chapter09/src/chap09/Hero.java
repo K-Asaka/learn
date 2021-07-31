@@ -15,4 +15,9 @@ public class Hero {
 		this.hp = 100;
 		this.name = name;	// 引数の値でnameフィールドを初期化
 	}
+	
+	public Hero() {
+		this.hp = 100;
+		this.name = "ダミー";
+	}
 }
