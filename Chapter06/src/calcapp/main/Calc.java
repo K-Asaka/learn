@@ -1,6 +1,6 @@
 package calcapp.main;
 
-import calcapp.logics.CalcLogic;
+import calcapp.logics.*;
 
 public class Calc {
 	public static void main(String[] args) {
