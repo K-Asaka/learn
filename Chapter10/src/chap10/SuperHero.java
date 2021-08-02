@@ -4,6 +4,8 @@ public class SuperHero extends Hero {
 	boolean flying;
 	
 	public SuperHero() {
+		super();
+		// super();の記述がコンストラクタの1行目にない場合はJVMによって自動的に追加される
 		System.out.println("SuperHeroのコンストラクタが動作");
 	}
 	
