@@ -1,6 +1,6 @@
 package chap11;
 
-public class Character {
+public abstract class Character {
 	String name;
 	int hp;
 	// 逃げる
