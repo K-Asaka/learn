@@ -17,6 +17,6 @@ public class Hero {
 	}
 	
 	public Hero() {	// コンストラクタ②
-		this.Hero("ダミー");
+		this("ダミー");
 	}
 }
