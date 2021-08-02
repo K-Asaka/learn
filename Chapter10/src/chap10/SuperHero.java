@@ -1,21 +1,7 @@
 package chap10;
 
-public class SuperHero {
-	String name = "ミナト";
-	int hp = 100;
+public class SuperHero extends Hero {
 	boolean flying;
-
-	// 戦う
-	public void attack(Matango m) {
-		System.out.println(this.name + "の攻撃！");
-		m.hp -= 5;
-		System.out.println("5ポイントのダメージをあたえた！");
-	}
-
-	// 逃げる
-	public void run() { 
-		System.out.println(this.name + "は逃げ出した！");
-	}
 	
 	// 飛ぶ
 	public void fly() {
