@@ -1,7 +1,7 @@
 package chap13;
 
 public class Hero {
-	int hp;
+	private int hp;
 	String name;
 	Sword sword;
 	
