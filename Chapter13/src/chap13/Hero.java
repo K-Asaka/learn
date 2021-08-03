@@ -8,6 +8,9 @@ public class Hero {
 	public String getName() {
 		return this.name;
 	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	
 	public void bye() {
 		System.out.println("勇者は別れを告げた");
