@@ -1,6 +1,8 @@
 package chap11;
 
-public class TangibleAsset extends Asset {
+public class TangibleAsset extends Asset implements Thing {
+	double weight;
+	String color;
 	
 	public TangibleAsset(String name, int price, String color) {
 		super(name, price);
@@ -8,4 +10,6 @@ public class TangibleAsset extends Asset {
 	}
 	
 	public String getColor() { return this.color; }
+	public double getWeight() { return this.weight; }
+	public void setWeight(double weight) { this.weight = weight; }	
 }
