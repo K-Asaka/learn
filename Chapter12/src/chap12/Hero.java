@@ -8,4 +8,8 @@ public class Hero extends Character {
 		m.hp -= 10;
 	}
 
+	public void attack(Matango m) {
+		
+	}
+
 }
