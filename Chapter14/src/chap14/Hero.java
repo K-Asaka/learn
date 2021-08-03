@@ -19,4 +19,8 @@ public class Hero {
 		}
 		return false;
 	}
+	
+	public static void setRandomMoney() {
+		Hero.money = (int)(Math.random() * 1000);
+	}
 }
