@@ -6,4 +6,9 @@ public class Main {
 		Object o2 = new Hero();
 		Object o3 = "こんにちは";
 	}
+	
+	public void printAnything(Object o) {
+		// 何型でもいいから、引数を1つ受け取り画面に表示
+		System.out.println(o.toString());
+	}
 }
