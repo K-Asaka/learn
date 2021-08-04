@@ -11,6 +11,6 @@ public class Code17_04 {
 		} catch (IOException e) {
 			System.out.println("エラーです");
 		}
-		fw.close();
+		//fw.close();
 	}
 }
