@@ -8,7 +8,6 @@ public class Code17_04 {
 		try {
 			fw = new FileWriter("A:\\data.txt");
 			fw.write("hello!");
-			fw.close();
 		} catch (IOException e) {
 			System.out.println("エラーです");
 		}
