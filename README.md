@@ -221,3 +221,8 @@ WebブラウザがアプレットをWebページで表示するのと同様の�
 javac Sample123.java
 appletviewer Sampleq123
 ```
+
+### 178　Swingを理解する
+JavaのGUI部品群の1つ。  
+AWTの上部に作成されたパッケージ。
+
