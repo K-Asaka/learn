@@ -27,3 +27,9 @@ Vue.js devtoolsを用いて視覚的に調査・デバッグができる。
 ```
 <script src="https://unpkg.com/vue@3.0.0/dist/vue.global.prod.js"></script>
 ```
+
+
+## Vue.js devtoolsのインストール
+
+- Google ChromeとFirefoxの拡張機能として提供されている
+- インストールしたら、「Allow access to file URLs」を有効にしておくと、ローカル環境でHTMLファイルをブラウザで直接開いたときでもVue.js devtoolsを使用できる
