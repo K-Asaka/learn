@@ -24,6 +24,9 @@ Vue.createApp({
             const categoryName = this.categoryName
             return this.categories.indexOf(categoryName) !== -1
         },
+        hasTodos: function() {
+            return this.todos.length > 0
+        }
     },
     watch: {
         todos: {

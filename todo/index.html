@@ -50,6 +50,10 @@
                 <input v-model.trim="searchWord" type="text" id="todo-search-keyword" />
             </div>
         </div>
+        <ul v-if="hasTodos" class="hasTodos" class="todo-list">
+            <!-- ここにToDoタスクの一覧を出力します -->
+        </ul>
+        <p v-else>ToDoタスクはまだ登録されていません</p>
     </div>
     <script src="app.js"></script>
 </body>
