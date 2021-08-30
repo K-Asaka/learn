@@ -1,7 +1,12 @@
 Vue.createApp({
     data: function() {
         return {
-            todoTitle: '',
+            todoCategories: [],
         }
+    },
+    computed: {
+        joinedToDoCategories: function() {
+            return this.todoCategories.join(' / ')
+        },
     },
 }).mount('#app')

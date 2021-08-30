@@ -9,8 +9,17 @@
 <body>
     <h1>ToDoアプリ</h1>
     <div id="app">
-        <input type="text" v-model.trim="todoTitle" />
-        <p>{{ todoTitle }}</p>
+        <div>
+            <div>
+                <input type="checkbox" id="category-1" v-model="todoCategories" value="category-1" />
+                <label for="category-1">category-1</label>
+            </div>
+            <div>
+                <input type="checkbox" id="category-2" v-model="todoCategories" value="category-2" />
+                <label for="category-2">category-2</label>
+            </div>
+            <p>{{ joinedToDoCategories }}</p>
+        </div>
     </div>
 
     <script src="sample.js"></script>
