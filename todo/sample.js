@@ -8,7 +8,7 @@ Vue.createApp({
         className: function() {
             return {
                 'is-active': this.isActive,
-                'is-inactive': this.isActive,
+                'is-inactive': !this.isActive,
             }
         },
     },
