@@ -4,4 +4,10 @@ Vue.createApp({
             count: 0,
         }
     },
+    methods: {
+        onClickCountUp: function(event) {
+            console.log(event)
+            this.count += 1
+        },
+    },
 }).mount('#app')
