@@ -9,13 +9,8 @@
 <body>
     <h1>ToDoアプリ</h1>
     <div id="app">
-        <div>
-            <select v-model="author" multiple>
-                <option value="Yamada">Yamada</option>
-                <option value="Sekiguchi">Sekiguchi</option>
-                <option value="Nagasawa">Nagasawa</option>
-            </select>
-        <p>{{ author }}</p>
+        <input type="text" v-model.lazy="todoTitle" />
+        <p>{{ todoTitle }}</p>
     </div>
 
     <script src="sample.js"></script>

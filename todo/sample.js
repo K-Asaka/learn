@@ -1,7 +1,7 @@
 Vue.createApp({
     data: function() {
         return {
-            author: '',
+            todoTitle: '',
         }
     },
 }).mount('#app')
