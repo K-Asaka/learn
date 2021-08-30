@@ -1,7 +1,7 @@
 Vue.createApp({
     data: function() {
         return {
-            todoCategory: false,
+            todoCategories: [],
         }
     },
 }).mount('#app')
