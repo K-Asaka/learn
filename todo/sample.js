@@ -1,15 +1,12 @@
 Vue.createApp({
     data: function() {
         return {
-            todoCategories: [],
+            count: 0,
         }
     },
-    computed: {
-        joinedToDoCategories: function() {
-            return this.todoCategories.join(' / ')
-        },
-        categoryText: function() {
-            return '選択されているカテゴリー: ' + this.joinedToDoCategories
+    methods: {
+        onClickCountUp: function(event) {
+            this.count += 1
         },
     },
 }).mount('#app')
