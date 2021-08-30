@@ -21,8 +21,11 @@
         </div>
     </div>
     <div>
-        <div class="tod-search">
-            <div class="tod-search-item">
+        <div class="todo-search">
+            <div class="todo-search-item">
+                <label for="todo-search-done">終了したものを非表示にする
+                    <input v-model="hideDoneTodo" type="checkbox" id="todo-search-done" />
+                </label>
                 <label for="todo-search-keyword">キーワードで検索</label>
                 <input v-model="searchWord" type="text" id="todo-search-keyword" />
             </div>
