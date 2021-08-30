@@ -1,18 +1,24 @@
 Vue.createApp({
     data: function() {
         return {
-            todoTitle: '',
+            todos: [
+                {
+                    title: 'タスク 1',
+                },
+                {
+                    title: 'タスク 2',
+                },
+            ],
         }
     },
-    computed: {
-        todoTitleText: function() {
-            return 'todoTitleは、' + this.todoTitle + 'です。'
+    watch: {
+        todos: function(next, prev) {
+            console.log('todosに変更がありました')
         },
     },
-    watch: {
-        todoTitleText: function(next, prev) {
-            console.log('next: ' + next)
-            console.log('prev: ' + prev)
+    methods: {
+        onClick: function(event) {
+            this.todos[1].title = 'たすく 2'
         },
     },
 }).mount('#app')
