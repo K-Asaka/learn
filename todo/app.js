@@ -4,8 +4,10 @@ Vue.createApp({
             todoTitle: '',
             todoDescription: '',
             todoCategories: [],
+            selectedCategory: '',
             hideDoneTodo: false,
             searchWord: '',
+            order: 'desc',
         }
     },
 }).mount('#app')
