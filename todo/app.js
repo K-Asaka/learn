@@ -1,7 +1,7 @@
 Vue.createApp({
     data: function() {
         return {
-            message: 'ToDoアプリケーション',
+            message: '<span>ToDoアプリケーション</span>',
         }
     },
 }).mount('#app')
