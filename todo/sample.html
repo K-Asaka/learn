@@ -10,18 +10,12 @@
     <h1>ToDoアプリ</h1>
     <div id="app">
         <div>
-            <input type="checkbox" id="category-1" v-model="todoCategories" value="category-1" />
-            <label for="category-1">category-1</label>
-        </div>
-        <div>
-            <input type="checkbox" id="category-2" v-model="todoCategories" value="category-2" />
-            <label for="category-2">category-2</label>
-        </div>
-        <div>
-            <input type="checkbox" id="category-3" v-model="todoCategories" value="category-3" />
-            <label for="category-3">category-3</label>
-        </div>
-        <p>{{ todoCategories }}</p>
+            <select v-model="author">
+                <option value="Yamada">Yamada</option>
+                <option value="Sekiguchi">Sekiguchi</option>
+                <option value="Nagasawa">Nagasawa</option>
+            </select>
+        <p>{{ author }}</p>
     </div>
 
     <script src="sample.js"></script>
