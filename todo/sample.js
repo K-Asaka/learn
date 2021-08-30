@@ -1,11 +1,16 @@
 Vue.createApp({
     data: function() {
         return {
-            object: {
-                name: 'ヤマダ',
-                age: 40,
-                gender: '女',
-            },
+            items: [
+                {
+                    id: 1,
+                    name: 'item-1',
+                },
+                {
+                    id: 2,
+                    name: 'item-2',
+                },
+            ],
         }
     },
 }).mount('#app')
