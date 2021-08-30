@@ -9,7 +9,8 @@
 <body>
     <h1>ToDoアプリ</h1>
     <div id="app">
-        <div v-for="value in object">{{ value }}</div>
+        <div v-for="(value, key, index) in object">
+            {{ index }}: [{{ key }}] {{ value }}</div>
     </div>
 
     <script src="sample.js"></script>
