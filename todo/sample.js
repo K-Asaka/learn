@@ -12,8 +12,11 @@ Vue.createApp({
         }
     },
     watch: {
-        todos: function(next, prev) {
-            console.log('todosに変更がありました')
+        todos: {
+            handler: function(next, prev) {
+                console.log('todosに変更がありました')
+            },
+            deep: true,
         },
     },
     methods: {
