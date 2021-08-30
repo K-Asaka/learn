@@ -1,7 +1,7 @@
 Vue.createApp({
     data: function() {
         return {
-            isShow: false,
+            value: 7,
         }
     },
 }).mount('#app')
