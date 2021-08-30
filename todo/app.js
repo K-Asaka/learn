@@ -10,4 +10,9 @@ Vue.createApp({
             order: 'desc',
         }
     },
+    computed: {
+        canCreateTodo: function() {
+            return this.todoTitle !== ''
+        },
+    },
 }).mount('#app')
