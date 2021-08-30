@@ -1,7 +1,7 @@
 Vue.createApp({
     data: function() {
         return {
-            value: 7,
+            items: ['item-1', 'item-2'],
         }
     },
 }).mount('#app')

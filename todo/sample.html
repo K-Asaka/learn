@@ -9,9 +9,7 @@
 <body>
     <h1>ToDoアプリ</h1>
     <div id="app">
-        <div v-if="value >= 10">10以上</div>
-        <div v-else-if="value >= 5">5以上</div>
-        <div v-else>5未満</div>
+        <div v-for="item in items">{{ item }}</div>
     </div>
 
     <script src="sample.js"></script>
