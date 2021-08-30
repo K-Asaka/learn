@@ -1,17 +1,7 @@
 Vue.createApp({
     data: function() {
         return {
-            className: 'from-data-class-name',
+            classArr: ['class-name-1', 'class-name-2'],
         }
-    },
-    computed: {
-        classNameComputed: function() {
-            return 'from-computed-class-name'
-        },
-    },
-    methods: {
-        classNameMethod: function() {
-            return 'from-methods-class-name'
-        },
     },
 }).mount('#app')
