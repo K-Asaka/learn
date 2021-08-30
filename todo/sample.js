@@ -1,7 +1,7 @@
 Vue.createApp({
     data: function() {
         return {
-            defaultColor: 'blue',
+            isShow: false,
         }
     },
 }).mount('#app')
