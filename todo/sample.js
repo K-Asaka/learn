@@ -1,13 +1,13 @@
 Vue.createApp({
     data: function() {
         return {
-            count: 0,
+            todoTitle: '',
         }
     },
-    methods: {
-        onClickCountUp: function(event) {
-            console.log(event)
-            this.count += 1
+    watch: {
+        todoTitle: function(next, prev) {
+            console.log('next: ' + next)
+            console.log('prev: ' + prev)
         },
     },
 }).mount('#app')
