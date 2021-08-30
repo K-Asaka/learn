@@ -9,8 +9,10 @@
 <body>
     <h1>ToDoアプリ</h1>
     <div id="app">
-        <button type="button" @click="onClick">todos[1]のタイトルを変更</button>
-        <p>{{ todos }}</p>
+        <button type="button" @click="onClick">画像差し替え</button>
+        <div>
+            <img v-bind:src="imgSrc" alt="" />
+        </div>
     </div>
 
     <script src="sample.js"></script>
