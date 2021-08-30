@@ -9,7 +9,7 @@
 <body>
     <h1>ToDoアプリ</h1>
     <div id="app">
-        <div v-for="item in items">{{ item }}</div>
+        <div v-for="(item, index) in items">{{ index }}: {{ item }}</div>
     </div>
 
     <script src="sample.js"></script>
