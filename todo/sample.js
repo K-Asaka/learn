@@ -1,12 +1,17 @@
 Vue.createApp({
     data: function() {
         return {
-            imgSrc: 'img/cat.jpg',
+            className: 'from-data-class-name',
         }
     },
+    computed: {
+        classNameComputed: function() {
+            return 'from-computed-class-name'
+        },
+    },
     methods: {
-        onClick: function(event) {
-            this.imgSrc = 'img/dog.jpg'
+        classNameMethod: function() {
+            return 'from-methods-class-name'
         },
     },
 }).mount('#app')
