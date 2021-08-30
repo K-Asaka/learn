@@ -1,3 +1,7 @@
 Vue.createApp({
-    // アプリケーションの機能を定義
+    data: function() {
+        return {
+            message: 'ToDoアプリケーション',
+        }
+    },
 }).mount('#app')
