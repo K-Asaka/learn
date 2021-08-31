@@ -1,16 +1,8 @@
-Vue.createApp({
+Vue.createApp({}).component('my-title', {
     data: function() {
         return {
-            items: [
-                {
-                    id: 1,
-                    name: 'item-1',
-                },
-                {
-                    id: 2,
-                    name: 'item-2',
-                },
-            ],
+            title: '',
         }
     },
+    template: `<input type="text" v-model="title" />`,
 }).mount('#app')
