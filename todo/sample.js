@@ -1,12 +1,14 @@
+const myTitle = {
+    data: function() {
+        return {
+            title: '',
+        }
+    },
+    template: `#title-template`,
+}
+
 Vue.createApp({
     components: {
-        'my-title': {
-            data: function() {
-                return {
-                    title: '',
-                }
-            },
-            template: `#title-template`,
-        },
+        'my-title': myTitle,
     },
 }).mount('#app')
