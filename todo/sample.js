@@ -16,9 +16,4 @@ Vue.createApp({
     components: {
         'count-up-button': countUpButton,
     },
-    methods: {
-        countUp: function(volume) {
-            this.count += volume
-        },
-    },
 }).mount('#app')

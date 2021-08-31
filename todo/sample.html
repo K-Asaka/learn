@@ -9,7 +9,7 @@
 <body>
     <h1>ToDoアプリ</h1>
     <div id="app">
-        <count-up-button @count-up="countUp"></count-up-button>
+        <count-up-button @count-up="count += $event"></count-up-button>
         <div>{{ count }}</div>
     </div>
     <script type="text/x-template" id="btn-template">
