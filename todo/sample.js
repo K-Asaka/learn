@@ -1,11 +1,9 @@
 const myTitle = {
     props: {
         name: {
-            type: Object,
-            default: function() {
-                return {
-                    name: 'yamada',
-                }
+            type: String,
+            validator: function(value) {
+                return value.length > 0
             },
         },
     },
