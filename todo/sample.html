@@ -3,25 +3,17 @@
 <head>
     <meta charset="UTF-8" />
     <title>ToDoアプリ</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="sample.css" />
     <script src="https://unpkg.com/vue@3.0.0/dist/vue.global.js"></script>
 </head>
 <body>
     <h1>ToDoアプリ</h1>
     <div id="app">
-        <update-author
-            v-model:name="author.name"
-            v-model:age="author.age"
-        ></update-author>
-        <div>name: {{ author.name }}</div>
-        <div>age: {{ author.age }}</div>
+        <button @click="isShow = !isShow">Toggleボタン</button>
+        <transition>
+            <div v-show="isShow">トランジション</div>
+        </transition>
     </div>
-    <script type="text/x-template" id="update-author-template">
-        <div>
-            <button type="button" @click="onClickAge">Age + 1 | {{ age }} + 1</button>
-            <input type="text" :value="name" @input="onInput">
-        </div>
-    </script>
 
     <script src="sample.js"></script>
 </body>
