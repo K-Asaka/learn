@@ -1,28 +1,14 @@
-const myTitle = {
-    props: {
-        name: {
-            type: String,
-            validator: function(value) {
-                return value.length > 0
-            },
-            required: true,
-        },
-    },
-    computed: {
-        upperCaseName: function() {
-            return this.name.toUpperCase()
-        },
-    },
-    template: '#title-template',
+const countUpButton = {
+    template: '#btn-template',
 }
 
 Vue.createApp({
     data: function() {
         return {
-            authorName: 'yamada',
+            count: 0,
         }
     },
     components: {
-        'my-title': myTitle,
+        'count-up-button': countUpButton,
     },
 }).mount('#app')
