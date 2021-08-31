@@ -1,14 +1,21 @@
-const countUpButton = {
-    template: '#btn-template',
+const updateAuthor = {
+    template: '#update-author-template',
     props: {
-        count: {
+        name: {
+            type: String,
+            required: true,
+        },
+        age: {
             type: Number,
             required: true,
         },
     },
     methods: {
-        onClick: function() {
-            this.$emit('update:count', this.count + 3)
+        onClickAge: function() {
+            this.$emit('update:age', this.age + 1)
+        },
+        onInput: function($event) {
+            this.$emit('update:name', $event.target.value)
         },
     },
 }
@@ -16,10 +23,13 @@ const countUpButton = {
 Vue.createApp({
     data: function() {
         return {
-            count: 0,
+            author: {
+                name: 'Yamada',
+                age: 40,
+            },
         }
     },
     components: {
-        'count-up-button': countUpButton,
+        'update-author': updateAuthor,
     },
 }).mount('#app')
