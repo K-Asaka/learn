@@ -8,7 +8,7 @@ const countUpButton = {
     },
     methods: {
         onClick: function() {
-            this.$emit('count-up', this.count + 1)
+            this.$emit('update:count', this.count + 3)
         },
     },
 }
@@ -21,10 +21,5 @@ Vue.createApp({
     },
     components: {
         'count-up-button': countUpButton,
-    },
-    methods: {
-        countUp: function(nextCount) {
-            this.count = nextCount
-        },
     },
 }).mount('#app')
