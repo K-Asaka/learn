@@ -1,10 +1,15 @@
 const myTitle = {
-    data: function() {
-        return {
-            title: '',
-        }
+    props: {
+        name: {
+            type: Object,
+            default: function() {
+                return {
+                    name: 'yamada',
+                }
+            },
+        },
     },
-    template: `#title-template`,
+    template: '#title-template',
 }
 
 Vue.createApp({
