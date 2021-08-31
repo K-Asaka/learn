@@ -9,20 +9,10 @@
 <body>
     <h1>ToDoアプリ</h1>
     <div id="app">
-        <button @click="isShow = !isShow">Toggleボタン</button>
-        <transition
-            @before-enter="beforeEnter"
-            @enter="enter"
-            @after-enter="afterEnter"
-            @enter-cancelled="enterCancelled"
-            @before-leave="beforeLeave"
-            @leave="leave"
-            @after-leave="afterLeave"
-            @leave-cancelled="leaveCancelled"
-            :css="false"
-        >
-            <div v-show="isShow">トランジション</div>
-        </transition>
+        <button @click="filterDone = !filterDone">Toggleフィルターボタン</button>
+        <transition-group tag="ul">
+            <li v-for="item in filteredItems" :key="item.title">{{ item.title }}</li>
+        </transition-group>
     </div>
 
     <script src="sample.js"></script>
