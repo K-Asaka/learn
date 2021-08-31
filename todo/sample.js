@@ -1,5 +1,10 @@
 const countUpButton = {
     template: '#btn-template',
+    methods: {
+        onClick: function() {
+            this.$emit('count-up')
+        },
+    },
 }
 
 Vue.createApp({
@@ -10,5 +15,10 @@ Vue.createApp({
     },
     components: {
         'count-up-button': countUpButton,
+    },
+    methods: {
+        countUp: function() {
+            this.count += 1
+        },
     },
 }).mount('#app')
