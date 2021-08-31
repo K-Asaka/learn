@@ -6,7 +6,7 @@ Vue.createApp({
                     title: '',
                 }
             },
-            template: `<input type="text" v-model="title" />`,
+            template: `#title-template`,
         },
     },
 }).mount('#app')
