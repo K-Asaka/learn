@@ -10,7 +10,17 @@
     <h1>ToDoアプリ</h1>
     <div id="app">
         <button @click="isShow = !isShow">Toggleボタン</button>
-        <transition>
+        <transition
+            @before-enter="beforeEnter"
+            @enter="enter"
+            @after-enter="afterEnter"
+            @enter-cancelled="enterCancelled"
+            @before-leave="beforeLeave"
+            @leave="leave"
+            @after-leave="afterLeave"
+            @leave-cancelled="leaveCancelled"
+            :css="false"
+        >
             <div v-show="isShow">トランジション</div>
         </transition>
     </div>
