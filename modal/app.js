@@ -44,6 +44,10 @@ Vue.createApp({
             this.isVisible = true
             this.selectedThumbnailId = thumb.id
         },
+        closeModal: function() {
+            this.isVisible = false
+            this.selectedThumbnailId = undefined
+        },
         onLoad: function(event) {
             this.thumbnailHeight = 
                 event.target.naturalHeight > 300 ? 300 : event.target.naturalHeight
