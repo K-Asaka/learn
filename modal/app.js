@@ -33,6 +33,20 @@ Vue.createApp({
                 return thumb.id === self.selectedThumbnailId
             })
         },
+        currentThumbnailIndex: function() {
+            const self = this
+            return _.findIndex(self.thumbnails, function(thumb) {
+                return thumb.id === self.selectedThumbnailId
+            })
+        },
+        nextThumbnail: function() {
+            const nextIndex = this.currentThumbnailIndex + 1
+            return this.thumbnails[nextIndex > this.thumbnails.length - 1 ? 0 : nextIndex]
+        },
+        prevThumbnail: function() {
+            const prevIndex = this.currentThumbnailIndex - 1
+            return this.thumbnails[prevIndex < 0 ? this.thumbnails.length - 1 : prevIndex]
+        },
         containerStyle: function() {
             return {
                 height: this.thumbnailHeight + "px"
@@ -47,6 +61,12 @@ Vue.createApp({
         closeModal: function() {
             this.isVisible = false
             this.selectedThumbnailId = undefined
+        },
+        onClickPrev: function() {
+            this.selectedThumbnailId = this.prevThumbnail.id
+        },
+        onClickNext: function() {
+            this.selectedThumbnailId = this.nextThumbnail.id
         },
         onLoad: function(event) {
             this.thumbnailHeight = 
