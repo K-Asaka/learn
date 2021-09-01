@@ -16,6 +16,7 @@ Vue.createApp({
                 }
             ],
             selectedThumbnailId: undefined,
+            imageTransitionName: "pref",
             isVisible: false,
             thumbnailHeight: 0,
             isThumbnailLoaded: false
