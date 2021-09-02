@@ -4,5 +4,7 @@ target/
 Cargo.lock
 
 **/*.rs.bk
+**/.vscode/launch.json
 
 *.pdb
+
