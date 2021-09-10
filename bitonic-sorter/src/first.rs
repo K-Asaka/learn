@@ -5,8 +5,12 @@
 // 　u32型は32ビット符号なし整数
 // 　[u32]はu32のスライス(現時点でスライスは1次元の配列と考えてよい)
 pub fn sort(x: &mut [u32], up: bool) {
-    // 未実装の意味。コンパイルは通るが、実行するとpanicする
-    unimplemented!();
+    if x.len() > 1 {
+        let mid_point = x.len() / 2;
+        sort(&mut x[..mid_point], true);
+        sort(&mut x[mid_point..], false);
+        sub_sort(x, up);
+    }
 }
 
 fn sub_sort(x: &mut [u32], up: bool) {
