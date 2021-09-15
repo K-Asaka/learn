@@ -74,7 +74,25 @@ fn compare_and_swap<T, F>(x: &mut [T], forward: bool, comparator: &F)
 // このモジュールはcargo testを実行したときのみコンパイルされる
 #[cfg(test)]
 mod tests {
+    use crate::utils::{new_u32_vec, is_sorted_ascending, is_sorted_descending};
 
+    #[test]
+    fn sort_u32_large() {
+        {
+            // 乱数で65,536要素のデータ列を作る(65,536は2の16乗)
+            let mut x = new_u32_vec(65536);
+            // 昇順にソートする
+            assert_eq!(sort(&mut x, &Ascending), Ok(()));
+            // ソート結果が正しいことを検証する
+            assert!(is_sorted_ascending(&x));
+        }
+        {
+            let mut x = new_u32_vec(65536);
+            assert_eq!(sort(&mut x, &Descending), Ok(()));
+            assert!(is_sorted_descending(&x));
+        }
+    }
+    
     // 構造体Studentを定義する
     // 構造体は関連する値を1つにまとめたデータ構造。複数のデータフィールドを持つ
     // deriveアトリビュートを使い、DebugトレイトとPartialEqトレイトの実装を自動導出する
@@ -101,8 +119,8 @@ mod tests {
     }
 
     // 親モジュール(first)のsort関数を使用する
-    use super::{sort_by};
-    
+    use super::{sort, sort_by};
+    use super::SortOrder::*;
     
     #[test]
     // 年齢で昇順にソートする
