@@ -2,6 +2,7 @@ pub mod first;
 pub mod second;
 pub mod third;
 pub mod utils;
+pub mod fourth;
 
 // SortOrderを列挙型として定義する
 pub enum SortOrder {
