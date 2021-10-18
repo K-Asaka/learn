@@ -1,8 +1,20 @@
 pub fn overflow() {
-    let n1 = std::u8::MAX;  // u8型の最大値は255u8
-    let n2 = 1u8;
+    let n1 = 200u8;
+    let n2 = 3u8;
 
-    // 答えは256だがu8型では表現できない(オーバーフロー)
-    let n3 = n1 + n2;
-    println!("{}", n3);
+    // n1 x n2 = 600を計算する
+    // std::u8::MAXは255なので桁あふれする
+
+    // 検査付き乗算 → Noneになる。
+    assert_eq!(n1.checked_mul(n2), None);
+
+    // 飽和乗算 → u8の最大値255にはリ付く
+    assert_eq!(n1.saturating_mul(n2), std::u8::MAX);
+
+    // ラッピング乗算 → 600を256で割った余りの88になる
+    assert_eq!(n1.wrapping_mul(n2), 88);
+
+    // 桁あふれ乗算 → 88と桁あふれを示すtrueのペアを返す
+    assert_eq!(n1.overflowing_mul(n2), (88, true));
+    
 }
