@@ -1,3 +1,6 @@
+mod integer;
+mod overflow;
+
 // 戻り値の型を省略。コンパイラは戻り値がユニット型だと解釈する
 fn hello() {
     println!("Hello");    
@@ -34,4 +37,7 @@ fn main() {
     println!("b6={}", b6);
 
     assert_eq!(std::mem::size_of::<bool>(), 1); // サイズは1バイト
+
+    integer::int();
+    overflow::overflow();
 }
