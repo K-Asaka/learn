@@ -19,4 +19,19 @@ fn main() {
     // size_of::<型>()は、その型の値がメモリ上で占める大きさをバイト数で返す
     println!("{}", std::mem::size_of::<()>());
     assert_eq!(std::mem::size_of::<()>(), 0);   // 0バイト
+
+    let b1 = true;
+    let b2 = !b1;   // false、否定
+    println!("b2={}", b2);
+
+    let n1 = 8;
+    let n2 = 12;
+    let b3 = n1 >= 10;  // false
+    let b4 = n2 >= 10;  // true
+    let b5 = b3 && b4;  // false、ショートサーキット論理積
+    let b6 = b3 || b4;  // true、ショートサーキット論理和
+    println!("b5={}", b5);
+    println!("b6={}", b6);
+
+    assert_eq!(std::mem::size_of::<bool>(), 1); // サイズは1バイト
 }
