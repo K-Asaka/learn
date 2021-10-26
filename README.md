@@ -434,3 +434,8 @@ Tomcat4.0のため省略。
 
 `javac -classpath "Tomcatのインストールディレクトリ\common\lib\servlet.jar" Sample355.java`
 
+
+### サーブレットを実行する
+サーブレットを実行するには、Tomcatがインストールされているディレクトリ配下のディレクトリ「\webapps\examples\WEB-INF\classes」にクラスファイルをコピーする。
+Webブラウザを開いて、アドレスに「http://localhost:8080/examples/servlet/クラス名」と入力する。
+
