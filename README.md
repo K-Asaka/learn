@@ -439,3 +439,22 @@ Tomcat4.0のため省略。
 サーブレットを実行するには、Tomcatがインストールされているディレクトリ配下のディレクトリ「\webapps\examples\WEB-INF\classes」にクラスファイルをコピーする。
 Webブラウザを開いて、アドレスに「http://localhost:8080/examples/servlet/クラス名」と入力する。
 
+
+### サーブレット実行用の任意のディレクトリを作成する
+#### Contex5 Pathを設定し、サーブレット実行用の任意のディレクトリを作成
+通常のサーブレットを実行する場合、実行するサーブレットはTomcatがインストールされているディレクトリ配下のディレクトリ「\webapps\examples\WEB-INF\classes」に配置すればよいのだが、任意のディレクトリを作成し、そこにファイルを格納してファイルを管理したい場合はContext Pathを設定する。
+仮に「C:\java\sample」を任意のディレクトリとする。
+このディレクトリの配下に「WEB-INF」というディレクトリを作成する。
+続けて、作成した「WEB-INF」ディレクトリの配下に「lib」、「classes」という2つのディレクトリを作成する。
+次にContext Pathを設定する。
+Context Pathを設定するには、Tomcatがインストールされているディレクトリ配下のディレクトリ「\conf」にある「server.xml」をメモ帳などで開き、「<!-- Tomcat Examples Context -->」を検索し、この行の次に以下の行を追加して保存する。
+
+```
+<Context path="/java/sample" docBase="c:\java\sample" debug="0" reloadable="true">
+</Context>
+```
+追加後、Tomcatを再起動すると「c:\java\sample\WEB-INF\classes」ディレクトリ内にあるファイルに、http://localhost:8080/java/sample/servlet/[ファイル名]というアドレスでアクセスできるようになる。
+#### 格納用ディレクトリを指定してコンパイル
+```
+javac -a SAMPLE\WEB-INF\classes ソースファイル.java
+```
