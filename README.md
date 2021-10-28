@@ -458,3 +458,28 @@ Context Pathを設定するには、Tomcatがインストールされている�
 ```
 javac -a SAMPLE\WEB-INF\classes ソースファイル.java
 ```
+
+
+### サーブレットの初期化処理を理解する
+サーブレットの初期化処理は、initメソッドで行う。
+このメソッドには、引数を持つものと、引数を持たないものがある。
+
+■引数を持つinitメソッド  
+サーブレットの設定や、初期化パラメータをメソッドとして持つServletConfigオブジェクトを引数としてサーブレットコンテナに呼び出され、実行されるとServletがサービスを提供できるようになったことを意味する。
+ServletコンテナはServletがインスタンス化された後、1回だけinitメソッドを実行する。
+メソッドの本体の最初でsuper.init()を必ず呼び出す必要がある。
+```
+public void init(ServletConfig config) throws ServletException {
+    super.init(config);
+    // 初期化処理を記述する
+}
+```
+
+■引数を持たないinitメソッド
+オーバーライドする時に、super.init()を呼び出す必要はない。
+引数を持つinitメソッドをオーバーライドせずに、このメソッドをオーバーライドすると自動的にGenericServlet.init(ServletConfig config)から呼び出される。
+```
+public void init() throws ServletException {
+    // 初期化処理を記述する
+}
+```
