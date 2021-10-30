@@ -483,3 +483,22 @@ public void init() throws ServletException {
     // 初期化処理を記述する
 }
 ```
+
+
+### servlet初期化パラメータを取得する
+まず、servlet初期化パラメータを「server.xml」に記述する。
+Tomcatがインストールされているディレクトリ配下のディレクトリ「\conf」にある「server.xml」をメモ帳などで開き、「<web-app>」を検索し、この行の次に以下の行を追加して保存する。
+追加する行の内容は、servletParamという初期化パラメータを定義し、値として「this is servletparameter」という文字列を設定している。
+```
+<servlet>
+<servlet-name>Sample361</servlet-name>
+<servlet-class>Sample361</servlet-class>
+<init-param>
+<param-name>servletParam</param-name>
+<param-value>this is servletparameter</param-value>
+</init-param>
+</servlet>
+```
+Tomcatを再起動すると、設定の変更が有効になる。
+「servletParam」というservlet初期化パラメータを取得して、その内容をWebブラウザに表示する。
+initメソッドでgetInitParameterメソッドを使用してパラメータを取得している。
