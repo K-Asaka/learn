@@ -502,3 +502,16 @@ Tomcatがインストールされているディレクトリ配下のディレ�
 Tomcatを再起動すると、設定の変更が有効になる。
 「servletParam」というservlet初期化パラメータを取得して、その内容をWebブラウザに表示する。
 initメソッドでgetInitParameterメソッドを使用してパラメータを取得している。
+
+
+### context初期化パラメータを取得する
+context初期化パラメータを「Web.xml」に記述する。
+Tomcatがインストールされているディレクトリ配下のディレクトリ「\conf」にある「Web.xml」をメモ帳などで開き、「<web-app>」を検索し、この行の次に以下の行を追加して保存する。
+```
+<context-param>
+<param-name>contextParam</param-name>
+<param-value>this is contextParam</param-value>
+<description>For context-wide</description>
+</context-param>
+```
+Tomcatを再起動すると、設定の変更が有効になる。
