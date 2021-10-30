@@ -562,3 +562,6 @@ JSPの内部動作は次のようになる。
 - コンパイルされたサーブレットがJSPエンジンで起動される。
 - サーブレットがHTMLを出力し、WebサーバーがWebブラウザにHTMLを送信する。
 
+
+### JSPを実行する
+Webブラウザを開いて、アドレスに「http://localhost:8080/java/sample/Sample383.jsp」と入力する。
