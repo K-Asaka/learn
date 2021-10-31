@@ -583,3 +583,11 @@ Webブラウザを開いて、アドレスに「http://localhost:8080/java/sampl
 - Java2 Micro Edition Wireless
 - SDK for DoJa
 
+
+### J2MEを理解する
+Java 2 Micro Editionの略。
+小型コンピューティングデバイス(携帯電話やPDA、カーアンビゲーション等)のために最適化されたJavaアプリケーション環境のこと。
+J2MEは、仮想マシンとコアクラスを定義した「コンフィグレーション」と、特定分野固有のクラスを定義している「プロファイル」から構成される。
+J2MEには、サイズが小さく、リソースを多く必要としない特別なJVMが用意されていて、これを「KVM(K Virtual Machine)」と呼ぶ。
+KVMのKは10Kバイトという動作メモリサイズの小ささからきている。
+
