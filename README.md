@@ -576,3 +576,10 @@ Webブラウザを開いて、アドレスに「http://localhost:8080/java/sampl
 - サウンドは、iモード独自の16和音MFiフォーマットを採用
 - iアプリから、携帯電話の基本機能にアクセスできない
 
+
+### iアプリの開発環境
+以下の３つが必要。
+- Java2 SDK Standard Edition(JDK)
+- Java2 Micro Edition Wireless
+- SDK for DoJa
+
