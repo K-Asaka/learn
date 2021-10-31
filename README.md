@@ -591,3 +591,8 @@ J2MEは、仮想マシンとコアクラスを定義した「コンフィグレ�
 J2MEには、サイズが小さく、リソースを多く必要としない特別なJVMが用意されていて、これを「KVM(K Virtual Machine)」と呼ぶ。
 KVMのKは10Kバイトという動作メモリサイズの小ささからきている。
 
+
+### J2MEをインストールする
+http://www.nttdocomo.co.jp/mc-user/i/java/tool.html
+よりダウンロード。
+
