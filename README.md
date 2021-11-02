@@ -666,3 +666,8 @@ Javaの開発のためのツール一式をまとめた開発環境として、C
 校舎の代表格としてJBuilderがあげられる。
 Visual Basicなどと同様の視覚的な開発環境を提供し、プログラム初心者でも容易にJavaプログラミングの世界に入り込むことが可能。
 
+
+### JBuilderを理解する
+JBuilderはBorland社からリリースされているRAD(Rapid Application Development)ツールの1つで、マウスを使ったビジュアル的な開発を可能にするだけでなく、デバッグツールなどを兼ね備えているため、開発効率の向上を図ることが可能。
+JBuilderには「Personal」「Professional」「Enterprise」の3つがある。
+
