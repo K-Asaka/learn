@@ -671,3 +671,7 @@ Visual Basicなどと同様の視覚的な開発環境を提供し、プログ�
 JBuilderはBorland社からリリースされているRAD(Rapid Application Development)ツールの1つで、マウスを使ったビジュアル的な開発を可能にするだけでなく、デバッグツールなどを兼ね備えているため、開発効率の向上を図ることが可能。
 JBuilderには「Personal」「Professional」「Enterprise」の3つがある。
 
+
+### JBuilderをインストールする
+情報が古いため省略
+
