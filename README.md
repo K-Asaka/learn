@@ -655,3 +655,6 @@ i-JADE Lite単体ではiアプリの開発を行うことはできず、必ず�
 情報が古いため省略
 http://www.zentek.com/i-JADE/ja/download.html
 
+
+### i-JADE Liteでアプリを実行する
+情報が古いため省略
