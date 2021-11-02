@@ -641,3 +641,17 @@ NTT DoCoMo | DoJa(NTT独自プロファイル + 携帯メーカー拡張API) | i
 J-PHONE | MIDP + JSCL(JPHONE拡張ライブラリ) | MIDlet | 30Kバイト
 KDDI(Au) | MIDP + KDDI-P(KDDI拡張ライブラリ) | MIDlet | 50Kバイト
 
+
+### i-JADE Liteを理解する
+i-JADE Liteは、iモード対応Javaのエミュレータ。
+JDKの上にiモード対応Javaのエミュレーション環境を構築している。
+実際に販売されているiモード対応携帯電話に近いエミュレーション環境を提供している。
+目的のiモード対応携帯電話用のi-JADE Liteをインストールすると、それぞれの機種に合わせたエミュレータを使用して、iアプリの動作確認などを行える。
+J2MEとの違いは、開発環境(ビルド機能)を含んでいないこと。
+i-JADE Lite単体ではiアプリの開発を行うことはできず、必ず他の開発環境と組み合わせて利用する必要がある。
+
+
+### i-JADE Liteをインストール
+情報が古いため省略
+http://www.zentek.com/i-JADE/ja/download.html
+
