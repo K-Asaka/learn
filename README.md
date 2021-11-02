@@ -675,3 +675,7 @@ JBuilderには「Personal」「Professional」「Enterprise」の3つがある�
 ### JBuilderをインストールする
 情報が古いため省略
 
+
+### JBuilderのライセンス登録をする
+情報が古いため省略
+
