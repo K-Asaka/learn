@@ -40,4 +40,5 @@ fn main() {
 
     integer::int();
     overflow::overflow();
+    float::float();
 }
