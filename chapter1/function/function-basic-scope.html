@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 外側の関数
+            function outFunc() {
+                // 猫を得る関数
+                function getCat(catName) {
+                    // 文字列を作成して返す
+                    const res = `猫名:「${catName}」`;
+                    return res;
+                }
+                // 関数を実行してコンソールに出力
+                console.log(getCat('タマ'));
+            }
+
+            // 外側の関数を実行
+            outFunc();
+
+            // 外側の関数内の関数を実行しようとする
+            console.log(getCat('大福'));
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
