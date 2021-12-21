@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            console.log('start');
+
+            {
+                let item ='チョコレート';
+                console.log('1-1:', item);  // 上の階層のitem
+                {
+                    let item = 'キャンディー';
+                    console.log('  2-1:', item);  // 下の階層のitem
+                    {
+                        console.log('    3-1:', item);  // 下の階層のitem
+                    }
+                    console.log('  2-2:', item);  // 下の階層のitem
+                }
+                console.log('1-2:', item);  // 上の階層のitem
+            }
+            
+            console.log('end');
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
