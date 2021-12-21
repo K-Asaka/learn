@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 関数
+            function fnc1() {
+                // コンソールに出力
+                console.log('中', this);
+
+                // 内側の関数
+                function fnc2() {
+                    // コンソールに出力
+                    console.log('内', this);
+                }
+                // 内側の関数を呼び出し
+                fnc2();
+            }
+
+            // thisを設定した関数を作成
+            const fncBind = fnc1.bind('thisを設定');
+
+            // 関数を呼び出し
+            fncBind();
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
