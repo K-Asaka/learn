@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <input type="number" value="100" id="price1">
+        <input type="number" value="100" id="price2">
+        <input type="number" value="" id="sum">
+
+        <script>
+            const price1 = document.querySelector('#price1').value;
+            const price2 = document.querySelector('#price2').value;
+            const sum = price1 + price2;
+            document.querySelector('#sum').value = sum;
+        </script>
+    </body>
+</html>
