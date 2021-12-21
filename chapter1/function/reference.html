@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 猫の年を取らせる関数
+            function growOldCat(cat) {
+                cat.age = cat.age + 1;
+            }
+
+            // オブジェクトを作成して、コンソールに出力
+            const catObj = {name: 'タマ', age: 3};
+            console.log(`${catObj.name} ${catObj.age}歳`);
+
+            // 関数を実行して、コンソールに出力
+            growOldCat(catObj);
+            console.log(`${catObj.name} ${catObj.age}歳`);
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
