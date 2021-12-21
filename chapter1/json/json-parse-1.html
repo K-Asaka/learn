@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // JSON形式の文字列を作成
+            const text = '{"items":[{"name":"cat","age":3},{"name":"dog","age":4}]}';
+
+            // オブジェクトにパース
+            let res = null;
+            try {
+                res = JSON.parse(text);
+            } catch (e) {
+            }
+
+            // コンソールに出力
+            console.log(res);
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
