@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // ネストしたオブジェクトを作成
+            const animal = {
+                cat: {name: 'タマ', age: 3, color: 'black'},
+                dog: {name: 'ポチ', age: 4, color: 'orange'}
+            };
+
+            // プロパティの値をコンソールに出力
+            console.log(animal.cat.name);
+            console.log(animal['cat']['age']);
+
+            // 混ぜた書き方で書いてコンソールに出力
+            console.log(animal['dog'].color);
+            console.log(animal.dog['color']);
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
