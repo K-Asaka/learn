@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 文字列を作成　アルファベットと日本語と絵文字
+            const s = 'cat猫🐱';
+
+            // .charPointAt()の結果をコンソールに出力
+            const b1 = s.codePointAt(0);
+            const b2 = s.codePointAt(3);
+            const b3 = s.codePointAt(4);
+            console.log('--- codePointAt ---');
+            console.log(b1, b2, b3);
+
+            // String.fromCodePoint()の結果をコンソールに出力
+            console.log('--- String.fromCodePoint ---');
+            console.log(
+                String.fromCodePoint(b1), String.fromCodePoint(b2),
+                String.fromCodePoint(b3)
+            );
+            console.log(String.fromCodePoint(b1, b2, b3));
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

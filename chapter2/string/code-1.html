@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 文字列を作成　アルファベットと日本語と絵文字
+            const s = 'cat猫🐱';
+
+            // .charCodeAt()の結果をコンソールに出力
+            const a1 = s.charCodeAt(0);
+            const a2 = s.charCodeAt(3);
+            const a3 = s.charCodeAt(4);
+            const a4 = s.charCodeAt(5);
+            console.log('--- charCodeAt ---');
+            console.log(a1, a2, a3, a4);
+
+            // String.fromCharCode()の結果をコンソールに出力
+            console.log('--- String.fromCharCode ---');
+            console.log(
+                String.fromCharCode(a1), String.fromCharCode(a2),
+                String.fromCharCode(a3), String.fromCharCode(a4)
+            );
+            console.log(String.fromCharCode(a1, a2, a3, a4));
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
