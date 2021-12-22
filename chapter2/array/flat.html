@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 配列を作成
+            const arr = ['猫', ['柴犬', '豆柴'], [['鶏', '鶉'], ['七面鳥', '孔雀']]];
+
+            // JSON文字列化してコンソールに出力
+            console.log(JSON.stringify(arr));
+
+            // .flat()で平坦化して、JSON文字列化してコンソールに出力
+            console.log(JSON.stringify(arr.flat()));
+            console.log(JSON.stringify(arr.flat(2)));
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
