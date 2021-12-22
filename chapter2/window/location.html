@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <button onclick="move()">移動</button>
+
+        <script>
+            // パラメーターやハッシュがなければ付ける
+            if (location.search === '') {
+                location.href += '?q=cat#dog';
+            }
+
+            // locationの情報を出力
+            console.log('href     :', location.href);
+            console.log('protocol :', location.protocol);
+            console.log('hostname :', location.hostname);
+            console.log('pathname :', location.pathname);
+            console.log('search   :', location.search);
+            console.log('hash     :', location.hash);
+
+            // 移動ボタンクリックで移動
+            function move() {
+                location.href = 'https://www.google.com/search?q=a';
+            };
+        </script>
+    </body>
+</html>
