@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <style>
+            /* 表示領域を大きくする。背景にグラデーションを付ける */
+            body {
+                height: 4000px;
+                background: linear-gradient(#9cf, #048);
+            }
+            /* 情報表示欄の位置と色を設定 */
+            #inf {
+                position: fixed;
+                top: 0;
+                background: #fff;
+                padding: 0.5em 1em;
+                border: solid 2px #048;
+            }
+        </style>
+    </head>
+    <body>
+        <pre id="inf"></pre>
+        <script>
+            // くり返し処理
+            const intervalID = setInterval(() => {
+                // 相対位置スクロール
+                scrollBy(0, 20);
+            }, 20);
+
+            // 一定時間後に停止
+            setTimeout(() => {
+                // 停止
+                clearInterval(intervalID);
+
+                // 絶対位置スクロール
+                scrollTo(0, 0);
+            }, 4000);
+
+            // #infに情報を表示
+            setInterval(() => {
+                // 文字列を作成
+                const t = `
+scrollX : ${scrollX}
+scrollY : ${scrollY}
+innerWidth  : ${innerWidth}
+innerHeight : ${innerHeight}
+                `;
+
+                // idがinfの要素の内部文字列に、tの前後のホワイトスペースを除いた文字を設定
+                document.querySelector('#inf').innerText = t.trim();
+
+            }, 10);
+        </script>
+    </body>
+</html>
