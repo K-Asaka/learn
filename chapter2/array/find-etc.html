@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 配列を作成
+            const arr = ['タマ', 'ポチ', 'ココア', 'きなこ'];
+
+            // .find()の結果を、コンソールに出力
+            console.log('--- find ---');
+            console.log(arr.find(x => x.length >= 3));
+            console.log(arr.find(x => x.length >= 4));
+
+            // .findIndex()の結果を、コンソールに出力
+            console.log('--- findIndex ---');
+            console.log(arr.findIndex(x => x.length >= 3));
+            console.log(arr.findIndex(x => x.length >= 4));
+
+            // .every()の結果を、コンソールに出力
+            console.log('--- every ---');
+            console.log(arr.every(x => x.length >= 2));
+            console.log(arr.every(x => x.length >= 3));
+
+            // .some()の結果を、コンソールに出力
+            console.log('--- some ---');
+            console.log(arr.some(x => x.length >= 3));
+            console.log(arr.some(x => x.length >= 4));
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
