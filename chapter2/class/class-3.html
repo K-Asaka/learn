@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 動物クラス
+            class Animal {
+                // コンストラクター
+                constructor(type, name) {
+                    // 引数をもとにプロパティを初期化
+                    this.type = type;
+                    this.name = name;
+                }
+                // 静的プロパティを作成
+                static pet = ['犬', '猫', '兎', '亀'];
+            }
+
+            // 静的プロパティを作成
+            Animal.japaneseZodiac = ['鼠', '牛', '虎', '兎', '竜', '蛇',
+                                     '馬', '羊', '猿', '鳥', '犬', '猪'];
+
+            // コンソールに静的プロパティを出力
+            console.log(Animal.pet.join(', '));
+            console.log(Animal.japaneseZodiac.join(', '));
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

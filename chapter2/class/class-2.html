@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 動物クラス
+            class Animal {
+                // コンストラクター
+                constructor(type, name) {
+                    // 引数をもとにプロパティを初期化
+                    this.type = type;
+                    this.name = name;
+                }
+                // 情報取得メソッド
+                getInf() {
+                    // 情報の文字列を作成して返す
+                    return `${this.type} : ${this.name}`;
+                }
+                // 月齢から年齢を計算
+                static calcAgeFromMonth(month) {
+                    // 計算結果を返す
+                    return Math.trunc(month / 12);
+                }
+            }
+
+            // コンソールに情報を出力
+            console.log(`13ヶ月は${Animal.calcAgeFromMonth(13)}歳`);
+            console.log(`32ヶ月は${Animal.calcAgeFromMonth(32)}歳`);
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
