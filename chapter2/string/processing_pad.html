@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 文字列を作成
+            const s = '3456';
+
+            // .padEnd()の結果を、コンソールに出力
+            console.log('--- padEnd ---');
+            console.log('|' + s.padEnd(8)       + '|');
+            console.log('|' + s.padEnd(8, '#')  + '|');
+            console.log('|' + s.padEnd(8, '<=') + '|');
+            console.log('|' + s.padEnd(2, '#')  + '|');
+
+            // .padStart()の結果を、コンソールに出力
+            console.log('--- padStart ---');
+            console.log('|' + s.padStart(8)       + '|');
+            console.log('|' + s.padStart(8, '0')  + '|');
+            console.log('|' + s.padStart(8, '=>') + '|');
+            console.log('|' + s.padStart(2, '0')  + '|');
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
