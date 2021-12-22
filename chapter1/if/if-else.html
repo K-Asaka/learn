@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 価格カードを得る関数
+            function getPriceCard(price) {
+                // 戻り値用の変数を作成
+                let res = '';
+
+                // 条件分岐
+                if (price < 1000) {
+                    // 1,000未満
+                    res = price + '円';
+                } else if (price < 10000) {
+                    // 1,000以上10,000未満
+                    const salePrice = Math.trunc(price * 0.9);
+                    res = '特価 ' + price + '円 → ' + salePrice + '円';
+                } else {
+                    // 10,000以上
+                    const salePrice = Math.trunc(price * 0.8);
+                    res = '大特価 ' + price + '円 → ' + salePrice + '円';
+                }
+
+                // 戻り値を戻す
+                return res;
+            }
+
+            // 関数を実行してコンソールに出力
+            console.log(getPriceCard(500));
+            console.log(getPriceCard(1000));
+            console.log(getPriceCard(5000));
+            console.log(getPriceCard(10000));
+            console.log(getPriceCard(15000));
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
