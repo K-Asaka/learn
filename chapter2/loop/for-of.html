@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 配列を作成
+            const arr = ['猫', '犬', '牛', '馬'];
+            console.log('--- Array ---');
+
+            // for of文
+            for (let item of arr) {
+                // コンソールに出力
+                console.log(item);
+            }
+
+            // Mapを作成
+            const map = new Map([['猫', 'タマ'], ['犬', 'ポチ']]);
+            console.log('--- Map ---');
+
+            // for of文
+            for (let item of map) {
+                // コンソールに出力
+                console.log(item);
+            }
+
+            // Setを作成
+            const set = new Set(['猫', '犬']);
+            console.log('--- Set ---');
+
+            // for of文
+            for (let item of set) {
+                // コンソールに出力
+                console.log(item);
+            }
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
