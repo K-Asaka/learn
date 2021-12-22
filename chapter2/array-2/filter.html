@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 配列を作成
+            const arr1 = ['猫', '山猫', '犬', '牛', '水牛', '馬'];
+
+            // 全要素に対して処理
+            arr2 = arr1.filter(x => {
+                // 文字列長が2文字以上の要素を選ぶ
+                return x.length >= 2;
+            });
+
+            // コンソールに出力
+            console.log(arr2.join(', '));
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
