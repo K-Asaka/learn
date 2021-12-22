@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 価格を得る関数
+            function getPrice(menu) {
+                // 戻り値用の変数を作成
+                let res = '';
+
+                // 条件分岐
+                switch (menu) {
+                    case 'チョコケーキ':
+                    case 'チーズケーキ':
+                    case 'ショートケーキ':
+                        // チョコケーキ、チーズケーキ、ショートケーキ
+                        res = 500;
+                        break;
+                    case 'ホットコーヒー':
+                    case 'アメリカンコーヒー':
+                        // ホットコーヒー、アメリカンコーヒー
+                        res = 450;
+                        break;
+                    default:
+                        // その他
+                        res = 500;
+                }
+
+                // 戻り値を戻す
+                return menu + 'は' + res + '円';
+            }
+
+            // 関数を実行して、コンソールに出力
+            console.log(getPrice('チョコケーキ'));
+            console.log(getPrice('ショートケーキ'));
+            console.log(getPrice('ホットコーヒー'));
+            console.log(getPrice('紅茶'));
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
