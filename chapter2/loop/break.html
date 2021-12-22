@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 配列を作成
+            const arr = ['猫', '犬', '牛', '獅子', '馬'];
+
+            // for文
+            for (let i = 0; i < arr.length; i++) {
+                // 要素を取り出し
+                const item = arr[i];
+
+                // 文字列の長さが2文字以上なら抜ける
+                if (item.length >= 2) {
+                    break;
+                }
+
+                // コンソールに出力
+                console.log(i, item);
+            }
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
