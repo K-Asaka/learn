@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 正規表現を作成
+            const re = /(\d{3})-?(\d{4})/;
+
+            // .match()で判定して、コンソールに出力
+            let t;
+            t = '100-0001';             console.log(t, t.match(re));
+            t = '2790031';              console.log(t, t.match(re));
+            t = '２７９００３１';         console.log(t, t.match(re));
+            t = '1oo-ooo1';             console.log(t, t.match(re));
+            t = '1000001/2790031';      console.log(t, t.match(re));
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
