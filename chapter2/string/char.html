@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 絵文字混じりの文字列を作成
+            const s = '猫犬牛🐮狐';
+            
+            // 角括弧で文字を取り出してコンソールに出力
+            console.log('--- 角括弧 ---');
+            console.log(s[0], s[1], s[2], s[3], s[4], s[5]);
+            
+            // .charAt()で文字を取り出してコンソールに出力
+            console.log('--- charAt ---');
+            console.log(s.charAt(0), s.charAt(1), s.charAt(2), s.charAt(3), s.charAt(5));
+
+            // .split()で文字列を配列にしてコンソールに出力
+            console.log('--- split ---');
+            console.log(s.split(''));
+
+            // Array.from()で文字列を配列にしてコンソールに出力
+            console.log('--- Array.from ---');
+            console.log(Array.from(s));
+
+            // スプレッド構文で文字列を配列にしてコンソールに出力
+            console.log('--- スプレッド構文 ---');
+            console.log([...s]);
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
