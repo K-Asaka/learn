@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 正規表現の作成
+            const re = /(きら|ころ|さら)\1/;
+            
+            // .search()で位置を検索して、コンソールに出力
+            let t;
+            t = 'きらきらした星。'; console.log(t, t.search(re));
+            t = '石がころころ。'; console.log(t, t.search(re));
+            t = '水がさらさら。'; console.log(t, t.search(re));
+            t = 'きらころした？。'; console.log(t, t.search(re));
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

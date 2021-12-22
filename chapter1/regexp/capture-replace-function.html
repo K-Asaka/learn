@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 文字列を作成して、コンソールに出力
+            const t = 'Danger! Fighter attack Knight.';
+            console.log(t);
+
+            // 関数を利用して.replace()で置換
+            const re = /(\w+)( attack )(\w+)/;
+            const res = t.replace(re, function(s, s1, s2, s3) {
+                console.log(`  sは「${s}」`);   // 一致した全体
+                console.log(`  s1は「${s1}」`); // 1番目のキャプチャ
+                console.log(`  s2は「${s2}」`); // 2番目のキャプチャ
+                console.log(`  s3は「${s3}」`); // 3番目のキャプチャ
+                return s3 + s2 + s1;
+            })
+
+            // コンソールに出力
+            console.log(res);
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
