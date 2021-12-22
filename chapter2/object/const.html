@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 定数変数を宣言してオブジェクトを代入
+            const animal = {name: 'ポチ', age: 4};
+            console.log(animal);
+
+            // プロパティの値の書き換え
+            animal.name = 'タマ';
+            animal.age = 3;
+            console.log(animal);
+
+            // プロパティの追加と削除
+            animal.type = 'cat';
+            delete animal.age;
+            console.log(animal);
+
+            // 再代入
+            animal = {name: 'ココア', age: 2};
+            console.log(animal);
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
