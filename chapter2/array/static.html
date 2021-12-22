@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 配列風オブジェクトを作成
+            const animal1 = {
+                '0': '鼠',
+                '1': '猫',
+                '2': '犬',
+                length: 3
+            };
+
+            // 配列か判定してコンソールに出力
+            console.log(Array.isArray(animal1), animal1);
+
+            // Array.from()で配列を作る
+            const animal2 = Array.from(animal1);
+
+            // 配列か判定してコンソールに出力
+            console.log(Array.isArray(animal2), animal2);
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
