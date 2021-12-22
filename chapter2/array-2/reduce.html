@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 配列を作成
+            const arr = [111, 222, 333, 444];
+
+            // 集計処理
+            const sum = arr.reduce((a, x) => {
+                // アキュームレーターを使って合計を求める
+                return a + x;
+            }, 0);
+
+            // コンソールに出力
+            console.log(`合計は${sum}。`);
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
