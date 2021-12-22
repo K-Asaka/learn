@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <h1 id="ttl">タイトル</h1>
+        <div class="doc">文章1</div>
+        <div class="doc">文章2</div>
+
+        <script>
+            // .querySelector()を使用
+            console.log('--- querySelector ---');
+
+            // idがttlの要素を選択してコンソールに出力
+            const el1 = document.querySelector('#ttl');
+            console.log(`選択した要素は、${el1}。`);
+
+            // idがfootの要素を選択して(存在しない)、コンソールに出力
+            const el2 = document.querySelector('#foot');
+            console.log(`選択した要素は、${el2}。`);
+
+            // .querySelectorAll()を使用
+            console.log('--- querySelectorAll ---');
+
+            // クラスがdocの要素を全選択して、コンソールに出力
+            const elArr1 = document.querySelectorAll('.doc');
+            console.log(`選択した要素は、${elArr1}。${elArr1.length}個。`);
+
+            // クラスがlistの要素を全選択(存在しない)して、コンソールに出力
+            const elArr2 = document.querySelectorAll('.list');
+            console.log(`選択した要素は、${elArr2}。${elArr2.length}個。`);
+        </script>
+    </body>
+</html>
