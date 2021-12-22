@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 外側の関数
+            function outer() {
+                console.log(' 外 開始');
+
+                // 内側の関数
+                function inner() {
+                    console.log('  内 開始');
+
+                    // ここで例外を起こす
+                    console.log('  内 処理', null.toString());
+
+                    console.log('  内 終了');
+                }
+
+                inner();    // 内側の関数を実行
+                console.log(' 外 終了');
+            }
+
+            console.log('開始');
+
+            // 例外処理
+            try {
+                console.log('処理 1');
+                console.log('処理 2', outer());
+                console.log('処理 3');
+            } catch(e) {
+                // 例外発生時の処理
+                console.log('エラーが起きました');
+                console.log(e);
+            }
+
+            console.log('終了');
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
