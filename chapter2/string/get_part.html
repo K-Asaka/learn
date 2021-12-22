@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 文字列を作成
+            const s = '鼠牛虎兎竜蛇馬羊猿鳥犬猪';
+
+            // .substr()の結果をコンソールに出力
+            console.log('--- substr ---');
+            console.log(s.substr(6));
+            console.log(s.substr(6, 2));
+            console.log(s.substr(-3, 2));
+
+            // .substring()の結果をコンソールに出力
+            console.log('--- substring ---');
+            console.log(s.substring(6));
+            console.log(s.substring(6, 8));
+            console.log(s.substring(8, 6));
+            console.log(s.substring(-2, 3));
+
+            // .slice()の結果をコンソールに出力
+            console.log('--- slice ---');
+            console.log(s.slice(6));
+            console.log(s.slice(6, 8));
+            console.log(s.slice(8, 6));
+            console.log(s.slice(-3, -1));
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
