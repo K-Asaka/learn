@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <style>
+            .even {
+                background: #ccc;
+                padding: 0.3em 1em;
+            }
+            .odd {
+                background: #eee;
+                padding: 0.3em 1em;
+            }
+        </style>
+    </head>
+    <body>
+        <ul>
+            <li class="list">猫</li>
+            <li class="list">犬</li>
+            <li class="list">兎</li>
+            <li class="list">狐</li>
+        </ul>
+        <script>
+            // listクラスの要素をすべて選択
+            const els = document.querySelectorAll('.list');
+
+            // 選択したクラスの全要素を処理
+            els.forEach((x, i) => {
+                // 偶数と奇数で別のクラスを追加
+                if (i % 2 === 0) {
+                    x.classList.add('even');
+                } else {
+                    x.classList.add('odd');
+                }
+            });
+        </script>
+    </body>
+</html>

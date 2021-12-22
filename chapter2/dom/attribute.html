@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <ul>
+            <li><a href="https://www.google.com/search?q=cat">cat</a></li>
+            <li><a href="https://www.google.com/search?q=dog">dog</a></li>
+            <li><a href="https://www.google.com/search?q=pig">pig</a></li>
+        </ul>
+        <script>
+            // aタグの要素をすべて選択
+            const els = document.querySelectorAll('a');
+
+            // 選択したクラスの全要素を処理
+            els.forEach((x, i) => {
+                // リンク先をコンソールに出力
+                console.log(i, x.getAttribute('href'));
+            });
+        </script>
+    </body>
+</html>

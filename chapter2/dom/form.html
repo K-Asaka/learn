@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <style>
+            input {
+                box-sizing: border-box;
+                width: 300px;
+            }
+            textarea {
+                box-sizing: border-box;
+                width: 300px;
+                height: 4em;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <input type="text" value="猫" id="animalType">
+        </div>
+        <div>
+            <input type="text" value="タマ。三毛猫。3歳。" id="description">
+        </div>
+        <div>
+            <textarea id="output"></textarea>
+        </div>
+        <script>
+            // idがanimalTypeの要素を選択
+            const elAni = document.querySelector('#animalType');
+
+            // #animalTypeの入力欄の値を得る
+            const animalType = elAni.value;
+
+            // idがdescriptionの要素を選択
+            const elDes = document.querySelector('#description');
+
+            // #descriptionの入力欄の値を得る
+            const description = elDes.value;
+
+            // idがoutputの要素を選択
+            const elOut = document.querySelector('#output');
+
+            // 得た文字列を改行で結合して、#outputに表示する
+            elOut.value = animalType + '\n' + description;
+        </script>
+    </body>
+</html>

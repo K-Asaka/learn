@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <ul>
+            <li class="list">猫</li>
+            <li class="list">犬</li>
+            <li class="list">兎</li>
+            <li class="list">狐</li>
+        </ul>
+
+        <script>
+            // listクラスの要素をすべて選択
+            const els = document.querySelectorAll('.list');
+
+            // 選択したクラスの全要素を処理
+            els.forEach((x, i) => {
+                // 要素内の文字列を得る
+                const txt = x.innerText;
+
+                // 要素内の文字列からURLを作る
+                const url = 'https://www.google.com/search?q=' + encodeURI(txt);
+
+                // 要素内の文字列とURLから、HTMLを組み立てる
+                const html = `<a href="${url}">${txt}</a>`;
+
+                // 要素内のHTMLを変更
+                x.innerHTML = html;
+
+                // 要素のスタイルを変更
+                x.style.background = i % 2 === 0 ? '#ccc' : '#eee';
+                x.style.padding = '0.3em 1em';
+            });
+        </script>
+    </body>
+</html>
