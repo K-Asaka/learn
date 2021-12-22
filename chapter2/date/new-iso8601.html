@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // ISO 8601形式でDateオブジェクトを作成
+            const dJapan = new Date('1999-01-01T00:00:00+09:00');
+            const dUTC   = new Date('1999-01-01T00:00:00Z')
+
+            // ISO 8601形式のUTCでコンソールに出力
+            console.log('日本標準時→世界協定時 :', dJapan.toISOString());
+            console.log('世界協定時→世界協定時 :', dUTC.toISOString());
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
