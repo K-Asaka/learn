@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 配列を作成
+            const arr1 = ['鼠', '猫', '犬'];
+            const arr2 = ['鹿', '豚', '牛'];
+
+            // .concat()の結果を、コンソールに出力
+            const arr3 = arr1.concat(arr2, '象', '虎', '羊');
+            console.log('--- concat ---');
+            console.log(arr3);
+
+            // .slice()の結果を、コンソールに出力
+            const arr4 = arr3.slice(2, 5);
+            console.log('--- slice ---');
+            console.log(arr4);
+
+            // .splice()の結果を、コンソールに出力
+            const arr5 = arr3.splice(2, 5, '★', '★', '★');
+            console.log('--- splice ---');
+            console.log(arr5);
+            console.log(arr3);
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
