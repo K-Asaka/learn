@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // オブジェクトを作成
+            const obj = {type: '猫', name: 'タマ', age: 3};
+
+            // Object.keys()で配列を得る
+            const keys = Object.keys(obj);
+
+            // for文
+            for (let i = 0; i < keys.length; i++) {
+                // プロパティ名を得る
+                const key = keys[i];
+
+                // コンソールに出力
+                console.log(i, key, obj[key]);
+            }
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
