@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // クッキーを取得してコンソールに出力
+            console.log(document.cookie);
+
+            // クッキーの変更
+            document.cookie = 'type=cat';
+            document.cookie = 'name=' + encodeURIComponent('タマ');
+            document.cookie = 'age=3';
+
+            // クッキーを取得してコンソールに出力
+            console.log(document.cookie);
+
+            // クッキーを削除
+            document.cookie = 'type=;max-age=0';
+            document.cookie = 'name=;max-age=0';
+            document.cookie = 'age=;max-age=0';
+
+        </script>
+    </head>
+</html>
