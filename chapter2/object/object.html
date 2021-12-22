@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // オブジェクトの作成
+            const animal = {
+                name: '',
+                age: 0,
+                getInf() {
+                    // メソッドの処理
+                    return `${this.name}(${this.age}歳)`;
+                },
+                get inf() {
+                    // Getterの処理
+                    return this.getInf();
+                },
+                set month(x) {
+                    // Setterの処理
+                    this.age = Math.trunc(x / 12);
+                }
+            }
+            // プロパティを使い、値を変更
+            animal.name = 'タマ';
+
+            // Setterを使い、値を渡す
+            animal.month = 26;
+
+            // Getterを使い、値を得る
+            console.log(animal.inf);
+
+            // メソッドを使う
+            console.log(animal.getInf());
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
