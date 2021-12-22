@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // オブジェクトを作成
+            const animalObj = {
+                cat: 'ニャー',
+                dog: 'ワン',
+                cow: 'モー',
+                mouse: 'チュー'
+            };
+
+            // 分割代入する
+            const {cat, dog, ...animalRest} = animalObj;
+
+            // 変数の値をコンソールに出力
+            console.log(cat);
+            console.log(dog);
+            console.log(animalRest);
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
