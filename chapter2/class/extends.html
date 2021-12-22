@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 動物クラス(親クラス)
+            class Animal {
+                // コンストラクター
+                constructor(type, name) {
+                    // 引数をもとにプロパティを初期化
+                    this.type = type;
+                    this.name = name;
+                }
+                // 情報取得メソッド
+                getInf() {
+                    // 情報の文字列を作成して返す
+                    return `${this.type} : ${this.name}`;
+                }
+            }
+
+            // 動物クラスを作成して、コンソールに情報を出力
+            const dog = new Animal('犬', 'ポチ');
+            console.log(dog.getInf());
+
+            // 猫クラス(子クラス)
+            class Cat extends Animal {
+                // コンストラクター
+                constructor(name, color) {
+                    // super()を使ってプロパティを初期化
+                    super('猫', name);
+
+                    // 引数をもとにプロパティを初期化
+                    this.color = color;
+                }
+
+                // 情報取得メソッド
+                getInf() {
+                    // super.getInf()を使いつつ、戻す情報を増やす
+                    return `${super.getInf()} (${this.color})`;
+                }
+                
+                // このクラスで追加するメソッド
+                getName() {
+                    return this.name;
+                }
+                // このクラスで追加するメソッド
+                getColor() {
+                    return this.color;
+                }
+            }
+
+            // 猫クラスを作成して、コンソールに情報を出力
+            const cat = new Cat('タマ', '三毛');
+            console.log(cat.getInf());
+            console.log(cat.getName(), cat.getColor());
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
