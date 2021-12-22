@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // カウンターを初期化
+            let cnt = 0;
+
+            // 100ミリ秒あいだをあける定期処理
+            const intervalID = setInterval(() => {
+                // コンソールに出力
+                console.log(cnt, 'くり返し処理:ニャー！');
+
+                // カウンターを1大きくする
+                cnt++;
+            }, 100);
+
+            // 500ミリ秒後に処理
+            setTimeout(() => {
+                // 定期処理をキャンセル
+                clearInterval(intervalID);
+
+                // コンソールに出力
+                console.log('停止しました。');
+            }, 500);
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
