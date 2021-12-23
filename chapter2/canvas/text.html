@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <style>
+            canvas {
+                border: solid 1px #888;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="canvas" width="600" height="350"></canvas>
+
+        <script>
+            // Canvasを選択して、2次元コンテクストを取り出す
+            const canvas  = document.querySelector('#canvas');
+            const context = canvas.getContext('2d');
+
+            // 線描画で罫線を作る
+            context.beginPath();
+            context.moveTo(150, 0);     // 縦線
+            context.lineTo(150, canvas.height);
+            context.moveTo(450, 0);     // 縦線
+            context.lineTo(450, canvas.height);
+
+            const lnH = 50;
+            for (let i = 1; i <= 6; i++) {
+                context.moveTo(0, i * lnH);     // 横線
+                context.lineTo(canvas.width, i * lnH);
+            }
+
+            context.strokeStyle = '#666';
+            context.stroke();       // 線描画
+
+            // 設定を行う
+            context.fillStyle   = '#000';
+            context.strokeStyle = '#000';
+            context.lineWidth   = 1;
+            context.font        = 'bold 25px sans-serif';
+            const t = 'cat猫dog犬'
+
+            // 文字列描画　左側　横位置変更　線描画
+            context.textBaseline = 'middle';
+            const arrA = ['start', 'end', 'left', 'right', 'center'];
+            arrA.forEach((x, i) => {
+                context.textAlign = x;
+                context.strokeText(t, 150, lnH * (i + 1));
+            });
+
+            // 文字列描画　右側　縦位置変更　塗りつぶし描画
+            context.textAlign = 'center';
+            const arrB = ['top', 'hanging', 'middle',
+                'alphabetic', 'ideographic', 'bottom'];
+            arrB.forEach((x, i) => {
+                context.textBaseline = x;
+                context.fillText(t, 450, lnH * (i + 1));
+            });
+        </script>
+    </body>
+</html>
