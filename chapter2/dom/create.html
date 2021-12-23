@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <ul id="listRoot"></ul>
+
+        <script>
+            // idがlistRootの要素を選択
+            const root = document.querySelector('#listRoot');
+
+            // 配列を作成
+            const arr = ['猫', '犬', '兎', '狐', '猿', '豚', '馬'];
+
+            // 選択した要素の内部にli要素を作成して追加
+            arr.forEach((x, i) => {
+                // URLを作成
+                const url = 'https://www.google.com/search?q=' + encodeURI(x);
+
+                // li要素を作成
+                const li = document.createElement('li');
+
+                // 作成したli要素を、idがlistRootの要素に追加
+                root.appendChild(li);
+
+                // li要素のスタイルを設定
+                li.style.background = i % 2 === 0 ? '#ccc' : '#eee';
+                li.style.padding = '0.3em 1em';
+
+                // a要素の作成
+                const a = document.createElement('a');
+
+                // 作成したa要素を、li要素に追加
+                li.appendChild(a);
+
+                // href属性を設定して、内部の文字列を追加
+                a.setAttribute('href', url);
+                a.innerText = x;
+            });
+        </script>
+    </body>
+</html>
