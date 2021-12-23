@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // URL
+            const url = './data.json';
+
+            // XMLHttpRequestオブジェクトの作成
+            var oReq = new XMLHttpRequest();
+
+            // 読み込み後の処理を登録
+            oReq.addEventListener('load', function() {
+                console.log(this.status);
+                console.log(this.statusText);
+                console.log(this.responseURL);
+                console.log(this.response);
+                console.log(this.responseText);
+            });
+            
+            // 通信を開始
+            oReq.open('GET', url);
+            oReq.send();
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
