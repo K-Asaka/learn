@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <style>
+            div {
+                margin-top: 0.6em;
+            }
+            input, button {
+                box-sizing: border-box;
+                width: 100%;
+                height: 3em;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            値段<input type="number" value="" id="price">
+        </div>
+        <div>
+            人数<input type="number" value="" id="person">
+        </div>
+        <div>
+            <div><button id="exec">計算</button></div>
+        </div>
+        <div id="output"></div>
+
+        <script>
+            // DOM読み込み終了時の処理を登録
+            window.addEventListener('DOMContentLoaded', () => {
+                // #idがexecのボタンに、クリック時の処理を登録
+                document.querySelector('#exec').addEventListener('click', () => {
+                    // 要素を選択
+                    const elPrice  = document.querySelector('#price');
+                    const elPerson = document.querySelector('#person');
+                    const elOutput = document.querySelector('#output');
+                    
+                    // 数値の取得(文字列なので整数化)
+                    const price  = parseInt(elPrice.value);
+                    const person = parseInt(elPerson.value);
+
+                    // 割り勘の計算
+                    let div = Math.trunc(price / person);
+                    let mod = price % person;
+                    if (Number.isNaN(div)) { div = 0; }
+                    if (Number.isNaN(mod)) { mod = 0; }
+
+                    // 出力
+                    const html = `割り勘金額:${div}円<br>端数:${mod}円`;
+                    elOutput.innerHTML = html;
+                });
+            });
+        </script>
+    </body>
+</html>
