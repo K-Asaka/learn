@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <style>
+            canvas {
+                border: solid 1px #888;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="canvas" width="400" height="300"></canvas>
+
+        <script>
+            // Canvasを選択して、2次元コンテクストを取り出す
+            const canvas = document.querySelector('#canvas');
+            const context = canvas.getContext('2d');
+
+            // 背景を作る(設定を行い、矩形を描く)
+            context.fillStyle = '#cccccc';
+            context.fillRect(0, 0, canvas.width, canvas.height);
+
+            // 2次元コンテクストの状態を保存
+            context.save();
+
+            // 設定を行う
+            context.fillStyle   = '#ff8888';
+            context.strokeStyle = 'rgba(32, 64, 255, 0.33)';
+            context.lineWidth   = 16;
+
+            // 矩形を描く
+            context.fillRect(  50,  50, 300, 200);  // 塗りつぶし
+            context.strokeRect(50,  50, 300, 200);  // 線描画
+            context.clearRect(100, 100, 200, 100);  // 消去
+
+            // 2次元コンテクストの状態を復帰
+            context.restore();
+
+            // 矩形を描く
+            context.fillRect(70, 70, 20, 20);   // 塗りつぶし
+            
+        </script>
+    </body>
+</html>
