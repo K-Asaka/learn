@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 待機用の関数
+            function wait(tm, isResolve = true) {
+                // Promiseオブジェクトを戻り値にする
+                return new Promise((resolve, reject) => {
+                    // tmミリ秒待って実行
+                    setTimeout(() => {
+                        // コンソールに情報を出力
+                        console.log(tm, isResolve ? 'resolve' : 'reject');
+                        
+                        if (isResolve) {
+                            // isResolveがtrueなら解決
+                            resolve(`${tm}!`);
+                        } else {
+                            // isResolveがfalseなら拒否
+                            reject(`${tm}`);
+                        }
+                    }, tm);
+                });
+            };
+
+            // .any() その1
+            setTimeout(() => {
+                console.log('--- .any() その1 ---');
+
+                // Promiseオブジェクトの配列を作成
+                const arr = [wait(10, false), wait(20, true), wait(30, false)];
+
+                // .any()の処理
+                Promise.any(arr).then(data => {
+                    // 成功時
+                    console.log('@ then :', data);
+                }).catch(data => {
+                    // 失敗時
+                    console.log('@ catch :', data);
+                });
+            }, 0);
+
+            // .any() その2
+            setTimeout(() => {
+                console.log('--- .all() その ---');
+
+                // Promiseオブジェクトの配列を作成
+                const arr = [wait(10, false), wait(20, false), wait(30, false)];
+
+                // .any()の処理
+                Promise.any(arr).then(data => {
+                    // 成功時
+                    console.log('@ then :', data);
+                }).catch(data => {
+                    // 失敗時
+                    console.log('@ catch :', data);
+                });
+            }, 100);
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
