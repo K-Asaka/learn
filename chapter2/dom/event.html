@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <style>
+            textarea {
+                width: 300px;
+                height: 10em;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <div><textarea id="text">猫のタマ。</textarea></div>
+        </div>
+
+        <script>
+            // windowに、DOMContentLoadedとloadの処理を登録
+            window.addEventListener('DOMContentLoaded', e => {
+                console.log(e.currentTarget.toString(), e.type);
+            });
+            window.addEventListener('load', e => {
+                console.log(e.currentTarget.toString(), e.type);
+            });
+
+            // idがtextの要素を選択
+            const elText = document.querySelector('#text');
+
+            // idがtextの要素に、keyup、click、changeの処理を登録
+            elText.addEventListener('keyup', e => {
+                console.log(e.currentTarget.toString(), e.type);
+            });
+            elText.addEventListener('click', e => {
+                console.log(e.currentTarget.toString(), e.type);
+            });
+            elText.addEventListener('change', e => {
+                console.log(e.currentTarget.toString(), e.type);
+            });
+        </script>
+    </body>
+</html>
