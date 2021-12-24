@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <style>
+            canvas {
+                border: solid 1px #888;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="canvas" width="400" height="180"></canvas>
+
+        <script>
+            // Canvasを選択して、2次元コンテクストを取り出す
+            const canvas  = document.querySelector('#canvas');
+            const context = canvas.getContext('2d');
+            
+            // 円を描く
+            for (let i = 0; i < 16; i++) {
+                context.beginPath();
+                context.arc(canvas.width / 2, canvas.height / 2,
+                    200 - i * 10, 0, 2 * Math.PI);
+                context.fillStyle = `rgb(255, ${16 * i}, ${8 * i})`;
+                context.fill();     // 塗りつぶし
+            }
+
+            // Data URLを得る
+            const dtUrl = canvas.toDataURL();
+            console.log(dtUrl);
+
+            // 画素としてWebページに追加
+            const elImg = document.createElement('img');
+            elImg.setAttribute('src', dtUrl);
+            document.querySelector('body').appendChild(elImg);
+        </script>
+    </body>
+</html>
