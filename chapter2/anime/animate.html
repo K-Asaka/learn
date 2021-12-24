@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <style>
+            #box {
+                width: 100px;
+                height: 100px;
+                position: fixed;
+                left: calc(50% - 50px);
+                top: 270px;
+                background: #faa;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="box"></div>
+
+        <script>
+            // idがboxの要素を選択
+            const elBox = document.querySelector('#box');
+
+            // アニメーション関数
+            const anim = function() {
+                // 「四角,不透明→丸,半透明,回転→四角,不透明」のアニメーション
+                elBox.animate({
+                    borderRadius: ['0px', '50px', '0px'],
+                    opacity: [1, 0.5, 1],
+                    transform: ['', 'rotate(720deg)', '']
+                }, 1500)    // 1500ミリ秒かけて変化
+                .finished
+                .then(() => {
+                    // 「下,赤→上,青→上,青→下,赤」のアニメーション
+                    return elBox.animate([
+                        { top: '270px', background: '#faa' },
+                        { top: '30px',  background: '#aaf' },
+                        { top: '30px',  background: '#aaf' },
+                        { top: '270px', background: '#faa'}
+                    ], {
+                        delay: 250,             // 250ミリ秒遅らせて開始
+                        duration: 750,          // 750ミリ秒かけて変化
+                        easing: 'ease',         // 変化の種類はease
+                        endDelay: 250           // 250ミリ秒遅らせて終了
+                    }).finished
+                })
+                .then(() => {
+                    anim();     // アニメーション再実行
+                });
+            };
+
+            // アニメーション開始
+            anim();
+        </script>
+    </body>
+</html>
