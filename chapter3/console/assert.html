@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 日付フォーマット
+            function dateFormat(txt, d) {
+                // 引数dが未指定なら現在の時刻でDateオブジェクトを作成
+                if (d === undefined) { d = new Date(); }
+
+                // 桁揃え用の関数
+                var dgt = (m, n) => `${m}`.padStart(n, '0').substr(-n);
+
+                // 置換用の配列を作成
+                var arr = [
+                    { k: 'YYYY', v: d.getFullYear() }
+                   ,{ k: 'YY',   v: dgt(d.getFullYear(), 2) }
+                   ,{ k: 'MM',   v: dgt(d.getMonth() + 1, 2) }
+                   ,{ k: 'M',    v: d.getMonth() + 1}
+                   ,{ k: 'DD',   v: dgt(d.getDate(), 2) }
+                   ,{ k: 'D',    v: d.getDate() }
+                   ,{ k: 'hh',   v: dgt(d.getHours(), 2) }
+                   ,{ k: 'h',    v: d.getHours() }
+                   ,{ k: 'mm',   v: dgt(d.getMinutes(), 2) }
+                   ,{ k: 'm',    v: d.getMinutes() }
+                   ,{ k: 'ss',   v: dgt(d.getSeconds(), 2) }
+                   ,{ k: 's',    v: d.getSeconds() }
+                   ,{ k: 'iii',  v: dgt(d.getMilliseconds(), 3) }
+                   ,{ k: 'i',    v: d.getMilliseconds() }
+                ];
+
+                // 置換用の配列を使って、引数tの内容を置換する
+                arr.forEach(x => txt = txt.replace(x.k, x.v));
+
+                // 置換結果を戻す
+                return txt;
+            }
+
+            // テスト等値
+            function testEqual(a, b, obj) {
+                // assertを実行
+                console.assert(a === b, {a, b, obj});
+            }
+
+            // テスト日付フォーマット
+            function testDateFormat() {
+                // テスト用のDateオブジェクトを作成
+                let d = new Date('2030-06-09T01:02:03+09:00');
+                console.log(d);
+
+                // Dateオブジェクトからの変換が合っているか
+                testEqual(dateFormat('YYYY-MM-DD',   d), '2030-06-09',   {d});
+                testEqual(dateFormat('YY-M-D',       d), '30-6-9',       {d});
+                testEqual(dateFormat('hh:mm:ss.iii', d), '01:02:03.000', {d});
+
+                // 第2引数が空の時の処理が合っているか
+                d = new Date();
+                testEqual(dateFormat('YYYY-MM-DDThh:mm:ss.iii'),
+                          dateFormat('YYYY-MM-DDThh:mm:ss.iii', d), {d});                
+            }
+
+            // テスト日付フォーマットを実行
+            testDateFormat();
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
