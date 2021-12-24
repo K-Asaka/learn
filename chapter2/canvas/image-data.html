@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <style>
+            canvas {
+                border: solid 1px #888;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="canvas" width="400" height="300"></canvas>
+
+        <script>
+            // Canvasを選択して、2次元コンテクストを取り出す
+            const canvas  = document.querySelector('#canvas');
+            const context = canvas.getContext('2d');
+            
+            // 円を描く
+            for (let i = 0; i < 16; i++) {
+                context.beginPath();
+                context.arc(200, 150, 200 - i * 10, 0, 2 * Math.PI);
+                context.fillStyle = `rgb(255, ${16 * i}, ${8 * i})`;
+                context.fill();     // 塗りつぶし
+            }
+
+            // ImageDataオブジェクトを取り出す
+            const imgDt = context.getImageData(25, 90, 350, 120);
+            const data = imgDt.data;
+
+            // 画素に対して処理をする
+            for (let i = 0; i < data.length; i += 4) {
+                // RGBAを取り出す
+                const r = data[i + 0];
+                const g = data[i + 1];
+                const b = data[i + 2];
+                const a = data[i + 3];
+
+                // グレーにして白黒反転
+                const gray = Math.trunc((r + g + b) / 3);
+                data[i + 0] = data[i + 1] = data[i + 2] = 255 - gray;
+            }
+
+            // ImageDataオブジェクトを描画する
+            context.putImageData(imgDt, 25, 90);
+        </script>
+    </body>
+</html>
