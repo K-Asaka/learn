@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <style>
+            /* idがmenuの要素　ボタンの土台部分 */
+            #menu { 
+                position: fixed;    /* 固定位置 */
+                right:    10px;     /* 右座標 */
+                top:      10px;     /* 上座標 */
+                width:   100px;     /* 横幅 */
+                height:  100px;     /* 高さ */
+                background: #ddd;   /* 背景 */
+            }
+            /* classがmenuBarの要素　3本線 */
+            .menuBar {
+                position: absolute;     /* 親に対する絶対位置 */
+                left:   10px;           /* 左座標 */
+                width:  80px;           /* 横幅 */
+                height: 10px;           /* 高さ */
+                background: #aaa;     /* 背景 */
+                transition: 0.8s;       /* アニメーション時間は0.8秒 */
+            }
+
+            /* classがmenuBarの要素　1～3本目の初期位置 */
+            .menuBar:nth-of-type(1) { top: 20px; }  /* 上座標 */
+            .menuBar:nth-of-type(2) { top: 45px; }  /* 上座標 */
+            .menuBar:nth-of-type(3) { top: 70px; }  /* 上座標 */
+
+            /* classがcloseの要素　バツ印になるように中心に移動して回転 */
+            .close { top: 45px !important; }    /* 上座標 */
+            .close:nth-of-type(1) { transform:rotateZ(-135deg); }   /* 回転 */
+            .close:nth-of-type(2) { transform:rotateZ( 135deg); }   /* 回転 */
+            .close:nth-of-type(3) { transform:rotateZ(-135deg); }   /* 回転 */
+        </style>
+    </head>
+    <body>
+        <div id="menu">
+            <span class="menuBar"></span>
+            <span class="menuBar"></span>
+            <span class="menuBar"></span>
+        </div>
+
+        <script>
+            // idがmenuの要素に、クリック時の処理を登録
+            document.querySelector('#menu')
+            .addEventListener('click', e => {
+                // クラスがmenuBarの要素すべてに処理
+                document.querySelectorAll('.menuBar')
+                .forEach(x => {
+                    // closeクラスを付け外し
+                    x.classList.toggle('close');
+                });
+            });
+        </script>
+    </body>
+</html>
