@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <style>
+            canvas {
+                border: solid 1px #888;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="canvas" width="400" height="300"></canvas>
+
+        <script>
+            // Canvasを選択して、2次元コンテクストを取り出す
+            const canvas  = document.querySelector('#canvas');
+            const context = canvas.getContext('2d');
+
+            // Imageオブジェクトを作成
+            const img = new Image();
+
+            // 読み込み完了時の処理を登録
+            img.onload = function() {
+                // 画像を描画
+                context.drawImage(img,
+                    140, 180, 640, 480,
+                     10,  10, 320, 240);
+            };
+
+            // 画像を読み込む
+            img.src = './DT3131_w1024.jpg';
+        </script>
+    </body>
+</html>
