@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <style>
+            canvas {
+                border: solid 1px #888;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas width="400" height="300" id="canvas"></canvas>
+
+        <script>
+            // idがcanvasのCanvasを選択して、2次元コンテクストを取り出す
+            const canvas  = document.querySelector('#canvas');
+            const context = canvas.getContext('2d');
+
+            // 塗りつぶし色を設定
+            context.fillStyle = '#fcc';
+
+            // アニメーション用関数
+            const step = function(tm) {
+                // タイムスタンプの時間から移動位置を作成
+                const x = Math.trunc(tm / 4 % canvas.width);
+                const y = Math.trunc(tm / 8 % canvas.height);
+
+                // コンソールに出力
+                console.log(`time : ${tm}, x : ${x}, y : ${y}`);
+
+                // まず、前回の描画内容を全部消す
+                context.clearRect(0, 0, canvas.width, canvas.height);
+
+                // 円形のパスを作成して塗りつぶす
+                context.beginPath();
+                context.arc(x, y, 50, 0, 2 * Math.PI);
+                context.fill();
+
+                // アニメーションの再実行
+                requestAnimationFrame(step);
+            };
+
+            // アニメーションの実行
+            requestAnimationFrame(step);
+        </script>
+    </body>
+</html>

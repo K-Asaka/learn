@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <style>
+            #box {
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 100px;
+                height: 100px;
+                background: #faa;
+                border-radius: 50px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="box"></div>
+
+        <script>
+            // アニメーション用関数
+            const step = function(tm) {
+                // idがboxの要素を選択
+                const elBox = document.querySelector('#box');
+
+                // タイムスタンプの時間から移動位置を作成
+                const x = Math.trunc(tm / 4 % 500);
+                const y = Math.trunc(tm / 8 % 300);
+
+                // コンソールに出力
+                console.log(`time : ${tm}, x : ${x}, y : ${y}`);
+
+                // 位置の反映
+                elBox.style.left = `${x}px`;
+                elBox.style.top = `${y}px`;
+
+                // アニメーションの再実行
+                requestAnimationFrame(step);
+            };
+
+            // アニメーションの実行
+            requestAnimationFrame(step);
+        </script>
+    </body>
+</html>
