@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // カウント開始
+            console.log('--- countStart ---');
+            console.count();
+            console.count();
+            console.count('dog');
+            console.count('dog');
+            console.count();
+            console.count();
+
+            // デフォルトのカウントをリセット
+            console.log('--- countReset default ---');
+            console.countReset();
+            console.count();
+            console.count('dog');
+
+            // ラベルのdogのカウントをリセット
+            console.log('--- countReset dog ---');
+            console.countReset('dog');
+            console.count();
+            console.count('dog');
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

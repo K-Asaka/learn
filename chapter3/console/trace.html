@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // 関数1
+            function fnc1() {
+                console.trace();
+            }
+
+            // 関数2
+            function fnc2() {
+                fnc1();
+            }
+
+            // 関数3
+            function fnc3(){
+                fnc2();
+            }
+
+            console.log('開始');
+            fnc3();
+            console.log('終了');
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

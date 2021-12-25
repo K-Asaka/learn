@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <script>
+            // タイム開始
+            console.log('--- timeStart ---');
+            console.time();
+            console.time('dog');
+
+            // 時間のかかる処理
+            for (let i = 0; i < 1000; i++) {
+                const s = '文字列'.repeat(i).replace(/./g, '*');
+            }
+
+            // タイム終了
+            console.log('--- timeEnd default ---');
+            console.timeEnd();
+
+            // 時間のかかる処理
+            for (let i = 0; i < 1000; i++) {
+                const s = '文字列'.repeat(i).replace(/./g, '*');
+            }
+
+            // ラベルdogのタイム終了
+            console.log('--- timeEnd dog ---');
+            console.timeEnd('dog');
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
