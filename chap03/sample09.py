@@ -23,6 +23,10 @@ def en_ins3():
 def en_insend():
     en.insert(tk.END, "最後に追加")
 
+def en_upd():
+    en.delete(0, tk.END)
+    en.insert(0, "更新しました")
+
 root = tk.Tk()
 # テキストボックスの作成
 en = tk.Entry()
@@ -33,7 +37,8 @@ bt4 = tk.Button(text="delete(0, tkinter.END)", command=en_del0end)
 bt5 = tk.Button(text="insert(0,...)", command=en_ins0)
 bt6 = tk.Button(text="insert(3,...)", command=en_ins3)
 bt7 = tk.Button(text="insert(END,...)", command=en_insend)
-[widget.pack() for widget in (en, bt, bt2, bt3, bt4, bt5, bt6, bt7)]
+bt8 = tk.Button(text="更新", command=en_upd)
+[widget.pack() for widget in (en, bt, bt2, bt3, bt4, bt5, bt6, bt7, bt8)]
 # フォーカスを当てる
 en.focus_set()
 root.mainloop()
