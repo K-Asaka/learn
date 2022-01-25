@@ -1,17 +1,16 @@
 import tkinter as tk
 
-# ボタンが押された時に呼び出される
-def action_btn_press():
-    print("ボタンが押されました")
-
+def print_txtval():
+    # テキストボックス内容の取得
+    val_en = en.get()
+    print(val_en)
+    
 root = tk.Tk()
-root.title("アクションの組み込み")
+root.title("テキストボックス内容の取得")
 root.geometry("350x150")
-# 部品(widget)の作成
 lb = tk.Label(text="ラベル")
-# commandオプションに関数名を指定
-bt = tk.Button(text="ボタン", command=action_btn_press)
-# 配置
-lb.pack()
-bt.pack()
+# テキストボックスの作成
+en = tk.Entry()
+bt = tk.Button(text="ボタン", command=print_txtval)
+[widget.pack() for widget in (lb, en, bt)]
 root.mainloop()
