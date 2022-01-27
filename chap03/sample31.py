@@ -9,8 +9,7 @@ root.title("spinbox")
 var_spinbox = tk.StringVar()
 label = tk.Label(root, text="スピンボックスの値")
 # スピンボックス:-10から10まで0.5づつ
-spinbox = tk.Spinbox(root, from_=-10, to=10, increment=0.5, state="readonly", textvariable=var_spinbox, command=upd_spinbox)
-var_spinbox.set(0.0)
+spinbox = tk.Spinbox(root, value=tuple("item_{0}".format(i) for i in range(1, 11)), textvariable=var_spinbox, command=upd_spinbox)
 spinbox.bind("<Return>", upd_spinbox)
 [widget.pack() for widget in (label, spinbox)]
 root.mainloop()
