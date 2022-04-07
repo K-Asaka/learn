@@ -22,6 +22,12 @@ namespace MySample
             Console.WriteLine("{0}さん、こんにちは", name);
             name = "佐藤";
             Console.WriteLine("{0}さん、お久しぶりです", name);
+
+            int height = 8;
+            int width = 5;
+            int area;
+            area = height * width;
+            Console.WriteLine("面積：{0}㎡", area);
         }
     }
 }
