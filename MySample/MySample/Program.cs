@@ -10,10 +10,12 @@ namespace MySample
     {
         static void Main(string[] args)
         {
-            var squareRoot = 1.41421356;
-            var sideLength = 10.0;
-            var diagonal = sideLength * squareRoot;
-            Console.WriteLine("対角線の長さ：{0}メートル", diagonal);
+            var average = 3.28m;
+            Console.WriteLine(average);
+
+            var price = 1280m;
+            var priceIncludingTax = price * 1.08m;
+            Console.WriteLine(priceIncludingTax);
         }
     }
 }
