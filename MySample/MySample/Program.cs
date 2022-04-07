@@ -10,12 +10,12 @@ namespace MySample
     {
         static void Main(string[] args)
         {
-            var season = '夏';
-            var temperature = 39;
-            var str = $"今年の{season}の最高気温は、{temperature}度でした。";
-            Console.WriteLine(str);
-
-            Console.WriteLine($"今年の{season}の最高気温は、{temperature}度でした。");
+            var line = Console.ReadLine();
+            var num = int.Parse(line);
+            if (num == 10)
+            {
+                Console.WriteLine("10が入力されました");
+            }
         }
     }
 }
