@@ -10,10 +10,11 @@ namespace MySample
     {
         static void Main(string[] args)
         {
-            var num = 6;
-            var dup = num;
+            var num = 8;
+            num += 2;
             Console.WriteLine(num);
-            Console.WriteLine(dup);
+            num *= 4;
+            Console.WriteLine(num);
         }
     }
 }
