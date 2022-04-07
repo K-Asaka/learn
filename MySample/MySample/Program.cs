@@ -10,10 +10,10 @@ namespace MySample
     {
         static void Main(string[] args)
         {
-            for (var year = 1; year <= 64; year++)
+            var n = 5;
+            for (var i = 0; i < n; i++)
             {
-                var westernYear = year + 1925;
-                Console.WriteLine($"昭和{year}年 {westernYear}年");
+                Console.WriteLine($"i = {i}");
             }
         }
     }
