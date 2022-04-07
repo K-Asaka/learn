@@ -12,7 +12,7 @@ namespace MySample
         {
             var season = '夏';
             var temperature = 39;
-            var str = "今年の" + season + "の最高気温は、" + temperature + "度でした。";
+            var str = String.Format("今年の{0}の最高気温は、{1}度でした。", season, temperature);
             Console.WriteLine(str);
         }
     }
