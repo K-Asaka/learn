@@ -10,10 +10,13 @@ namespace MySample
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(100 + 5);
-            Console.WriteLine(100 - 5);
-            Console.WriteLine(100 * 5);
-            Console.WriteLine(100 / 5);
+            int age;
+            age = 23;
+            Console.WriteLine(age);
+            Console.WriteLine("年齢：{0}", age);
+            Console.WriteLine("年齢は{0}歳です", age);
+            int number = 8;
+            Console.WriteLine("{0}歳の人は{1}人います", age, number);
         }
     }
 }
