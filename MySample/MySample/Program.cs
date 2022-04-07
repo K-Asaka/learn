@@ -10,23 +10,12 @@ namespace MySample
     {
         static void Main(string[] args)
         {
-            var temperature = 29.5;
-
-            if (temperature >= 35.0)
+            var year = 1;
+            while (year <= 64)
             {
-                Console.WriteLine("猛暑日です");
-            }
-            else if (temperature >= 30.0)
-            {
-                Console.WriteLine("真夏日です");
-            }
-            else if (temperature >= 25.0)
-            {
-                Console.WriteLine("夏日です");
-            }
-            else
-            {
-                Console.WriteLine("いずれでもありません");
+                var westernYear = year + 1925;
+                Console.WriteLine($"昭和{year}年 {westernYear}年");
+                year += 1;
             }
         }
     }
