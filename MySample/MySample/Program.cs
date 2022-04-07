@@ -12,9 +12,13 @@ namespace MySample
         {
             var line = Console.ReadLine();
             var num = int.Parse(line);
-            if (num == 10)
+            if (num % 2 == 0)
             {
-                Console.WriteLine("10が入力されました");
+                Console.WriteLine("偶数です");
+            }
+            else
+            {
+                Console.WriteLine("奇数です");
             }
         }
     }
