@@ -10,20 +10,11 @@ namespace MySample
     {
         static void Main(string[] args)
         {
-//            char alphabet = 'A';
-//            char symbol = '*';
-//            char kanji = '愛';
-//            char kana = 'あ';
+            bool exists = true;
+            var married = false;
 
-            var alphabet = 'A';
-            var symbol = '*';
-            var kanji = '愛';
-            var kana = 'あ';
-
-            Console.WriteLine(alphabet);
-            Console.WriteLine(symbol);
-            Console.WriteLine(kanji);
-            Console.WriteLine(kana);
+            Console.WriteLine(exists);
+            Console.WriteLine(married);
         }
     }
 }
