@@ -10,12 +10,16 @@ namespace MySample
     {
         static void Main(string[] args)
         {
-            var average = 3.28m;
-            Console.WriteLine(average);
+            Console.WriteLine("おはよう\nこんにちは\nこんばんは");
 
-            var price = 1280m;
-            var priceIncludingTax = price * 1.08m;
-            Console.WriteLine(priceIncludingTax);
+            var message = "おはようございます";
+            var length = message.Length;
+            Console.WriteLine("{0}文字", length);
+
+            var emptyString = "";
+            Console.WriteLine("1行目");
+            Console.WriteLine(emptyString);
+            Console.WriteLine("3行目");
         }
     }
 }
