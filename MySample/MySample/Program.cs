@@ -10,21 +10,23 @@ namespace MySample
     {
         static void Main(string[] args)
         {
-            Console.Write("x=");
-            var xline = Console.ReadLine();
-            Console.Write("y=");
-            var yline = Console.ReadLine();
-            var x = int.Parse(xline);
-            var y = int.Parse(yline);
-            if (x == 0)
+            var line = Console.ReadLine();
+            var num = int.Parse(line);
+            if (num >= 10)
             {
-                Console.WriteLine("xは0です");
-                if (y == 0)
-                {
-                    Console.WriteLine("yも0です");
-                }
+                Console.WriteLine("num >= 10が成り立ちました。");
+                Console.WriteLine($"numの値は{num}です。");
             }
 
+            var lang = Console.ReadLine();
+            if (lang == "C#")
+            {
+                Console.WriteLine("langの値は「C#」です。");
+            }
+            if (lang != "Java")
+            {
+                Console.WriteLine("langの値は「Java」ではありません。");
+            }
         }
     }
 }
