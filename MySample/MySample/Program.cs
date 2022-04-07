@@ -28,6 +28,14 @@ namespace MySample
             int area;
             area = height * width;
             Console.WriteLine("面積：{0}㎡", area);
+
+            var age2 = 19;
+            var name2 = "近藤";
+            Console.WriteLine("age2：{0}, name2：{1}", age2, name2);
+
+            Console.WriteLine("名前を入力してください。");
+            var name3 = Console.ReadLine();
+            Console.WriteLine("{0}さん、おはようございます", name3);
         }
     }
 }
