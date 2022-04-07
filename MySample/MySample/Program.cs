@@ -10,16 +10,11 @@ namespace MySample
     {
         static void Main(string[] args)
         {
-            var source = 15.8;
-            var width = (int)source;
-            Console.WriteLine(width);
-
-            var total = 998;
-            var discount = total * 0.1;
-            var payment = total - discount;
-
-            Console.WriteLine("割引額：{0}円", discount);
-            Console.WriteLine("支払額：{0}円", payment);
+            var total = 100;
+            var line = Console.ReadLine();
+            var count = int.Parse(line);
+            var num = total / count;
+            Console.WriteLine(num);
         }
     }
 }
