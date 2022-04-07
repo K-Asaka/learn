@@ -10,13 +10,14 @@ namespace MySample
     {
         static void Main(string[] args)
         {
-            var year = 1;
-            while (year <= 64)
+            var num = 0;
+            while (num <= 0 || 5 <= num)
             {
-                var westernYear = year + 1925;
-                Console.WriteLine($"昭和{year}年 {westernYear}年");
-                year += 1;
+                Console.WriteLine("1、2、3、4のいずれかを入力してください。");
+                var line = Console.ReadLine();
+                num = int.Parse(line);
             }
+            Console.WriteLine($"{num}が入力されました。");
         }
     }
 }
