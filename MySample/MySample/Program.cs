@@ -10,11 +10,13 @@ namespace MySample
     {
         static void Main(string[] args)
         {
-            var n = 5;
-            for (var i = 0; i < n; i++)
+            var line = "";
+            do
             {
-                Console.WriteLine($"i = {i}");
-            }
+                Console.WriteLine("何か入力してください");
+                line = Console.ReadLine();
+            } while (line == "");
+            Console.WriteLine(line);
         }
     }
 }
