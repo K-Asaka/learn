@@ -10,16 +10,21 @@ namespace MySample
     {
         static void Main(string[] args)
         {
-            var line = Console.ReadLine();
-            var num = int.Parse(line);
-            if (num % 2 == 0)
+            Console.Write("x=");
+            var xline = Console.ReadLine();
+            Console.Write("y=");
+            var yline = Console.ReadLine();
+            var x = int.Parse(xline);
+            var y = int.Parse(yline);
+            if (x == 0)
             {
-                Console.WriteLine("偶数です");
+                Console.WriteLine("xは0です");
+                if (y == 0)
+                {
+                    Console.WriteLine("yも0です");
+                }
             }
-            else
-            {
-                Console.WriteLine("奇数です");
-            }
+
         }
     }
 }
