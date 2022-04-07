@@ -10,10 +10,10 @@ namespace MySample
     {
         static void Main(string[] args)
         {
-            var month = 6;
-            if (1 <= month && month <= 12)
+            var num = 15;
+            if (num % 3 == 0 || num % 5 == 0)
             {
-                    Console.WriteLine("1以上、12以下の数値です");
+                    Console.WriteLine("numは3か5で割り切れます");
             }
         }
     }
