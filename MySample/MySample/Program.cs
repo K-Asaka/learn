@@ -10,16 +10,20 @@ namespace MySample
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("おはよう\nこんにちは\nこんばんは");
+//            char alphabet = 'A';
+//            char symbol = '*';
+//            char kanji = '愛';
+//            char kana = 'あ';
 
-            var message = "おはようございます";
-            var length = message.Length;
-            Console.WriteLine("{0}文字", length);
+            var alphabet = 'A';
+            var symbol = '*';
+            var kanji = '愛';
+            var kana = 'あ';
 
-            var emptyString = "";
-            Console.WriteLine("1行目");
-            Console.WriteLine(emptyString);
-            Console.WriteLine("3行目");
+            Console.WriteLine(alphabet);
+            Console.WriteLine(symbol);
+            Console.WriteLine(kanji);
+            Console.WriteLine(kana);
         }
     }
 }
