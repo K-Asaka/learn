@@ -18,9 +18,9 @@ namespace MySample
             int number = 8;
             Console.WriteLine("{0}歳の人は{1}人います", age, number);
 
-            string name;
-            name = "山田";
+            string name = "山田";
             Console.WriteLine("{0}さん、こんにちは", name);
+            name = "佐藤";
             Console.WriteLine("{0}さん、お久しぶりです", name);
         }
     }
