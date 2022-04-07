@@ -10,12 +10,11 @@ namespace MySample
     {
         static void Main(string[] args)
         {
-            var total = 998;
-            var discount = total * 0.1;
-            var payment = total - discount;
-
-            Console.WriteLine("割引額：{0}円", discount);
-            Console.WriteLine("支払額：{0}円", payment);
+            var x = +100;
+            var y = -5;
+            var a = +(x + y);
+            var b = -(x + y);
+            Console.WriteLine("a={0}, b={1}", a, b);
         }
     }
 }
