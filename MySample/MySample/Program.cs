@@ -10,11 +10,10 @@ namespace MySample
     {
         static void Main(string[] args)
         {
-            var x = +100;
-            var y = -5;
-            var a = +(x + y);
-            var b = -(x + y);
-            Console.WriteLine("a={0}, b={1}", a, b);
+            var num = 6;
+            var dup = num;
+            Console.WriteLine(num);
+            Console.WriteLine(dup);
         }
     }
 }
