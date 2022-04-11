@@ -10,14 +10,16 @@ namespace MySample
     {
         static void Main(string[] args)
         {
-            for (var x = 1; x <= 9; x++)
+            for (var i = 0; i < 20; i++)
             {
-                for (var y = 1; y <= 9; y++)
+                var s = Console.ReadLine();
+                if (s == "")
                 {
-                    var n = x * y;
-                    Console.WriteLine($"{x} × {y} = {n}");
+                    break;
                 }
+                Console.WriteLine(s);
             }
+            Console.WriteLine("ループを終了しました");
         }
     }
 }
