@@ -11,7 +11,9 @@ namespace ClassSample
         static void Main(string[] args)
         {
             var bmicalc = new BmiCalculator();
-            var bmi = bmicalc.GetBmi(176, 67);
+            int h = 162;
+            int w = 63;
+            var bmi = bmicalc.GetBmi(h, w);
             Console.WriteLine("{0:.00}", bmi);
         }
     }
