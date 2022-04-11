@@ -10,6 +10,15 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
+            var sale = new Sale
+            {
+                ProductName = "おにぎり",
+                UnitPrice = 120,
+                Quantity = 4
+            };
+
+            var amount = sale.GetAmount();
+            Console.WriteLine($"合計金額: {amount}円");
         }
     }
 
