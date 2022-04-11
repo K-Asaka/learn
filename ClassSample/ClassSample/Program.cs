@@ -10,37 +10,30 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var book1 = new Book { Title = "伊豆の踊り子", Author = "川端康成" };
-            book1.PrintTitle();
-            var book2 = new Book { Title = "走れメロス", Author = "太宰治" };
-            book2.PrintTitle();
-            var book3 = new Book { Title = "銀河鉄道の夜", Author = "宮沢賢治" };
-            book3.PrintTitle();
-            Book.ClearCount();
-            Console.WriteLine(Book.Count);
+            var scores = new int[] { 55, 60, 45, 70, 85, 93, 68 };
+            var total = ArrayUtils.Total(scores);
+            var average = ArrayUtils.Average(scores);
+            Console.WriteLine($"合計:{total}, 平均:{average}");
         }
     }
-
-    class Book
+    class ArrayUtils
     {
-        // 静的プロパティ
-        public static int Count { get; set; }
-
-        // 静的メソッド
-        public static void ClearCount()
+        // 配列内の数値の合計を求める
+        public static int Total(int[] numbers)
         {
-            Count = 0;
+            var total = 0;
+            foreach (var n in numbers)
+            {
+                total += n;
+            }
+            return total;
         }
 
-        public string Title { get; set; }
-        public string Author { get; set; }
-
-        public void PrintTitle()
+        // 配列内の数値の平均を求める
+        public static double Average(int[] numbers)
         {
-            Console.WriteLine("書籍名: {0}", Title);
-            Count++;
-
-            Console.WriteLine(Count);
+            var total = Total(numbers);
+            return (double)total / numbers.Length;
         }
     }
 }
