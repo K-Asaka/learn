@@ -10,21 +10,14 @@ namespace MySample
     {
         static void Main(string[] args)
         {
-            // 10個の数値を配列に格納
-            var scores = new int[10];
-            for (var i = 0; i < scores.Length; i++)
-            {
-                var line = Console.ReadLine();
-                var number = int.Parse(line);
-                scores[i] = number;
-            }
-            // 配列に格納された10個の数値の合計を求める
+            var scores = new int[] { 65, 54, 78, 96, 81 };
             var total = 0;
-            for (var i = 0; i < scores.Length; i++)
+            foreach (var p in scores)
             {
-                total += scores[i];
+                total += p;
             }
-            Console.WriteLine("合計: {0}", total);
+            var average = (double)total / scores.Length;
+            Console.WriteLine("平均点: {0}", average);
         }
     }
 }
