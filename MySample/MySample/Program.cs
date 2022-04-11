@@ -10,16 +10,24 @@ namespace MySample
     {
         static void Main(string[] args)
         {
-            for (var i = 0; i < 20; i++)
+            for (var i = 0; i < 10; i++)
             {
-                var s = Console.ReadLine();
-                if (s == "")
+                var x = 0;
+                while (x < 20)
+                {
+                    if (x == 5)
+                    {
+                        break;
+                    }
+                    x++;
+                }
+                Console.WriteLine($"whileループ終了 i={i} x={x}");
+                if (i == 3)
                 {
                     break;
                 }
-                Console.WriteLine(s);
             }
-            Console.WriteLine("ループを終了しました");
+            Console.WriteLine("forループ終了");
         }
     }
 }
