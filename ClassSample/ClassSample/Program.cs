@@ -18,15 +18,9 @@ namespace ClassSample
                 Rating = 4
             };
 
-            var title = book.Title;
-            var author = book.Author;
-            var pages = book.Pages;
-            var rating = book.Rating;
-
-            Console.WriteLine($"書籍名: {title}");
-            Console.WriteLine($"著者名: {author}");
-            Console.WriteLine($"ページ数: {pages}");
-            Console.WriteLine($"評価: {rating}");
+            Console.WriteLine("Printメソッドを呼び出します");
+            book.Print();
+            Console.WriteLine("Printメソッドの処理が終わりました");
         }
     }
 
