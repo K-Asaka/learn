@@ -10,28 +10,25 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            PrintEvenOrOdd(6);
-            PrintEvenOrOdd(25);
-        }
-
-        static void Print()
-        {
-            var num = 123;
-            Console.WriteLine(num);
-        }
-
-        static void PrintEvenOrOdd(int num)
-        {
-            string str;
-            if (num % 2 == 0)
+            var array = new int[] { 5, 8, 4, 9, 5, -3, 6 };
+            var foundIndex = -1;
+            for (var i = 0; i < array.Length; i++)
             {
-                str = "偶数";
+                if (array[i] < 0)
+                {
+                    foundIndex = i;
+                    break;
+                }
+            }
+
+            if (foundIndex >= 0)
+            {
+                Console.WriteLine($"配列最初のマイナス値は {array[foundIndex]}です。");
             }
             else
             {
-                str = "奇数";
+                Console.WriteLine("配列にマイナス値はありませんでした。");
             }
-            Console.WriteLine($"{num}は{str}");
         }
     }
 }
