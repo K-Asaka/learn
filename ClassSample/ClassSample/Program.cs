@@ -16,7 +16,7 @@ namespace ClassSample
             Console.WriteLine($"合計:{total}, 平均:{average}");
         }
     }
-    class ArrayUtils
+    static class ArrayUtils
     {
         // 配列内の数値の合計を求める
         public static int Total(int[] numbers)
