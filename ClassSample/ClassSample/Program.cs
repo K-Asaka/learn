@@ -10,28 +10,20 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var sale = new Sale
-            {
-                ProductName = "おにぎり",
-                UnitPrice = 120,
-                Quantity = 4
-            };
-
-            var amount = sale.GetAmount();
-            Console.WriteLine($"合計金額: {amount}円");
+            var bmicalc = new BmiCalculator();
+            var bmi = bmicalc.GetBmi(176, 67);
+            Console.WriteLine("{0:.00}", bmi);
         }
     }
 
-    class Sale
+    class BmiCalculator
     {
-        public string ProductName { get; set; }
-        public int UnitPrice { get; set; }
-        public int Quantity { get; set; }
-
-        public int GetAmount()
+        // 身長はcm単位で、体重はkg単位で渡してもらう
+        public double GetBmi(double height, double weight)
         {
-            var amount = UnitPrice * Quantity;
-            return amount;
+            var metersTall = height / 100.0;
+            var bmi = weight / (metersTall * metersTall);
+            return bmi;
         }
     }
 }
