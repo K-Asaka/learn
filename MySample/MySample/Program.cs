@@ -10,24 +10,14 @@ namespace MySample
     {
         static void Main(string[] args)
         {
-            for (var i = 0; i < 10; i++)
+            for (var i = 0; i < 50; i++)
             {
-                var x = 0;
-                while (x < 20)
+                if (i % 13 != 0)
                 {
-                    if (x == 5)
-                    {
-                        break;
-                    }
-                    x++;
+                    continue;
                 }
-                Console.WriteLine($"whileループ終了 i={i} x={x}");
-                if (i == 3)
-                {
-                    break;
-                }
+                Console.WriteLine($"{i}は13で割り切れる数です");
             }
-            Console.WriteLine("forループ終了");
         }
     }
 }
