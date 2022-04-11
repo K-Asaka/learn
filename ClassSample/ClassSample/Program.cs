@@ -10,36 +10,19 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var book1 = new Book
-            {
-                Title = "吾輩は猫である",
-                Author = "夏目漱石",
-                Pages = 610,
-                Rating = 4
-            };
-            var book2 = new Book
-            {
-                Title = "人間失格",
-                Author = "太宰治",
-                Pages = 212,
-                Rating = 5
-            };
-            book1.Print();
-            book2.Print();
         }
     }
 
-    class Book
+    class Sale
     {
-        public string Title { get; set; }
-        public string Author { get; set; }
-        public int Pages { get; set; }
-        public int Rating { get; set; }
+        public string ProductName { get; set; }
+        public int UnitPrice { get; set; }
+        public int Quantity { get; set; }
 
-        public void Print()
+        public int GetAmount()
         {
-            Console.WriteLine($"■{this.Title}");
-            Console.WriteLine($"  {this.Author}  {this.Pages}ページ  評価: {this.Rating}");
+            var amount = UnitPrice * Quantity;
+            return amount;
         }
     }
 }
