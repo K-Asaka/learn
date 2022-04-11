@@ -17,9 +17,9 @@ namespace MySample
                 { 7, 8, 9 },
                 { 10, 11, 12 }
             };
-            for (var row = 0; row < 4; row++)
+            for (var row = 0; row < array2d.GetLength(0); row++)
             {
-                for (var col = 0; col < 3; col++)
+                for (var col = 0; col < array2d.GetLength(1); col++)
                 {
                     Console.Write("{0} ", array2d[row, col]);
                 }
