@@ -10,11 +10,13 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var book = new Book();
-            book.Title = "吾輩は猫である";
-            book.Author = "夏目漱石";
-            book.Pages = 610;
-            book.Rating = 4;
+            var book = new Book
+            {
+                Title = "吾輩は猫である",
+                Author = "夏目漱石",
+                Pages = 610,
+                Rating = 4
+            };
 
             var title = book.Title;
             var author = book.Author;
