@@ -10,16 +10,28 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var num = 10;
-            Console.WriteLine(num);
-            Print();
-            Console.WriteLine(num);
+            PrintEvenOrOdd(6);
+            PrintEvenOrOdd(25);
         }
 
         static void Print()
         {
             var num = 123;
             Console.WriteLine(num);
+        }
+
+        static void PrintEvenOrOdd(int num)
+        {
+            string str;
+            if (num % 2 == 0)
+            {
+                str = "偶数";
+            }
+            else
+            {
+                str = "奇数";
+            }
+            Console.WriteLine($"{num}は{str}");
         }
     }
 }
