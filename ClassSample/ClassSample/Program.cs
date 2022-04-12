@@ -10,10 +10,19 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var str = "銀河鉄道の夜,宮沢賢治";
+            var str = "吾輩は猫である,夏目漱石";
             var items = str.Split(',');
-            Console.WriteLine("Title: {0}", items[0]);
-            Console.WriteLine("Author: {0}", items[1]);
+            var book = new Book
+            {
+                Title = items[0],
+                Author = items[1]
+            };
+            Console.WriteLine($"{book.Title}, {book.Author}");
         }
+    }
+    class Book
+    {
+        public string Title { get; set; }
+        public string Author { get; set; }
     }
 }
