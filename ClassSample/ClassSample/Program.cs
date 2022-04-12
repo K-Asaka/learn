@@ -10,13 +10,9 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var today = DateTime.Today;
-            Console.WriteLine("{0}年", today.Year);
-            Console.WriteLine("{0}月", today.Month);
-            Console.WriteLine("{0}日", today.Day);
-            Console.WriteLine("{0}時", today.Hour);
-            Console.WriteLine("{0}分", today.Minute);
-            Console.WriteLine("{0}秒", today.Second);
+            var date1 = new DateTime(2020, 9, 10);
+            var date2 = date1.AddDays(10);
+            Console.WriteLine($"{date2.Year}年{date2.Month}月{date2.Day}日");
         }
     }
 }
