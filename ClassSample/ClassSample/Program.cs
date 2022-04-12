@@ -17,7 +17,7 @@ namespace ClassSample
                 "奢れる人も久しからず、ただ春の夜の夢のごとし。",
                 "猛き者もつひにはほろびぬ、ひとへに風の前の塵に同じ。"
             };
-            File.WriteAllLines("C:\\temp\\祇園精舎.txt", lines);
+            File.WriteAllLines(@"C:\temp\祇園精舎.txt", lines);
         }
     }
 }
