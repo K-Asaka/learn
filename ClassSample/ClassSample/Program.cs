@@ -10,26 +10,67 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var person = new Person
+            // 1⃣配列の要素を0、10、20、30、40……に設定する
+            var array = new int[10];
+            ArrayUtils.SetValue(array, 0, 10);
+            // 2⃣配列のすべての要素を1に設定する
+            var array2 = new int[10];
+            ArrayUtils.SetValue(array2, 1);
+            // 3⃣配列のすべての要素を0に設定する
+            var array3 = new int[10];
+            ArrayUtils.SetValue(array3);
+
+            foreach (var v in array)
             {
-                FirstName = "隆之",
-                LastName = "森本"
-            };
-            var name1 = person.AddTitle("先生");
-            var name2 = person.AddTitle();
-            Console.WriteLine(name1);
-            Console.WriteLine(name2);
+                Console.WriteLine(v);
+            }
+            foreach (var v in array2)
+            {
+                Console.WriteLine(v);
+            }
+            foreach (var v in array3)
+            {
+                Console.WriteLine(v);
+            }
         }
     }
-
-    class Person
+    static class ArrayUtils
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-
-        public string AddTitle(string title = "様")
+        public static void SetValue(int[] array, int value = 0, int inc = 0)
         {
-            return $"{LastName}{FirstName} {title}";
+            for (var i = 0; i < array.Length; i++)
+            {
+                array[i] = value;
+                value += inc;
+            }
+        }
+        // 配列内の数値の合計を求める
+        public static int Total(int[] numbers)
+        {
+            var total = 0;
+            foreach (var n in numbers)
+            {
+                total += n;
+            }
+            return total;
+        }
+
+        // 配列内の数値の平均を求める
+        public static double Average(int[] numbers)
+        {
+            var total = Total(numbers);
+            return (double)total / numbers.Length;
+        }
+
+        public static int[] GetArray(int count)
+        {
+            var array = new int[count];
+            for (var i = 0; i < count; i++)
+            {
+                var line = Console.ReadLine();
+                array[i] = int.Parse(line);
+            }
+            return array;
         }
     }
 }
