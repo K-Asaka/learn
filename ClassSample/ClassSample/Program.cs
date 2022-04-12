@@ -10,10 +10,9 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var str = "　オブジェクト指向  ";
-            var str2 = str.Trim();
-            Console.WriteLine($"[{str}]");
-            Console.WriteLine($"[{str2}]");
+            var str = "Microsoft";
+            var str2 = str.ToUpper();
+            Console.WriteLine(str2);
         }
     }
 }
