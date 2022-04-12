@@ -10,13 +10,13 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var now = DateTime.Now;
-            Console.WriteLine("{0}年", now.Year);
-            Console.WriteLine("{0}月", now.Month);
-            Console.WriteLine("{0}日", now.Day);
-            Console.WriteLine("{0}時", now.Hour);
-            Console.WriteLine("{0}分", now.Minute);
-            Console.WriteLine("{0}秒", now.Second);
+            var today = DateTime.Today;
+            Console.WriteLine("{0}年", today.Year);
+            Console.WriteLine("{0}月", today.Month);
+            Console.WriteLine("{0}日", today.Day);
+            Console.WriteLine("{0}時", today.Hour);
+            Console.WriteLine("{0}分", today.Minute);
+            Console.WriteLine("{0}秒", today.Second);
         }
     }
 }
