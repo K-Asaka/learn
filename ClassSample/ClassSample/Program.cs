@@ -10,11 +10,26 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            for (var i = 0; i < args.Length; i++)
-            {
-                var s = args[i];
-                Console.WriteLine($"{i}番目の引数は、{s}です");
-            }
+            var mapLocation = new MyApp.Map.Location();
+            var canvasLocation = new MyApp.Drawing.Location();
         }
+    }
+}
+
+namespace MyApp.Map
+{
+    class Location
+    {
+        public double Latitude { get; set; }    // 緯度
+        public double Longitude { get; set; }   // 経度
+    }
+}
+
+namespace MyApp.Drawing
+{
+    class Location
+    {
+        public int X { get; set; }  // X座標
+        public int Y { get; set; }  // Y座標
     }
 }
