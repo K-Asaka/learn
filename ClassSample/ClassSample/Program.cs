@@ -10,53 +10,15 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var card = new Card('H', 8);
-            card.Print();
-            if (card.Suit == 'D')
+            var week = DayOfWeek.Sunday; 
+            if (week == DayOfWeek.Friday)
             {
-                Console.WriteLine("ダイヤです");
+                Console.WriteLine("金曜日です");
             }
             else
             {
-                Console.WriteLine("ダイヤではありません");
+                Console.WriteLine("金曜日ではありません");
             }
-        }
-    }
-
-    // Card構造体
-    struct Card
-    {
-        // プロパティ
-        public char Suit { get; private set; }
-        public int Number { get; private set; }
-
-        // コンストラクター
-        public Card(char suit, int number)
-        {
-            Suit = suit;
-            Number = number;
-        }
-
-        // メソッド
-        public void Print()
-        {
-            var s = "";
-            switch (Suit)
-            {
-                case 'H':
-                    s = "ハート";
-                    break;
-                case 'D':
-                    s = "ダイヤ";
-                    break;
-                case 'S':
-                    s = "スペード";
-                    break;
-                case 'C':
-                    s = "クラブ";
-                    break;
-            }
-            Console.WriteLine($"{s} {Number}");
         }
     }
 }
