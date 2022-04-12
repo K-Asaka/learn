@@ -10,9 +10,15 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var date1 = new DateTime(2020, 9, 3);
-            var date2 = date1.AddDays(-7);
-            Console.WriteLine($"{date2.Year}年{date2.Month}月{date2.Day}日");
+            var date = new DateTime(2019, 4, 3, 19, 8, 53);
+            var s1 = date.ToString("d");
+            var s2 = date.ToString("D");
+            var s3 = date.ToString("f");
+            var s4 = date.ToString("F");
+            Console.WriteLine(s1);
+            Console.WriteLine(s2); 
+            Console.WriteLine(s3);
+            Console.WriteLine(s4);
         }
     }
 }
