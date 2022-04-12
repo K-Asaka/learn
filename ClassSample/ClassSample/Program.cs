@@ -10,7 +10,9 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var mypet = new VirtualPet();
+            Console.Write("名前を入力してください⇒");
+            var name = Console.ReadLine();
+            var mypet = new VirtualPet(name);
             Console.WriteLine($"Name: {mypet.Name}");
             Console.WriteLine($"Mood: {mypet.Mood}");
             Console.WriteLine($"Energy: {mypet.Energy}");
@@ -28,9 +30,9 @@ namespace ClassSample
         public int Energy { get; set; }
 
         // コンストラクターの定義
-        public VirtualPet()
+        public VirtualPet(string name)
         {
-            Name = "エイミー";
+            Name = name;
             Mood = 5;
             Energy = 100;
         }
