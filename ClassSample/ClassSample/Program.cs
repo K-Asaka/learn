@@ -10,10 +10,10 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var value1 = 340;
-            var value2 = 500;
-            var max = Math.Min(value1, value2);
-            Console.WriteLine(max);
+            var n = 3.7;
+            var floor = Math.Floor(n);
+            var ceiling = Math.Ceiling(n);
+            Console.WriteLine($"{floor}, {ceiling}");
         }
     }
 }
