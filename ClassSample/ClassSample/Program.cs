@@ -10,41 +10,43 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var book1 = MakeBookObject();
-            var book2 = MakeBookObject();
-            book1.Print();
-            book2.Print();
-        }
+            var scores = new int[] { 55, 60, 45, 70, 85, 93, 68 };
+            var total = ArrayUtils.Total(scores);
+            Console.WriteLine(total);
 
-        public static Book MakeBookObject()
-        {
-            Console.Write("書籍名⇒");
-            var title = Console.ReadLine();
-            Console.Write("著者名⇒");
-            var author = Console.ReadLine();
-            Console.Write("ページ数⇒");
-            var pages = Console.ReadLine();
-            var book = new Book
-            {
-                Title = title,
-                Author = author,
-                Pages = int.Parse(pages),
-                Rating = 3
-            };
-            return book;
+            var scores2 = new double[] { 5.9, 9.6, 12.4, 8.0, 7.9 };
+            var total2 = ArrayUtils.Total(scores2);
+            Console.WriteLine(total2);
         }
     }
-    class Book
+    static class ArrayUtils
     {
-        public string Title { get; set; }
-        public string Author { get; set; }
-        public int Pages { get; set; }
-        public int Rating { get; set; }
-
-        public void Print()
+        // 1⃣int型の配列内の数値の合計を求める
+        public static int Total(int[] numbers)
         {
-            Console.WriteLine($"■{this.Title}");
-            Console.WriteLine($"  {this.Author}  {this.Pages}ページ  評価: {this.Rating}");
+            var total = 0;
+            foreach (var n in numbers)
+            {
+                total += n;
+            }
+            return total;
+        }
+        // 2⃣double型の配列内の数値の合計を求める
+        public static double Total(double[] numbers)
+        {
+            var total = 0.0;
+            foreach (var n in numbers)
+            {
+                total += n;
+            }
+            return total;
+        }
+
+        // 配列内の数値の平均を求める
+        public static double Average(int[] numbers)
+        {
+            var total = Total(numbers);
+            return (double)total / numbers.Length;
         }
     }
 }
