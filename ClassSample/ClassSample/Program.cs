@@ -10,15 +10,13 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var r1 = Math.Round(6.4, MidpointRounding.AwayFromZero);
-            var r2 = Math.Round(6.4);
-            Console.WriteLine($"{r1}, {r2}");
-            var r3 = Math.Round(6.5, MidpointRounding.AwayFromZero);
-            var r4 = Math.Round(6.5);
-            Console.WriteLine($"{r3}, {r4}");
-            var r5 = Math.Round(6.6, MidpointRounding.AwayFromZero);
-            var r6 = Math.Round(6.6);
-            Console.WriteLine($"{r5}, {r6}");
+            var now = DateTime.Now;
+            Console.WriteLine("{0}年", now.Year);
+            Console.WriteLine("{0}月", now.Month);
+            Console.WriteLine("{0}日", now.Day);
+            Console.WriteLine("{0}時", now.Hour);
+            Console.WriteLine("{0}分", now.Minute);
+            Console.WriteLine("{0}秒", now.Second);
         }
     }
 }
