@@ -10,8 +10,8 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var str = "Microsoft";
-            var str2 = str.ToUpper();
+            var str = "HTML File";
+            var str2 = str.ToLower();
             Console.WriteLine(str2);
         }
     }
