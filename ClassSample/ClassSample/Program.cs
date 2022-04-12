@@ -10,24 +10,53 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var pet = new VirtualPet("エイミー");
-            // pet.Name = "リサ"; // 代入できないのでコンパイルエラーになる
-
-            Console.WriteLine(pet.Name);
-            Console.WriteLine(pet.Mood);
-            Console.WriteLine(pet.Energy);
+            var card = new Card('H', 8);
+            card.Print();
+            if (card.Suit == 'D')
+            {
+                Console.WriteLine("ダイヤです");
+            }
+            else
+            {
+                Console.WriteLine("ダイヤではありません");
+            }
         }
     }
-    class VirtualPet
+
+    // Card構造体
+    struct Card
     {
-        public string Name { get; private set; }
-        public int Mood { get; set; } = 5;
-        public int Energy { get; set; } = 100;
+        // プロパティ
+        public char Suit { get; private set; }
+        public int Number { get; private set; }
 
         // コンストラクター
-        public VirtualPet(string name)
+        public Card(char suit, int number)
         {
-            Name = name;
+            Suit = suit;
+            Number = number;
+        }
+
+        // メソッド
+        public void Print()
+        {
+            var s = "";
+            switch (Suit)
+            {
+                case 'H':
+                    s = "ハート";
+                    break;
+                case 'D':
+                    s = "ダイヤ";
+                    break;
+                case 'S':
+                    s = "スペード";
+                    break;
+                case 'C':
+                    s = "クラブ";
+                    break;
+            }
+            Console.WriteLine($"{s} {Number}");
         }
     }
 }
