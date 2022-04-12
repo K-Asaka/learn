@@ -10,11 +10,10 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var str = "インスタンスを生成せずに利用できるメソッドを静的メソッドと言います。";
-            if (str.Contains("静的メソッド"))
-            {
-                Console.WriteLine("文字列の中に「静的メソッド」が含まれています。");
-            }
+            var str = "銀河鉄道の夜,宮沢賢治";
+            var items = str.Split(',');
+            Console.WriteLine("Title: {0}", items[0]);
+            Console.WriteLine("Author: {0}", items[1]);
         }
     }
 }
