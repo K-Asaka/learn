@@ -10,27 +10,24 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var person = new Person
-            {
-                LastName = "渡部",
-                FirstName = "智史"
-            };
-            var name = person.FullName;
-            Console.WriteLine(name);
+            var pet = new VirtualPet("エイミー");
+            // pet.Name = "リサ"; // 代入できないのでコンパイルエラーになる
+
+            Console.WriteLine(pet.Name);
         }
     }
-    class Person
+    class VirtualPet
     {
-        // 名
-        public string FirstName { get; set; }
+        public string Name { get; private set; }
+        public int Mood { get; set; }
+        public int Energy { get; set; }
 
-        // 姓
-        public string LastName { get; set; }
-
-        // 姓名を返す
-        public string FullName
+        // コンストラクター
+        public VirtualPet(string name)
         {
-            get { return LastName + FirstName; }
+            Name = name;
+            Mood = 5;
+            Energy = 100;
         }
     }
 }
