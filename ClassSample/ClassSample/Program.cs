@@ -10,46 +10,41 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var nums = ArrayUtils.GetArray(5);
-            // nums配列内の要素の合計を求める
-            var total = 0;
-            foreach (var x in nums)
+            var book1 = MakeBookObject();
+            var book2 = MakeBookObject();
+            book1.Print();
+            book2.Print();
+        }
+
+        public static Book MakeBookObject()
+        {
+            Console.Write("書籍名⇒");
+            var title = Console.ReadLine();
+            Console.Write("著者名⇒");
+            var author = Console.ReadLine();
+            Console.Write("ページ数⇒");
+            var pages = Console.ReadLine();
+            var book = new Book
             {
-                total += x;
-            }
-            Console.WriteLine($"合計: {total}");
+                Title = title,
+                Author = author,
+                Pages = int.Parse(pages),
+                Rating = 3
+            };
+            return book;
         }
     }
-
-    static class ArrayUtils
+    class Book
     {
-        // 配列内の数値の合計を求める
-        public static int Total(int[] numbers)
-        {
-            var total = 0;
-            foreach (var n in numbers)
-            {
-                total += n;
-            }
-            return total;
-        }
+        public string Title { get; set; }
+        public string Author { get; set; }
+        public int Pages { get; set; }
+        public int Rating { get; set; }
 
-        // 配列内の数値の平均を求める
-        public static double Average(int[] numbers)
+        public void Print()
         {
-            var total = Total(numbers);
-            return (double)total / numbers.Length;
-        }
-
-        public static int[] GetArray(int count)
-        {
-            var array = new int[count];
-            for (var i = 0; i < count; i++)
-            {
-                var line = Console.ReadLine();
-                array[i] = int.Parse(line);
-            }
-            return array;
+            Console.WriteLine($"■{this.Title}");
+            Console.WriteLine($"  {this.Author}  {this.Pages}ページ  評価: {this.Rating}");
         }
     }
 }
