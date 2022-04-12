@@ -10,25 +10,37 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var person1 = new Person();
-            var person2 = new Person("勇太", "佐々木");
         }
     }
-    class Person
+    class Book
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string Title { get; set; }
+        public string Author { get; set; }
+        public int Pages { get; set; }
 
-        public Person()
-        {
-            FirstName = "";
-            LastName = "";
-        }
+        int _rating;
 
-        public Person(string firstName, string lastName)
+        public int Rating
         {
-            FirstName = firstName;
-            LastName = lastName;
+            get
+            {
+                return _rating;
+            }
+            set
+            {
+                if (value <= 1)
+                {
+                    _rating = 1;
+                }
+                else if (value >= 6)
+                {
+                    _rating = 5;
+                }
+                else
+                {
+                    _rating = value;
+                }
+            }
         }
     }
 }
