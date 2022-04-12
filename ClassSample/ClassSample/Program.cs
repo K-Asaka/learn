@@ -12,7 +12,7 @@ namespace ClassSample
         {
             var value1 = 340;
             var value2 = 500;
-            var max = Math.Max(value1, value2);
+            var max = Math.Min(value1, value2);
             Console.WriteLine(max);
         }
     }
