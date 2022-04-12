@@ -14,20 +14,20 @@ namespace ClassSample
             // pet.Name = "リサ"; // 代入できないのでコンパイルエラーになる
 
             Console.WriteLine(pet.Name);
+            Console.WriteLine(pet.Mood);
+            Console.WriteLine(pet.Energy);
         }
     }
     class VirtualPet
     {
         public string Name { get; private set; }
-        public int Mood { get; set; }
-        public int Energy { get; set; }
+        public int Mood { get; set; } = 5;
+        public int Energy { get; set; } = 100;
 
         // コンストラクター
         public VirtualPet(string name)
         {
             Name = name;
-            Mood = 5;
-            Energy = 100;
         }
     }
 }
