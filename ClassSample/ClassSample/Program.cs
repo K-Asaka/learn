@@ -10,37 +10,27 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
+            var person = new Person
+            {
+                LastName = "渡部",
+                FirstName = "智史"
+            };
+            var name = person.FullName;
+            Console.WriteLine(name);
         }
     }
-    class Book
+    class Person
     {
-        public string Title { get; set; }
-        public string Author { get; set; }
-        public int Pages { get; set; }
+        // 名
+        public string FirstName { get; set; }
 
-        int _rating;
+        // 姓
+        public string LastName { get; set; }
 
-        public int Rating
+        // 姓名を返す
+        public string FullName
         {
-            get
-            {
-                return _rating;
-            }
-            set
-            {
-                if (value <= 1)
-                {
-                    _rating = 1;
-                }
-                else if (value >= 6)
-                {
-                    _rating = 5;
-                }
-                else
-                {
-                    _rating = value;
-                }
-            }
+            get { return LastName + FirstName; }
         }
     }
 }
