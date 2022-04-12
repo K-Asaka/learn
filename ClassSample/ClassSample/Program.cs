@@ -10,14 +10,10 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var abs1 = Math.Abs(150);
-            var abs2 = Math.Abs(-320);
-            var abs3 = Math.Abs(-5.67M);
-            var abs4 = Math.Abs(-1.414);
-            Console.WriteLine(abs1);
-            Console.WriteLine(abs2);
-            Console.WriteLine(abs3);
-            Console.WriteLine(abs4);
+            var value1 = 340;
+            var value2 = 500;
+            var max = Math.Max(value1, value2);
+            Console.WriteLine(max);
         }
     }
 }
