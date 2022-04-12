@@ -10,10 +10,15 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var n = 3.7;
-            var floor = Math.Floor(n);
-            var ceiling = Math.Ceiling(n);
-            Console.WriteLine($"{floor}, {ceiling}");
+            var r1 = Math.Round(6.4, MidpointRounding.AwayFromZero);
+            var r2 = Math.Round(6.4);
+            Console.WriteLine($"{r1}, {r2}");
+            var r3 = Math.Round(6.5, MidpointRounding.AwayFromZero);
+            var r4 = Math.Round(6.5);
+            Console.WriteLine($"{r3}, {r4}");
+            var r5 = Math.Round(6.6, MidpointRounding.AwayFromZero);
+            var r6 = Math.Round(6.6);
+            Console.WriteLine($"{r5}, {r6}");
         }
     }
 }
