@@ -10,31 +10,25 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            Console.Write("名前を入力してください⇒");
-            var name = Console.ReadLine();
-            var mypet = new VirtualPet(name);
-            Console.WriteLine($"Name: {mypet.Name}");
-            Console.WriteLine($"Mood: {mypet.Mood}");
-            Console.WriteLine($"Energy: {mypet.Energy}");
+            var person1 = new Person();
+            var person2 = new Person("勇太", "佐々木");
         }
     }
-    class VirtualPet
+    class Person
     {
-        // ペットの名前
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
 
-        // ペットの機嫌を示す(値が大きいと機嫌が良い)
-        public int Mood { get; set; }
-
-        // ペットの元気度を示す(エネルギーの値で元気かどうかを判断)
-        public int Energy { get; set; }
-
-        // コンストラクターの定義
-        public VirtualPet(string name)
+        public Person()
         {
-            Name = name;
-            Mood = 5;
-            Energy = 100;
+            FirstName = "";
+            LastName = "";
+        }
+
+        public Person(string firstName, string lastName)
+        {
+            FirstName = firstName;
+            LastName = lastName;
         }
     }
 }
