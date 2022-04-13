@@ -10,25 +10,24 @@ namespace ClassSample
         {
             try
             {
-                var total = 1000;
-                var line = Console.ReadLine();
-                var count = int.Parse(line);
-                var ans = total / count;
-                Console.WriteLine(ans);
-                Console.WriteLine("正常終了");
+                Book book = null;
+                var title = book.Title;
+                Console.WriteLine(title);
             }
-            catch (System.DivideByZeroException)
+            catch (Exception ex)
             {
-                Console.WriteLine("ゼロは入力できません");
-            }
-            catch (System.FormatException)
-            {
-                Console.WriteLine("数値を入力してください");
-            }
-            catch (System.Exception)
-            {
-                Console.WriteLine("予期しないエラーが発生しました");
+                Console.WriteLine($"Type: {ex.GetType().Name}");
+                Console.WriteLine($"Message: {ex.Message}");
+                Console.WriteLine($"TargetSite: {ex.TargetSite}");
+                Console.WriteLine($"StackTrace: {ex.StackTrace}");
             }
         }
+    }
+    class Book
+    {
+        public string Title { get; set; }
+        public string Author { get; set; }
+        public int Pages { get; set; }
+        public int Rating { get; set; }
     }
 }
