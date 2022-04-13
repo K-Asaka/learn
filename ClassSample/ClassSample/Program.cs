@@ -17,9 +17,17 @@ namespace ClassSample
                 Console.WriteLine(ans);
                 Console.WriteLine("正常終了");
             }
-            catch
+            catch (System.DivideByZeroException)
             {
-                Console.WriteLine("入力した値が正しくありません");
+                Console.WriteLine("ゼロは入力できません");
+            }
+            catch (System.FormatException)
+            {
+                Console.WriteLine("数値を入力してください");
+            }
+            catch (System.Exception)
+            {
+                Console.WriteLine("予期しないエラーが発生しました");
             }
         }
     }
