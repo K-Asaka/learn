@@ -9,22 +9,18 @@ namespace ClassSample
         static void Main(string[] args)
         {
             VirtualPet pet1 = new FoodiePet("エイミー");
-            pet1.Play();
-            pet1.Eat();
-            pet1.Sleep();
-            Console.WriteLine($"{pet1.Name} 機嫌:{pet1.Mood} エネルギー:{pet1.Energy}");
-
             VirtualPet pet2 = new CheerfulPet("クー");
-            pet2.Play();
-            pet2.Eat();
-            pet2.Sleep();
-            Console.WriteLine($"{pet2.Name} 機嫌:{pet2.Mood} エネルギー:{pet2.Energy}");
-
             VirtualPet pet3 = new SleepyPet("ライアン");
-            pet3.Play();
-            pet3.Eat();
-            pet3.Sleep();
-            Console.WriteLine($"{pet3.Name} 機嫌:{pet3.Mood} エネルギー:{pet3.Energy}");
+            var pets = new List<VirtualPet>();
+            pets.Add(pet1);
+            pets.Add(pet2);
+            pets.Add(pet3);
+            foreach (var pet in pets)
+            {
+                pet.Eat();
+                pet.Play();
+                Console.WriteLine($"{pet.Name} 機嫌:{pet.Mood} エネルギー:{pet.Energy}");
+            }
         }
     }
 
