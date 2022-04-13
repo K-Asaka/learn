@@ -17,6 +17,8 @@ namespace ClassSample
                 "こんにちは",
                 "こんばんは",
             };
+            lines.Add("おやすみ");
+            lines.Add("さようなら");
         }
     }
 }
