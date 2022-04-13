@@ -19,6 +19,9 @@ namespace ClassSample
             };
             lines.Add("おやすみ");
             lines.Add("さようなら");
+
+            var str = lines[0];
+            Console.WriteLine(str);
         }
     }
 }
