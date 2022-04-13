@@ -10,57 +10,28 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var card = new Card(CardSuit.Heart, 8);
-            card.Print();
-            if (card.Suit == CardSuit.Diamond)
-            {
-                Console.WriteLine("ダイヤです");
-            }
-            else
-            {
-                Console.WriteLine("ダイヤではありません");
-            }
+            var cardA = new Card(CardSuit.Spade, 4);
+            var cardB = cardA;
+            cardA.Number = 12;
+            Console.WriteLine($"CardA: Suit:{cardA.Suit}, Number: {cardA.Number}");
+            Console.WriteLine($"CardB: Suit:{cardB.Suit}, Number: {cardB.Number}");
         }
     }
     // CardSuit列挙型の定義
     enum CardSuit
     {
-        Club,
-        Spade,
-        Heart,
-        Diamond
+        Club, Spade, Heart, Diamond
     }
     // Card構造体の定義
     struct Card
     {
-        public CardSuit Suit { get; private set; }
-        public int Number { get; private set; }
+        public CardSuit Suit { get; set; }
+        public int Number { get; set; }
 
         public Card(CardSuit suit, int number)
         {
             Suit = suit;
             Number = number;
-        }
-
-        public void Print()
-        {
-            var s = "";
-            switch (Suit)
-            {
-                case CardSuit.Heart:
-                    s = "ハート";
-                    break;
-                case CardSuit.Diamond:
-                    s = "ダイヤ";
-                    break;
-                case CardSuit.Spade:
-                    s = "スペード";
-                    break;
-                case CardSuit.Club:
-                    s = "クラブ";
-                    break;
-            }
-            Console.WriteLine($"{s} {Number}");
         }
     }
 }
