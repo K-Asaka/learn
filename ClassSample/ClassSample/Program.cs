@@ -8,11 +8,14 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var nums = new List<int> { 4, 6, 7, 1, 3, 9, 2, 5, 8 };
-            var query = nums.OrderByDescending(x => x);
-            foreach (var n in query)
+            var words = new List<string>
             {
-                Console.WriteLine(n);
+                "effect", "access", "condition", "sign", "profit", "line", "result"
+            };
+            var query = words.OrderByDescending(x => x);
+            foreach (var word in query)
+            {
+                Console.WriteLine(word);
             }
         }
     }
