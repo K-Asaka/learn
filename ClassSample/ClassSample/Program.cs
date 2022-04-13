@@ -15,7 +15,7 @@ namespace ClassSample
             lines.Add("こんにちは");
             lines.Add("こんばんは");
             lines.Add("おやすみ");
-            lines.RemoveAt(2);
+            lines.Clear();
             foreach (var s in lines)
             {
                 Console.WriteLine(s);
