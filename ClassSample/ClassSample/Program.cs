@@ -15,10 +15,10 @@ namespace ClassSample
             books.Add(new Book("こゝろ", "夏目漱石", 378, 5));
             books.Add(new Book("銀河鉄道の夜", "宮沢賢治", 357, 3));
             books.Add(new Book("伊豆の踊子", "川端康成", 201, 3));
-            var query = books.OrderByDescending(x => x.Pages);
-            foreach (var book in query)
+            var query = books.Where(x => x.Rating == 5).Select(x => x.Title);
+            foreach (var title in query)
             {
-                Console.WriteLine($"{book.Title} {book.Author} {book.Pages}");
+                Console.WriteLine(title);
             }
         }
     }
