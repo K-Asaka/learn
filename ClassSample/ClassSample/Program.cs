@@ -10,33 +10,38 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var king = new Card(CardSuit.Spade, 13);
-            Console.WriteLine($"Suit: {king.Suit}, Number: {king.Number}");
-            ChangeToAce(king);
-
-            Console.WriteLine($"Suit: {king.Suit}, Number: {king.Number}");
+            var book = GetBook();
+            if (book == null)
+            {
+                Console.WriteLine("Bookオブジェクトは生成できませんでした");
+            }
+            else
+            {
+                Console.WriteLine($"{book.Title}  {book.Author}");
+            }
         }
 
-        private static void ChangeToAce(Card card)
+        private static Book GetBook()
         {
-            card.Number = 1;
+            var line = Console.ReadLine();
+            var items = line.Split(',');
+            if (items.Length != 2)
+            {
+                return null;
+            }
+            var book = new Book
+            {
+                Title = items[0],
+                Author = items[1],
+            };
+            return book;
         }
     }
-    // CardSuit列挙型の定義
-    enum CardSuit
+    class Book
     {
-        Club, Spade, Heart, Diamond
-    }
-    // Card構造体の定義
-    class Card
-    {
-        public CardSuit Suit { get; set; }
-        public int Number { get; set; }
-
-        public Card(CardSuit suit, int number)
-        {
-            Suit = suit;
-            Number = number;
-        }
+        public string Title { get; set; }
+        public string Author { get; set; }
+        public int Pages { get; set; }
+        public int Rating { get; set; }
     }
 }
