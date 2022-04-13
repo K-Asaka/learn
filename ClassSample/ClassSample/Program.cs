@@ -8,13 +8,35 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var nums = new List<int> { 4, 6, 7, 1, 3, 9, 2, 1, 5, 8 };
-            var query = nums.OrderByDescending(x => x)
-                            .Take(3);
-            foreach (var n in query)
+            var books = new List<Book>();
+            books.Add(new Book("人間失格", "太宰治", 212, 5));
+            books.Add(new Book("女生徒", "太宰治", 279, 4));
+            books.Add(new Book("吾輩は猫である", "夏目漱石", 610, 4));
+            books.Add(new Book("こゝろ", "夏目漱石", 378, 5));
+            books.Add(new Book("銀河鉄道の夜", "宮沢賢治", 357, 3));
+            books.Add(new Book("伊豆の踊子", "川端康成", 201, 3));
+            var query = books.Where(x => x.Rating >= 4)
+                             .Select(x => x.Author)
+                             .Distinct();
+            foreach (var author in query)
             {
-                Console.WriteLine(n);
+                Console.WriteLine(author);
             }
+        }
+    }
+    class Book
+    {
+        public string Title { get; set; }
+        public string Author { get; set; }
+        public int Pages { get; set; }
+        public int Rating { get; set; }
+
+        public Book(string title, string author, int pages, int rating)
+        {
+            Title = title;
+            Author = author;
+            Pages = pages;
+            Rating = rating;
         }
     }
 } 
