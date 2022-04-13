@@ -16,10 +16,8 @@ namespace ClassSample
             lines.Add("こんばんは");
             lines.Add("おやすみ");
 
-            foreach (var s in lines)
-            {
-                Console.WriteLine(s);
-            }
+            var count = lines.Count;
+            Console.WriteLine(count);
         }
     }
 }
