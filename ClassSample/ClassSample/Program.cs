@@ -8,11 +8,13 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var nums = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-            var first = nums.First();
-            var last = nums.Last();
-            Console.WriteLine(first);
-            Console.WriteLine(last);
+            var words = new List<string>
+            {
+                "effect", "access", "condition", "sign", "profit", "line", "result"
+            };
+            var array = words.OrderBy(x => x)
+                             .ToArray();
+            Console.WriteLine(array[0]);
         }
     }
 } 
