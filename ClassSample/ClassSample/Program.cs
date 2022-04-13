@@ -8,15 +8,23 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
+            var person = new Person
+            {
+                FirstName = "はるか",
+                LastName = "佐々木",
+                Email = "hsasaki@example.com"
+            };
+            person.Print();
+
             var employee = new Employee
             {
                 Number = 352,
                 FirstName = "涼太",
                 LastName = "田中",
+                Email = "rtanaka@example.com",
                 HireDate = new DateTime(2015, 10, 1)
             };
-            Console.WriteLine("従業員番号{0}の{1}は、{2}年に入社しました。",
-                                employee.Number, employee.FullName, employee.HireDate.Year);
+            employee.Print();
         }
     }
     class Person
@@ -28,6 +36,11 @@ namespace ClassSample
             get { return LastName + FirstName; }
         }
         public string Email { get; set; }
+
+        public void Print()
+        {
+            Console.WriteLine($"名前: {FullName} ({Email})");
+        }
         
     }
     // 従業員クラス
