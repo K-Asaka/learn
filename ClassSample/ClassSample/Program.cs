@@ -37,7 +37,7 @@ namespace ClassSample
         }
         public string Email { get; set; }
 
-        public void Print()
+        public virtual void Print()
         {
             Console.WriteLine($"名前: {FullName} ({Email})");
         }
@@ -50,6 +50,11 @@ namespace ClassSample
         public int Number { get; set; }
         // 入社年月日
         public DateTime HireDate { get; set; }
+
+        public override void Print()
+        {
+            Console.WriteLine($"{Number}:{FullName} ({Email}) {HireDate.Year}年入社");
+        }
     }
     // 顧客クラス
     class Customer : Person
