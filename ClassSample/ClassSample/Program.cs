@@ -15,9 +15,14 @@ namespace ClassSample
             lines.Add("こんにちは");
             lines.Add("こんばんは");
             lines.Add("おやすみ");
+            lines.RemoveAt(2);
+            foreach (var s in lines)
+            {
+                Console.WriteLine(s);
+            }
 
             var count = lines.Count;
-            Console.WriteLine(count);
+            Console.WriteLine($"要素数:{count}");
         }
     }
 }
