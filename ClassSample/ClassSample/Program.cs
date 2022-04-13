@@ -8,13 +8,10 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var words = new List<string>
-            {
-                "effect", "access", "condition", "sign", "profit", "line", "result"
-            };
-            var array = words.OrderBy(x => x)
-                             .ToArray();
-            Console.WriteLine(array[0]);
+            var nums = new int[] { 12, 56, 75, 8, 12, 95, 32, 85, 24, 49 };
+            var list = nums.Where(x => x <= 10)
+                           .ToList();
+            Console.WriteLine(list[0]);
         }
     }
 } 
