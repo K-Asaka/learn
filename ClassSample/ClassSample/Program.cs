@@ -37,17 +37,11 @@ namespace ClassSample
             Energy = 100;
         }
 
-        public virtual void Eat()
-        {
-        }
+        public abstract void Eat();
 
-        public virtual void Play()
-        {
-        }
+        public abstract void Play();
 
-        public virtual void Sleep()
-        {
-        }
+        public abstract void Sleep();
     }
     class FoodiePet : VirtualPet
     {
