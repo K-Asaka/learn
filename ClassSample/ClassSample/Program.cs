@@ -10,18 +10,16 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            //var lines = new List<string>();
-            var lines = new List<string>
-            {
-                "おはよう",
-                "こんにちは",
-                "こんばんは",
-            };
+            var lines = new List<string>();
+            lines.Add("おはよう");
+            lines.Add("こんにちは");
+            lines.Add("こんばんは");
             lines.Add("おやすみ");
-            lines.Add("さようなら");
 
-            var str = lines[0];
-            Console.WriteLine(str);
+            foreach (var s in lines)
+            {
+                Console.WriteLine(s);
+            }
         }
     }
 }
