@@ -47,6 +47,13 @@ namespace ClassSample
         {
             Console.WriteLine($"{Number}:{FullName} ({Email}) {HireDate.Year}年入社");
         }
+
+        public override string ToString()
+        {
+            var s = $"{Number} {FullName} " +
+                    $"{HireDate.Year}年{HireDate.Month}月{HireDate.Day}日入社";
+            return s;
+        }
     }
     // 顧客クラス
     class Customer : Person
