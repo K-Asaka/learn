@@ -8,33 +8,26 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            try
-            {
-                var bc = new BmiCalculator();
-                var bmi = bc.GetBmi(1.57, 49.5);
-                Console.WriteLine(bmi);
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            var price = GetPrice();
+            var discount = (int)(price * 0.01);
+            Console.WriteLine($"割引額{discount}円");
         }
-    }
-    class BmiCalculator
-    {
-        public double GetBmi(double height, double weight)
+
+        private static int GetPrice()
         {
-            if (height < 60.0 || 250.0 < height)
+            while (true)
             {
-                throw new ArgumentException("heightの指定に誤りがあります");
+                Console.WriteLine("金額を入力してください。");
+                var line = Console.ReadLine();
+                if (int.TryParse(line, out var num))
+                {
+                    // 変換に成功。変換した値は変数numに格納される
+                    return num;
+                }
+                // 変換に失敗。再度繰り返す
+                Console.WriteLine("入力に誤りがあります。");
             }
-            if (weight < 10.0 || 200.0 < weight)
-            {
-                throw new ArgumentException("weightの指定に誤りがあります");
-            }
-            var metersTall = height / 100.0;
-            var bmi = weight / (metersTall * metersTall);
-            return bmi;
         }
+
     }
 }
