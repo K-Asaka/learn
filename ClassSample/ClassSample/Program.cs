@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.IO;
 
 namespace ClassSample
 {
@@ -10,30 +8,13 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var books = new List<Book>();
-            var book1 = new Book("吾輩は猫である", "夏目漱石", 610, 4);
-            books.Add(book1);
-            var book2 = new Book("人間失格", "太宰治", 212, 5);
-            books.Add(book2);
-            foreach (var book in books)
-            {
-                Console.WriteLine($"{book.Title} {book.Author} {book.Rating}");
-            }
-        }
-    }
-    class Book
-    {
-        public string Title { get; set; }
-        public string Author { get; set; }
-        public int Pages { get; set; }
-        public int Rating { get; set; }
+            var nums = new List<int> { 12, 56, 75, 8, 12, 95, 32, 85, 24, 49 };
 
-        public Book(string title, string author, int pages, int rating)
-        {
-            Title = title;
-            Author = author;
-            Pages = pages;
-            Rating = rating;
+            var query = nums.Where(x => x >= 50);
+            foreach (var n in query)
+            {
+                Console.WriteLine(n);
+            }
         }
     }
 }
