@@ -8,13 +8,11 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            Person person = new Employee
-            {
-                Number = 352,
-                FirstName = "涼太",
-                LastName = "田中",
-                HireDate = new DateTime(2015, 10, 1)
-            };
+            object o1 = new Person();
+            object o2 = new Employee();
+            object num1 = 10;
+            object num2 = 3.14;
+            object str = "継承関係";
         }
     }
     class Person
