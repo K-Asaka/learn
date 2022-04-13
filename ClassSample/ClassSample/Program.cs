@@ -24,7 +24,7 @@ namespace ClassSample
         }
     }
 
-    class VirtualPet
+    abstract class VirtualPet
     {
         public string Name { get; set; }
         public int Mood { get; set; }
