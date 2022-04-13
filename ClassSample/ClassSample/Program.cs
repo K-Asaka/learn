@@ -10,24 +10,31 @@ namespace ClassSample
         {
             try
             {
-                Book book = null;
-                var title = book.Title;
-                Console.WriteLine(title);
+                var bc = new BmiCalculator();
+                var bmi = bc.GetBmi(1.57, 49.5);
+                Console.WriteLine(bmi);
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
             {
-                Console.WriteLine($"Type: {ex.GetType().Name}");
-                Console.WriteLine($"Message: {ex.Message}");
-                Console.WriteLine($"TargetSite: {ex.TargetSite}");
-                Console.WriteLine($"StackTrace: {ex.StackTrace}");
+                Console.WriteLine(ex.Message);
             }
         }
     }
-    class Book
+    class BmiCalculator
     {
-        public string Title { get; set; }
-        public string Author { get; set; }
-        public int Pages { get; set; }
-        public int Rating { get; set; }
+        public double GetBmi(double height, double weight)
+        {
+            if (height < 60.0 || 250.0 < height)
+            {
+                throw new ArgumentException("heightの指定に誤りがあります");
+            }
+            if (weight < 10.0 || 200.0 < weight)
+            {
+                throw new ArgumentException("weightの指定に誤りがあります");
+            }
+            var metersTall = height / 100.0;
+            var bmi = weight / (metersTall * metersTall);
+            return bmi;
+        }
     }
 }
