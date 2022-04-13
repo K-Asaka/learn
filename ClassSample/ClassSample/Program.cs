@@ -10,16 +10,13 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            int? number = 123;
-            if (number == null)
+            //var lines = new List<string>();
+            var lines = new List<string>
             {
-                Console.WriteLine("numberはnullです");
-            }
-            else
-            {
-                int n = number.Value;
-                Console.WriteLine($"number={n}");
-            }
+                "おはよう",
+                "こんにちは",
+                "こんばんは",
+            };
         }
     }
 }
