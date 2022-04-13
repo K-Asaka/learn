@@ -8,6 +8,20 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
+            var pets = new List<IVirtualPet>();
+            var pet1 = new FoodiePet("エイミー");
+            var pet2 = new CheerfulPet("クー");
+            var pet3 = new SleepyPet("ライアン");
+            pets.Add(pet1);
+            pets.Add(pet2);
+            pets.Add(pet3);
+
+            foreach (var pet in pets)
+            {
+                pet.Eat();
+                pet.Play();
+                Console.WriteLine($"{pet.Name} 機嫌:{pet.Mood} エネルギー:{pet.Energy}");
+            }
         }
     }
     interface IVirtualPet
