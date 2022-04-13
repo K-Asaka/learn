@@ -36,4 +36,27 @@ namespace ClassSample
         {
         }
     }
+    class FoodiePet : VirtualPet
+    {
+        public override void Eat()
+        {
+            Mood += 3;
+            Energy += 5;
+            Console.WriteLine("FoodiePet.Eatメソッドが実行されました");
+        }
+
+        public override void Play()
+        {
+            Mood -= 1;
+            Energy -= 10;
+            Console.WriteLine("FoodiePet.Playメソッドが実行されました");
+        }
+
+        public override void Sleep()
+        {
+            Mood -= 1;
+            Energy += 2;
+            Console.WriteLine("FoodiePet.Sleepメソッドが実行されました");
+        }
+    }
 }
