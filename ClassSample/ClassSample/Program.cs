@@ -23,7 +23,7 @@ namespace ClassSample
         Club, Spade, Heart, Diamond
     }
     // Card構造体の定義
-    struct Card
+    class Card
     {
         public CardSuit Suit { get; set; }
         public int Number { get; set; }
