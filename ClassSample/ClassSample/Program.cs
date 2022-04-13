@@ -8,23 +8,13 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var person = new Person
-            {
-                FirstName = "はるか",
-                LastName = "佐々木",
-                Email = "hsasaki@example.com"
-            };
-            person.Print();
-
-            var employee = new Employee
+            Person person = new Employee
             {
                 Number = 352,
                 FirstName = "涼太",
                 LastName = "田中",
-                Email = "rtanaka@example.com",
                 HireDate = new DateTime(2015, 10, 1)
             };
-            employee.Print();
         }
     }
     class Person
