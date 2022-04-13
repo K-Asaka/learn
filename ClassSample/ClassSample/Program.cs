@@ -8,12 +8,14 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var nums = new int[] { 12, 56, 75, 8, 12, 95, 32, 85, 24, 49 };
-
-            var query = nums.Where(x => x >= 50);
-            foreach (var n in query)
+            var words = new List<string>
             {
-                Console.WriteLine(n);
+                "effect", "access", "condition", "sign", "profit", "line", "result"
+            };
+            var query = words.Where(x => x.Length == 6);
+            foreach (var word in query)
+            {
+                Console.WriteLine(word);
             }
         }
     }
