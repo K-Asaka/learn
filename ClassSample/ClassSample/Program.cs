@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 
 namespace ClassSample
 {
@@ -8,26 +7,31 @@ namespace ClassSample
     {
         static void Main(string[] args)
         {
-            var price = GetPrice();
-            var discount = (int)(price * 0.01);
-            Console.WriteLine($"割引額{discount}円");
-        }
-
-        private static int GetPrice()
-        {
-            while (true)
+            try
             {
-                Console.WriteLine("金額を入力してください。");
-                var line = Console.ReadLine();
-                if (int.TryParse(line, out var num))
-                {
-                    // 変換に成功。変換した値は変数numに格納される
-                    return num;
-                }
-                // 変換に失敗。再度繰り返す
-                Console.WriteLine("入力に誤りがあります。");
+                ReadSample();
+            }
+            catch
+            {
+                Console.WriteLine("ReadSampleでエラーが発生");
             }
         }
 
+        private static void ReadSample()
+        {
+            var file = new StreamReader("test.txt");
+            try
+            {
+                while (file.EndOfStream == false)
+                {
+                    var line = file.ReadLine();
+                    Console.WriteLine(line);
+                }
+            }
+            finally
+            {
+                file.Dispose();
+            }
+        }
     }
 }
