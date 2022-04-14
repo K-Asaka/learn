@@ -19,22 +19,13 @@ namespace ClassSample
 
         private static void ReadSample()
         {
-            var file = new StreamReader("test.txt");
-            try
+            using (var file = new StreamReader("test.txt"))
             {
                 while (file.EndOfStream == false)
                 {
                     var line = file.ReadLine();
-                    if (line == "")
-                    {
-                        return;
-                    }
                     Console.WriteLine(line);
                 }
-            }
-            finally
-            {
-                file.Dispose();
             }
         }
     }
