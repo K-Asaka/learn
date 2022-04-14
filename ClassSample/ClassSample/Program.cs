@@ -25,6 +25,10 @@ namespace ClassSample
                 while (file.EndOfStream == false)
                 {
                     var line = file.ReadLine();
+                    if (line == "")
+                    {
+                        return;
+                    }
                     Console.WriteLine(line);
                 }
             }
