@@ -3,8 +3,8 @@ class Fraction2 extends FractionOrigin {
         super();
     }
 
-    Fraction2(int numerator, int denominator) {
-        super(numerator, denominator);
+    Fraction2(int n, int d) {
+        super(n, d);
     }
 
     void add (Fraction2 f) {
@@ -14,5 +14,13 @@ class Fraction2 extends FractionOrigin {
 
     void add(int n) {
         numerator = numerator + denominator * n;
+    }
+
+    @Override
+    public String toString() {
+        if (denominator == 1) {
+            return numerator + "";
+        }
+        return numerator + "/" + denominator;
     }
 }
