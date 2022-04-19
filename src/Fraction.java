@@ -20,4 +20,8 @@ class Fraction {
     void add(int n) {
         numerator = numerator + denominator * n;
     }
+
+    public String toString() {
+        return numerator + "/" + denominator;
+    }
 }
