@@ -10,4 +10,9 @@ class Fraction {
     void add(int n) {
         numerator = numerator + denominator * n;
     }
+
+    void add(int numerator, int denominator) {
+        this.numerator = this.numerator * denominator * this.denominator * numerator;
+        this.denominator = this.denominator * denominator;
+    }
 }
