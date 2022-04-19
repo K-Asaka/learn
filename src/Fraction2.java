@@ -1,12 +1,10 @@
 class Fraction2 extends FractionOrigin {
     Fraction2() {
-        numerator = 0;
-        denominator = 1;
+        super();
     }
 
     Fraction2(int numerator, int denominator) {
-        this.numerator = numerator;
-        this.denominator = denominator;
+        super(numerator, denominator);
     }
 
     void add (Fraction2 f) {
