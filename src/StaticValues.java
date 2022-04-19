@@ -1,3 +1,3 @@
 class StaticValues {
-    static String greet = "こんにちは";
+    static final String greet = "こんにちは";
 }
