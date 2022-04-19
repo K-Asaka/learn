@@ -12,15 +12,6 @@ class Fraction {
         denominator = d;
     }
 
-    void add(Fraction f) {
-        numerator = numerator * f.denominator + denominator * f.numerator;
-        denominator = denominator * f.denominator;
-    }
-
-    void add(int n) {
-        numerator = numerator + denominator * n;
-    }
-
     public String toString() {
         return numerator + "/" + denominator;
     }
