@@ -10,18 +10,22 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            int n, sum = 0;
-            Console.WriteLine("整数値を10回入力してください。");
-            Console.WriteLine("途中で負数を入力したら終了します。");
-            for (int i = 1; i <= 10; i++)
+            int n, div = 1000;
+
+            Console.WriteLine("整数値を5回入力してください。");
+            for (int i = 1; i <= 5; i++)
             {
                 Console.Write("＞ ");
                 n = int.Parse(Console.ReadLine());
-                if (n < 0)      // 負数が入力された場合、ループを脱出
-                    break;
-                sum += n;
+                if (n == 0)
+                {
+                    Console.WriteLine("0では割れません。再入力してください。");
+                    continue;
+                }
+                Console.WriteLine($"{div} / {n} = ");
+                div /= n;
+                Console.WriteLine(div);
             }
-            Console.WriteLine($"合計値は{sum}です。");
         }
     }
 }
