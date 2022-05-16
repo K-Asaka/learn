@@ -10,14 +10,17 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            for (int i = 1; i <= 5; i++)
+            int n, sum = 0;
+
+            Console.Write("整数値＞ ");
+            n = int.Parse(Console.ReadLine());
+            while (n > 0)           // 入力した値が0より大きければ繰り返す
             {
-                for (int j = 1; j <= i; j++)
-                {
-                    Console.Write("*");
-                }
-                Console.Write("\n");
+                sum += n;
+                Console.Write("整数値＞ ");
+                n = int.Parse(Console.ReadLine());
             }
+            Console.WriteLine($"合計値は{sum}です。");
         }
     }
 }
