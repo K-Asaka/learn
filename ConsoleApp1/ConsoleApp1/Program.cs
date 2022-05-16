@@ -10,13 +10,10 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            Console.Write("科目＞ ");
-            string subject = Console.ReadLine();
-            Console.Write("点数＞ ");
-            int score = int.Parse(Console.ReadLine());
-            Console.Write("平均点＞ ");
-            double average = double.Parse(Console.ReadLine());
-            Console.WriteLine($"{subject}は{score}点(平均{average}点)");
+            for (int i = 1; i <= 10; i++)       // 1から10まで表示
+            {
+                Console.Write(i + " ");
+            }
         }
     }
 }
