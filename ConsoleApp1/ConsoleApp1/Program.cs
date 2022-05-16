@@ -12,14 +12,12 @@ namespace ConsoleApp1
         {
             int n, sum = 0;
 
-            Console.Write("整数値＞ ");
-            n = int.Parse(Console.ReadLine());
-            while (n > 0)           // 入力した値が0より大きければ繰り返す
+            do
             {
-                sum += n;
                 Console.Write("整数値＞ ");
                 n = int.Parse(Console.ReadLine());
-            }
+                sum += n;
+            } while (n > 0);           // 入力した値が0より大きければ繰り返す
             Console.WriteLine($"合計値は{sum}です。");
         }
     }
