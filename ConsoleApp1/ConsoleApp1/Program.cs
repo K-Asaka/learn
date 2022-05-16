@@ -10,9 +10,11 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("これがコンソールアプリです。");
-            Console.WriteLine("終了するには何かキーを押してください。");
-            Console.Read();
+            int a = 10;
+            string s = "こんにちは";
+            Console.Write(a);
+            Console.WriteLine(s);
+            Console.WriteLine(s + "、aの値は" + a + "です。");
         }
     }
 }
