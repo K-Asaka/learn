@@ -13,7 +13,8 @@ namespace ConsoleApp1
             int n, div = 1000;
 
             Console.WriteLine("整数値を5回入力してください。");
-            for (int i = 1; i <= 5; i++)
+            int i = 1;
+            while (i <= 5)
             {
                 Console.Write("＞ ");
                 n = int.Parse(Console.ReadLine());
@@ -25,6 +26,7 @@ namespace ConsoleApp1
                 Console.WriteLine($"{div} / {n} = ");
                 div /= n;
                 Console.WriteLine(div);
+                i++;
             }
         }
     }
