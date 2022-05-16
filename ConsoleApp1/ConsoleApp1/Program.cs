@@ -10,9 +10,10 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            for (int i = 1; i <= 10; i++)       // 1から10まで表示
+            for (int i = 30; i >= 1; i -= 3)
             {
-                Console.Write(i + " ");
+                if (i % 2 == 0)
+                    Console.Write(i + " ");
             }
         }
     }
