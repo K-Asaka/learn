@@ -12,9 +12,8 @@ namespace ConsoleApp1
         {
             int a = 10;
             string s = "こんにちは";
-            Console.Write(a);
-            Console.WriteLine(s);
-            Console.WriteLine(s + "、aの値は" + a + "です。");
+            Console.WriteLine("{0}、aの値は{1}です。", s, a);
+            Console.WriteLine($"{s}、aの値は{a}です。");
         }
     }
 }
