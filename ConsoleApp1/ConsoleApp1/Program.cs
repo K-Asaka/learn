@@ -10,10 +10,13 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            for (int i = 30; i >= 1; i -= 3)
+            for (int i = 1; i <= 5; i++)
             {
-                if (i % 2 == 0)
-                    Console.Write(i + " ");
+                for (int j = 1; j <= 7; j++)
+                {
+                    Console.Write("*");
+                }
+                Console.Write("\n");
             }
         }
     }
