@@ -10,24 +10,21 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            int n, div = 1000;
+            int i, j = 0, k = 0, no = 1;
 
-            Console.WriteLine("整数値を5回入力してください。");
-            int i = 1;
-            while (i <= 5)
+            for (i = 1; i <= 10; i++)
             {
-                Console.Write("＞ ");
-                n = int.Parse(Console.ReadLine());
-                if (n == 0)
+                for (j = 1; j <= 10; j++)
                 {
-                    Console.WriteLine("0では割れません。再入力してください。");
-                    continue;
+                    for (k = 1; k <= 10; k++)
+                    {
+                        no += (i + j + k);
+                        if (no >= 2000) goto OUT;
+                    }
                 }
-                Console.WriteLine($"{div} / {n} = ");
-                div /= n;
-                Console.WriteLine(div);
-                i++;
             }
+        OUT:
+            Console.WriteLine($"i:{i} j:{j} k:{k} no:{no}");
         }
     }
 }
