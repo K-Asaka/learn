@@ -11,13 +11,16 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             int n, sum = 0;
-
-            do
+            Console.WriteLine("整数値を10回入力してください。");
+            Console.WriteLine("途中で負数を入力したら終了します。");
+            for (int i = 1; i <= 10; i++)
             {
-                Console.Write("整数値＞ ");
+                Console.Write("＞ ");
                 n = int.Parse(Console.ReadLine());
+                if (n < 0)      // 負数が入力された場合、ループを脱出
+                    break;
                 sum += n;
-            } while (n > 0);           // 入力した値が0より大きければ繰り返す
+            }
             Console.WriteLine($"合計値は{sum}です。");
         }
     }
