@@ -8,13 +8,34 @@ namespace ClassSample
 {
     internal class Television
     {
-        public bool power;                  // 電源の状態
-        public int channel;                 // 現在のチャンネル
-        public int volume;                  // 現在の音量
-        public const int ChannelMin = 1;    // チャンネル下限
-        public const int ChannelMax = 12;   // チャンネル上限
-        public const int VolumeMin = 0;     // 音量下限
-        public const int VolumeMax = 40;    // 音量上限
+        private bool power;                  // 電源の状態
+        private int channel;                 // 現在のチャンネル
+        private int volume;                  // 現在の音量
+        private const int ChannelMin = 1;    // チャンネル下限
+        private const int ChannelMax = 12;   // チャンネル上限
+        private const int VolumeMin = 0;     // 音量下限
+        private const int VolumeMax = 40;    // 音量上限
+
+        // プロパティ
+        public bool Power
+        {
+            get { return power; }
+        }
+
+        public int Channel
+        {
+            get { return channel; }
+            set
+            {
+                if (value >= ChannelMin && value <= ChannelMax)
+                    channel = value;
+            }
+        }
+
+        public int Volume
+        {
+            get { return volume; }
+        }
 
         // メソッド
         // テレビの電源をON/OFFする
@@ -24,13 +45,6 @@ namespace ClassSample
                 power = false;      // 電源OFF
             else
                 power = true;       // 電源On
-        }
-
-        // チャンネルを設定する
-        public void SetChannel(int c)
-        {
-            if (c >= ChannelMin && c <= ChannelMax)
-                channel = c;
         }
 
         // チャンネルを+1する

@@ -13,16 +13,16 @@ namespace ClassSample
             Television tv = new Television();
 
             Console.WriteLine("10チャンネルを設定します。");
-            tv.SetChannel(10);
-            Console.WriteLine($"TVは{tv.channel}チャンネルです。");
+            tv.Channel = 10;
+            Console.WriteLine($"TVは{tv.Channel}チャンネルです。");
             Console.WriteLine("チャンネルを+2します。");
             tv.ChannelUP();
             tv.ChannelUP();
-            Console.WriteLine($"TVは{tv.channel}チャンネルです。");
+            Console.WriteLine($"TVは{tv.Channel}チャンネルです。");
 
             Console.WriteLine("チャンネルを-1します。");
             tv.ChannelDown();
-            Console.WriteLine($"TVは{tv.channel}チャンネルです。");
+            Console.WriteLine($"TVは{tv.Channel}チャンネルです。");
         }
     }
 }
