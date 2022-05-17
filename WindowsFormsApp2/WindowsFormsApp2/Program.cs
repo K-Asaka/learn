@@ -16,6 +16,7 @@ namespace WindowsFormsApp2
         {
             DateTimePropertyExample();
             DateTimeAddExample();
+            DateTimeToXxxxXxxxStringExample();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
@@ -48,6 +49,16 @@ namespace WindowsFormsApp2
             addSpan = new TimeSpan(1, 1, 1, 1);             // TimeSpan(日, 時, 分, 秒)
             answer = now.Add(addSpan);                      // TimeSpanの加算
             Console.WriteLine(answer);
+        }
+
+        static void DateTimeToXxxxXxxxStringExample()
+        {
+            DateTime now = DateTime.Now;
+            Console.WriteLine(now);
+            Console.WriteLine(now.ToLongDateString());
+            Console.WriteLine(now.ToLongTimeString());
+            Console.WriteLine(now.ToShortDateString());
+            Console.WriteLine(now.ToShortTimeString());
         }
     }
 }
