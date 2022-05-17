@@ -14,6 +14,30 @@ namespace ClassSample
         private const int VolumeMin = 0;     // 音量下限
         private const int VolumeMax = 40;    // 音量上限
 
+        // コンストラクター
+        public Television()
+        {
+            Console.WriteLine("引数のないコンストラクターの呼び出し");
+            Power = false;
+            Channel = 1;
+            Volume = 20;
+        }
+        public Television(int channel, int volume)
+        {
+            Console.WriteLine("引数が2個のコンストラクターの呼び出し");
+            Power = false;
+            Channel = channel;
+            Volume = volume;
+        }
+
+        public Television(bool power, int channel, int volume)
+        {
+            Console.WriteLine("引数が3個のコンストラクターの呼び出し");
+            Power = power;
+            Channel = channel;
+            Volume = volume;
+        }
+
         // プロパティ
         public bool Power { get; private set; }     // テレビのON/OFF状態
         public int Volume { get; private set; }     // 現在の音量
