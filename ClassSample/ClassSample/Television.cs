@@ -8,19 +8,15 @@ namespace ClassSample
 {
     internal class Television
     {
-        private bool power;                  // 電源の状態
         private int channel;                 // 現在のチャンネル
-        private int volume;                  // 現在の音量
         private const int ChannelMin = 1;    // チャンネル下限
         private const int ChannelMax = 12;   // チャンネル上限
         private const int VolumeMin = 0;     // 音量下限
         private const int VolumeMax = 40;    // 音量上限
 
         // プロパティ
-        public bool Power
-        {
-            get { return power; }
-        }
+        public bool Power { get; private set; }     // テレビのON/OFF状態
+        public int Volume { get; private set; }     // 現在の音量
 
         public int Channel
         {
@@ -32,47 +28,42 @@ namespace ClassSample
             }
         }
 
-        public int Volume
-        {
-            get { return volume; }
-        }
-
         // メソッド
         // テレビの電源をON/OFFする
         public void OnOff()
         {
-            if (power == true)
-                power = false;      // 電源OFF
+            if (Power == true)
+                Power = false;      // 電源OFF
             else
-                power = true;       // 電源On
+                Power = true;       // 電源On
         }
 
         // チャンネルを+1する
         public void ChannelUP()
         {
-            if (channel < ChannelMax)
-                channel++;
+            if (Channel < ChannelMax)
+                Channel++;
         }
 
         // チャンネルを-1する
         public void ChannelDown()
         {
-            if (channel > ChannelMin)
-                channel--;
+            if (Channel > ChannelMin)
+                Channel--;
         }
 
         // 音量を上げる
         public void VolumeUP()
         {
-            if (volume < VolumeMax)
-                volume++;
+            if (Volume < VolumeMax)
+                Volume++;
         }
 
         // 音量を下げる
         public void VolumeDown()
         {
-            if (volume > VolumeMin)
-                volume--;
+            if (Volume > VolumeMin)
+                Volume--;
         }
     }
 }
