@@ -15,6 +15,7 @@ namespace WindowsFormsApp2
         static void Main()
         {
             DateTimePropertyExample();
+            DateTimeAddExample();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
@@ -35,6 +36,18 @@ namespace WindowsFormsApp2
             Console.WriteLine("分 = " + now.Minute);
             Console.WriteLine("秒 = " + now.Second);
             Console.WriteLine("曜日 = " + now.DayOfWeek);
+        }
+
+        static void DateTimeAddExample()
+        {
+            DateTime now = DateTime.Now;                    // 現在の日時を得る
+            Console.WriteLine(now);                         // 現在日時の表示
+            TimeSpan addSpan = new TimeSpan(10, 10, 10);    // TimeSpan(時, 分, 秒)
+            DateTime answer = now.Add(addSpan);             // TimeSpanの加算
+            Console.WriteLine(answer);
+            addSpan = new TimeSpan(1, 1, 1, 1);             // TimeSpan(日, 時, 分, 秒)
+            answer = now.Add(addSpan);                      // TimeSpanの加算
+            Console.WriteLine(answer);
         }
     }
 }
