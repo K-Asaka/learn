@@ -17,6 +17,7 @@ namespace WindowsFormsApp2
             DateTimePropertyExample();
             DateTimeAddExample();
             DateTimeToXxxxXxxxStringExample();
+            DateTimeToStringExample();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
@@ -59,6 +60,17 @@ namespace WindowsFormsApp2
             Console.WriteLine(now.ToLongTimeString());
             Console.WriteLine(now.ToShortDateString());
             Console.WriteLine(now.ToShortTimeString());
+        }
+
+        static void DateTimeToStringExample()
+        {
+            DateTime now = DateTime.Now;
+            Console.WriteLine(now.ToString());
+            Console.WriteLine("D = " + now.ToString("D"));
+            Console.WriteLine("T = " + now.ToString("T"));
+            Console.WriteLine("d = " + now.ToString("d"));
+            Console.WriteLine("t = " + now.ToString("t"));
+            Console.WriteLine("m = " + now.ToString("m"));
         }
     }
 }
