@@ -14,6 +14,7 @@ namespace ArraySample
             ArrayRankExample();
             ArrayClearExample();
             ArraySortExample();
+            ArrayReverseExample();
         }
 
         static void ArrayLengthExample()
@@ -58,6 +59,21 @@ namespace ArraySample
             Array.Sort(n1);                 // 12 23 28 43 54 56 73 79 81 93
             PrintArray(n1);
 
+        }
+
+        static void ArrayReverseExample()
+        {
+            int[] n1 = { 28, 56, 23, 79, 12, 43, 93, 81, 54, 73 };
+
+            // 配列n1をn1[3]から4個分反転
+            Array.Reverse(n1, 3, 4);        // 28 56 23 93 43 12 79 81 54 73
+            PrintArray(n1);
+
+            // 降順に並び替える
+            // 配列n1の全要素を昇順に並び替えてから全要素を反転
+            Array.Sort(n1);
+            Array.Reverse(n1);              // 93 81 79 73 56 54 43 28 23 12
+            PrintArray(n1);
         }
 
         static void PrintArray(int[] n)
