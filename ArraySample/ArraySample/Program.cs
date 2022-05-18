@@ -15,6 +15,7 @@ namespace ArraySample
             ArrayClearExample();
             ArraySortExample();
             ArrayReverseExample();
+            ArrayCopyExample();
         }
 
         static void ArrayLengthExample()
@@ -74,6 +75,25 @@ namespace ArraySample
             Array.Sort(n1);
             Array.Reverse(n1);              // 93 81 79 73 56 54 43 28 23 12
             PrintArray(n1);
+        }
+
+        static void ArrayCopyExample()
+        {
+            int[] n1 = { 28, 56, 23, 79, 12, 43, 93, 81, 54, 73 };
+            int[] n2 = new int[5];
+            // n1の要素を先頭から5個分、n2にコピー
+            Array.Copy(n1, n2, 5);      // n2 : 28 56 23 79 12
+            Console.Write("n1 = ");
+            PrintArray(n1);
+            Console.Write("n2 = ");
+            PrintArray(n2);
+
+            // n1の要素をn1[3]から5個分、n2の先頭にコピー
+            Array.Copy(n1, 3, n2, 0, 5);        // n2 : 79 12 43 93 81
+            Console.Write("n1 = ");
+            PrintArray(n1);
+            Console.Write("n2 = ");
+            PrintArray(n2);
         }
 
         static void PrintArray(int[] n)
