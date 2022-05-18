@@ -30,6 +30,11 @@ namespace ArraySample
                 }
             }
 
+            int[] number = { 123, 456, 789, 1000 };
+            foreach (int n in number)
+            {
+                Console.Write($"{n}  ");
+            }
         }
 
         static void ArrayLengthExample()
