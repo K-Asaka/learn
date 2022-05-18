@@ -12,6 +12,7 @@ namespace StringSample
         {
             StringCharsExample();
             StringLengthExample();
+            StringIndexOfExample();
         }
 
         static void StringCharsExample()
@@ -28,6 +29,15 @@ namespace StringSample
             int length2 = str2.Length;      // length2 = 5(全角文字も1字と数える)
             Console.WriteLine("length1 = " + length1);
             Console.WriteLine("length2 = " + length2);
+        }
+
+        static void StringIndexOfExample()
+        {
+            string str = "ABC", str2 = "1234567";
+            int index1 = str.IndexOf('B');          // index1 = 1
+            int index2 = str2.IndexOf("345");       // index2 = 2
+            Console.WriteLine("index1 = " + index1);
+            Console.WriteLine("index2 = " + index2);
         }
     }
 }
