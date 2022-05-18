@@ -13,6 +13,7 @@ namespace ArraySample
             ArrayLengthExample();
             ArrayRankExample();
             ArrayClearExample();
+            ArraySortExample();
         }
 
         static void ArrayLengthExample()
@@ -38,15 +39,33 @@ namespace ArraySample
             int[] n1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
             // 配列n1をn1[3]から4個分初期化
             Array.Clear(n1, 3, 4);      // 1 2 3 0 0 0 0 8 9
-            foreach (int i in n1)
-                Console.Write(i + " ");
-            Console.WriteLine();
+            PrintArray(n1);
 
             // 配列n1の全要素を初期化
             Array.Clear(n1, 0, n1.Length);  // 0 0 0 0 0 0 0 0 0
-            foreach (int i in n1)
+            PrintArray(n1);
+        }
+
+        static void ArraySortExample()
+        {
+            int[] n1 = { 28, 56, 23, 79, 12, 43, 93, 81, 54, 73 };
+
+            // 配列n1をn1[3]から4個分並び替え
+            Array.Sort(n1, 3, 4);           // 28 56 23 12 43 79 93 81 54 73
+            PrintArray(n1);
+
+            // 配列n1の全要素を昇順に並び替え
+            Array.Sort(n1);                 // 12 23 28 43 54 56 73 79 81 93
+            PrintArray(n1);
+
+        }
+
+        static void PrintArray(int[] n)
+        {
+            foreach (int i in n)
                 Console.Write(i + " ");
             Console.WriteLine();
+
         }
     }
 }
