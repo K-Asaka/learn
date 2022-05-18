@@ -12,6 +12,7 @@ namespace ArraySample
         {
             ArrayLengthExample();
             ArrayRankExample();
+            ArrayClearExample();
         }
 
         static void ArrayLengthExample()
@@ -30,6 +31,22 @@ namespace ArraySample
             int r2 = n2.Rank;           // r2 = 2
             Console.WriteLine("r1 = " + r1);
             Console.WriteLine("r2 = " + r2);
+        }
+
+        static void ArrayClearExample()
+        {
+            int[] n1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+            // 配列n1をn1[3]から4個分初期化
+            Array.Clear(n1, 3, 4);      // 1 2 3 0 0 0 0 8 9
+            foreach (int i in n1)
+                Console.Write(i + " ");
+            Console.WriteLine();
+
+            // 配列n1の全要素を初期化
+            Array.Clear(n1, 0, n1.Length);  // 0 0 0 0 0 0 0 0 0
+            foreach (int i in n1)
+                Console.Write(i + " ");
+            Console.WriteLine();
         }
     }
 }
