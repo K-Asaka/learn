@@ -27,17 +27,13 @@ namespace InheritanceSample
             Class2 c2 = new Class2();
 
             c1.M();
-            Console.WriteLine("c1.x = " + c1.x);
             c2.M();
-            Console.WriteLine("c2.x = " + c2.x);
         }
     }
 
     class Class1
     {
-        public int x = 10;
-
-        public void M()
+        public virtual void M()
         {
             Console.WriteLine("基本クラスのメソッドが呼ばれました。");
         }
@@ -45,9 +41,7 @@ namespace InheritanceSample
 
     class Class2 : Class1
     {
-        public new int x = 20;          // 基本クラスの変数xを隠蔽
-
-        public new void M()             // 基本クラスのMメソッドを隠蔽
+        public override void M()
         {
             Console.WriteLine("派生クラスのメソッドが呼ばれました。");
         }
