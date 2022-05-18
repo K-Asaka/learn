@@ -13,6 +13,7 @@ namespace StringSample
             StringCharsExample();
             StringLengthExample();
             StringIndexOfExample();
+            StringInsertExample();
         }
 
         static void StringCharsExample()
@@ -38,6 +39,13 @@ namespace StringSample
             int index2 = str2.IndexOf("345");       // index2 = 2
             Console.WriteLine("index1 = " + index1);
             Console.WriteLine("index2 = " + index2);
+        }
+
+        static void StringInsertExample()
+        {
+            string str = "ABC";
+            string str2 = str.Insert(2, "123");     // str2 = "AB123C";
+            Console.WriteLine("str2 = " + str2);
         }
     }
 }
