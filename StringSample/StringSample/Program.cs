@@ -16,6 +16,7 @@ namespace StringSample
             StringInsertExample();
             StringSubstringExample();
             StringReplaceExample();
+            StringSplitExample();
         }
 
         static void StringCharsExample()
@@ -66,6 +67,25 @@ namespace StringSample
             // str2 = "My cat eats cat food" (dog をすべて cat に置換)
             string str2 = str.Replace("dog", "cat");
             Console.WriteLine("str2 = " + str2);
+        }
+
+        static void StringSplitExample()
+        {
+            string s1 = "Red,Green,Blue,White";
+            string[] w1 = s1.Split(',');            // 区切り文字に「,」を指定して分割
+            foreach (string w in w1)
+            {
+                Console.Write($"[{w}]");
+            }
+            Console.WriteLine();
+
+            char[] delimiter = { '.', ',', ':' };
+            string s2 = "red,green.blue,white:yellow";
+            string[] w2 = s2.Split(delimiter);          // 区切り文字に「.」「,」「:」を指定
+            foreach (string w in w2)
+            {
+                Console.Write($"[{w}]");
+            }
         }
     }
 }
