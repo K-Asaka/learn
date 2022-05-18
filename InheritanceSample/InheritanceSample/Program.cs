@@ -23,37 +23,33 @@ namespace InheritanceSample
             tv.OnOff();
             Console.WriteLine($"電源：{(tv.Power ? "ON" : "OFF")}");
 
-            Class2 c2 = new Class2("旧姓");
-            Console.WriteLine(c2.Name);         // "旧姓"を出力
+            Class1 c1 = new Class1();
+            Class2 c2 = new Class2();
 
-            //c2.name = "新しい姓";
-            c2.NameChange("結婚後の姓");
-            Console.WriteLine(c2.Name);         // "結婚後の姓"を出力
+            c1.M();
+            Console.WriteLine("c1.x = " + c1.x);
+            c2.M();
+            Console.WriteLine("c2.x = " + c2.x);
         }
     }
 
     class Class1
     {
-        protected string name;          // 派生クラスからはアクセス可能
+        public int x = 10;
 
-        public Class1(string n)
+        public void M()
         {
-            name = n;
-        }
-
-        public string Name
-        {
-            get { return name; }
+            Console.WriteLine("基本クラスのメソッドが呼ばれました。");
         }
     }
 
     class Class2 : Class1
     {
-        public Class2(string n) : base(n) { }
+        public new int x = 20;          // 基本クラスの変数xを隠蔽
 
-        public void NameChange(string n)
+        public new void M()             // 基本クラスのMメソッドを隠蔽
         {
-            base.name = n;      // 基本クラスのnameはprotectedなのでアクセス可能
+            Console.WriteLine("派生クラスのメソッドが呼ばれました。");
         }
     }
 }
