@@ -14,6 +14,7 @@ namespace StringSample
             StringLengthExample();
             StringIndexOfExample();
             StringInsertExample();
+            StringSubstringExample();
         }
 
         static void StringCharsExample()
@@ -46,6 +47,15 @@ namespace StringSample
             string str = "ABC";
             string str2 = str.Insert(2, "123");     // str2 = "AB123C";
             Console.WriteLine("str2 = " + str2);
+        }
+
+        static void StringSubstringExample()
+        {
+            string str = "1234567";
+            string str2 = str.Substring(3);     // str2 = "4567"
+            string str3 = str.Substring(2, 3);  // str3 = "345"
+            Console.WriteLine("str2 = " + str2);
+            Console.WriteLine("str3 = " + str3);
         }
     }
 }
