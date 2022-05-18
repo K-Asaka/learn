@@ -15,6 +15,7 @@ namespace StringSample
             StringIndexOfExample();
             StringInsertExample();
             StringSubstringExample();
+            StringReplaceExample();
         }
 
         static void StringCharsExample()
@@ -56,6 +57,15 @@ namespace StringSample
             string str3 = str.Substring(2, 3);  // str3 = "345"
             Console.WriteLine("str2 = " + str2);
             Console.WriteLine("str3 = " + str3);
+        }
+
+        static void StringReplaceExample()
+        {
+            string str = "My dog eats dog food.";
+            Console.WriteLine("str = " + str);
+            // str2 = "My cat eats cat food" (dog をすべて cat に置換)
+            string str2 = str.Replace("dog", "cat");
+            Console.WriteLine("str2 = " + str2);
         }
     }
 }
