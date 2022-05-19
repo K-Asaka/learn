@@ -27,6 +27,7 @@ namespace StaticSample
             PIExample();
             PowExample();
             SqrtExample();
+            SinCosTanExample();
         }
 
         static void PIExample()
@@ -46,6 +47,18 @@ namespace StaticSample
         {
             double x = Math.Sqrt(2.0);      // 2の平方根 x = 1.4142135623731
             Console.WriteLine(x);
+        }
+
+        static void SinCosTanExample()
+        {
+            double angle = 30;
+            double radians = angle * (Math.PI / 180);
+            double sin = Math.Sin(radians);     // sin = 0.5
+            double cos = Math.Cos(radians);     // cos = 0.866025403784439
+            double tan = Math.Tan(radians);     // tan = 0.577350269189626
+            Console.WriteLine(sin);
+            Console.WriteLine(cos);
+            Console.WriteLine(tan);
         }
     }
 
