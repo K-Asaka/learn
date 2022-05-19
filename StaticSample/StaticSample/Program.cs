@@ -26,6 +26,7 @@ namespace StaticSample
 
             PIExample();
             PowExample();
+            SqrtExample();
         }
 
         static void PIExample()
@@ -38,6 +39,12 @@ namespace StaticSample
         static void PowExample()
         {
             double x = Math.Pow(2.0, 10.0);     // 2の10乗 x = 1024
+            Console.WriteLine(x);
+        }
+
+        static void SqrtExample()
+        {
+            double x = Math.Sqrt(2.0);      // 2の平方根 x = 1.4142135623731
             Console.WriteLine(x);
         }
     }
