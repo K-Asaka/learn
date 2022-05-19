@@ -23,6 +23,15 @@ namespace StaticSample
             Class1.PassScore += 10;
 
             Console.WriteLine($"合格点は{Class1.PassScore}点に上がりました。");
+
+            PIExample();
+        }
+
+        static void PIExample()
+        {
+            double r = 3.4;
+            double s = r * r * Math.PI;     // 円の面積 s = 36.316811075498
+            Console.WriteLine(s);
         }
     }
 
