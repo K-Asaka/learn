@@ -42,6 +42,38 @@ namespace FileIOSample
             {
                 Console.WriteLine(ex.Message);
             }
+
+            // ファイルを全部読み込む例
+            string readText = "";
+            try
+            {
+                using (StreamReader reader = new StreamReader("test1.txt", Encoding.Default))
+                {
+                    readText = reader.ReadToEnd();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            Console.WriteLine(readText);
+
+            // ファイルを1行ずつ読み込む例
+            try
+            {
+                using (StreamReader reader2 = new StreamReader("test1.txt", Encoding.Default))
+                {
+                    string line;
+                    while ((line = reader2.ReadLine()) != null)
+                    {
+                        Console.WriteLine(line);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }
