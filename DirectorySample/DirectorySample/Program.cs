@@ -12,6 +12,7 @@ namespace DirectorySample
         static void Main(string[] args)
         {
             ExistsExample();
+            CreateDirectoryExample();
         }
 
         static void ExistsExample()
@@ -21,6 +22,22 @@ namespace DirectorySample
                 Console.WriteLine(directory + "ディレクトリは存在します。");
             else
                 Console.WriteLine(directory + "ディレクトリは存在しません。");
+        }
+
+        static void CreateDirectoryExample()
+        {
+            try
+            {
+                if (Directory.Exists("test") == false)
+                {
+                    Console.WriteLine("testディレクトリが存在しないので作成します。");
+                    Directory.CreateDirectory("test");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }
