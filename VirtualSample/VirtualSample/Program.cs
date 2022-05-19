@@ -24,7 +24,7 @@ namespace VirtualSample
         }
     }
 
-    class Mark
+    abstract class Mark
     {
         public Mark(string name)
         {
@@ -32,10 +32,8 @@ namespace VirtualSample
         }
         public string Name { get; set; }
 
-        public virtual void Draw()      // 仮想メソッド
-        {
-            Console.WriteLine("");      // とりあえず空文字列を描く
-        }
+        // 抽象メソッド
+        public abstract void Draw();
     }
 
     class Triangle : Mark
