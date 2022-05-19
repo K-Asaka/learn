@@ -13,6 +13,7 @@ namespace DirectorySample
         {
             ExistsExample();
             CreateDirectoryExample();
+            DeleteExample();
         }
 
         static void ExistsExample()
@@ -32,6 +33,22 @@ namespace DirectorySample
                 {
                     Console.WriteLine("testディレクトリが存在しないので作成します。");
                     Directory.CreateDirectory("test");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        static void DeleteExample()
+        {
+            try
+            {
+                if (Directory.Exists("test") == true)
+                {
+                    Console.WriteLine("testディレクトリは存在するので削除します。");
+                    Directory.Delete("test");
                 }
             }
             catch (Exception ex)
