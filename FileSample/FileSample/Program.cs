@@ -12,6 +12,8 @@ namespace FileSample
         static void Main(string[] args)
         {
             ExistsExample();
+            CreateExample();
+            DeleteExample();
         }
 
         static void ExistsExample()
@@ -23,5 +25,37 @@ namespace FileSample
                 Console.WriteLine(fileName + "は存在しません。");
         }
 
+        static void CreateExample()
+        {
+            try
+            {
+                if (File.Exists("test.txt") == false)
+                {
+                    Console.WriteLine("test.txt ファイルは存在しないので作成します。");
+                    FileStream fs = File.Create("test.txt");
+                    fs.Close();     // ファイルをクローズ
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        static void DeleteExample()
+        {
+            try
+            {
+                if (File.Exists("test.txt") == true)
+                {
+                    Console.WriteLine("test.txt ファイルは存在するので削除します。");
+                    File.Delete("test.txt");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
     }
 }
