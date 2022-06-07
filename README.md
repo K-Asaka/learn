@@ -585,3 +585,24 @@ assert 0 < age < 100
 age = -1
 assert 0 < age < 100, 'ageは年齢を表す数値でなければならない'
 ```
+
+forループ  
+すべての要素を対象にして、コードブロックを実行する。
+```
+words = ['this', 'is', 'an', 'ex', 'parrot']
+for word in words:
+    print(word)
+```
+
+範囲を生成する。
+```
+range(0, 10)
+list(range(0, 10))
+range(10)
+list(range(10))
+```
+
+```
+for number in range(1, 101):
+    print(number)
+````
