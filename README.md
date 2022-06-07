@@ -468,3 +468,65 @@ print('年齢:', 42)
 ```
 print('年齢:', 42, sep="")
 ```
+
+インポート時の別名
+```
+import math as foobar
+foobar.sqrt(4)
+from math import sqrt as foobar
+foobar(4)
+```
+
+シーケンスアンパック(sequence unpacking)あるいはイテラブルアンパック(iterable unpacking)  
+一連の値の列(シーケンス)を一連の変数の列にアンパックする(解いて取り出す)
+```
+x, y, z = 1, 2, 3
+print(x, y, z)
+x, y =y, x
+print(x, y, z)
+x, y, z = 1, 2, 3
+x, y, z = y, z, x
+print(x, y, z)
+values = 1, 2, 3
+values
+x, y, z = values
+x
+person = {'名前': 'ロビン', 'ガールフレンド': 'マリオン'}
+key, value = person.popitem()
+key
+value
+a, b, *rest = [1, 2, 3, 4]
+rest
+name = "アルバス・パーシバル・ウルフリック・ブライアン・ダンブルドア"
+first, *middle, last = name.split("・")
+middle
+```
+
+連鎖代入
+```
+x = y = somefunction()
+```
+
+累算代入(augmented assignment)
+```
+x = 2
+x += 1
+x *= 2
+x
+x = 'foo'
+x += 'bar'
+x *= 2
+x
+```
+
+真偽値  
+以下は全て「偽」と解釈される。
+```
+False
+None
+0
+""
+()
+[]
+{}
+```
