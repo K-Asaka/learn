@@ -392,3 +392,69 @@ print(d['name'])  # エラー
 print(d.get('name'))
 print(d.get('name', 'N/A'))
 ```
+
+items  
+返される値は辞書ビューと呼ばれる特殊な型。
+```
+d = {'タイトル': 'Pythonウェブサイト', 'url': 'https://www.python.org', 'スパム数': 0}
+d.items()
+ditems = d.items()
+len(ditems)
+('スパム数', 0) in ditems
+list(d.items())
+```
+
+keys
+```
+d.keys()
+```
+
+pop
+```
+d = {'x': 1, 'y': 2}
+d.pop('x')
+d
+```
+
+popitem
+```
+d = {'タイトル': 'Pythonウェブサイト', 'url': 'https://www.python.org', 'スパム数': 0}
+d.popitem()
+d
+d.popitem()
+d
+```
+
+setdefault  
+指定のキーに対応する値を返す。値が無ければ設定する
+```
+d = {}
+d.setdefault('名前', '＜不明＞')
+d
+d['名前'] = '太郎'
+d.setdefault('名前', '＜不明＞')
+d
+d = {}
+d.setdefault('名前')    # キーのみを指定。Noneが返る
+d
+```
+
+update  
+別の辞書を指定し、別の辞書の項目と同じキーの項目があれば辞書を更新し、その項目がなければ辞書に追加する。
+```
+d = {'タイトル': 'Pythonウェブサイト', 'url': 'https://www.python.org', '更新日時': 'Mar 14 22:09:15 PST 2019'} 
+x = {'タイトル': 'Python言語のウェブサイト'}
+d.update(x)
+d
+```
+
+values  
+辞書内にあるすべての値(value)を辞書ビューとして返す。
+```
+d = {}
+d[1] = 1
+d[2] = 2
+d[3] = 3
+d[4] = 4
+d.values()
+```
