@@ -65,3 +65,54 @@ input('ユーザー名を入力してください: ') in users
 subject = '$$$ 大金持ちになるチャンスです!!! $$$'
 '$$$' in subject
 ```
+
+文字列をリストに変換する(リストを文字列に変換する)
+```
+l = list("こんにちは")
+print(l)
+print(''.join(l))
+```
+
+要素のないところには代入できない。空の要素を作ってから代入
+```
+list = [None] * 101
+list[100] = '101番目'
+list[100]
+```
+
+要素の削除
+```
+names = ['太郎', '花子', 'ジョン', 'メアリー', '和宏']
+del names[2]
+names
+```
+
+スライスに対する代入
+```
+name = list('Perl')
+name
+name[2:] = list('ar')
+name
+```
+
+元とは違う長さのシーケンスでスライスを置き換える
+```
+name = list('Perl')
+name[1:] = list('ython')
+name
+```
+
+スライスへ挿入
+```
+numbers = [1, 5]
+numbers[1:1] = [2, 3, 4]
+numbers
+```
+
+空のスライスとの置き換えで要素の削除
+```
+numbers = [1, 2, 3, 4, 5]
+numbers[1:4] = []
+numbers
+```
+
