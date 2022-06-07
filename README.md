@@ -213,3 +213,91 @@ print('{0: .2f}\n{1: .2f}'.format(pi, -pi))
 ```
 "{:#g}".format(42)
 ```
+
+文字列のメソッド  
+center
+```
+"The Middle by Jimmy Eat World".center(39)
+"The Middle by Jimmy Eat World".center(39, "*")
+```
+
+find
+```
+'With a moo-moo here, and a moo-moo there'.find('moo')
+'隣の客はよく柿食う客だ'.find('客')
+title = "Monty Python's Flying Circus"
+title.find('Monty')
+title.find('Python')
+title.find('Zirquss')
+```
+
+検索の開始点(と終了点)を指定
+```
+subject = '$$$ Get rich now!!! $$$'
+subject.find('$$$')
+subject.find('$$$', 1)
+subject.find('!!!')
+subject.find('!!!', 0, 16)
+```
+
+join  
+結合しようとするシーケンスの要素はすべて文字列でなければならない。
+```
+seq = [1, 2, 3, 4, 5]
+sep = '+'
+sep.join(seq)   # エラー
+seq = ['1', '2', '3', '4', '5']
+sep = '+'
+sep.join(seq)
+dirs = '', 'usr', 'bin', 'env'  # ディレクトリのリスト
+'/'.join(dirs)  # UNIX用のパスを生成
+print('C:' + '\\'.join(dirs))   # Windows用のパスを生成
+```
+
+lower
+```
+"Monty Python's Flying Circus".lower()
+name = 'Monty'
+names = ['monty', 'python', 'flying']
+if name.lower() in names: print('見つかった!')
+...
+```
+
+title
+```
+"that's all folks".title()
+```
+
+capwords
+```
+import string
+string.capwords("that's all, folks")
+```
+
+replace
+```
+'This is a test. That is also a test'.replace('is', 'eez')
+```
+
+split
+```
+'1+2+3+4+5'.split('+')
+'/usr/bin/env'.split('/')
+'Using   the   default'.split()
+```
+
+strip
+```
+'    internal whitespace  is  kept    '.strip()
+'　　　全角のスペースも　前後のものは削除されるが...　　　'.strip()
+'*** SPAM * for * everyone!!! ***'.strip(' *!') # 削除したい文字を含む文字列を引数に指定
+'　スペースは全角も半角も削除 '.strip('　 ')
+```
+
+translate
+```
+table = str.maketrans('cs', 'kz')
+'this is an incredible test'.translate(table)
+table = str.maketrans('cs', 'kz', ' ')
+'this is an incredible test'.translate(table)
+```
