@@ -116,3 +116,100 @@ numbers[1:4] = []
 numbers
 ```
 
+文字列フォーマット演算子
+```
+format = "こんにちは、%sさん。%sですか？"
+value = ('花子', 'お元気')
+format % value
+```
+
+テンプレート文字列
+```
+from string import Template
+tmpl = Template("こんにちは、$whoさん。$whatですか？")
+tmpl.substitute(who="太郎", what="暑い")
+```
+
+置換フィールド名
+```
+"{foo} {} {bar} {}".format(1, 2, bar=4, foo=3)
+```
+
+与えられた値そのものを使わず、通常のPythonコードと同じように、その一部にアクセスする例
+```
+"{name[0]}".format(name=fullname)
+tmpl = "モジュール{mod.__name__}はπの値を{mod.pi}と定義しています。"
+tmpl.format(mod=math)
+```
+
+基本的な変換
+関数str、repr、asciiによる変換
+```
+print("{pi!s} {pi!r} {pi!a}".format(pi="π"))
+```
+s:str関数は一般的に値の自然な文字列表現を生成する。  
+r:repr関数は与えられた値のPython表現(Python representation)を生成しようとする
+。  
+a:ascii関数はASCIIエンコーディングで許されている文字だけの表現を生成する。  
+
+変換する値の型を指定する
+```
+"The number is {num:f}".format(num=42) 
+"The number is {num:b}".format(num=42) 
+```
+
+表示幅
+```
+"{num:10}".format(num=3)
+"{name:10}".format(name="Bob")
+```
+
+小数部の桁精度
+```
+"{pi:.2f}はパイを食べる日です。".format(pi=math.pi)
+```
+
+表示幅と精度の組み合わせ
+```
+"{pi:10.2f}".format(pi=math.pi)
+```
+
+整数の3桁ごとの区切りの指定
+```
+"1グーゴル(googol)の値は{:50,}に等しい。".format(10**100)
+```
+表示幅と精度と組み合わせる時は、表示幅と精度のピリオドの間に「,」を入れる
+
+数値の前を0で埋める。表示幅の前に0を指定
+```
+'{:010.2f}'.format(pi)
+```
+
+充填文字(fill character)
+```
+"{:$^15}".format(" 大当たり！ ")
+```
+
+=を使った充填文字
+```
+print('{0:10.2f}\n{1:=10.2f}'.format(pi, -pi))
+```
+
+正数に符号をつける
+```
+print('{0:-.2f}\n{1:-.2f}'.format(pi, -pi))
+print('{0:+.2f}\n{1:+.2f}'.format(pi, -pi))
+print('{0: .2f}\n{1: .2f}'.format(pi, -pi))
+```
+
+数値の種類を表す記号を追加
+```
+"{:#b}".format(42)
+"{:#o}".format(42)
+"{:#x}".format(42)
+```
+
+小数点以下の0を表示
+```
+"{:#g}".format(42)
+```
