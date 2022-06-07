@@ -301,3 +301,94 @@ table = str.maketrans('cs', 'kz')
 table = str.maketrans('cs', 'kz', ' ')
 'this is an incredible test'.translate(table)
 ```
+
+dict  
+シーケンスから辞書を作成
+```
+items = [('名前', '太郎'), ('年齢', 42)]
+d = dict(items)
+d
+d['名前']
+```
+キーワード引数で辞書を作成
+```
+d = dict(名前='太郎', 年齢=42)
+```
+空の辞書を作成
+```
+e = dict()
+```
+
+clear
+```
+d = {}
+d['name'] = 'Gumby'
+d['age'] = 42
+d
+returned_value = d.clear()
+d
+print(returned_value)
+```
+次のようなコードの場合にclearを使う
+```
+x = {}
+y = x
+x['key'] = 'value'
+y
+x = {}
+y
+#-----
+x = {}
+y = x
+x['key'] = 'value'
+y
+x.clear()
+y
+```
+
+copy
+```
+x = {'username': 'admin', 'machines': ['foo', 'bar', 'baz']}
+y = x.copy()
+y['username'] = 'mlh'
+y
+x
+y['machines'].remove('bar')
+y
+x
+```
+
+deepcopy
+copyでは辞書内の参照オブジェクトは同じオブジェクトを指している。それを回避するためのメソッド。
+```
+from copy import deepcopy
+x = {'username': 'admin', 'machines': ['foo', 'bar', 'baz']}
+z = deepcopy(x)
+z['username'] = 'mlh'
+z
+x
+z['machines'].remove('bar')
+z
+x
+```
+
+fromkeys  
+与えられたキーから新たな辞書を作成する
+```
+# 冗長な書き方
+{}.fromkeys(['name', 'age'])
+{}.fromkeys(['名前', '年齢'])
+# 一般的な書き方
+dict.fromkeys(['name', 'age'])
+dict.fromkeys(['名前', '年齢'])
+dict.fromkeys(['name', 'age'], '(unknown)')
+dict.fromkeys(['名前', '年齢'], '(不詳)')
+```
+
+get
+```
+d = {}
+print(d['name'])  # エラー
+print(d.get('name'))
+print(d.get('name', 'N/A'))
+```
