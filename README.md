@@ -606,3 +606,29 @@ list(range(10))
 for number in range(1, 101):
     print(number)
 ````
+
+辞書のイテレーション
+```
+d = {'x': 1, 'y': 2, 'z': 3}
+for key in d:
+    print(key, 'は', d[key], 'に対応')
+```
+```
+for key, value in d.items():
+    print(key, 'は', value, 'に対応')
+```
+
+並列イテレーション  
+2つのリストを並列に繰り返したいときは組み込み関数zipを使う。zipはシーケンスをジッパーのように組み合わせ、タプルのシーケンスを返す。
+```
+names = ['渋谷', '恵比寿', '上野', '巣鴨']
+ages = [12, 45, 32, 102]
+list(zip(names, ages))
+for name, age in zip(names, ages):
+    print(name, 'さんは', age, '歳です')
+```
+zip関数は、シーケンスをいくつでも好きなだけ組み合わせられる。
+シーケンスの長さが異なる場合は、最も短いシーケンスが終わりに達すると全体も終了する。
+```
+list(zip(range(5), range(100000000)))
+```
