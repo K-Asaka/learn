@@ -632,3 +632,13 @@ zip関数は、シーケンスをいくつでも好きなだけ組み合わせ�
 ```
 list(zip(range(5), range(100000000)))
 ```
+
+reversedとsorted
+```
+sorted([4, 3, 6, 8, 3])
+sorted('Hello, world!')
+list(reversed('Hello, world!'))
+''.join(reversed('Hello, world!'))
+sorted('こんにちは、皆さん！')
+''.join(reversed('こんにちは、皆さん！'))
+```
