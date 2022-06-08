@@ -642,3 +642,19 @@ list(reversed('Hello, world!'))
 sorted('こんにちは、皆さん！')
 ''.join(reversed('こんにちは、皆さん！'))
 ```
+
+リスト内包表記
+```
+[e for x in range(n)]
+# 0～n-1の整数に対してeを実行し、リストを生成
+[e for x in range(n) if c]
+# 0～n-1の整数に対してcが真ならeを実行し、リストを生成
+[e for x in range(n) for y in range(n)]
+# 0～n-1の2つの整数(xとy)に対してeを実行し、リストを生成
+```
+```
+[x * x for x in range(10)]
+[x * x for x in range(10) if x * x % 3 == 0]
+[(x, y) for x in range(3) for y in range(3)]
+```
+
