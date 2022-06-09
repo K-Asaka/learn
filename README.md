@@ -657,4 +657,3 @@ sorted('こんにちは、皆さん！')
 [x * x for x in range(10) if x * x % 3 == 0]
 [(x, y) for x in range(3) for y in range(3)]
 ```
-
