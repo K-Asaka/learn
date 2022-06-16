@@ -832,3 +832,88 @@ names
 ```
 こうすれば引数nにはコピーが入るため、元のリストは安全。
 
+
+詳細の隠蔽  
+人名を保存しておき、ファーストネーム、ミドルネーム、ラストネームで人を探し出せるようなプログラムを書きたいとする。
+次のようなデータ構造を使うことにする。
+```
+storage = {}
+storage['first'] = {}
+storage['middle'] = {}
+storage['last'] = {}
+```
+この3つのキーの下位に別の辞書を作る。
+この下位辞書では、名前(ファーストネーム、ミドルネーム、ラストネーム)をキーとし、人名のリストを値として挿入する。
+```
+me = 'Magnus Lie Hetland'
+storage['first']['Magnus'] = [me]
+storage['middle']['Lie'] = [me]
+storage['last']['Hetland'] = [me]
+```
+登録されている人の中でLieというミドルネームをもった人全員のリストが欲しければ次のようにする。
+```
+storage['middle']['Lie']
+```
+この構造に人名を追加していくのは面倒。特に同じ姓や名の人が多くなってくると、その名前の下にすでに保存されているリストを延長していかなければならない。
+```
+my_sister = 'Anne Lie Hetland'
+storage['first'].setdefault('Anne', []).append(my_sister)
+storage['middle'].setdefault('Lie', []).append(my_sister)
+storage['last'].setdefault('Hetland', []).append(my_sister)
+storage['first']['Anne']
+storage['middle']['Lie']
+```
+このような更新用コードがたくさん入った大きなプログラムを書くことを想像すると、すぐに手に負えなくなることが考えられる。
+抽象化のポイントは、更新の詳細の泥臭い部分を覆い隠すこと。
+関数を使うのがその方法の1つ。
+```
+def init(data):
+    data['first'] = {}
+    data['middle'] = {}
+    data['last'] = {}
+```
+次のように使う。
+```
+storage = {}
+init(storage)
+storage
+```
+関数が初期化をしてくれるため、コードは読みやすくなった。  
+名前を保存する関数を書く前に、名前のリストを探し出す(lookupする)関数を書く。
+```
+def lookup(data, label, name):
+    return data[label].get(name)
+```
+lookup関数を使えば、ラベルと名前(たとえば'middle'と'Lie')を与えると、フルネームのリストが返される。
+```
+lookup(storage, 'middle', 'Lie')
+```
+返されるリストはstorageに保存されてるものと同じ。
+リストを変更すると、その変更はstorageにも及ぶ。  
+名前を保存する関数を書く。
+```
+def store(data, full_name):
+    names = full_name.split()
+    if len(names) == 2: names.insert(1, '')
+    labels = 'first', 'middle', 'last'
+    for label, name in zip(labels, names):
+        people = lookup(data, label, name)
+        if people:
+            people.append(full_name)
+        else:
+            data[label][name] = [full_name]
+```
+ここまでに作成した関数を呼び出す。
+```
+MyNames = {}
+init(MyNames)
+store(MyNames, 'Magnus Lie Hetland')
+lookup(MyNames, 'middle', 'Lie')
+store(MyNames, 'Robin Hood')
+store(MyNames, 'Robin Locksley')
+lookup(MyNames, 'first', 'Robin')
+store(MyNames, 'Mr. Gumby')
+lookup(MyNames, 'middle', '')
+```
+こういったアプリケーションの場合は、オブジェクト指向の考え方を用いたほうがわかりやすくなることが多い。
+
