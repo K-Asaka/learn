@@ -738,3 +738,21 @@ scope = {}
 exec('x = 2', scope)
 eval('x * x', scope)
 ```
+
+## 関数による抽象化
+
+標準の組み込み関数callableを使えば、あるものを呼び出すことが可能かどうかわかる。
+```
+import math
+x = 1
+y = math.sqrt
+callable(x)
+callable(y)
+```
+
+関数の定義にはdef文(関数定義文)を使う。
+```
+def hello(name):
+    return 'こんにちは、' + name + 'さん！'
+```
+
