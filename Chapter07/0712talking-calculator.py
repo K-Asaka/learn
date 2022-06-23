@@ -14,3 +14,13 @@ class TalkingCalculator(Calculator, Talker):
 tc = TalkingCalculator()
 tc.calculate('1 + 2 * 3')
 tc.talk()
+
+
+print(hasattr(tc, 'talk'))
+print(hasattr(tc, 'fnord'))
+
+print(callable(getattr(tc, 'talk', None)))
+print(callable(getattr(tc, 'fnord', None)))
+
+setattr(tc, 'name', '山田太郎')
+print(tc.name)
