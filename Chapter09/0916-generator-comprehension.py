@@ -1,0 +1,6 @@
+g = ((i + 2) ** 2 for i in range(2, 27))
+print(next(g))
+print(next(g))
+print(next(g))
+print(next(g))
+print(next(g))
