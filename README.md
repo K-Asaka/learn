@@ -1109,3 +1109,38 @@ Pythonにはラムダ式と呼ばれる機能があり、簡単な関数をイ�
 ```
 list(filter(lambda x: x.isalnum(), seq))
 ```
+
+
+## オブジェクト指向
+
+割愛
+
+
+## 例外
+
+例外的な自体を表すのに例外オブジェクトを使う。
+エラーに遭遇すると、例外を生成する。そのオブジェクトが補足されないと、プログラムはトレースバックと呼ばれるエラーメッセージを出力して終了する。
+```
+>>> 1/0
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: division by zero
+```
+
+独自の例外の生成  
+raise文  
+例外を生成するには、raise文を使い、Exceptionクラス(のサブクラス)またはそのインスタンスを引数として指定する。
+```
+raise Exception
+
+raise Exception('ハイパードライブの過負荷')
+```
+
+例外クラスの作り方は他のクラスと同じだが、必ずExceptionの(直接あるいは間接の)サブクラスとする。
+```
+class SomeCustomException(Exception): pass
+```
+
+例外の補足  
+try/except文を使うことで、例外を処理(補足)できる。
+try/exceptを使えばエラーハンドラは1つだけで済む。
