@@ -1214,3 +1214,12 @@ filterwarnings("ignore", category=DeprecationWarning)
 warn("非推奨警告をもうひとつ", DeprecationWarning)
 warn("別の警告")
 ```
+
+## 特殊メソッド、プロパティ、イテレータ、ジェネレータ
+
+コンストラクタ  
+オブジェクトを初期化するためのメソッド。
+```
+def __init__(self):
+```
+
