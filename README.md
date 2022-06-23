@@ -1185,3 +1185,32 @@ finally節
 ifか例外か  
 if/elseを使うのが自然だと思えるようなケースでも、try/exceptを使ったほうがうまく実装できる場合がある。
 また、オブジェクトに特定の属性があるかどうかチェックする際にもtry/exceptが有用。
+
+
+警告  
+実行の過程でちょっとした異常が発生した場合に警告したいときは、warning(ウォーニング)モジュールのwarn関数を使う。
+```
+from warnings import warn
+warn("何かここのところがちょっと嫌な感じ。")
+```
+
+同じモジュールのfilterwarnings関数を使うことで、一部あるいはすべての警告を除去(フィルター)できる。
+```
+from warnings import filterwarnings
+filterwarnings("ignore")
+warn("誰かいるかい？")
+filterwarnings("error")
+warn("何か、メチャクチャ変だぞ！")
+```
+
+警告を生成する際、引数にはほかの例外や「警告カテゴリ」を指定できる。
+指定する例外はWarningのサブクラスでなければならない。
+ここで指定した例外は、特定種類の警告を除去するために使うこともできる。
+```
+filterwarnings("error")
+warn("この関数はとても古い...", DeprecationWarning)
+
+filterwarnings("ignore", category=DeprecationWarning)
+warn("非推奨警告をもうひとつ", DeprecationWarning)
+warn("別の警告")
+```
