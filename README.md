@@ -1360,3 +1360,17 @@ import hello
 import importlib
 hello = importlib.reload(hello)
 ```
+
+
+モジュールにおける関数定義
+```python:hello2.py
+# hello2.py
+def hello():
+    print("Hello world!")
+```
+hello2.pyをインポートするとモジュールとして実行され、hello関数はモジュールのスコープで定義される。
+```
+import hello2
+hello2.hello()
+```
+
