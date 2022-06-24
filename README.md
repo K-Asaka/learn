@@ -1411,3 +1411,31 @@ import hello4
 hello4.hello()
 ```
 
+
+モジュールを正しい場所に配置する  
+ディレクトリのリストは、sysモジュールの変数pathで見ることができる。
+モジュールを置くべき場所を確認する。
+```
+import sys,pprint
+pprint.pprint(sys.path)
+```
+長すぎて1行に収まりきらないデータ構造体の場合は、pprintモジュールのpprint関数を使うとよい。pprintは「プリティプリント」をする関数。
+
+ディレクトリsite-packagesは最良の選択肢。
+hello4.pyをanother_hello.pyのように名前を変更してからsite-packagesへ保存する。
+```
+import another_hello
+another_hello.hello()
+```
+
+モジュールをsite-packagesのような場所に置いてあれば、どのプログラムからでもインポートできるようになる。
+
+
+インタプリタに探す場所を教える  
+直接sys.pathを変更する方法は一般的な方法ではない。
+環境変数PYTHONPATHにモジュールのディレクトリを指定する。  
+bashで環境変数PYTHONPATHに~/pythonを追加するには次のようにする。
+```
+export PYTHONPATH=$PYTHONPATH:~/python
+```
+
