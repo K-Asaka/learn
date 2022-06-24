@@ -1512,3 +1512,11 @@ print(range.__doc__)
 ```
 https://docs.python.org/library
 
+
+ソースコード  
+copyのソースコードを読みたいとする。
+1つの方法はsys.pathを調べて自分で探すこと。
+より速いのがモジュールのプロパティ__file__を調べること。
+```
+print(copy.__file__)
+```
