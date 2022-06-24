@@ -1374,3 +1374,40 @@ import hello2
 hello2.hello()
 ```
 
+
+モジュールへテストコードの追加
+次のように書くと他のプログラムでhello関数を使おうとインポートした際にテストコードが実行される。
+```python:listing10-03.py
+# hello3.py
+def hello():
+    print("Hello world!")
+
+# テスト
+hello()
+```
+
+モジュールが単独でプログラムとして実行されているのか、他のプログラムにインポートされているのかを変数__name__を使ってチェックできる。
+```python:1003__name__.py
+import hello3
+print __name__
+print hello3.__name__
+```
+
+メインプログラム内では変数__name__の値は'__main__'になる。
+インポートされたモジュール内では、そのモジュールの名前になる。
+
+```python:hello4.py
+def hello():
+    print("Hello, world!")
+
+def test():
+    hello()
+
+if __name__ == '__main__': test()
+```
+
+```python:1004__name__2.py
+import hello4
+hello4.hello()
+```
+
