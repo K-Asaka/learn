@@ -1734,3 +1734,8 @@ __exit__が偽(False)を返すと、すべての例外が抑制される。
 ファイルオブジェクトの__enter__メソッドは自分自身を返し、__exit__メソッドはファイルをクローズする。
 
 
+単純なデータベースアプリケーション  
+米国農務省(USDA)農業調査局(Agricultural Research Service, https://www.ars.usda.gov)のデータを基にした小規模な栄養素データベースの構築方法を確認する。
+https://data.nal.usda.gov/dataset/composition-foods-raw-processed-prepared-usda-national-nutrient-database-standard-referen-10
+から「sr28abbr.zip」をダウンロードする。
+
