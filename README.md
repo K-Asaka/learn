@@ -1739,3 +1739,8 @@ __exit__が偽(False)を返すと、すべての例外が抑制される。
 https://data.nal.usda.gov/dataset/composition-foods-raw-processed-prepared-usda-national-nutrient-database-standard-referen-10
 から「sr28abbr.zip」をダウンロードする。
 
+
+Requests
+```
+pip install requests
+```
