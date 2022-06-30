@@ -1,1 +1,3 @@
-Your mother was a hamster and your father smelled fo elderberries.
+First line
+Second line
+Third and final line
