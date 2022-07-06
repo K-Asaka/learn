@@ -1767,3 +1767,11 @@ pip install pytidylib
 UNIXやLinuxの系統のOSなら、コマンドライン版のTidyが利用できる可能性が高い。
 Tidyのサイト(http://html-tidy.org)から実行可能なバイナリを取得することも可能。
 バイナリ版が入手できれば、subprocessモジュール(あるいはPopen系の関数)を使ってTidyのプログラムを実行できる。  
+
+
+Beautiful Soup
+```
+pip install beautifulsoup4
+```
+
+
