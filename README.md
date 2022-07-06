@@ -1823,3 +1823,18 @@ route('/powers/<int:n>')とすることで変換が追加される。こうし�
 http://127.0.0.1:5000/powers/3
 というURLへのアクセスに対して、1、2、4という出力が得られる。
 
+その他のWebアプリケーションフレームワーク  
+* Django        https://djangoproject.com
+* TurboGears    https://turbogears.org
+* web2py        http://web2py.com
+* Grok          https://pypi.python.org/pypi/grok
+* Zope2         https://pypi.python.org/pypi/Zope2
+* Pyramid       https://trypyramid.com
+
+
+### Webサービス
+
+Webサービスは、コンピュータフレンドリーなWebページのようなもの。
+ネットワークを介してプログラムが情報を交換できるような規格とプロトコルに基づいており、通常は一方のプログラム(クライアントあるいはサービスリクエスタと呼ばれる)が情報やサービスを求め、もう一方のプログラム(サーバあるいはサービスプロバイダ)がその情報やサービスを提供する。
+
+
