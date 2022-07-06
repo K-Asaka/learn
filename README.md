@@ -1961,3 +1961,74 @@ python3 my_math.py
 この例では、square(2)によるテストではこのバグは見つけられない。
 x == 2の場合、x ** 2とx ** xは同じになる。
 
+
+## unittest
+
+doctestがとても簡単に使えるのに対して、unittestは、柔軟性に優れていて強力(Java用テストフレームワークのJUnitがベース)。unittestはdoctestよりも習得に時間がかかるが、大規模で包括的な一連のテストを体系だった方法で記述できる。
+
+このほかの単体テストツールとしては、pytest(https://pytest.org/en/latest/)やnose(https://nose.readthedocs.io/en/latest/)などがある。
+
+ここでも簡単な例を見る。  
+積を計算するproduct関数を含むmy_math2というモジュールを記述する(ファイルtest_my_math2.py)。
+unittestモジュールのTestCaseクラスを使う。
+```
+import unittest, my_math2
+
+class ProductTestCase(unittest.TestCase):
+
+    def test_integers(self):
+        for x in range(-10, 10):
+            for y in range(-10, 10):
+                p = my_math2.product(x, y)
+                self.assertEqual(p, x * y, 'Integerの乗算に失敗しました')
+    
+    def test_floats(self):
+        for x in range(-10, 10):
+            for y in range(-10, 10):
+                x = x / 10
+                y = y / 10
+                p = my_math2.product(x, y)
+                self.assertEqual(p, x * y, 'Floatの乗算に失敗しました')
+
+if __name__ == '__main__': unittest.main()
+```
+
+unittest.main関数が、テスト実行の面倒をみてくれる。
+これがTestCaseのすべてのサブクラスをインスタンス化し、名前がtestで始まるすべてのメソッドを実行する。
+
+setUpとtearDown(tear downは「解体」などの意)というメソッドを定義すれば、各テストメソッドの前と後に実行される。これらのメソッドにより、すべてのテストに共通の初期化と後始末の処理、いわゆるテストフィクスチャ(test fixture)が行える。
+
+このテストスクリプトを実行しても、my_math2モジュールがないために例外が発生する。
+assertEqualなどのメソッドは条件を検査して所定のテストが成功した化失敗したかを判別する。
+TestCaseクラスには他に、assertTrue、assertIsNotNone、assertAlmostEqualなど多くの似たメソッドがある。
+
+my_math2モジュール(つまりmy_math2.pyというファイル)を書く。
+unittestモジュールは、例外を発生させる「エラー(error)」と、failUnlessなどの呼び出しの結果である「失敗(failure)」とを区別する。my_math2を次のように記述すると、「失敗」が起こる。
+```
+def product(x, y):
+    pass
+```
+
+テストを実行すると、2つのFAILメッセージが出力される。
+テストが実際にコードに関連付けられている。
+現在のコードは正しくなく、テストは失敗する。
+次のステップは、コードが正しく機能するようにすること。
+```
+def product(x, y):
+    return x * y
+```
+
+出力1行目の2つのドットはテストを表している。失敗の時はFと出力されている。
+試しに、product関数を変更して、引数が7と9のときに失敗するようにする。
+```
+def product(x, y):
+    if x == 7 and y == 9:
+        return '潜んでいたバグが発覚！'
+    else:
+        return x * y
+```
+
+再度テストスクリプトを実行すると、発生する失敗は1つだけ。
+
+オブジェクト指向のコードの高度なテストについては、unittest.mockモジュールを参照。
+
