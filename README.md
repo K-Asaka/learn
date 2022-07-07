@@ -2166,3 +2166,81 @@ p = pstats.Stats('my_math3.profile')
 標準ライブラリにはtimeitというモジュールもあり、Pythonの小さなコードの実行時間を簡単に測定できる。
 timeitモジュールは詳細なプロファイリングにはあまり役に立たないが、一片のコードの実行にどれだけ時間がかかるのかを知るには便利なツール。
 
+## JythonとIronPython
+
+Jython(https://jython.org)かIronPython(https://ironpython.net)を使っている場合、Pythonをネイティブモジュールで拡張するのは簡単。土台となっている言語(JythonではJava、IronPythonではC#および他の.NET言語)から直接、モジュールとクラスにアクセスできる一方で、(CPythonを拡張する場合にしなければならないように)特定のAPIに合わせる必要がない。必要な機能を実装するだけでPythonで使うことができる。
+代表的な例として、JythonではJava標準ライブラリを直接使用でき、IronPythonではC#標準ライブラリを直接利用できる。
+簡単なJavaクラスを示す。
+```Java:JythonTest.java
+public class JythonTest {
+    public void greeting() {
+        System.out.println("Hello, world!");
+    }
+}
+```
+
+これは、javacなどのJavaコンパイラでコンパイルできる。
+```
+javac JythonTest.java
+```
+
+そのクラスをコンパイルしたら、Jythonを起動する(そして、できた.classファイルをカレントディレクトリあるいはJavaの環境変数CLASSPATHに設定してある場所のどこかに置く)。
+```
+CLASSPATH=JythonTest.class jython
+```
+
+するとそのクラスを直接、インポートできる。
+```
+import JythonTest
+test = JythonTest()
+test.greeting()
+```
+
+Jythonでは、JavaBeansプロパティにアクセスできる。
+
+同様なC#クラスを示す。
+```C#:IronPythonTest.cs
+using System;
+namespace FePyTest {
+    public class IronPythonTest {
+        public void greeting() {
+            Console.WriteLine("Hello, world!");
+        }
+    }
+}
+```
+
+これをコンパイルする。
+```
+csc.exe /t:library IronPythonTest.cs
+```
+
+IronPythonでこれを使う1つの方法は、このクラスをコンパイルしてダイナミックリンクライブラリ(DLL)を作成し、関係する環境変数(PATHなど)を必要に応じて設定すること。そうすれば、次のように(IronPythonの対話型インタプリタで)使える。
+```
+import clr
+clr.AddReferenceToFile("IronPythonTest.dll")
+import FePyTest
+f = FePyTest.IronPythonTest()
+f.greeting()
+```
+
+
+## C拡張モジュールの記述
+
+Pythonの拡張とは通常、CPythonの拡張を意味する。
+CPythonはCで実装された標準のPython。
+Python用にC拡張モジュールを記述する場合、厳密なAPIに従う必要がある。
+C拡張モジュールを簡単に記述できるようにするプロジェクトとして、SWIGがある。
+その他のアプローチとしては以下の通り。
+
+* Cython(https://cython.org)
+* PyPy(https://pypy.org)
+* Weave(https://scipy.org)
+* NumPy(https://numpy.org)
+* ctypes(https://docs.python.org/ja/3/library/ctypes.html)
+* subprocess(https://docs.python.org/ja/3/library/subprocess.html)
+* PyCXX(https://cxx.sourceforge.net)
+* SIP(https://www.riverbankcomputing.co.uk/software/sip)
+* Boost.Python(https://www.boost.org/libs/python/doc)
+
+
