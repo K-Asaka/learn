@@ -2386,3 +2386,123 @@ if is_palindrome('abba'):
 Setuptoolsを使えば、直接SWIGに対応しているため手動で実行する必要がない。
 コードとインタフェースファイルを記述してセットアップスクリプトを実行するだけでよい。
 
+
+### 拡張モジュール向けのフレームワーク
+
+定型コードは自動生成できるが、手作業でやってみるのも勉強になる。
+ヘッダファイルPython.hを他の標準ヘッダよりも前にインクルードしなければならない。
+これは、一部のプラットフォームで他のヘッダで使われるものを再定義する場合があるから。
+```
+#include <Python.h>
+```
+
+作成する関数の名前は何でもかまわない。
+関数はstaticで、PyObject型オブジェクトへのポインタ(所有参照)を返し、2つの引数(いずれもPyObjectへのポインタ)をとる必要がある。
+これらのオブジェクトの名前には慣例としてselfとargsが使われる(selfは自己のオブジェクトまたはNULL、argsは引数のタプル)。関数は次のようになる。
+```
+static PyObject *somename(PyObject *self, PyObject *args) {
+    PyObject *result;
+    /* resultへの割当などの処理をここに記述 */
+    Py_INCREF(result);  /* 必要な場合のみ */
+    return result;
+}
+```
+
+引数selfは実際にはオブジェクトに結び付けられたメソッドでのみ使われる。
+他の関数ではただのNULLポインタになる。
+Py_INCREFの呼び出しは不要な場合がある。このオブジェクトは関数内で(たとえば、ユーティリティ関数Py_BuildValueなどを使って)生成され、関数はすでにそれへの参照を保持しているので、それを返すだけで済む。
+しかし関数からNoneを返したい場合は、用意されているPy_Noneオブジェクトを使うべき。
+ただしその場合、その関数はPy_Noneへの参照を保持していないので、Py_INCREF(Py_None)を呼び出してから返す必要がある。
+仮引数argsは、作成するこの関数への引数のすべて(実引数selfがある場合はそれを除く)を含んでいる。オブジェクトを取り出すには、PyArg_ParseTuple関数(位置指定引数用)とPyArg_ParseTupleAndKeywords(位置指定引数とキーワード引数用)を使う。今回は、位置指定引数のみを使う。
+PyArg_ParseTupleのシグネチャは次のとおり。
+```
+int PyArg_ParseTuple(PyObject *args, char *format, ...);
+```
+
+文字列formatは想定している引数を指定するもので、値を入れる変数のアドレスを最後に指定する。
+戻り値はブール値。
+これがTrueならすべて正常で、Falseならエラー発生を示す。
+エラーがあった場合、例外を生成するようになっているので、コードで記述するのは処理を取り消すためにNULLを返すことだけ。
+したがって、引数を受け取らない場合(フォーマット文字列は空)、引数の指定方法は次のようにする。
+```
+if (!PyArg_ParseTuple(args, "")) {
+    return NULL;
+}
+```
+
+この文よりも先に進んだら、引数の取得が済んだということ(この例では引数なし)。
+フォーマット文字列は、文字列を"s"、整数を"i"、Pythonオブジェクトを"o"で表し、たとえば、整数2つと文字列1つならば"iis"になる。
+フォーマット文字列コードには他にも種類がある。
+必要な関数ができても、そのCのコードをモジュールとして使えるようにするには、さらにラップする必要がある。
+
+
+### 回文処理の完成形
+
+palindromeモジュールのPython C API版を示す。
+```C:palindrome2.c
+#include <string.h>
+
+static PyObject *is_palindrome(PyObject *self, PyObject *args) {
+    int i, n;
+    const char *text;
+    int result;
+    /* "s" は単一の文字列を意味する */
+    if (!PyArg_ParseTuple(args, "s", &text)) {
+        return NULL;
+    }
+    /* 以前のコードと基本的に同じ */
+    n = strlen(text);
+    result = 1;
+    for (i = 0; i <= n/2; ++i) {
+        if (text[i] != text[n-i-1]) {
+            result = 0;
+            break;
+        }
+    }
+    /* "i"は単一の整数を意味する */
+    return Py_BuildValue("i", result);
+}
+
+/* メソッド/関数のリスト */
+static PyMethodDef PalindromeMethods[] = {
+    /* 名前、関数、引数の型、docstring */
+    { "is_palindrome", is_palindrome, METH_VARARGS, "Detect palindromes" },
+    /* リストの終わりの目印 */
+    { NULL, NULL, 0, NULL }
+};
+
+static struct PyModuleDef palindrome =
+{
+    PyModuleDef_HEAD_INIT,
+    "palindrome",   /* モジュール名 */
+    "",             /* docstring(ドキュメンテーション文字列) */
+    -1,             /* 大域変数に保持されるシグナルの状態 */
+    PalindromeMethods
+};
+
+/* モジュールの初期化関数 */
+PyMODINIT_FUNC PyInit_palindrome(void)
+{
+    return PyModule_Create(&palindrome);
+}
+```
+
+追加したコードの大部分は定型パターン。
+palindromeとなっているところに、作成するモジュールの名前を入れる。
+is_palindromeとなっているところには、関数名を入れる。
+他にも関数がある場合は、単純にそれらをすべて配列PyMethodDefに列挙する。
+注意点は、初期化関数の名前がinitmoduleで「module」の部分は作成するモジュールの名前でなければならない。
+違っていると、Pythonがそれを見つけられなくなる。
+gccを使ってコンパイルする例。
+```
+gcc -I$PYTHON_HOME -I$PYTHON_HOME/Include -shared palindrome2.c -o palindrome.so
+```
+
+これでpalindrome.soというファイルが生成され、使えるようになっているはず。
+PYTHONPATHに設定してある場所に配置して試す。
+```
+from palindrome import is_palindrome
+is_palindrome('foobar')
+is_palindrome('deified')
+```
+
