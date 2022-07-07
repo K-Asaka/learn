@@ -2602,3 +2602,31 @@ setup(name='palindrome',
 拡張モジュールの名前を_palindromeにしていることに注意。
 これはSWIGがpalindrome.pyという名前でラッパーを生成し、ラッパーがCのライブラリをこの名前(_palindrome)でインポートするため。
 
+
+### py2exeによる実行可能プログラムの作成
+
+Setuptoolsのpy2exe拡張モジュール(pipで入手可能)を使うと、実行可能なWindowsプログラム(.exeファイル)をビルドできる。
+ユーザーにPythonインタプリタを別途インストールする負担をかけたくない場合に便利。
+py2exeパッケージは、GUI付き実行可能ファイルの作成にも使える。
+```Python:hello.py
+print('Hello, world!')
+input('Press <enter>')
+```
+
+この場合もまず空のディレクトリに、このコードを含むファイルをhello.pyという名前で作成し、次のようなsetup.pyファイルを作成する。
+```
+from distutils.core import setup
+import py2exe
+
+setup(console=['hello.py'])
+```
+
+このあと次のコマンドを実行する。
+```
+python setup.py py2exe
+```
+
+これでサブディレクトリdistの中に、コンソールアプリケーション(名前はhello.exe)とその他に数個のファイルが作成される。
+このプログラムはコマンドラインからでも、ダブルクリックでも実行できる。
+macOSを使っている場合は、macOS向けに同様な機能を提供するpy2appも確認するとよい。
+
