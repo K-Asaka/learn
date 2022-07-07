@@ -2244,3 +2244,145 @@ C拡張モジュールを簡単に記述できるようにするプロジェク�
 * Boost.Python(https://www.boost.org/libs/python/doc)
 
 
+### SWIG - C/C++コードのラップツール
+
+SWIG(https://www.swig.org。Simple Wrapper and Interface Generatorの略)は、複数の言語で利用できるツール。拡張モジュールのコードをCやC++で記述できるが、それをTcl、Python、Perl、Ruby、Javaなどの言語の中で使えるように自動的にラップしてくれる。
+開発対象のシステムの一部をC拡張モジュールで記述すれば、他の複数の言語でも利用できる。
+複数の言語でサブシステムを記述して組み合わせたい場合に特に便利。
+C(またはC++)で記述した拡張モジュールにハブの役割を担わせることができる。
+SWIGのインストールは他のPythonツールの場合と同じ。
+
+* SWIGはhttp://www.swig.orgで入手可能
+* 多くのUNIX/LinuxディストリビューションにはSWIGが付属している。多くのパッケージマネージャーが対応していて、SWIGを直接インストールできる。
+* Windows用にはバイナリインストーラがある。
+* ソースファイルから自分でコンパイルする場合も、configureとmake installを実行するだけでよい
+
+
+### SWIGで生成されるファイル
+
+1. 開発者は、用意したコードのためのインタフェースファイルを記述する(Cのヘッダファイルによく似たもの。単純な場合は、ヘッダファイルをそのまま利用可能)
+2. インタフェースファイルに対してSWIGを実行すると、追加のCのコード(ラッパーコード)が自動生成される
+3. 元のCのコードと生成したラッパーコードとをコンパイルして共有ライブラリを生成する
+
+
+### 回文の処理
+
+回文とは「I Prefer Pi」のように、空白や句読点、大文字小文字の区別を無視すれば後ろから読んでも同じになる文のこと。
+タンパク質の配列解析など長大な回文構造を判別したいと仮定する(空白などの違いも許さないとする)。
+それをCで書く。
+```C:palindrome.c
+#include <string.h>
+
+int is_palindrome(char *text) {
+    int i, n=strlen(text);
+    for (i = 0; i <= n/2; ++i) {
+        if (text[i] != text[n-i-1]) return 0;
+    }
+    return 1;
+}
+```
+
+参考までに、純粋なPythonによる同等の関数を示す。
+```Python:palindrome_in_python.py
+def is_palindrome(text):
+    n = len(text)
+    for i in range(len(text) // 2):
+        if text[i] != text[n-i-1]:
+            return False
+    return True
+```
+
+
+### インタフェースファイル
+
+palindrome.cを作成したら、次はpalindrome.iというファイルにインタフェースを記述する。
+多くの場合、ヘッダファイル(palindrome.h)を定義すれば、SWIGはそこから必要な情報を得られる。
+したがって、ヘッダがあるならば、それを使うことを試したほうがよい。
+ただし、明示的にインタフェースファイルを記述すれば、SWIGによるコードのラップ方法を微調整できる。
+特に、何か除外したい時にこの手法を用いることが多い。
+たとえば、大きなCのライブラリをラップするけれども、Pythonにエクスポートしたいのは数個の関数だけというような場合、エクスポートしたい関数だけをインタフェースファイルに記述する。
+
+インタフェースファイルでは、単にエクスポートしたいすべての関数(と変数)をヘッダファイルと同じように宣言する。
+また、その前にインクルードするヘッダファイル(今回はstring.h)を指定するため、%{と%}で区切った部分を記述する。さらにその前で%module宣言にモジュール名を指定する(これらの一部はオプション。また、インタフェースファイルにはこの他の機能もある)。
+```インタフェースファイル:palindrome.i
+%module palindrome
+
+%{
+#include <string.h>
+%}
+
+extern int is_palindrome(char *text);
+```
+
+
+### SWIGの実行
+
+インタフェースファイル(または、必要に応じてヘッダファイル)を指定して、SWIGを実行する。
+```
+swig -python palindrome.i
+```
+
+この後、新しいファイルが2つできる。
+palindrome_wrap.cとpalindrome.py。
+
+
+### コンパイル、リンク、実行
+
+コンパイルを正しく行うには、使っているPythonのディストリビューションのソースコード(あるいはpyconfig.hとPython.hというヘッダファイル)の場所を指定する必要がある(ソースコードやヘッダファイルは、インストールされているPythonのルートディレクトリやIncludeサブディレクトリにあるかもしれない)。
+また、使用中のCコンパイラでコードをコンパイルして共有ライブラリにするための適切なスイッチも知っておく必要がある。
+Linuxでgccを使う場合のコマンドは以下の通り。
+$PYTHON_HOMEがPythonのインストール先ルートディレクトリを指しているとする。
+```
+gcc -c palindrome.c
+gcc -I$PYTHON_HOME -I$PYTHON_HOME/Include -c palindrome_wrap.c
+gcc -shared palindrome.o palindrome_wrap.o -o _palindrome.so
+```
+
+Solarisでccを使う例。
+```
+cc -c palindrome.c
+cc -I$PYTHON_HOME -I$PYTHON_HOME/Include -c palindrome_wrap.c
+cc -G palindrome.o palindrome_wrap.o -o _palindrome.so
+```
+
+Solarisでgccを使う場合、コマンドラインの最初の2行にはフラグ-fPICを(コマンドgccのすぐ右に)追加する。
+
+Windowsの場合(これもコマンドラインでgccを使うとして)、共有ライブラリを作成するには、最後の行に次のようなコマンドを使う。
+```
+gcc -shared palindrome.o palindrome_wrap.o C:/Python37/libs/libpython37.a -o _palindrome.dll
+```
+
+macOSでは、次のようなコマンドになる(公式のPythonでインストールする場合、PYTHON_HOMEは/Library/Frameworks/Python.framework/Versions/Current)。
+```
+gcc -dynamic -I$PYTHON_HOME/include/python3.7 -c palindrome.c
+gcc -dynamic -I$PYTHON_HOME/include/python3.7 -c palindrome_wrap.c
+gcc -dynamiclib palindrome_wrap.o palindrome.o -o _palindrome.so -Wl,-undefined dynamic_lookup
+```
+
+
+_palindrome.soというファイルができる。
+これが目的とするファイルで、カレントディレクトリなどPYTHONPATHに設定してある場所に配置すれば、次のように直接、Pythonにインポートできる。
+```
+import _palindrome
+dir(_palindrome)
+_palindrome.is_palindrome('ipreferpi')
+_palindrome.is_palindrome('notlob')
+```
+
+SWIGの旧バージョンはこれで終わりだったが、その後のバージョンはPythonのラッパーコードも生成する(palindrome.py)。このラッパーコードは_palindromeモジュールをインポートし、検査も少々行う。
+それを省きたい場合は、palindrome.pyを削除することで、開発者自身のライブラリを直接、palindrome.soというファイルにリンクすることもできる。
+このラッパーコードを使うと、共有ライブラリを使った場合と同じようにできる。
+```
+import palindrome
+from palindrome import is_palindrome
+if is_palindrome('abba'):
+    print('Wow -- that never occurred to me ...')
+
+```
+
+
+### コンパイラの魔法の森を抜ける
+
+Setuptoolsを使えば、直接SWIGに対応しているため手動で実行する必要がない。
+コードとインタフェースファイルを記述してセットアップスクリプトを実行するだけでよい。
+
