@@ -2506,3 +2506,58 @@ is_palindrome('foobar')
 is_palindrome('deified')
 ```
 
+
+## Setuptoolsの基本
+
+Python Packaging User Guide (https://packaging.python.org)とSetuptoolsサイト(https://setuptools.readthedocs.io)に多くの関連文書がある。
+Setuptools(pipでインストール可能)を使うと、次のような簡単なスクリプトを記述することで、いろいろと有用なことができる。
+```
+from setuptools imoprt setup
+
+setup(name='Hello',
+      version='1.0',
+      description='簡単な例',
+      author='Magnus Lie Hetland',
+      py_modules=['hello'])
+```
+
+このスクリプトをsetup.pyという名前で保存し(これはDistutilsのセットアップスクリプトの全般的な規約)、hello.pyというモジュールを同じディレクトリに置く。
+
+このセットアップスクリプトは、カレントディレクトリに新しくファイルとサブディレクトリを作成する。
+古いファイルがあると上書きされてしまう。
+試すなら新規のディレクトリの中で行うのがよい。
+
+このスクリプトの使い方を見ていく。
+次のように実行する。
+```
+python setup.py
+```
+
+ヘルプが表示される。
+buildコマンドを指定して動きを見てみる。
+```
+python setup.py build
+```
+
+Setuptoolsがbuildというディレクトリとlibというサブディレクトリを作成し、hello.pyをbuild/libにコピーしている。buildサブディレクトリは、Setuptoolsがパッケージを組み立てる(拡張モジュールライブラリのコンパイルなどを行う)一種の作業領域。
+実際にはインストール時にbuildコマンドを実行する必要はない。
+installコマンドの実行時に必要に応じて自動的に実行される。
+
+インストールの過程でSetuptoolsは、ファイルをまとめてegg(自己完結したパッケージ)を作成している。
+
+
+### 配布物などのアーカイブ
+
+アーカイブファイルの作成方法。
+Windowsインストーラーや、RPMパッケージ、eggディストリビューション、wheelディストリビューション、その他も作成できる(Wheelは最終的にeggに取って代わることを目的としている)。
+.tar.gzの例から順を追って確認する。
+ソースアーカイブファイルはsdistコマンド(source distributionの意)で作成する。
+```
+python setup.py sdist
+```
+これを実行すると、いくつかの警告を含むかなりの量の出力が表示される。
+buildと別にdistというサブディレクトリができ、その中にHello-1.0.tar.gzというgzip圧縮されたtarアーカイブができる。
+このアーカイブはユーザーに配布でき、ユーザーはこのファイルを展開し、中に含まれているsetup.pyを実行することでインストールが行える。
+.tar.gz以外の配布用形式を使う場合は、--formatsオプションで指定する。複数の形式をカンマ区切りで指定すれば一度に複数の形式のアーカイブファイルを作成できる。
+sdist --help-formatsを指定すれば形式は確認できる。
+
