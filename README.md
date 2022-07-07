@@ -2032,3 +2032,111 @@ def product(x, y):
 
 オブジェクト指向のコードの高度なテストについては、unittest.mockモジュールを参照。
 
+
+## 単体テストを超えて
+
+プログラムの検査には他の方法もある。
+ソースコード検査(source code checking)とプロファイリング(profiling)。
+ソースコード検査はコードによくある誤りや問題点を見つける方法(性的型付け言語でコンパイラが行うことに少し似ているが、それをはるかに超える検査)。プロファイリングはプログラムの実際の速度を知る方法。
+単体テストは動作させることに役立ち、ソースコード検査は質を高め、プロファイリングは高速化に役立つ。
+
+
+### ソースコードの検査 - PyCheckerとPyLintの活用
+
+かなり長い間、PyChecker(http://pychecker.sourceforge.net)が、Pythonのソースコードを検査し、関数に合わない引数を渡しているなどの誤りを検出する唯一のツールだった。
+その後、PyLint(https://pylint.org)が登場した。これはPyCheckerのほとんどの機能に加えて、さらに多くの機能を揃えている(変数名が指定の命名規則に従っているか、コードが指定の基準を守っているかなどの検査)。
+これらのツールのインストールは簡単。PyLintはpipでもインストールできる。
+```
+pip install pylint
+```
+
+どちらも(Debian APT、Gentoo Portageなど)複数のパッケージマネージャシステムから入手できる。
+それぞれのサイトから直接ダウンロードしても構わない。
+Distutilsを使って、次のように標準コマンドでインストールする。
+```
+python setup.py install
+```
+
+インストールできたら、PyCheckerとPyLintはコマンドラインスクリプトとしても(名前はそれぞれpycheckerとpylint)、Pythonモジュールとしても使うことができる(名前は同じ)。
+
+Windowsの場合、これら2つはコマンドラインでバッチファイルpycheker.bat、pylint.batを使う。
+コマンドラインでpychecker、pylintのコマンドを使えるようにするには、環境変数PATHの設定が必要な場合がある。
+
+PyChekcerでファイルを検査するには、次のようにファイル名を引数としてスクリプトを実行する。
+```
+pychecker file1.py file2.py ...
+```
+
+PyLintの場合は、モジュール(またはパッケージ)の名前を使う。
+```
+pylint module
+```
+
+これらの検査プログラムを単体テストと組み合わせる方法を見ておく。
+一連のテストの1つとして、両方(または片方)を自動実行させ、問題がなければ何事もなくテストが終わるようにするのが楽。そうすれば、一連のテストで機能だけでなくコードの品質も検査できる。
+
+PyCheckerとPyLintは、モジュール(pychecker.checker、pylint.lint)としてインポートできる。
+しかし、実際にプログラムで読み込んで使うようには設計されていない。
+pychecker.checkerをインポートすると、それ以降のコードを(インポートしたモジュールを含め)検査し、警告を標準出力に出力する。pylint.lintモジュールには文書化されていないRunという関数があり、これがpylintスクリプト自体の中で使われる。こちらも警告を何らかの方法で返すのではなく表示する。
+PyCheckerとPyLintは想定されている通りの使い方、つまりコマンドラインで使うことが推奨される。
+Pythonでコマンドラインツールを使う方法は、subprocessモジュールを使うこと。
+
+以前のテストスクリプトの例に対して、コード検査のテストを2つ加えたものを示す(my_math3というモジュール名に変更)。
+
+```
+import unittest, my_math3
+from subprocess import Popen, PIPE
+
+class ProductTestCase(unittest.TestCase):
+
+    def test_integers(self):
+        for x in range(-10, 10):
+            for y in range(-10, 10):
+                p = my_math3.product(x, y)
+                self.assertEqual(p, x * y, 'Integerの乗算に失敗しました')
+    
+    def test_floats(self):
+        for x in range(-10, 10):
+            for y in range(-10, 10):
+                x = x / 10
+                y = y / 10
+                p = my_math3.product(x, y)
+                self.assertEqual(p, x * y, 'Floatの乗算に失敗しました')
+
+    def test_with_PyChecker(self):
+        cmd = 'pychecker', '-Q', my_math3.__file__.rstrip('c')
+        pychecker = Popen(cmd, stdout=PIPE, stderr=PIPE)
+        self.assertEqual(pychecker.stdout.read(), '')
+    
+    def test_with_PyLint(self):
+        cmd = 'pylint', '-rn', 'my_math3'
+        pylint = Popen(cmd, stdout=PIPE, stderr=PIPE)
+        self.assertEqual(pylint.stdout.read(), '')
+
+if __name__ == '__main__': unittest.main()
+```
+
+検査プログラムにコマンドラインスイッチを指定して、テストの邪魔になる本質的でない出力を防ぐ。
+pycheckerには、-Q(Quiet:「出力しない」)スイッチを指定している。
+pylintには、レポートをオフにする-rn(nは「ノー」を表す)を指定して、警告とエラーだけを出力するようにしている。
+
+コマンドpylintは、与えられたモジュール名をそのまま使って動作するので簡単。
+pycheckerを正しく動作させるには、ファイル名を取得する必要がある。そのためにmy_math3モジュールの__file__プロパティを使い、さらに、ファイル名の末尾にあるかもしれないcをrstripで取り除いている(モジュールが実際には.pycファイルであるかもしれないため)。
+
+PyLintの出力を抑えるため、(短い変数名、リビジョン、docstringがない、などの場合に出力をしないように設定するのではなく)my_math2モジュールを少し書き直し、そのファイル名をmy_math3.pyとしている。
+```
+"""
+単純な数学モジュール
+"""
+__revision__ = '0.1'
+
+def product(factor1, factor2):
+    '2つの数の積'
+    return factor1 * factor2
+```
+
+今度はテストを実行しても、エラーは発生しないはず。
+コードをいじってみて、チェッカーがエラーを出力しても機能テストがうまくいくことを確認する(PyCheckerとPyLintを外してもかまわない。おそらく片方を外せば動作する)。
+たとえば、仮引数の名前をxとyに戻してみると、PyLintは変数名が短いことを警告するはず。
+あるいは、return文の後にprint('Hello, world!')を追加すると、きわめて正当に両方のプログラムが警告する(警告の理由は異なるかもしれない)。
+
