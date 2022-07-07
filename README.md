@@ -2561,3 +2561,44 @@ buildと別にdistというサブディレクトリができ、その中にHello
 .tar.gz以外の配布用形式を使う場合は、--formatsオプションで指定する。複数の形式をカンマ区切りで指定すれば一度に複数の形式のアーカイブファイルを作成できる。
 sdist --help-formatsを指定すれば形式は確認できる。
 
+
+### 拡張モジュールのコンパイル
+
+拡張モジュールのコンパイルにもSetuptoolsが使える。
+空のカレントディレクトリにソースファイルpalindrome2.cがある場合、次のsetup.pyでコンパイル(とインストール)が行える。
+```Python:setup.py
+from setuptools import setup, Extension
+
+setup(name='palindrome',
+      version='1.0',
+      ext_modules = [
+        Extension('palindrome', ['palindrome2.c'])
+      ])
+```
+
+このsetup.pyを指定してinstallコマンドを実行すると、palindrome拡張モジュールがインストール前に自動的にコンパイルされる。
+モジュール名のリストを指定する代わりに、引数ext_modulesを使ってExtensionインスタンスのリストを指定する。
+このコンストラクタは名前と、関係するファイルのリストとを受けとる。
+ヘッダファイル(.h)などもここに指定する。
+拡張モジュールをコンパイルして、その同じ場所においておきたい場合は(ほとんどのUNIXシステムではpalindrome.soというファイルがカレントディレクトリにできる)、次のコマンドが使える。
+```
+python3 setup.py build_ext --inplace
+```
+SWIGをインストール済みであれば、Setuptoolsに直接それを使わせることができる。
+SetuptoolsにSWIGを使わせて、Python拡張モジュールとして直接コンパイルが可能。
+Extensionインスタンスのファイルのリストにインタフェース(.i)ファイルの名前を追加するだけ。
+```
+from setuptools import setup, Extension
+
+setup(name='palindrome',
+      version='1.0',
+      ext_modules = [
+        Extension('_palindrome', ['palindrome.c', 'palindrome.i'])
+      ])
+```
+
+このスクリプトを前回と同じコマンドで(build_extで、必要なら--inplaceスイッチを付けて)実行すると、.soファイル(または同等のファイル)ができる。
+今回は自分でラッパーコードを記述する必要がない。
+拡張モジュールの名前を_palindromeにしていることに注意。
+これはSWIGがpalindrome.pyという名前でラッパーを生成し、ラッパーがCのライブラリをこの名前(_palindrome)でインポートするため。
+
