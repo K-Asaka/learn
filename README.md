@@ -2784,3 +2784,12 @@ ReportLab(https://www.reportlab.com)
 pip install reportlab
 ```
 
+
+## XML解析処理
+
+```
+from xml.sax import make_parser
+parser = make_parser()
+```
+これで例外が発生しなければサンプルプログラムの確認ができる。
+
