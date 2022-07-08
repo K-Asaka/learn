@@ -2646,3 +2646,82 @@ python setup.py register
 python setup.py sdist upload
 ```
 
+## プロトタイプづくり
+
+### 設定・構成ファイル
+
+設定・構成用の変数をモジュールの内のどれかの先頭に置く代わりに、別個のファイルに入れることができる。
+最も簡単な方法は設定用に別個のモジュールを設けること。
+たとえば、PIをモジュールファイルのconfig.py内で設定したなら、(メインプログラムの中で)次のように記述できる。
+```
+from config import PI
+```
+そうすれば、PIで異なった値を使いたいユーザーは、config.pyを編集するだけで済む。
+
+設定ファイルの利用には「トレードオフ」がある。
+設定ファイルは便利だが、一方で、プロジェクト全体の一元化した変数用共有リポジトリを使うことになる。
+モジュール性が低下してモノリシック(一枚岩的)な状態になる。
+抽象化(カプセル化など)を損なわないようにする必要がある。
+
+他には標準ライブラリのconfigparserモジュールを使う方法がある。
+設定ファイルとして標準的な形式を扱える。
+この方法では、以下2つの形式が使える。
+
+1つ目はPythonの通常の代入構文(引用符で囲む必要がある)。
+```
+greeting = 'Hello, world!'
+```
+
+もう1つは、多くのプログラムで使われている次の形式。
+```
+greeting: Hello, world!
+```
+
+設定ファイルは[files]や[colors]などのヘッダを使って「セクション」に分割しなければならない。
+セクション名は任意だが[...]で囲む必要がある。
+設定ファイルの見本とそれを使うプログラムを示す。
+```txt:listing19-1.cfg
+[numbers]
+
+pi: 3.14159265897931
+
+[messages]
+
+greeting: 面積計算プログラムです
+question: 半径を入れてください:
+result_message: 面積は次のとおりです:
+```
+
+ConfigParserを使ったプログラム
+```Python:listing19-1.py
+from configparser import ConfigParser
+
+CONFIGFILE = "Chapter19/listing19-1.cfg"
+# CONFIGFILE = "area.ini"
+
+config = ConfigParser()
+# 設定・構成ファイルから読み込み
+config.read(CONFIGFILE)
+
+# 初期設定を出力
+# 'messages' のセクションを見る
+print(config['messages'].get('greeting'))
+
+# radius(半径)を読み込むためのメッセージ(question)を読み込む
+radius = float(input(config['messages'].get('question') + ' '))
+
+# 結果を出力
+# endをスペースに設定して改行しない
+print(config['messages'].get('result_message'), end=' ')
+
+# getfloat()を使って、値をfloat(浮動小数点数)に変換
+print(config['numbers'].getfloat('pi') * radius**2)
+```
+
+
+設定のレベル
+
+* 設定ファイル
+* 環境変数：辞書os.environを使って取得可能
+* コマンドラインでプログラムに渡すスイッチや引数：引数に関してはsys.argvを使って直接処理できる。
+
