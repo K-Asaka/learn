@@ -2772,3 +2772,15 @@ loggingモジュールに相応の設定をすればロギングの動作を調�
 cat .\Chapter20\test_input.txt | python.exe Chapter20/markup.py > test_output.html
 ```
 
+
+## 図の描画
+
+日本語文字の表示  
+https://gammasoft.jp/blog/pdf-japanese-font-by-python/
+
+
+ReportLab(https://www.reportlab.com)
+```
+pip install reportlab
+```
+
