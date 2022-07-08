@@ -2765,3 +2765,10 @@ INFO:root:1を0で割る
 1を0でわろうとした後は、このエラー(0による除算)によってプログラムが異常終了するため、何もログに記録されない。
 loggingモジュールに相応の設定をすればロギングの動作を調整できる。
 
+
+## テキストからHTMLへの変換
+
+```Powershell
+cat .\Chapter20\test_input.txt | python.exe Chapter20/markup.py > test_output.html
+```
+
