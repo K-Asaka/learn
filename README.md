@@ -2725,3 +2725,43 @@ print(config['numbers'].getfloat('pi') * radius**2)
 * 環境変数：辞書os.environを使って取得可能
 * コマンドラインでプログラムに渡すスイッチや引数：引数に関してはsys.argvを使って直接処理できる。
 
+
+### ロギング
+
+プログラムに関するデータを実行時に収集することで、これを使って実行後や実行中にプログラムの様子を調査できる。
+プログラムの先頭で次のような文を書いておくことで、「ログファイル」をオープンする。
+```
+log = open('logfile.txt', 'w')
+```
+
+以降、関心のある情報を次のように書き込むことができる。
+```
+print('次のURLからファイルをダウンロード中:', url, file=log)
+text = urllib.urlopen(url).read()
+pritn('ファイルダウンロード正常終了', file=log)
+```
+
+この方法は、ダウンロード中にプログラムが異常終了するとうまくいかない。
+各logを取るたびにファイルのオープンとクローズ(または少なくとも書き込み後にそのファイルをフラッシュ)すれば、安全性は増す。
+実際には、標準ライブラリのloggingモジュールを使うのがよい。
+```Python:listing19-2.py
+import logging
+
+logging.basicConfig(level=logging.INFO, filename='mylog.log')
+
+logging.info('実行開始')
+logging.info('1を0で割る')
+print(1 / 0)
+logging.info('割り算成功')
+logging.info('実行終了')
+```
+
+このプログラムを実行すると、次のようなログファイル(mylog.log)が作成される。
+```
+INFO:root:実行開始
+INFO:root:1を0で割る
+```
+
+1を0でわろうとした後は、このエラー(0による除算)によってプログラムが異常終了するため、何もログに記録されない。
+loggingモジュールに相応の設定をすればロギングの動作を調整できる。
+
