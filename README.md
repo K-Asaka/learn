@@ -2793,3 +2793,12 @@ parser = make_parser()
 ```
 これで例外が発生しなければサンプルプログラムの確認ができる。
 
+
+## ネットニュースの取得と表示
+
+```
+from nntplib import NNTP
+server = NNTP('news.foo.bar')
+server.group('comp.lang.python.announce')[0]
+```
+
