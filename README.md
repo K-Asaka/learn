@@ -2802,3 +2802,68 @@ server = NNTP('news.foo.bar')
 server.group('comp.lang.python.announce')[0]
 ```
 
+
+## XML-RPCを使ったファイル共有
+```
+from xmlrpc.server import SimpleXMLRPCServer
+s = SimpleXMLRPCServer(("", 4242))
+def twice(x):
+    return x * 2
+
+s.register_function(twice)
+s.serve_forever()
+```
+
+```
+from xmlrpc.client import ServerProxy
+s = ServerProxy('http://localhost:4242')
+s.twice(2)
+```
+
+動作確認
+```
+python Chapter24/simple_node.py http://localhost:4242 files1 secret1
+```
+```
+python Chapter24/simple_node.py http://localhost:4243 files2 secret2
+```
+
+別ターミナルでインタプリタを起動
+```
+from xmlrpc.client import *
+mypeer = ServerProxy('http://localhost:4242')
+code, data = mypeer.query('test.txt')
+code
+
+otherpeer = ServerProxy('http://localhost:4243')
+code, data = otherpeer.query('test.txt')
+code
+
+data
+
+mypeer.hello('http://localhost:4243')
+
+mypeer.query('test.txt')
+
+mypeer.fetch('test.txt', 'secret1')
+```
+
+urls.txt
+```
+http://localhost:4243
+```
+
+server.py 実行
+```
+python server.py http://localhost:4243 files1 secret1
+```
+
+client.py 実行
+```
+mkdir directory     # directoryが存在しなければ作成
+python client.py urls.txt directory http://localhost:4242
+> help fetch
+> fetch fooo        # ファイルが見つかりませんでした
+> fetch test.txt    # ファイルがdirectoryにコピーされる
+```
+
