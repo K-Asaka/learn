@@ -2867,3 +2867,15 @@ python client.py urls.txt directory http://localhost:4242
 > fetch test.txt    # ファイルがdirectoryにコピーされる
 ```
 
+## ファイル共有アプリケーションのGUI化
+
+シンプルなGUIクライアント実行
+```
+python simple_guiclient.py urls.txt files/ http://localhost:8000
+```
+
+完成したGUIクライアント実行
+```
+python guiclient.py urls.txt files/ http://localhost:8000
+```
+
