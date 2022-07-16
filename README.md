@@ -2879,3 +2879,14 @@ python simple_guiclient.py urls.txt files/ http://localhost:8000
 python guiclient.py urls.txt files/ http://localhost:8000
 ```
 
+## アーケードゲームの作成
+
+Pygame(https://pygame.org)
+```
+pip instal pygame
+```
+
+実行
+```
+python weights.py
+```
