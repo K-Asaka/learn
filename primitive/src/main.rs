@@ -11,7 +11,7 @@ fn hello() {
 
 // 関数f1は呼び出し元の値のコピーを引数nに束縛し、1に変更する
 fn f1(mut n: u32) {
-    //n = 1;
+    n = 1;
     println!("f1:       n = {}", n);
 }
 
@@ -22,6 +22,16 @@ fn f2(n_ptr: &mut u32) {
     // *を付けると参照先にアクセスできる。これを参照外し(dereference)と呼ぶ
     *n_ptr = 2;
     println!("n:  *n_ptr = {}", *n_ptr);
+}
+
+// この関数は引数を2倍した値を返す
+fn double(n: i32) -> i32 {
+    n + n
+}
+
+// この関数は引数の絶対値を返す
+fn abs(n: i32) -> i32 {
+    if n >= 0 { n } else { -n }
 }
 
 fn main() {
@@ -99,5 +109,46 @@ fn main() {
         *n1_ptr = 1_000;
         assert_eq!(*n1_ptr, 1_000);
     }
-it
+
+    // 変数に型注釈として関数ポインタ型を指定することで、関数名から関数ポインタを得られる
+    let mut f: fn(i32) -> i32 = double;
+    assert_eq!(f(-42), -84);    // double関数で2倍された
+
+    // 関数ポインタのサイズはusizeと同じ(x86_64アーキテクチャなら8バイト)
+    assert_eq!(std::mem::size_of_val(&f), std::mem::size_of::<usize>());
+
+    f = abs;
+    assert_eq!(f(-42), 42);     // abs関数で絶対値を得た
+
+
+    let x = 4;      // 変数xを4に束縛する
+
+    // クロージャを定義する。するとxがクロージャの環境に補足される(キャプチャされる)
+    let adder = |n| n + x;
+    assert_eq!(adder(2), 4 + 2);
+
+    let mut state = false;
+    // 別のクロージャを定義する。このクロージャは引数を取らない
+    let mut flipflop = || {
+        // stateが補足される
+        state = !state;     // 状態を反転する
+        state
+    };
+
+    // クロージャを呼ぶたびに返る値が反転する
+    assert!(flipflop());        // true
+    assert!(!flipflop());       // false
+    assert!(flipflop());        // true
+
+    // クロージャが返す値だけでなく、stateの値も変化している
+    assert!(state);             // true
+
+    // 環境になにも補足しないクロージャは関数ポインタ型になれる
+    let mut f: fn(i32) -> i32 = |n| n * 3;
+    assert_eq!(f(-42), -126);
+
+    // 環境になにかを補足するクロージャは関数ポインタ型になれない
+    // let x = 4;
+    // f = |n| n * x;
+
 }
