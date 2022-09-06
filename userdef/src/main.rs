@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 fn main() {
     let t1 = (3, "birds".to_string());      // (i32, String)型のタプル。スタックに置かれる
     let mut b1 = Box::new(t1);              // Boxポインタを作る。タプルがヒープに移動する
@@ -54,6 +56,27 @@ fn main() {
     // 余分なメモリを持っていないことを確認するためにVec<i32>に戻す
     let v2 = s1.into_vec();
     println!("v1 len: {}, capacity: {}", v2.len(), v2.capacity());
+
+    let mut m1 = HashMap::new();
+
+    // 要素を2つ追加する
+    m1.insert("a", 1);
+    m1.insert("b", 3);
+    assert_eq!(m1.len(), 2);        // 要素数は2
+
+    // キーに対応する値を取り出す
+    assert_eq!(m1.get("b"), Some(&3));
+    assert_eq!(m1.get("c"), None);  // キーが存在しないのでNone
+
+    // "d"が存在するならその値への参照を得る。存在しないなら"d"に対して0を登録してから参照を返す
+    let d = m1.entry("d").or_insert(0);
+    *d += 7;
+    assert_eq!(m1.get("d"), Some(&7));
+
+
+    let m2 = vec![("a", 1), ("b", 3)].into_iter().collect::<HashMap<_, _>>();
+    assert_eq!(m2.get("a"), Some(&1));
+    assert_eq!(m2.get("b"), Some(&3));
 
     
 }
