@@ -274,21 +274,21 @@ fn main() {
     assert_eq!(add1("3", "abc"), Err("s1が整数ではありません".to_string()));
 
 
-    type UserName = String;
-    type Id = i64;
-    type Timestamp = i64;
-    type User = (Id, UserName, Timestamp);
+    // type UserName = String;
+    // type Id = i64;
+    // type Timestamp = i64;
+    // type User = (Id, UserName, Timestamp);
 
-    fn new_user(name: UserName, id: Id, created: Timestamp) -> User {
-        (id, name, created)
-    }
+    // fn new_user(name: UserName, id: Id, created: Timestamp) -> User {
+    //     (id, name, created)
+    // }
 
-    let id = 400;
-    let now = 4567890123;
-    let user = new_user(String::from("mika"), id, now);
+    // let id = 400;
+    // let now = 4567890123;
+    // let user = new_user(String::from("mika"), id, now);
 
     // IdとTimestampは同じi64型なので、間違えてもエラーにならない
-    let bad_user = new_user(String::from("kazuki"), now, id);   // nowとidが逆
+    // let bad_user = new_user(String::from("kazuki"), now, id);   // nowとidが逆
 
 
     use std::cell::RefCell;
@@ -300,5 +300,133 @@ fn main() {
     // https://github.com/rust-lang/rust/blob/master/src/libstd/io/error.rs
     //pub type Result<T> = result::Result<T, Error>;
 
+
+    // 名前付きフィールド構造体
+    struct Polygon {
+        vertexes: Vec<(i32, i32)>,      // 頂点の座標
+        stroke_width: u8,               // 輪郭の太さ
+        fill: (u8, u8, u8),             // 塗りつぶしのRGB色
+    }
+
+    // タプル構造体
+    struct Triangle(Vertex, Vertex, Vertex);
+    struct Vertex(i32, i32);
+
+    // ユニット構造体
+    // struct UniqueValue;
+    // または
+    // struct UniqueValue {}
+    // struct UniqueValue();
+
+
+    // Polygon型の値を作り、変数triangleを束縛する
+    let triangle = Polygon {
+        vertexes: vec![(0, 0), (3, 0), (2, 2)],
+        fill: (255, 255, 255),
+        stroke_width: 1,
+    };
+
+    // フィールド名と同じ名前の関数引数やローカル変数があるときは以下のような省略形も使える(Rust 1.17以降)
+    fn new_polygon(vertexes: Vec<(i32, i32)>) -> Polygon {
+        let stroke_width = 1;
+        let fill = (0, 0, 0);
+        Polygon { vertexes, stroke_width, fill }
+    }
+
+    let quadrangle = new_polygon(vec![(5, 2), (4, 7), (10, 6), (8, 1)]);
+
+    // フィールド名でアクセス
+    assert_eq!(triangle.vertexes[0], (0, 0));
+    assert_eq!(triangle.vertexes.len(), 3);
+    assert_eq!(triangle.fill, (255, 255, 255));
+
+    // パターンマッチでアクセス。不要なフィールドは..で省略できる
+    let Polygon { vertexes: quad_vx, .. } = quadrangle;
+    assert_eq!(4, quad_vx.len());
+
+    // :移行を省略すると、フィールドと同じ名前の変数が作られフィールド値に束縛される
+    let Polygon { fill, .. } = quadrangle;
+    assert_eq!((0, 0, 0), fill);
+
+    // 構造体の値を変更するにはmutが必要
+    let mut polygon = new_polygon(vec![(-1, -5), (-4, 0)]);
+    assert_eq!(polygon.vertexes.len(), 2);
+    polygon.vertexes.push((2, 8));
+    assert_eq!(polygon.vertexes.len(), 3);
+
+    let triangle1 = Polygon {
+        vertexes: vec![(0, 0), (3, 0), (2, 2)],
+        fill: (255, 255, 255),
+        stroke_width: 5,
+    };
+
+    // triangle1を元にvertexesだけ異なる新しい値を作る
+    let triangle2 = Polygon {
+        vertexes: vec![(0, 0), (-3, 0), (-2, 2)],
+        .. triangle1
+    };
+
+    // コンパイルエラーになる
+    // let bad_polygon = Polygon {
+    //     vertexes: vec![(0, 0), (3, 0), (2, 2)],
+    // };
+
+
+    // #[derive(Default)]
+    // struct Polygon {
+    //     vertexes: Vec<(i32, i32)>,
+    //     stroke_width: u8,
+    //     fill: (u8, u8, u8),
+    // }
+
+    // すべてのフィールドがデフォルト値を持つPolygonを作成する
+    let polygon1: Polygon = Default::default();
+
+    // vertexesフィールドだけ別の値に設定し、他はデフォルト値にする
+    let polygon2 = Polygon {
+        vertexes: vec![(0, 0), (3, 0), (2, 2)],
+        .. Default::default()
+    };
+
+    impl Default for Polygon {
+        fn default() -> Self {
+            Self {
+                stroke_width: 1,                // デフォルト値を1にする
+                vertexes: Default::default(),   // Vec<(i32, i32)>のDefault実装を使う
+                fill: Default::default(),       // (u8, u8, u8)のDefault実装を使う
+            }
+        }
+    }
+
+    let vx0 = Vertex(0, 0);
+    let vx1 = Vertex(3, 0);
+    let triangle = Triangle(vx0, vx1, Vertex(2, 2));
+
+    assert_eq!((triangle.1).0, 3);
+
+    struct UserName(String);
+    struct Id(u64);
+    struct Timestamp(u64);
+    type User = (Id, UserName, Timestamp);
+
+    fn new_user(name: UserName, id: Id, created: Timestamp) -> User {
+        (id, name, created)
+    }
+
+    let id = Id(400);
+    let now = Timestamp(4567890123);
+
+    // nowとidの順番を間違えるとコンパイルエラーになってくれる
+    // let bad_user = new_user(UserName(String::from("kazuki")), now, id);
+
+
+    // assert_eq!で使うためにDebugとPartialEqの実装が必要
+    #[derive(Debug, PartialEq)]
+    struct UniqueValue;
+
+    // フィールドないので作れる値は1つのみ
+    let uv1 = UniqueValue;
+    let uv2 = UniqueValue;
+    assert_eq!(uv1, uv2);
 
 }
