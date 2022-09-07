@@ -1,5 +1,13 @@
 use std::collections::HashMap;
 
+// fn f1(name: &str) -> &str {
+fn f1(name: &str) -> String {
+    // let s =
+    format!("Hello, {}!", name)        // format!はStringを作る   
+    //;
+    // &s       // Stringから&strを作成し、戻り値として返す
+}
+
 fn main() {
     let t1 = (3, "birds".to_string());      // (i32, String)型のタプル。スタックに置かれる
     let mut b1 = Box::new(t1);              // Boxポインタを作る。タプルがヒープに移動する
@@ -77,6 +85,85 @@ fn main() {
     let m2 = vec![("a", 1), ("b", 3)].into_iter().collect::<HashMap<_, _>>();
     assert_eq!(m2.get("a"), Some(&1));
     assert_eq!(m2.get("b"), Some(&3));
+
+
+    // strリテラルからStringを作る。どちらの方法でも結果は同じ
+    let mut s1 = "ラズベリー".to_string();
+    let mut s2 = String::from("ブラックベリー");
+
+    // Rust 1.19より前のバージョンでは性能上の理由からto_string()よりもto_owned()が推奨されていた
+    let s3 = "ストロベリー".to_owned();
+
+    s1.push_str("タルト");      // String型の文字列に&str型の文字列を追加
+    assert_eq!(s1, "ラズベリータルト");
+
+    s2.push('と');              // Stringにcharを追加する
+
+    // push_str()が受け付けるのは&str型のみ。以下はコンパイルエラー
+    //s2.push_str(s3);        // s3はString型
+
+    // &を付けると型強制というしくみによって&Stringから&strへ変換される
+    s2.push_str(&s3);
+    assert_eq!(s2, "ブラックベリーとストロベリー");
+
+
+    let i = 42;     // i32型
+    assert_eq!(i.to_string(), "42");
+
+    let f = 4.3 + 0.1;      // f64型
+    assert_eq!(f.to_string(), "4.3999999999999995");
+    assert_eq!(format!("{:.2}", f), "4.40");        // format!マクロが便利
+
+    let t = (1, "ABC");
+    // 2要素のタプル型はDebugトレイトを実装しているのでformat!マクロで変換できる
+    assert_eq!(format!("{:?}", t), r#"(1, "ABC")"#);
+
+
+    let s1 = "42";
+    assert_eq!(s1.parse::<i32>(), Ok(42));      // &str型からi32型へ変換
+
+    let s2 = "abc";
+    let r2: Result<f64, _> = s2.parse();        // 変数の型から型推論できるならparseの型パラメータは不要
+    assert!(r2.is_err());                       // 数値として解釈できないときはエラーが返る
+    println!("{:?}", r2);
+
+
+    let cs = ['t', 'r', 'u', 's', 't'];     // [char; 5]型
+    assert_eq!(cs.iter().collect::<String>(),       "trust");
+    assert_eq!(&cs[1..].iter().collect::<String>(), "rust" );
+
+
+    let bad_utf8: [u8; 7] = [
+        b'a',                   // a
+        0xf0, 0x90, 0x80,       // でたらめなバイト列
+        0xe3, 0x81, 0x82,       // あ
+    ];
+
+    // 不正なバイト列はUnicodeのU+FFFD Replacement Characterに置き換わる
+    let s = String::from_utf8_lossy(&bad_utf8);
+    assert_eq!(s, "a\u{fffd}あ");
+
+
+    println!("{}", f1("名前"));
+
+
+    let utf16: Vec<u16> = vec![0x61, 0x62, 0x6f22, 0x5b57];
+
+    // Vec<u16>の値をUTF-16と解釈しStringを作成する(UTF-8へ変換される)
+    if let Ok(s) = String::from_utf16(&utf16) {
+        assert_eq!(s, "ab漢字");
+    } else {
+        unreachable!();
+    }
+
+
+    // バイト文字列リテラル。ASCII文字以外のバイトは「\x2桁の16進数」で記述する
+    let bs1 = b"abc\xe3\x81\x82";       // &[u8; 6]型。UTF-8表現で"abcあ"
+    assert_eq!(bs1, &[b'a', b'b', b'c', 0xe3, 0x81, 0x82]);
+
+    // rawバイト文字列リテラル。エスケープ文字(\)を特別扱いしないので、\nは改行文字ではなく文字通り\nと解釈される
+    let bs2 = br#"ab\ncd"#;     // &[u8; 6]型
+    assert_eq!(bs2, &[b'a', b'b', b'\\', b'n', b'c', b'd']);
 
     
 }
