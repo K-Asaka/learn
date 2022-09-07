@@ -273,5 +273,32 @@ fn main() {
 
     assert_eq!(add1("3", "abc"), Err("s1が整数ではありません".to_string()));
 
-    
+
+    type UserName = String;
+    type Id = i64;
+    type Timestamp = i64;
+    type User = (Id, UserName, Timestamp);
+
+    fn new_user(name: UserName, id: Id, created: Timestamp) -> User {
+        (id, name, created)
+    }
+
+    let id = 400;
+    let now = 4567890123;
+    let user = new_user(String::from("mika"), id, now);
+
+    // IdとTimestampは同じi64型なので、間違えてもエラーにならない
+    let bad_user = new_user(String::from("kazuki"), now, id);   // nowとidが逆
+
+
+    use std::cell::RefCell;
+    // use std::collections::HashMap;
+    use std::rc::Rc;
+    pub type SharedMap<K, V> = Rc<RefCell<HashMap<K, V>>>;
+
+    // 標準ライブラリのstd::ioモジュールのソースコードより引用
+    // https://github.com/rust-lang/rust/blob/master/src/libstd/io/error.rs
+    //pub type Result<T> = result::Result<T, Error>;
+
+
 }
