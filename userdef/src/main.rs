@@ -1,5 +1,55 @@
 use std::collections::HashMap;
 
+// shapeモジュール内にPolygon構造体を定義
+// mod shape {
+//     #[derive(Default)]
+//     pub struct Polygon {            // この構造体にモジュール外からアクセスできるようになる
+//         pub vertexes: Vec<(i32, i32)>,
+//         pub stroke_width: u8,
+//         pub fill: (u8, u8, u8),
+//         internal_id: String,        // このフィールドだけはモジュール外からのアクセス不可
+//     }
+// }
+
+// shapeモジュールの外側でPolygonを使いたい
+// use shape::Polygon;  // pubが付いていないとコンパイルエラー
+
+// ライフタイム指定子('a)が必要
+struct StrRefs<'a> {
+    s1: &'a str,
+    s2: &'a str,
+}
+// もし指定しなかったらコンパイルエラーになる
+
+// ジェネリクスな関数の例
+pub fn sort<T: Ord>(x: &mut [T], up: bool) { }
+
+#[derive(Default)]
+pub struct Polygon<T> {
+    pub vertexes: Vec<T>,
+    // 他のフィールドは省略
+}
+
+// 座標
+trait Coordinates {}
+
+// デカルト座標
+#[derive(Default)]
+struct CartesianCoord {
+    x: f64,
+    y: f64,
+}
+impl Coordinates for CartesianCoord {}
+
+// 極座標
+#[derive(Default)]
+struct PolarCoord {
+    r: f64,
+    theta: f64,
+}
+impl Coordinates for PolarCoord {}
+
+
 type UserName = String;
 
 #[derive(Debug)]
@@ -327,11 +377,11 @@ fn main() {
 
 
     // 名前付きフィールド構造体
-    struct Polygon {
-        vertexes: Vec<(i32, i32)>,      // 頂点の座標
-        stroke_width: u8,               // 輪郭の太さ
-        fill: (u8, u8, u8),             // 塗りつぶしのRGB色
-    }
+    // struct Polygon {
+    //     vertexes: Vec<(i32, i32)>,      // 頂点の座標
+    //     stroke_width: u8,               // 輪郭の太さ
+    //     fill: (u8, u8, u8),             // 塗りつぶしのRGB色
+    // }
 
     // タプル構造体
     struct Triangle(Vertex, Vertex, Vertex);
@@ -345,51 +395,51 @@ fn main() {
 
 
     // Polygon型の値を作り、変数triangleを束縛する
-    let triangle = Polygon {
-        vertexes: vec![(0, 0), (3, 0), (2, 2)],
-        fill: (255, 255, 255),
-        stroke_width: 1,
-    };
+    // let triangle = Polygon {
+    //     vertexes: vec![(0, 0), (3, 0), (2, 2)],
+    //     fill: (255, 255, 255),
+    //     stroke_width: 1,
+    // };
 
     // フィールド名と同じ名前の関数引数やローカル変数があるときは以下のような省略形も使える(Rust 1.17以降)
-    fn new_polygon(vertexes: Vec<(i32, i32)>) -> Polygon {
-        let stroke_width = 1;
-        let fill = (0, 0, 0);
-        Polygon { vertexes, stroke_width, fill }
-    }
+    // fn new_polygon(vertexes: Vec<(i32, i32)>) -> Polygon {
+    //     let stroke_width = 1;
+    //     let fill = (0, 0, 0);
+    //     Polygon { vertexes, stroke_width, fill }
+    // }
 
-    let quadrangle = new_polygon(vec![(5, 2), (4, 7), (10, 6), (8, 1)]);
+    // let quadrangle = new_polygon(vec![(5, 2), (4, 7), (10, 6), (8, 1)]);
 
     // フィールド名でアクセス
-    assert_eq!(triangle.vertexes[0], (0, 0));
-    assert_eq!(triangle.vertexes.len(), 3);
-    assert_eq!(triangle.fill, (255, 255, 255));
+    // assert_eq!(triangle.vertexes[0], (0, 0));
+    // assert_eq!(triangle.vertexes.len(), 3);
+    // assert_eq!(triangle.fill, (255, 255, 255));
 
     // パターンマッチでアクセス。不要なフィールドは..で省略できる
-    let Polygon { vertexes: quad_vx, .. } = quadrangle;
-    assert_eq!(4, quad_vx.len());
+    // let Polygon { vertexes: quad_vx, .. } = quadrangle;
+    // assert_eq!(4, quad_vx.len());
 
     // :移行を省略すると、フィールドと同じ名前の変数が作られフィールド値に束縛される
-    let Polygon { fill, .. } = quadrangle;
-    assert_eq!((0, 0, 0), fill);
+    // let Polygon { fill, .. } = quadrangle;
+    // assert_eq!((0, 0, 0), fill);
 
     // 構造体の値を変更するにはmutが必要
-    let mut polygon = new_polygon(vec![(-1, -5), (-4, 0)]);
-    assert_eq!(polygon.vertexes.len(), 2);
-    polygon.vertexes.push((2, 8));
-    assert_eq!(polygon.vertexes.len(), 3);
+    // let mut polygon = new_polygon(vec![(-1, -5), (-4, 0)]);
+    // assert_eq!(polygon.vertexes.len(), 2);
+    // polygon.vertexes.push((2, 8));
+    // assert_eq!(polygon.vertexes.len(), 3);
 
-    let triangle1 = Polygon {
-        vertexes: vec![(0, 0), (3, 0), (2, 2)],
-        fill: (255, 255, 255),
-        stroke_width: 5,
-    };
+    // let triangle1 = Polygon {
+    //     vertexes: vec![(0, 0), (3, 0), (2, 2)],
+    //     fill: (255, 255, 255),
+    //     stroke_width: 5,
+    // };
 
     // triangle1を元にvertexesだけ異なる新しい値を作る
-    let triangle2 = Polygon {
-        vertexes: vec![(0, 0), (-3, 0), (-2, 2)],
-        .. triangle1
-    };
+    // let triangle2 = Polygon {
+    //     vertexes: vec![(0, 0), (-3, 0), (-2, 2)],
+    //     .. triangle1
+    // };
 
     // コンパイルエラーになる
     // let bad_polygon = Polygon {
@@ -405,29 +455,29 @@ fn main() {
     // }
 
     // すべてのフィールドがデフォルト値を持つPolygonを作成する
-    let polygon1: Polygon = Default::default();
+    // let polygon1: Polygon = Default::default();
 
     // vertexesフィールドだけ別の値に設定し、他はデフォルト値にする
-    let polygon2 = Polygon {
-        vertexes: vec![(0, 0), (3, 0), (2, 2)],
-        .. Default::default()
-    };
+    // let polygon2 = Polygon {
+    //     vertexes: vec![(0, 0), (3, 0), (2, 2)],
+    //     .. Default::default()
+    // };
 
-    impl Default for Polygon {
-        fn default() -> Self {
-            Self {
-                stroke_width: 1,                // デフォルト値を1にする
-                vertexes: Default::default(),   // Vec<(i32, i32)>のDefault実装を使う
-                fill: Default::default(),       // (u8, u8, u8)のDefault実装を使う
-            }
-        }
-    }
+    // impl Default for Polygon {
+    //     fn default() -> Self {
+    //         Self {
+    //             stroke_width: 1,                // デフォルト値を1にする
+    //             vertexes: Default::default(),   // Vec<(i32, i32)>のDefault実装を使う
+    //             fill: Default::default(),       // (u8, u8, u8)のDefault実装を使う
+    //         }
+    //     }
+    // }
 
-    let vx0 = Vertex(0, 0);
-    let vx1 = Vertex(3, 0);
-    let triangle = Triangle(vx0, vx1, Vertex(2, 2));
+    // let vx0 = Vertex(0, 0);
+    // let vx1 = Vertex(3, 0);
+    // let triangle = Triangle(vx0, vx1, Vertex(2, 2));
 
-    assert_eq!((triangle.1).0, 3);
+    // assert_eq!((triangle.1).0, 3);
 
     // struct UserName(String);
     struct Id(u64);
@@ -507,5 +557,15 @@ fn main() {
         }
     }
 
+
+    let vertexes = vec![
+        CartesianCoord {x:  0.0, y:  0.0},
+        CartesianCoord {x: 50.0, y:  0.0},
+        CartesianCoord {x: 30.0, y: 20.0}
+    ];
+    
+    // Polygon<CartesianCoord>型
+    let poly = Polygon { vertexes, .. Default::default() };
+    
 
 }
