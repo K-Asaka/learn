@@ -1,5 +1,30 @@
 use std::collections::HashMap;
 
+type UserName = String;
+
+#[derive(Debug)]
+enum Task {
+    Open,
+    AssignedTo(UserName),
+    Working {
+        assignee: UserName,
+        remaining_hours: u16,
+    },
+    Done,
+}
+
+#[derive(Debug, PartialEq)]
+enum Weekday {
+    // Weekday型には以下のバリアントがある
+    Monday, Tuesday, Wednessday, Thursday, Friday,
+}
+
+// assert_eq!で使うためにDebugとPartialEqの実装が必要
+#[derive(Debug, PartialEq)]
+struct UniqueValue;
+
+
+
 // fn f1(name: &str) -> &str {
 fn f1(name: &str) -> String {
     // let s =
@@ -404,14 +429,14 @@ fn main() {
 
     assert_eq!((triangle.1).0, 3);
 
-    struct UserName(String);
+    // struct UserName(String);
     struct Id(u64);
     struct Timestamp(u64);
-    type User = (Id, UserName, Timestamp);
+    // type User = (Id, UserName, Timestamp);
 
-    fn new_user(name: UserName, id: Id, created: Timestamp) -> User {
-        (id, name, created)
-    }
+    // fn new_user(name: UserName, id: Id, created: Timestamp) -> User {
+    //     (id, name, created)
+    // }
 
     let id = Id(400);
     let now = Timestamp(4567890123);
@@ -420,13 +445,67 @@ fn main() {
     // let bad_user = new_user(UserName(String::from("kazuki")), now, id);
 
 
-    // assert_eq!で使うためにDebugとPartialEqの実装が必要
-    #[derive(Debug, PartialEq)]
-    struct UniqueValue;
+
 
     // フィールドないので作れる値は1つのみ
     let uv1 = UniqueValue;
     let uv2 = UniqueValue;
     assert_eq!(uv1, uv2);
+
+
+    // 平日を表すWeekday型を定義する
+    // Debugトレイトを自動導出すると"{:?}"で表示できるようになる
+    // PartialEqトレイトを自動導出すると==演算子が使えるようになる
+
+
+    fn say_something(weekday: Weekday) {
+        if weekday == Weekday::Friday {
+            println!("TGIF!");      // Thank God, it's Friday (やっと金曜日だ)
+        } else {
+            println!("まだ{:?}か", weekday);
+        }
+    }
+
+    say_something(Weekday::Friday);
+
+    // 月を表すMonth型を定義する
+    enum Month {
+        // バリアントにisize型の整数値を割り当てられる
+        January = 1, February = 2, March = 3,   /* 中略 */ December = 12,
+    }
+
+    assert_eq!(3, Month::March as isize);       // isize型にキャストすると割り当てた値が得られる
+
+
+
+
+    // use宣言でTaskが持つバリアントをインポートするとバリアント名が直接書けるようになる
+    use crate::Task::*;
+
+    // Task型の値を3つ作り、ベクタに格納する
+    let tasks = vec![
+        // もし上のuse宣言がなかったらTask::AssignedToと書かないといけない
+        AssignedTo(String::from("junko")),
+        Working {
+            assignee: String::from("hiro"),
+            remaining_hours: 18,
+        },
+        Done,
+    ];
+
+    // 個々のタスクの状況をレポートする
+    for (i, task) in tasks.iter().enumerate() {
+        // match式によるパターンマッチでバリアントを識別し、フィールド値を取り出す
+        match task {
+            AssignedTo(assignee) => {
+                println!("タスク{}は{}さんにアサインされています", i, assignee)
+            }
+            Working { assignee, remaining_hours } => {
+                println!("タスク{}は{}さんが作業中です。残り{}時間の見込み", i, assignee, remaining_hours)
+            }
+            _ => println!("タスク{}はその他のステータス({:?})です", i, task)
+        }
+    }
+
 
 }
