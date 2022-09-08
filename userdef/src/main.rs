@@ -580,10 +580,15 @@
 
 // }
 
+
+fn f1(n: &mut usize, str: &str, slice: &[i32]) {
+    *n = str.len() + slice.len()
+}
+
 fn main() {
     let i1 = 42;    // i32型
-    let f1 = i1 as f64 / 2.5;   // i32型からf64型へキャスト
-    println!("{}", f1);
+    // let f1 = i1 as f64 / 2.5;   // i32型からf64型へキャスト
+    // println!("{}", f1);
 
     let c1 = 'a';
     assert_eq!(97, c1 as u32);      // char型からu32型へキャスト
@@ -616,15 +621,69 @@ fn main() {
     // Boxポインタと*mutポインタはどちらも同じビット幅なのでtransmuteできる
     let p3: *mut i32 = unsafe { std::mem::transmute(p1) };
 
-    let f1 = 5.6789e+3_f32;     // 5678.9
+    // let f1 = 5.6789e+3_f32;     // 5678.9
 
     // f32型からi32型へキャストする。小数点以下は切り捨てられる
     let i1 = f1 as i32;
     println!("{}", i1);     // 5678と表示される
 
     // f32型からi32型へtransmuteする
-    let i2: i32 = unsafe { std::mem::transmute(f1) };
+    // let i2: i32 = unsafe { std::mem::transmute(f1) };
     println!("{}", i2);     // 浮動小数点数を整数として再解釈した値1169258291が表示される
-    
+
+
+    // 整数リテラル3、4、5は通常はi32型と解釈されるが、
+    // 型アノテーション(型注釈)によってu8型へと型強制されている
+    let v1: Vec<u8> = vec![3, 4, 5];
+
+    // もし型強制がなかったらこう書かなければならない
+    // let v1 = vec![3u8, 4u8, 5u8];
+
+    // Vec[u8]型からスライス&[u8]型へ型強制されることによって
+    // スライスに備わったfirst(&self)メソッドが使用できる
+    assert_eq!(Some(&3u8), v1.first());
+
+    // もし型強制がなかったらこう書かなければならない
+    // assert_eq!(Some(&3u8), (&v1[..]).first());
+
+    let mut s1 = String::from("Type coercion");
+    let s2 = String::from("is actually easy.");
+
+    // push_str()のシグネチャはpush_str(self: &mut String, s: &str)
+    // 型強制によってs1がString型から&mut String型へ変換され、
+    // &s2は&String型から&str型へ変換される
+    s1.push_str(&s2);
+
+    // もし型強制がなかったらこう書かなければならない
+    // (&mut s1).push_str(s2.as_str());
+
+    let mut i1 = 0u8;       // i1はu8型だと型推論される
+    i1 = 255;                   // よって255はu8型へ型強制される
+
+    let p1 = &&&&[1, 2, 3, 4];  // &&&&[i32; 4]型
+    // 型強制が&&&&a1 → &&&a1 → &&a1 → &a1の順に推移的に作用する
+    let p2: &[i32; 4] = p1;
+
+    let p3 = &&[1, 2, 3, 4];        // &&[i32; 4]型
+
+    // 配列への参照&&[i32; 4]型からスライス&[i32]型まで段階を踏むと型強制できる
+    let p4: &[i32; 4] = p3;
+    let p5: &[i32] = p4;
+
+    // しかし一度にはできない(rustc 1.31.0)
+    // let p6: &[i32] = p3;     // エラー
+
+
+    let mut b1 = Box::new(0);       // Box<usize>型
+    let s1 = String::from("deref");
+    let v1 = vec![1, 2, 3];
+
+    // Derefによる型強制が起こる：
+    // - &mut Box<usize> → &mut usize
+    // - &String → &str
+    // - &Vec<i32> → &[i32]
+    f1(&mut b1, &s1, &v1);
+    assert_eq!(8, *b1);
+
 
 }
