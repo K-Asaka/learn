@@ -594,4 +594,17 @@ fn main() {
     // 300はu8型の最大値を超えているので桁あふれして44になる(300を256で割った余りは44)
     assert_eq!(44, u1);
 
+    let t1 = ('a', 42);
+    // let t2 = t1 as (u32, u8);    // エラー
+
+    let v1 = vec![b'h', b'e', b'l', b'l', b'o'];    // Vec<u8>型
+    // let v2 = v1 as Vec<u16>;    // エラー
+
+    let t3 = (t1.0 as u32, t1.1 as u8);
+    let v3 = v1.iter().map(|&n| n as u16).collect::<Vec<u16>>();
+
+    // &str型はVec<u8>型への変換を対象としたFromトレイトを実装している
+    let v4: Vec<u8> = From::from("hello");
+    assert_eq!(v1, v4);
+    
 }
