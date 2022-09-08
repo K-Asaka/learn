@@ -33,6 +33,18 @@ impl Circle {
     }
 }
 
+
+// 例5
+const SECRET_NUMBER: i32 = 25;
+// 例6
+static GLOBAL_COUNTER: i32 = 0;
+// 例7
+// 定義に使う値はコンパイル時に値が確定するものでないといけない
+static mut v: Option<Vec<i32>> = None;
+
+
+
+
 // エントリポイントとなる関数
 fn main() {
     let mut year = String::new();
@@ -71,6 +83,12 @@ fn main() {
     // mutable_string = 2019;                              // エラー！異なる型の値に束縛し直すことはできない
 
 
+    // ミュータブルなスタティック変数を扱うときは代入も参照もunsafeブロックの中で行わないといけない
+    unsafe {
+        // 代入するときはコンパイル時に値が確定するものでなくてもよい
+        v = Some(vec![1, 2, 3]);
+        println!("{:?}", v);
+    }
 
 }
 
