@@ -63,6 +63,13 @@ fn main() {
 
     not_initialized = 1;
 
+
+    // 例2
+    let mut mutable_string = String::from("String");    // 文字列に束縛
+    mutable_string = String::from("Hello");             // 別の文字列に束縛
+    mutable_string.push_str(", world!");                // 文字列を変更する操作
+    // mutable_string = 2019;                              // エラー！異なる型の値に束縛し直すことはできない
+
 }
 
 // うるう年の場合はtrue、平年の場合はfalseを返す関数
