@@ -606,5 +606,25 @@ fn main() {
     // &str型はVec<u8>型への変換を対象としたFromトレイトを実装している
     let v4: Vec<u8> = From::from("hello");
     assert_eq!(v1, v4);
+
+
+    let p1 = Box::new(10);      // Box<i32>型
+
+    // boxポインタを生ポインタ*mut i32型に変換したいが型キャストできない
+    // let p2 = p1 as *mut i32;     // エラー
+
+    // Boxポインタと*mutポインタはどちらも同じビット幅なのでtransmuteできる
+    let p3: *mut i32 = unsafe { std::mem::transmute(p1) };
+
+    let f1 = 5.6789e+3_f32;     // 5678.9
+
+    // f32型からi32型へキャストする。小数点以下は切り捨てられる
+    let i1 = f1 as i32;
+    println!("{}", i1);     // 5678と表示される
+
+    // f32型からi32型へtransmuteする
+    let i2: i32 = unsafe { std::mem::transmute(f1) };
+    println!("{}", i2);     // 浮動小数点数を整数として再解釈した値1169258291が表示される
     
+
 }
