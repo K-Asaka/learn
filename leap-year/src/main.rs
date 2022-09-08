@@ -55,6 +55,13 @@ fn main() {
     let circle1 = Circle::small_circle();
     println!("Circle1's diameter: {}", circle1.diameter());
 
+    // 例1
+    let date_string = "2019-01-06";     // 型を省略できる
+    let pi: f64 = 3.14;                 // 型を明示してもよい
+    let not_initialized;                // 初期化しなくてもよい
+    let (a, b) = (19, 79);              // パターンは単なる変数ではない
+
+    not_initialized = 1;
 
 }
 
