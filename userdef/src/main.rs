@@ -585,16 +585,18 @@
 //     *n = str.len() + slice.len()
 // }
 
-fn f1(slice: &[usize]) -> usize {
-    slice.len()
-}
+// fn f1(slice: &[usize]) -> usize {
+//     slice.len()
+// }
 
-fn f2(slice: &mut [usize]) {
-    // ポインタの弱体化により&mut [usize]型から&[usize]型へ型強制される
-    let len = f1(slice);
-    slice[0] = len;
-}
+// fn f2(slice: &mut [usize]) {
+//     // ポインタの弱体化により&mut [usize]型から&[usize]型へ型強制される
+//     let len = f1(slice);
+//     slice[0] = len;
+// }
 
+fn f1(p: &[i32])     -> i32 { p[0] }
+fn f2(p: Box<[i32]>) -> i32 { p[0] }
 
 fn main() {
     let i1 = 42;    // i32型
@@ -697,9 +699,21 @@ fn main() {
     // assert_eq!(8, *b1);
 
 
-    let mut v = vec![0; 10];
-    f2(&mut v[..]);
-    assert_eq!(10, v[0]);
+    // let mut v = vec![0; 10];
+    // f2(&mut v[..]);
+    // assert_eq!(10, v[0]);
 
-    
+
+    let a1 = [1, 2, 3, 4];
+    assert_eq!(1, f1(&a1));     // &[i32; 4] → &[i32]
+    assert_eq!(1, f2(Box::new(a1)));    // Box<[i32; 4]> → Box<[i32]>
+
+    // dの型をDebugトレイトのトレイトオブジェクトに指定する
+    let mut d: Box<dyn std::fmt::Debug>;
+
+    // Debugトレイトを実装する型はトレイトオブジェクトへ型強制できる
+    d = Box::new([1, 2]);       // Box<[i32; 2]>  → Box<Debug>
+    d = Box::new(Some(1));      // Box<Some<i32>> → Box<Debug>
+
+
 }
