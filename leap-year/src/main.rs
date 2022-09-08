@@ -70,6 +70,8 @@ fn main() {
     mutable_string.push_str(", world!");                // 文字列を変更する操作
     // mutable_string = 2019;                              // エラー！異なる型の値に束縛し直すことはできない
 
+
+
 }
 
 // うるう年の場合はtrue、平年の場合はfalseを返す関数
@@ -80,4 +82,24 @@ fn is_leap_year(year: u32) -> bool {
 // 発散する関数(値を返さない関数)
 fn end_function() -> ! {
     std::process::exit(0);
+}
+
+// 例3
+fn scope_example() {
+    let x = 10;
+
+    if x == 10 {
+        let y = 20;
+        println!("{}", y);
+    }
+
+    {
+        let z = 30;
+    }
+
+    println!("{}", x);
+}
+
+fn another_fn() {
+
 }
