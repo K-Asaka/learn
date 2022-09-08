@@ -103,3 +103,18 @@ fn scope_example() {
 fn another_fn() {
 
 }
+
+fn shadowing_example() {
+    let x = 10;
+    let x = 20;
+    let x = "String";
+
+    println!("{}", x);
+
+    {
+        let x = 30;
+        println!("{}", x);
+    }
+
+    println!("{}", x);
+}
