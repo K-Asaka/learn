@@ -6,6 +6,17 @@ use std::io;
 // std::io::Write トレイトを使う
 use std::io::Write;
 
+// 例5
+struct Circle {
+    radius: u32,
+}
+impl Circle {
+    fn diameter(&self) -> u32 {
+        self.radius * 2
+    }
+}
+
+
 // エントリポイントとなる関数
 fn main() {
     let mut year = String::new();
@@ -19,6 +30,9 @@ fn main() {
     } else {
         println!("{} is not a leap year.", year);
     }
+
+    let circle1 = Circle { radius: 10 };
+    println!("Circle1's diameter: {}", circle1.diameter());
 }
 
 // うるう年の場合はtrue、平年の場合はfalseを返す関数
