@@ -267,20 +267,20 @@ fn main() {
     let a = ['a', 'b', 'c', 'd', 'e'];
 
     // 糖衣構文と実際の範囲の対応
-    assert_eq!(a[ ..  ], ['a', 'b', 'c', 'd', 'e']);
-    assert_eq!(a[ .. 3], ['a', 'b', 'c'          ]);
-    assert_eq!(a[ ..=3], ['a', 'b', 'c', 'd'     ]);
-    assert_eq!(a[1..  ], [     'b', 'c', 'd', 'e']);
-    assert_eq!(a[1.. 3], [     'b', 'c'          ]);
-    assert_eq!(a[1..=3], [     'b', 'c', 'd'     ]);
+    // assert_eq!(a[ ..  ], ['a', 'b', 'c', 'd', 'e']);
+    // assert_eq!(a[ .. 3], ['a', 'b', 'c'          ]);
+    // assert_eq!(a[ ..=3], ['a', 'b', 'c', 'd'     ]);
+    // assert_eq!(a[1..  ], [     'b', 'c', 'd', 'e']);
+    // assert_eq!(a[1.. 3], [     'b', 'c'          ]);
+    // assert_eq!(a[1..=3], [     'b', 'c', 'd'     ]);
 
     // 糖衣構文とRange*型の対応
-    assert_eq!(   ..   , std::ops::RangeFull                   );
-    assert_eq!(   .. 3 , std::ops::RangeTo { end: 3 }          );
-    assert_eq!(   ..=3 , std::ops::RangeToInclusive { end: 3 } );
-    assert_eq!(  1..   , std::ops::RangeFrom { start: 1 }      );
-    assert_eq!(  1.. 3 , std::ops::Range { start: 1, end: 3 }  );
-    assert_eq!(  1..=3 , std::ops::RangeInclusive::new(1, 3)   );
+    // assert_eq!(   ..   , std::ops::RangeFull                   );
+    // assert_eq!(   .. 3 , std::ops::RangeTo { end: 3 }          );
+    // assert_eq!(   ..=3 , std::ops::RangeToInclusive { end: 3 } );
+    // assert_eq!(  1..   , std::ops::RangeFrom { start: 1 }      );
+    // assert_eq!(  1.. 3 , std::ops::Range { start: 1, end: 3 }  );
+    // assert_eq!(  1..=3 , std::ops::RangeInclusive::new(1, 3)   );
 
 
     let a1 = ['a', 'b', 'c', 'd'];
@@ -530,7 +530,7 @@ fn main() {
 
 
     // use宣言でTaskが持つバリアントをインポートするとバリアント名が直接書けるようになる
-    use crate::Task::*;
+    // use crate::Task::*;
 
     // Task型の値を3つ作り、ベクタに格納する
     let tasks = vec![
@@ -567,5 +567,15 @@ fn main() {
     // Polygon<CartesianCoord>型
     let poly = Polygon { vertexes, .. Default::default() };
     
+
+    #[derive(Default)]
+    struct A { f0: u8, f1: u32, f2: u8 }
+
+    let a: A = Default::default();
+    println!("struct A ({} bytes)\n  f0: {:p}\n  f1: {:p}\n  f2: {:p}\n",
+            std::mem::size_of::<A>(), &a.f0, &a.f1, &a.f2);
+
+    // #[repr(C)]アトリビュートを付けると構造体の内部表現がC言語の仕様通りになり、
+    // FFIで安全に受け渡せるようになる。
 
 }
