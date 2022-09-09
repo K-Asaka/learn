@@ -126,7 +126,44 @@ fn main() {
     println!("Unsigned right shift: {:08b}", unsigned >> 2);
     println!("Signed right shift: {:08b}", signed >> 2);
 
-    
+
+    // 例1
+    let a = 11;
+
+    if a % 2 == 0 {
+        println!("{} is an even number", a);    // aが偶数の場合
+    } else {
+        println!("{} is an odd number", a);     // aが奇数の場合
+    }
+
+    // 例2
+    let a = 12;
+
+    let even_or_odd = if a % 2 == 0 {
+        "an even"
+    } else {
+        "an odd"
+    };
+
+    println!("{} is {} number", a, even_or_odd);
+
+    // 例3　エラーあり
+    // let a = 13;
+    // let result = if a % 2 == 0 {
+    //     'E'     // char型
+    // } else {
+    //     "AN ODD"    // &str型
+    // };
+
+    // 例4
+    let a = 14;
+    if a % 2 == 0 {
+        println!("{} is an even number", a);        // 文なので戻り値は{}
+    }
+    // false節はないが、false節の戻り値は()として取り扱われる
+    // そのため、if式の戻り値は()
+
+
 }
 
 // うるう年の場合はtrue、平年の場合はfalseを返す関数
