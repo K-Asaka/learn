@@ -311,7 +311,19 @@ fn main() {
         counter += 1;
     }
 
-    
+
+    // 例6
+    let mut counter = Some(0);
+    while let Some(i) = counter {
+        if i == 10 {
+            counter = None;
+        } else {
+            println!("{}", i);
+            counter = Some(i + 1);
+        }
+    }
+
+
 }
 
 // うるう年の場合はtrue、平年の場合はfalseを返す関数
