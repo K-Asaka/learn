@@ -258,7 +258,16 @@ fn main() {
         None => "Nothing",
     };
     println!("{}", message);
-    
+
+
+    // 例10
+    let score = Some(100);
+    if let Some(100) = score {
+        println!("you got full marks!");
+    } else {
+        println!("You didn't get full marks.");
+    }
+
 
 }
 
