@@ -2,6 +2,14 @@
 // 入力された年がうるう年かどうかを判断するプログラム
 #![allow(overflowing_literals)]
 
+// unused_importsリントチェックの結果を無視する
+// unused_importsは使われていないクレートをインポートしていないかどうかのリントチェック
+#[allow(unused_imports)]
+
+// dead_codeリントチェックへの違反をエラーとして取り扱う
+// dead_codeは使われていない、エクスポートもされていないコードがないかどうかのリントチェック
+#[deny(dead_code)]
+
 
 // std::io 名前空間を io としてインポート
 use std::io;
@@ -354,8 +362,12 @@ fn main() {
     };
     one += 1;
     println!("10 + 1 = {}", plus_one(10));
-
     
+
+    let some_point = Point {x: 10, y: 20, z: 0};
+    // Debugトレイとのfmt関数が自動的に実装されているので、:?フォーマット文字列を使うことができる
+    println!("Debug: {:?}", some_point);
+
 }
 
 // うるう年の場合はtrue、平年の場合はfalseを返す関数
@@ -401,4 +413,55 @@ fn shadowing_example() {
     }
 
     println!("{}", x);
+}
+
+// 対象となるアイテム宣言の前に書く方法
+#[test]
+fn test1() {
+    // 本体は省略
+}
+
+// fn test2() { // エラーになった
+//     // 対象となるアイテム宣言の中に書く方法
+//     #![test]
+//     // 本体は省略
+// }
+
+// // macrosモジュールに含まれるマクロを読み込む
+// #[macro_use] mod macros;
+
+// // 外部のクレートで定義されているマクロを読み込むには、単にuseキーワードを使えばよい
+// // logクレートからdebugマクロ、errorマクロを読み込む
+// use log::{debug, error};
+
+// ターゲットのOSがUnix系の場合にだけコンパイルする
+#[cfg(unix)]
+fn something_for_unix() {
+    // 本体は省略
+}
+
+// ターゲットのOSがWindowsの場合にだけコンパイルする
+#[cfg(windows)]
+fn something_for_windows() {
+    // 本体は省略
+}
+
+// Rustコンパイラに--cfg allfnsオプションを渡したときだけコンパイルされる
+#[cfg(allfns)]
+fn rarely_used_fn() {
+    // 本体は省略
+}
+
+// Rustコンパイラに--cfg color="blue"オプションを渡したときだけコンパイルされる
+#[cfg(color = "blue")]
+fn blue_fn() {
+    // 本体は省略
+}
+
+// Point構造体にDebugトレイトが自動的に実装される
+#[derive(Debug)]
+struct Point {
+    x: i32,
+    y: i32,
+    z: i32,
 }
