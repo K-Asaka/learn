@@ -164,6 +164,102 @@ fn main() {
     // そのため、if式の戻り値は()
 
 
+    // 例1
+    let value = 100;
+    match value {
+        1 => println!("One"),
+        10 => println!("Ten"),
+        100 => println!("One hundred"),
+        _ => println!("Something else"),
+    }
+
+    // 例2
+    let number = 10;
+    let string = match number {
+        1 => "One",
+        10 => "Ten",
+        100 => "One hundred",
+        _ => "Something else",
+    };
+    println!("{}", string);
+
+    // 例3　エラーあり
+    // let character = 'C';
+    // let something = match character {
+    //     'A' => "Apple",
+    //     'B' => "Bear",
+    //     'C' => "Computer",
+    // };
+    // println!("{}", something);
+
+    // 例4
+    let character = 'C';
+    let something = match character {
+        'A' => "Apple",
+        'B' => "Bear",
+        'C' => "Computer",
+        _ => "Something else",
+    };
+    println!("{}", something);
+
+    // 例5
+    enum Light {
+        Red,
+        Yellow,
+        Green,
+    }
+
+    let light = Light::Green;
+
+    // すべての可能性を列挙しているのでワイルドカードパターンがなくてもエラーにならない
+    let action = match light {
+        Light::Red => "Stop",
+        Light::Yellow => "Proceed with caution",
+        Light::Green => "Go",
+    };
+    println!("Green: {}", action);
+
+    // 例6
+    let unknown = Some("Apple");
+    let string = match unknown {
+        Some(something) => String::from("Hi, ") + something,
+        None => String::from("Nothing"),
+    };
+    println!("{}", string);
+
+    // 例7
+    let ten = 10;
+    let ten_reference = &ten;
+
+    match ten_reference {
+        number => assert_eq!(&10, number),  // numberは参照
+    };
+
+    match ten_reference {
+        &number => assert_eq!(10, number),  // numberは参照ではない
+    };
+
+    // 例8
+    let number = 42;
+    let string = match number {
+        // パターンの連結
+        1 | 2 | 3 => "One or two or three",
+        // 範囲のパターン
+        40 ..= 50 => "From 40 to 50",
+        _ => "Something else",
+    };
+    println!("{}", string);
+
+    // 例9
+    let string = Some("This is a very long string");
+    let message = match string {
+        Some(s) if s.len() >= 10 => "Long string",
+        Some(_) => "String",
+        None => "Nothing",
+    };
+    println!("{}", message);
+    
+
 }
 
 // うるう年の場合はtrue、平年の場合はfalseを返す関数
