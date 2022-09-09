@@ -269,6 +269,41 @@ fn main() {
     }
 
 
+    // 例1
+    // loop {
+    //     println!("Infinite loop!");
+    // }
+
+    // 例2
+    let mut counter = 10;
+    loop {
+        println!("{}", counter);
+
+        if counter == 0 {
+            break;
+        }
+
+        counter -= 1;
+    }
+
+    // 例3
+    let mut counter = 0;
+    let ten = loop {
+        if counter == 10 {
+            break counter;
+        }
+        counter += 1;
+    };
+    println!("{}", ten);
+
+    // 例4
+    // loop {
+    //     println!("This is executed");
+    //     continue;
+    //     println!("This is not executed");
+    // }
+
+    
 }
 
 // うるう年の場合はtrue、平年の場合はfalseを返す関数
