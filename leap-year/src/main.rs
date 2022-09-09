@@ -16,6 +16,7 @@ use std::io;
 // std::io::Write トレイトを使う
 use std::io::Write;
 
+
 // 例5
 // struct Circle {
 //     radius: u32,
@@ -368,6 +369,27 @@ fn main() {
     // Debugトレイとのfmt関数が自動的に実装されているので、:?フォーマット文字列を使うことができる
     println!("Debug: {:?}", some_point);
 
+
+    // serverモジュールの中のecho()関数の呼び出し
+    server::echo();
+    // clientモジュールの中のecho()関数の呼び出し
+    client::echo();
+
+    // ここはルートモジュールの中
+    // ルートモジュールからの相対指定で、networkモジュールの中のping()関数の呼び出し
+    network::ping();
+    // crateはクレートのルートモジュールを指す特別な名前
+    // 次のように書くこともできる
+    crate::network::ping();
+    // selfは現在地のモジュールを指す特別な名前
+    // 現在地はルートモジュールなので、次のように書くこともできる。
+    self::network::ping();
+    // その他に、現在地のモジュールの親に当たるモジュールを指すsuperという特別な名前もある
+    // 現在地はルートモジュールなので、親に当たるモジュールはない
+
+
+    network::ping();
+
 }
 
 // うるう年の場合はtrue、平年の場合はfalseを返す関数
@@ -465,3 +487,54 @@ struct Point {
     y: i32,
     z: i32,
 }
+
+// ここはルートモジュール
+
+mod server {
+    // この中はserverモジュール
+    fn _echo() {
+        // これはserver::_echo()関数
+        println!("Server");
+    }
+    pub fn echo() {
+        // server::echo()はパブリックな関数
+        println!("Server");
+    }
+    pub(crate) fn echo2() {
+        // server::echo2()はserverモジュールの含まれるクレートに対してはパブリックな関数
+        println!("Server");
+    }
+
+}
+
+mod client {
+    // この中はclientモジュール
+    fn _echo () {
+        // これはclient::_echo()関数
+        println!("Client");
+    }
+    pub fn echo() {
+        // client::echo()はパブリックな関数
+        println!("Client");
+    }
+    // pub(in app::network) fn echo2() {
+    //     // client::echo2()はapp:networkモジュールに対してはパブリックな関数
+    //     println!("Client");
+    // }
+}
+
+// randは外部のクレート(https://crates.io/crates/rand)なので、これは絶対指定
+// randクレートのpreludeモジュールの中のすべてのアイテムを使う
+// use rand::prelude::*;
+
+// ここはルートモジュールの中
+
+// mod network {
+//     // ここはnetworkモジュールの中
+//     pub fn ping() {
+//         // これはnetworkモジュールの中のping()関数
+//         println!("Ping");
+//     }
+// }
+mod network;    // これでsrc/network.rsの内容がnetworkモジュールとしてコンパイルされる
+
