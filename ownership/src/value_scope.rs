@@ -6,6 +6,15 @@ struct Parent(usize, Child, Child);     // Parentはusizeに加えてChildを2�
 #[derive(Debug)]
 struct Child(usize);
 
+use std::ops::Drop;
+
+// Parent構造体にデストラクタを実装する
+impl Drop for Parent {
+    fn drop(&mut self) {
+        println!("Dropping {:?}", self);
+    }
+}
+
 pub fn value_scope() {
     let p1 = Parent(1, Child(11), Child(12));
     {   // ブロックを作りp2はその中で導入する
