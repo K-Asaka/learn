@@ -324,6 +324,13 @@ fn main() {
     }
 
 
+    // 例7
+    let vector = vec!["Cyan", "Magenta", "Yellow", "Black"];
+    for v in vector.iter() {
+        println!("{}", v);
+    }
+
+    
 }
 
 // うるう年の場合はtrue、平年の場合はfalseを返す関数
