@@ -1,10 +1,10 @@
 // 構造体を定義する
 // println!の"{:?}"で表示できるようにDebugトレイトを自動導出しておく
-#[derive(Copy, Clone, Debug)]
-struct Parent(usize, Child, Child);     // Parentはusizeに加えてChildを2つ持つ
+#[derive(Debug)]
+struct Parent(isize, Child, Child);     // Parentはusizeに加えてChildを2つ持つ
 
-#[derive(Copy, Clone, Debug)]
-struct Child(usize);
+#[derive(Debug)]
+struct Child(isize);
 
 // use std::ops::Drop;
 
@@ -32,12 +32,20 @@ pub fn value_scope() {
     println!("(c)  p1: {:?}, p3: {:?}", p1, p3);        // (c)の時点
 }
 
+// Parentへの不変の参照を引数にとる
+fn f1(p: &Parent) {
+    println!("p:  {:?}", p);
+}
+
+// Parentへの可変の参照を引数に取る
+fn f2(p: &mut Parent) {
+    p.0 *= -1;
+}
+
 pub fn move_semantics() {
     let mut p1 = Parent(1, Child(11), Child(12));
-    let p2 = p1;            // 値の所有権をp1からp2にムーブする
-    println!("p2: {:?}", p2);
-    println!("p1: {:?}", p1);       // p1は値の所有権を失ったためアクセス不可
-
-    p1 = Parent(2, Child(21), Child(22));       // p1を別の値に束縛する
-    println!("p1: {:?}", p1);       // p1は別の値の所有権を持つためアクセスできる
+    f1(&p1);                        // f1には所有権をムーブせず、不変の参照を渡す
+    f2(&mut p1);                    // f2には所有権をムーブせず、可変の参照を渡す
+    println!("p1: {:?}", p1);       // p1は値の所有権を失っていないのでアクセスできる
 }
+
