@@ -31,3 +31,13 @@ pub fn value_scope() {
     let p3 = Parent(3, Child(31), Child(32));
     println!("(c)  p1: {:?}, p3: {:?}", p1, p3);        // (c)の時点
 }
+
+pub fn move_semantics() {
+    let mut p1 = Parent(1, Child(11), Child(12));
+    let p2 = p1;            // 値の所有権をp1からp2にムーブする
+    println!("p2: {:?}", p2);
+    //println!("p1: {:?}", p1);       // p1は値の所有権を失ったためアクセス不可
+
+    p1 = Parent(2, Child(21), Child(22));       // p1を別の値に束縛する
+    println!("p1: {:?}", p1);       // p1は別の値の所有権を持つためアクセスできる
+}
