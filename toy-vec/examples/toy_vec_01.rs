@@ -29,6 +29,16 @@ fn main() {
     //take_static(&s2);           // &String型。コンパイルエラー('static要求を満たせない)
     take_static(s2);            // String型。OK
 
+
+    // 可変の参照と不正なポインタの回避
+    let mut v: ToyVec<usize> = ToyVec::new();
+    v.push(100);
+    let e = v.get(0);       // 不変の参照(不変の借用)を取得
+    // v.push(200);            // ベクタを変更する(pushは可変の参照をとる)
+    assert_eq!(e, Some(&100));
+    // v.push(200)により、キャパシティが不足し、growメソッドによってBox<[usize]>が再作成される。
+    // 元のusizeの値があった領域は開放されるため、eの持つ参照はダングリングポインタになる。
+
 }
 
 // この関数は'staticライフタイムを持つ任意の型を引数にとる
