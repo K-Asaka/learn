@@ -102,4 +102,17 @@ impl<T: Default> ToyVec<T> {
         }
     }
 
+    // 借用(&mut self)経由では所有権を奪えないためエラー
+    pub fn pop(&mut self) -> Option<T> {        // 戻り値が参照でないことに注目。所有権ごと返す
+        if self.len == 0 {
+            None
+        } else {
+            self.len -= 1;
+            // 代わりの値となら交換できる(ここではデフォルト値を使用)
+            // let elem = self.elements[self.len];
+            let elem = std::mem::replace(&mut self.elements[self.len], Default::default());
+            Some(elem)
+        }
+    }
+
 }   // implブロックの終わり
