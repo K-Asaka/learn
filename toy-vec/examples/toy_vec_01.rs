@@ -39,6 +39,20 @@ fn main() {
     // v.push(200)により、キャパシティが不足し、growメソッドによってBox<[usize]>が再作成される。
     // 元のusizeの値があった領域は開放されるため、eの持つ参照はダングリングポインタになる。
 
+
+    let mut v = ToyVec::new();
+    v.push("Java Finch".to_string());       // 桜文鳥
+    v.push("Budgerigar".to_string());       // セキセイインコ
+
+    let mut iter = v.iter();
+
+    //v.push("hill Mynah".to_string());     // 九官鳥。コンパイルエラーになる
+    // pushは可変の参照を得ようとするが、iterが生存しているので不変の参照が有効
+
+    assert_eq!(iter.next(), Some(&"Java Finch".to_string()));
+    v.push("Canary".to_string());       // カナリア。iterはもう生存していないので変更できる
+
+
 }
 
 // この関数は'staticライフタイムを持つ任意の型を引数にとる
