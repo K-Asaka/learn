@@ -62,13 +62,28 @@ impl<T: Default> ToyVec<T> {
         }
     }
 
-    // インデックスが範囲内なら要素への参照を返し、さもなければdefaultで与えた別の値への参照を返す
-    pub fn get_or(&self, index: usize, default: &T) -> &T {
-        match self.get(index) {
-            Some(v) => v,
-            None => default,
-        }
+    // // インデックスが範囲内なら要素への参照を返し、さもなければdefaultで与えた別の値への参照を返す
+    // // ライフタイムの省略規則に従い、selfと戻り値のライフタイムが同一('a)になる
+    // pub fn get_or<'a, 'b>(&'a self, index: usize, default: &'b T) -> &'a T {
+    //     match self.get(index) {
+    //         Some(v) => v,           // selfが所有する値(elements)からの借用なので'a
+    //         None => default,        // defaultのライフタイムは'b。戻り値のライフタイムと合わない
+    //     }
+    // }
+    
+    // self、default、戻り値のライフタイムを同じにする
+    pub fn get_or<'a>(&'a self, index: usize, default: &'a T) -> &'a T {
+        // 上のmatch式はunwrap_orコンビネータで置き換えられる
+        self.get(index).unwrap_or(default)
     }
+    // where節を使ってライフタイムを指定することもできる
+    // pub fn get_or<'a>(&'a self, index: usize, default: &'a T) -> &'a T 
+    // where
+    //     'b: 'a       // 'bは'aより長く生存するという意味
+    // {
+    //     // valueのライフタイム'bは戻り値の'aより長い('aを含んでいる)ので問題なく返せる
+    //     self.get(index).unwrap_or(default)
+    // }
 
     fn grow(&mut self) {
         if self.capacity() == 0 {
