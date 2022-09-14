@@ -246,3 +246,6 @@ rustup-initのコマンドラインオプション
 - ツールチェインのインストール先を変更する。
 - 非対話形式でインストールする。
 
+
+### Advanced Rust, by Nicholas Matsakis (RustConf2016)
+http://www.rust-tutorials.com/RustConf16/3-Advanced-Lifetimes.pdf
