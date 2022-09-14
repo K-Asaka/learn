@@ -53,6 +53,13 @@ fn main() {
     v.push("Canary".to_string());       // カナリア。iterはもう生存していないので変更できる
 
 
+    // &ToyVec<T>にIntoIteratorを実装し、Iter<T>を返すようにしたので以下のように使える
+    let mut v = ToyVec::new();
+    v.push("Hello, ");
+    v.push("World!\n");
+    for msg in &v {
+        print!("{}", msg);
+    }
 }
 
 // この関数は'staticライフタイムを持つ任意の型を引数にとる
