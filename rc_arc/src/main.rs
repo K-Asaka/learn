@@ -1,7 +1,18 @@
 use std::rc::Rc;
+use std::cell::RefCell;
 
 #[derive(Debug)]
 struct Child(isize);
+
+struct A {
+    c: char,
+    s: String,
+}
+
+struct B {
+    c: char,
+    s: RefCell<String>,     // StringをRefCellで包む
+}
 
 fn main() {
     let mut rc1 = Rc::new(Child(1));        // Rcポインタ経由でChild値をヒープ領域に格納する
@@ -40,4 +51,25 @@ fn main() {
     // rc1をドロップする(スコープを抜けたのと同じ)参照カウントが0になりChildは破棄される
     std::mem::drop(rc1);
     println!("(g) count: 0, weak.upgrade(): {:?}", weak.upgrade());
+
+
+    let a = A {c: 'a', s: "alex".to_string() };
+    let r = &a;     // 不変の参照を作る
+    //r.s.push('a');              // 不変の参照経由でフィールドを変更しようとするとコンパイルエラーになる
+
+    let b = B {c: 'a', s: RefCell::new("alex".to_string()) };
+    let rb = &b;
+    rb.s.borrow_mut().push('a');        // フィールドsのデータに対する可変の参照をとる
+    {
+        let rbs = b.s.borrow();             // 不変の参照をとる
+        assert_eq!(&*rbs, "alexa");
+
+        // RefCellでは他の参照が有効な間に可変の参照をとろうとすると実行時にパニックする
+        // b.s.borrow_mut();       // この時点で不変の参照rbsがまだ有効
+        
+        // try_borrow_mutならパニックせずErrを返してくれる
+        assert!(b.s.try_borrow_mut().is_err());     // Errが返る
+    }   // rbsはここでスコープを抜ける
+    assert!(b.s.try_borrow_mut().is_ok());          // Okが返る
+
 }
