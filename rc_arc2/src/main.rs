@@ -22,13 +22,19 @@ fn main() -> Result<(), Box<dyn Error>> {
     dogs.write().map_err(stringify)?.insert("ブル・テリア");
 
     let dogs1 = Arc::clone(&dogs);
-    std::thread::spawn(move ||
+    std::thread::spawn(move || {
         // 別のスレッドでwriteロックを取得しHashSetに要素を加える
-        dogs1.write().map(|mut ds| ds.insert("コーギー")).map_err(stringify)
-    ).join().expect("Thread error")?;       // スレッドの終了を待つ
+        // dogs1.write().map(|mut ds| ds.insert("コーギー")).map_err(stringify)
+        // writeロックを掴んだまま、このスレッドをpanicさせる
+        let _guard = dogs1.write();
+        panic!();
+    }).join().expect_err("");       // スレッドの終了を待つ(Errが返ることを期待)
+
+    // ここでErr(PoisonError(ガード))が返り、mainスレッドがpanicするはず
+    dogs.read().expect("Cannot acquire read lock");
 
     // このスレッドと別スレッドの両方で追加した要素が見える
-    assert!(dogs.read().map_err(stringify)?.contains("ブル・テリア"));
-    assert!(dogs.read().map_err(stringify)?.contains("コーギー"));
+    // assert!(dogs.read().map_err(stringify)?.contains("ブル・テリア"));
+    // assert!(dogs.read().map_err(stringify)?.contains("コーギー"));
     Ok(())
 }
