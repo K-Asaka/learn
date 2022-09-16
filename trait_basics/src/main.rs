@@ -109,6 +109,26 @@ where
 }
 
 
+// 線形変換に必要な行列を定義しておく
+struct Matrix([[f64; 2]; 2]);
+// 座標に対して線形変換を定義する
+trait LinearTransform: Coordinates {
+    fn transform(self, matrix: &Matrix) -> Self;
+}
+// 継承するトレイトをすべて実装しているのでLinearTransformをCartesianCoordに実装できる
+impl LinearTransform for CartesianCoord {
+    fn transform(mut self, matrix: &Matrix) -> Self {
+        let x = self.x;
+        let y = self.y;
+        let m = matrix.0;
+
+        self.x = m[0][0] * x + m[0][1] * y;
+        self.y = m[1][0] * x + m[1][1] * y;
+        self
+    }
+}
+
+
 fn main() {
     // 値を用意する
     let point = (1.0, 1.0);
