@@ -188,6 +188,52 @@ impl<T> Init<T> for Box<T> {
     }
 }
 
+trait As<T> {
+    fn cast(self) -> T;
+}
+// 実装をジェネリックにせずに個別の型に対して実装する
+impl As<u64> for u8 {
+    fn cast(self) -> u64 {
+        self as u64
+    }
+}
+// 同じAsをu8に実装しているが、パラメータが異なるので問題ない
+impl As<u32> for u8 {
+    fn cast(self) -> u32 {
+        self as u32
+    }
+}
+
+
+// trait Overload {
+//     fn call(&self) ->&'static str;
+// }
+// impl Overload for i32 {
+//     fn call(&self) -> &'static str {
+//         "i32"
+//     }
+// }
+// impl Overload for str {
+//     fn call(&self) -> &'static str {
+//         "str"
+//     }
+// }
+
+trait Overload1<T> {
+    fn call(&self, t: T) -> &'static str;
+}
+impl Overload1<i32> for i32 {
+    fn call(&self, _: i32) -> &'static str {
+        "(i32, i32)"
+    }
+}
+impl Overload1<char> for i32 {
+    fn call(&self, _: char) -> &'static str {
+        "(i32, char)"
+    }
+}
+
+
 fn main() {
     // 値を用意する
     let point = (1.0, 1.0);
@@ -225,5 +271,16 @@ fn main() {
     let data: Box::<f32> = Init::init(0.1);
     let data: Box<_> = Init::<f32>::init(0.1);
 
-    
+
+    // トレイト実装で指定した型はcastに指定できる
+    let one_u32: u32 = 1.cast();
+    let one_u32: u64 = 1.cast();
+    // i8は指定していないのでこれはエラー
+    // let one_u32: i8 = 1.cast();
+
+    // assert_eq!(Overload::call(&1i32), "i32");   //assert_eq!(1i32.call(), "i32");
+    // assert_eq!(Overload::call("str"), "str");   //assert_eq!("str".call(), "str");
+    assert_eq!(1i32.call(2i32), "(i32, i32)");
+    assert_eq!(1i32.call('c'), "(i32, char)");
+
 }
