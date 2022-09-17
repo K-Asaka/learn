@@ -170,6 +170,24 @@ impl LinearTransform for PolarCoord {
 // Coordinatesをインポートすることでto_cartesianが使える
 //use crate::some_module::Coordinates;
 
+
+trait Init<T> {
+    // トレイト定義内でTを参照できる
+    fn init(t: T) -> Self;
+}
+
+// データ型と同じくimpl<T>でパラメータを導入し、続くトレイト名をfor 型名でそれを使う
+// impl <T> Init<T> for Box<T> {
+//     // トレイト定義内でTを参照できる
+//     fn init(t: T) -> Self;
+// }
+// データ型と同じくimpl<T>でパラメータを導入し、続くトレイト名 for 型名でそれを使う
+impl<T> Init<T> for Box<T> {
+    fn init(t: T) -> Self {
+        Box::new(t)
+    }
+}
+
 fn main() {
     // 値を用意する
     let point = (1.0, 1.0);
@@ -198,4 +216,14 @@ fn main() {
 
     //let p = (1.0, 0.0).to_cartesian();
 
+    // ジェネリクストレイトを使う
+    // ジェネリクスが推論可能なら省略できる
+    let data = Box::init("foo");
+    // トレイトのジェネリクス型を明示するには型名::<型>と書く
+    let data = Box::<f32>::init(0.1);
+    // 文脈から型が推論できる場合は Init とトレイト名でも書ける
+    let data: Box::<f32> = Init::init(0.1);
+    let data: Box<_> = Init::<f32>::init(0.1);
+
+    
 }
