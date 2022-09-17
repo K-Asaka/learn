@@ -1,12 +1,13 @@
 
 // デカルト座標
-struct CartesianCoord {
+// 型をパブリックにしておく
+pub struct CartesianCoord {
     x: f64,
     y: f64,
 }
 
 // 極座標
-struct PolarCoord {
+pub struct PolarCoord {
     r: f64,
     theta: f64,
 }
@@ -14,8 +15,10 @@ struct PolarCoord {
 // トレイトを定義する
 
 // 座標
-trait Coordinates {
+// トレイト自身にpubを付ける
+pub trait Coordinates {
     // 関数の本体は書かない
+    // 関数にはpubは必要ない
     fn to_cartesian(self) -> CartesianCoord;
     fn from_cartesian(cart: CartesianCoord) -> Self;
 }
@@ -160,6 +163,10 @@ impl LinearTransform for PolarCoord {
     }
 }
 
+// 他のモジュールからアクセスする場合
+// Coordinatesをインポートすることでto_cartesianが使える
+//use crate::some_module::Coordinates;
+
 fn main() {
     // 値を用意する
     let point = (1.0, 1.0);
@@ -184,5 +191,8 @@ fn main() {
 
     let p = (1.0, 0.0).to_cartesian();
     print_point(p.rotate(std::f64::consts::PI));    // (-1, 0.00000000000000012246467991473532)
+
+
+    //let p = (1.0, 0.0).to_cartesian();
 
 }
