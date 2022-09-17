@@ -1,6 +1,9 @@
 
 // デカルト座標
 // 型をパブリックにしておく
+// #[derive(Debug, Clone)]     // 自動導出
+// #[derive(Debug, Clone, PartialEq, Eq)]  // f64でエラー
+#[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Default)]
 pub struct CartesianCoord {
     x: f64,
     y: f64,
