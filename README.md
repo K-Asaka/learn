@@ -76,3 +76,25 @@ stack install
 ```
 stack test
 ```
+
+- プロジェクト内でREPL
+```
+stack ghci
+```
+Mainモジュール(app/Main.hs)とLibモジュール(src/Lib.hs)が読み込まれる。  
+
+- 現在読み込まれているモジュールの一覧表示
+```
+:show modules
+```
+`:show imports`と合わせて、今の状態を確認できる。
+
+- モジュールに定義されている識別子の一覧表示  
+デフォルトのLib.hsを使った場合。
+```
+:browse Lib
+```
+
+.hsファイルを書き換えた場合、`:reload`で変更をghciに読み込む。  
+`stack.yaml`や`*.cabal`の変更があったときは、ghciを一度終了して読み直す必要がある。
+
