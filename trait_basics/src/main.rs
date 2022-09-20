@@ -283,4 +283,11 @@ fn main() {
     assert_eq!(1i32.call(2i32), "(i32, i32)");
     assert_eq!(1i32.call('c'), "(i32, char)");
 
+    // トレイとオブジェクトと動的ディスパッチ
+    use std::fmt::Display;
+    // dyn Displayで宣言する。参照にしないといけない点に注意
+    let mut v: Vec<&dyn Display> = vec![];
+    v.push(&true);
+    v.push(&1i32);
+
 }
