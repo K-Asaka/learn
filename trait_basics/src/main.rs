@@ -26,6 +26,14 @@ pub trait Coordinates {
     fn from_cartesian(cart: CartesianCoord) -> Self;
 }
 
+trait Dimension {
+    const DIMENSION: u32;
+}
+// DimensionをCartesianCoordに実装する
+impl Dimension for CartesianCoord {
+    const DIMENSION: u32 = 2;
+}
+
 // トレイトをそれぞれの型に実装する
 
 // デカルト座標はそのまま
@@ -335,5 +343,9 @@ fn main() {
     // 型が推論可能ならトレイト名::関数名でも呼び出せる
     let p: PolarCoord = Coordinates::from_cartesian(c);
 
+    // 実装された型から定数を取り出す
+    let dim = CartesianCoord::DIMENSION;
+    // 定数なので定数式としても使える
+    const DIM: u32 = CartesianCoord::DIMENSION;
 
 }
