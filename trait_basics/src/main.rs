@@ -319,6 +319,53 @@ fn gen_counter(init: i32) -> impl FnMut() -> i32 {
 }
 
 
+// ジェネリクスか関連型か
+// 定義時にパラメータか名前を付けるかの違いがある
+trait Foo<T> {}
+trait Bar { type T; }
+
+// 参照する時はTかSelf::Tかが違う
+trait Foo<T> {
+    fn new(t: T) -> Self;
+}
+trait Bar {
+    type T;
+    fn new(t: Self::T) -> Self;
+}
+
+// トレイト境界に書くときにジェネリクスは引数の型が必須だが、関連型は推論できるなら省略できる
+fn some_fun_foo<S, T: Foo<S>>(t: T) {}
+fn some_fun_bar<T: Bar>(t: T) {}
+
+// トレイト境界で特定の型を指定するときも、指定方法が異なる
+fn some_fun_foo<T: Foo<u32>>(t: T) {}
+fn some_fun_bar<T: Bar<T = u32>>(t: T) {}
+
+// データ型への実装をジェネリックにするときは、ジェネリクスの方は簡単に書けるが、関連型は制約がある
+struct Baz;
+impl<T> Foo<T> for Baz {}
+// これは書けない。implの部分でTが使われていないため
+//impl<T> Bar for Baz {type T = T;}
+// Qux<T>のように実装するデータ型の方がジェネリクスなら可能
+struct Qux<T>{..};
+impl<T> Bar for Qux<T> {type T = T;}
+
+// 同じ型へのパラメータを変えた複数の実装はジェネリクスでないと書けない
+// ジェネリクスは一対多
+impl Foo<i32> for Baz {}
+impl Foo<char> for Baz {}
+// 関連型は一対一
+impl Bar for Baz {type T = i32;}
+// 関連型だと2つ目以降はエラー
+//impl Bar for Baz {type T = char;}
+
+// 一方、関連型でないとできないこともある
+// 関連型は外部からも参照できる
+fn get_from_foo<D: Foo<VeryLong<Type, Name>>>(d: D) -> (VeryLong<Type, Name>, VeryLong<Type, Name>) {..}
+fn get_from_bar<D: Bar<T = VeriLong<Type, Name>>>(d: D) -> (D::T, D::T) {..}
+
+
+
 fn main() {
     // 値を用意する
     let point = (1.0, 1.0);
