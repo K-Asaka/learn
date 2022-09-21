@@ -325,4 +325,15 @@ fn main() {
     v.push(&true);
     v.push(&1i32);
 
+
+    let c = CartesianCoord {
+        x: 1.0,
+        y: 0.0,
+    };
+    // 関連関数はデータ型のものと同じく型名::関数名で呼び出せる
+    //let p = PolarCoord::from_cartesian(c);
+    // 型が推論可能ならトレイト名::関数名でも呼び出せる
+    let p: PolarCoord = Coordinates::from_cartesian(c);
+
+
 }
