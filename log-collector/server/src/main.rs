@@ -4,6 +4,8 @@ use actix_web::App;
 mod handlers;
 mod schema;
 mod model;
+mod db;
+
 
 #[macro_use]
 extern crate diesel;
