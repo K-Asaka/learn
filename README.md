@@ -706,3 +706,125 @@ crates.ioに登録するたびにGitのタグを打てば、GitHubのリリー�
 以下のリポジトリにはTravis CIとAppVeyorのテンプレートがあるので参考にするといい。
 
 `https://github.com/japaric/trust`
+
+
+## Dieselを使ったデータベースの扱い
+
+### diesel_cliのインストール
+CLIツールをビルドするのに、DBのクライアントライブラリが必要。
+
+#### PostgreSQLを利用する場合
+* macOS  
+`/usr/lib`に`libpq*.dylib`が入っていれば大丈夫。
+
+* Ubuntu
+```
+$ sudo apt-get install -y libpq-dev
+```
+
+* Windows - Powershell  
+まず、サンプルコードのGitHubリポジトリにある説明を参照しvcpkgをインストールする。
+
+```
+> cd $env:VCPKG_ROOT
+> .\vcpkg --triplet x64-windows-static install libpq
+```
+環境変数`RUSTFLAGS`を設定する。
+```
+# ライブラリと静的リンクするためのオプション
+# rustc 1.19.0か、それ以降のバージョンが必要
+> $env:RUSTFLAGS = '-Ctarget-feature=+crt-static'
+```
+
+この設定はdiesel_cliだけでなく、log-collectorをビルドするときにも必要。
+また`VCPKG_ROOT`も正しく設定されている必要がある。
+libpqが準備できたら以下のコマンドを実行する。
+
+```
+$ cargo install diesel_cli --no-default-features --features postgres
+```
+
+デフォルトだと対応しているすべてのDBバックエンドに対応したバイナリがインストールされ、それぞれの開発用ヘッダなどを要求される。
+
+### PostgreSQLの準備
+
+Docker Composeでセットアップする。
+`docker-compose.yml`に以下を記述。
+
+```
+postgres-data:
+  image: busybox
+  volumes:
+  - /var/lib/postgresql/log-collector-data
+  container_name: log-collector-postgres-datastore
+
+postgresql;
+  image: postgres
+  environment:
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: password
+  ports:
+    - "5432:5432"
+  volumes_from:
+    - postgres-data
+```
+
+この`docker-compose.yml`を使ってDBマネジメントシステムを立ち上げ、Dieselによる初期化を行う。`diesel setup`でプロジェクトのDiesel関連ファイルとDBのスキーマを初期化する。
+
+```
+# PostgreSQLのサーバを立ち上げる
+$ docker-compose up -d
+
+# Dieselのために環境変数を設定する
+# Linux、macOS
+$ export DATABASE_URL = postgresql://postgres:password@localhost:5432/log-collector
+# Windows PowerShell
+> set $env:DATABASE_URL='postgresql://postgres:password@localhost:5432/log-collector'
+
+$ cd server
+$ diesel setup
+# log-collectorDBが作られ、migrationsディレクトリができる
+# DATABASE_URLを設定しない場合は、diesel setup --database-url "DB"で設定
+```
+
+`diesel migration generate MIGRATION_NAME`でマイグレーションのひな形を生成できる。
+
+```
+$ diesel migration generate create_logs
+```
+
+`up.sql`にDBへの変更を、`down.sql`にその変更を取り消す処理を書く。
+
+up.sql
+```
+-- Your SQL goes here
+
+CREATE TABLE logs (
+  id BIGSERIAL NOT NULL,
+  user_agent VARCHAR NOT NULL,
+  response_time INT NOT NULL,
+  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  PRIMARY KEY (id)
+);
+```
+
+down.sql
+```
+DROP TABLE IF EXISTS logs;
+```
+
+完了したら以下のコマンドでマイグレーションを走らせる。
+
+```
+$ diesel migration run
+```
+
+このコマンドを走らせると自動で`schema.rs`にテーブルスキーマに対応するRustのコードが生成される。
+また、`diesel.toml`というDieselのコンフィギュレーションファイルも生成される。
+
+`down.sql`がちゃんと書けているか確認のため、一度`redo`も走らせておく。
+このコマンドは一度`diesel migration revert`をしてから`diesel migration run`をするので、`down.sql`の動作テストに向いている。
+
+```
+$ diesel migration redo
+```
