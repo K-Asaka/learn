@@ -2,6 +2,12 @@ use actix_web::http::Method;
 use actix_web::App;
 
 mod handlers;
+mod schema;
+mod model;
+
+#[macro_use]
+extern crate diesel;
+
 
 // アプリケーションで持ち回る状態
 #[derive(Clone)]
