@@ -9,3 +9,14 @@ take_ownership(int *i, void(*dtor)(int *))
     // Rustで用意した値はRustから貰ったデストラクタで解放する
     dtor(i);
 }
+
+int *
+make_memory()
+{
+    int *i;
+
+    i = malloc(sizeof(int));
+    *i = 2;
+
+    return i;
+}
