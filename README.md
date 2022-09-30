@@ -828,3 +828,52 @@ $ diesel migration run
 ```
 $ diesel migration redo
 ```
+
+## C FFI
+
+各プラットフォームのCビルド方法。
+
+### Linux
+
+コンパイラに`-c`オプションを指定しオブジェクトファイルを生成する。
+
+```
+$ gcc -c -o target/debug/native/fib.o c_src/fib.c
+```
+
+オブジェクトファイルから静的リンクライブラリ(libfib.a)を作成する
+
+```
+$ ar r target/debug/deps/libfib.a target/debug/native/fib.o
+```
+
+
+### macOS
+
+コンパイラに`-c`オプションを指定しオブジェクトファイルを生成する。
+
+```
+$ clang -c -o target/debug/native/fib.o c_src/fib.c
+```
+
+オブジェクトファイルから静的リンクライブラリ(libfib.a)を作成する。
+
+```
+ar r target/debug/deps/libfib.a target/debug/native/fib.o
+```
+
+
+### Windows MSVC
+
+コンパイラに/cオプションを指定しオブジェクトファイルを生成する。
+
+```
+> cl /c c_str\fib.c
+> mv fib.obj target\debug\native\
+```
+
+オブジェクトファイルから静的リンクライブラリ(fib.lib)を作成する
+
+```
+> lib /out:target\debug\deps\fib.lib target\debug\native\fib.obj
+```
