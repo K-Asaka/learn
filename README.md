@@ -877,3 +877,14 @@ ar r target/debug/deps/libfib.a target/debug/native/fib.o
 ```
 > lib /out:target\debug\deps\fib.lib target\debug\native\fib.obj
 ```
+
+
+## ValgrindをRustに使う
+
+valgrindはメモリに関連するバグの調査などに使えるツール。
+`cargo build`したあとに実行する。
+`cffi-ownership.rs`を対象にする場合。
+
+```
+$ valgrind ./target/debug/cffi-ownership
+```
