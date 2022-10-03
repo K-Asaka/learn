@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <stdint.h>
 
-// Rust‚Æ“¯‚¶’è‹`‚ğ‘‚­
+// Rustã¨åŒã˜å®šç¾©ã‚’æ›¸ã
 struct point {
     int x;
     int y;
 };
 
-// Rust‚ÌŠÖ”‚Ìƒvƒƒgƒ^ƒCƒvéŒ¾
-// ã‚Ìstruct point‚Æ‚±‚ê‚Í’š”J‚É‚â‚é‚È‚çƒwƒbƒ_‚ğì‚é‚×‚«
+// Rustã®é–¢æ•°ã®ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
+// ä¸Šã®struct pointã¨ã“ã‚Œã¯ä¸å¯§ã«ã‚„ã‚‹ãªã‚‰ãƒ˜ãƒƒãƒ€ã‚’ä½œã‚‹ã¹ã
 double
 dist(struct point *, struct point *);
 
