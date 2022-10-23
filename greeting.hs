@@ -50,3 +50,9 @@ instance Greeting a => Greeting [a] where
     hello = liftGreet hello
     bye   = liftGreet bye
 
+class Breeding a where
+    breed :: String -> a
+
+instance Breeding Human where
+    breed = Human -- このHumanはコンストラクタ
+
