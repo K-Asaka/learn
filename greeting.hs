@@ -1,3 +1,5 @@
+import Data.List (intercalate)
+
 data Dog = Dog deriving Show
 data Cat = Cat deriving Show
 data Human = Human String deriving Show
@@ -36,3 +38,15 @@ leaveWithLaugh :: Laughing a => a -> IO ()
 leaveWithLaugh x = do
     putStrLn (bye x)
     putStrLn (laugh x)
+
+
+-- `f`で得られる文字列を改行で連結する関数の定義
+-- intercalateは第一引数に連結に使う文字列、第二引数に連結したい文字列のリストをとる
+liftGreet :: (a -> String) -> ([a] -> String)
+liftGreet f = intercalate "\n" . map f
+
+instance Greeting a => Greeting [a] where
+    name  = liftGreet name
+    hello = liftGreet hello
+    bye   = liftGreet bye
+
