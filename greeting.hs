@@ -25,3 +25,14 @@ instance Greeting Cat where
 
 sayHello :: Greeting a => a  -> IO ()
 sayHello x = putStrLn (hello x)
+
+class Greeting a => Laughing a where
+    laugh :: a -> String
+
+instance Laughing Human where
+    laugh _ = "Zehahahah...!!"
+
+leaveWithLaugh :: Laughing a => a -> IO ()
+leaveWithLaugh x = do
+    putStrLn (bye x)
+    putStrLn (laugh x)
