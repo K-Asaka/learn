@@ -1,7 +1,7 @@
 import scala.collection.mutable
 
 // コンパニオンクラス
-class CheckSumAccumulator {
+class ChecksumAccumulator {
     private var sum = 0
     def add(b: Byte): Unit = { sum += b }
     def checksum(): Int = ~(sum & 0xFF) + 1
@@ -15,7 +15,7 @@ object ChecksumAccumulator {
         if (cache.contains(s))
             cache(s)
         else {
-            val acc = new ChecksumAccumulator2
+            val acc = new ChecksumAccumulator
             for (c <- s)
                 acc.add(c.toByte)
             val cs = acc.checksum()
