@@ -46,4 +46,6 @@ class Rational(n: Int, d: Int) {
         this.numer * that.denom < that.numer * this.denom
     def max(that: Rational) =
         if (this.lessThan(that)) that else this
+
+    // implicit def intToRational(x: Int): Rational = new Rational(x)
 }
