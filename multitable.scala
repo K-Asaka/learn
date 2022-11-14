@@ -1,28 +1,24 @@
 object MultiTable {
     def main(args: Array[String]): Unit = {
-        printMultiTable()
+        println(multiTable())
     }
 
-    def printMultiTable() = {
-        var i = 1
-        while (i <= 10) {
-            var j = 1
-
-            while  (j <= 10) {
-                val prod = (i * j).toString
-                var k= prod.length
-
-                while (k < 4) {
-                    print(" ")
-                    k += 1
-                }
-
-                print(prod)
-                j += 1
-            }
-
-            println()
-            i += 1
+    // 1段分をシーケンスとして返す
+    def makeRowSeq(row: Int) =
+        for (col <- 1 to 10) yield {
+            val prod = (row * col).toString
+            val padding = " " * (4 - prod.length)
+            padding + prod
         }
+
+    // 1段分を文字列として返す
+    def makeRow(row: Int) = makeRowSeq(row).mkString
+
+    // 1行に1段分の文字列を収めた表を返す
+    def multiTable() = {
+        val tableSeq =  // 各段の文字列のシーケンス
+            for (row <- 1 to 10)
+            yield makeRow(row)
+        tableSeq.mkString("\n")
     }
 }
