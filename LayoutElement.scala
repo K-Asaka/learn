@@ -8,10 +8,10 @@ abstract class Element {
     }
 }
 
-class ArrayElement(
+final class ArrayElement(
     val contents: Array[String]
 ) extends Element {
-    final override def demo() = {
+    override def demo() = {
         println("ArrayElement's implementation invoked")
     }
 }
