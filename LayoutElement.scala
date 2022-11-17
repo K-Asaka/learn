@@ -2,27 +2,16 @@ abstract class Element {
     def contents: Array[String]
     def height: Int = contents.length
     def width: Int = if (height == 0) 0 else contents(0).length
-
-    def demo() = {
-        println("Element's implementation invoked")
-    }
 }
 
-final class ArrayElement(
+class ArrayElement(
     val contents: Array[String]
-) extends Element {
-    override def demo() = {
-        println("ArrayElement's implementation invoked")
-    }
-}
+) extends Element
 
-class LineElement(s: String) extends ArrayElement(Array(s)) {
+class LineElement(s: String) extends Element {
+    val contents = Array(s)
     override def width = s.length
     override def height = 1
-
-    override def demo() = {
-        println("LineElement's implementation invoked")
-    }
 }
 
 class UniformElement (
