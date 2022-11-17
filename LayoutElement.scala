@@ -11,7 +11,7 @@ abstract class Element {
 class ArrayElement(
     val contents: Array[String]
 ) extends Element {
-        override def demo() = {
+    final override def demo() = {
         println("ArrayElement's implementation invoked")
     }
 }
