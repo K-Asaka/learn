@@ -1,6 +1,7 @@
 -- State sモナドを使う場合transformersパッケージが必要
 -- $ stack ghci --package transformers
 import Control.Monad.Trans.State
+import System.Random.Shuffle (shuffleM)
 import Data.List
 
 type Card = Int         -- カード
@@ -41,6 +42,12 @@ gameWithState = do
     ]
   -- さらにデッキにカードを戻す処理も実装する必要がある...
 
+runGame :: IO ()
+runGame = do
+  -- random-shuffleパッケージ定義されているshuffleM関数でシャッフル
+  -- 初期のシード値を無作為に選ぶ必要があるためI/Oアクションになっている
+  deck <- shuffleM [1..50]
+  print $  runState gameWithState deck
+
 main :: IO ()
-main = 
-  print $ runState gameWithState [1..50]
+main = runGame
