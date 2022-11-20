@@ -16,6 +16,10 @@ menu =
         , ("Tea", 100)  -- お茶
         ] )
     ]
+category :: Category
+category = "Foods"
+name :: Name
+name = "Hamburger"
 
 getItemWithoutMonado :: Menu -> Category -> Name -> Maybe Item
 getItemWithoutMonado menu category name
@@ -28,6 +32,15 @@ getItemWithoutMonado menu category name
       -- この計算ではマッチしなかったときの処理はNothingと決まっているので何度も書きたくない
       Nothing -> Nothing
 
+getItemWithMonado :: Menu -> Category -> Name -> Maybe Item
+getItemWithMonado menu category name = do
+    -- IOでgetLineしたときのように、lookup関数が使える
+    subMenu <- lookup category menu
+    price <- lookup name subMenu
+    -- どこかのアクションがNothingを返せば、計算全体がNothingとなる
+    -- 最終的に欲しい結果を組み立ててreturnで返す
+    return (category, name, price)
+
 f :: Maybe Int
 f = do
     x <- Just 10
@@ -39,9 +52,6 @@ f' = Just 10 >>= \x -> Nothing >>= \_ -> return (x * 2)
 
 main :: IO ()
 main = do
-    putStrLn "Hello!!"
-    print f
-    print f'
-    print c
-    print n
-
+    --let category="aaaa"
+    print $ getItemWithoutMonado menu category name
+    print $ getItemWithMonado menu category name
