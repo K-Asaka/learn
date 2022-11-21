@@ -5,8 +5,10 @@ object TraitPhilosohpical {
         }
     }
 
+    class Animal
+
     // トレイトのミックスイン
-    class Frog extends Philosophical {
+    class Frog extends Animal with Philosophical {
         override def toString = "green"
     }
 
