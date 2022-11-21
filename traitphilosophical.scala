@@ -6,10 +6,14 @@ object TraitPhilosohpical {
     }
 
     class Animal
+    trait HasLegs
 
     // トレイトのミックスイン
-    class Frog extends Animal with Philosophical {
+    class Frog extends Animal with Philosophical with HasLegs {
         override def toString = "green"
+        override def philosophize() = {
+            println("It ain't easy being " + toString + "!")
+        }
     }
 
     def main(args: Array[String]) = {
@@ -21,6 +25,10 @@ object TraitPhilosohpical {
         val phil: Philosophical = frog
         println("phil = " + phil)
         phil.philosophize()
+
+        val phrog: Philosophical = new Frog
+        println("phrog = " + phrog)
+        phrog.philosophize()
     }
 
 }
