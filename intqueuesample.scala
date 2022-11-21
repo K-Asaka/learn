@@ -12,12 +12,16 @@ object IntQueueSample {
         def put(x: Int) = { buf += x }
     }
 
-    def main(args: Array[String]) = {
-        val queue = new BasicIntQueue
-        queue.put(10)
-        queue.put(20)
+    trait Doubling extends IntQueue {
+        abstract override def put(x: Int) = { super.put(2 * x) }
+    }
 
-        println(queue.get())
+    class MyQueue extends BasicIntQueue with Doubling
+
+    def main(args: Array[String]) = {
+        val queue = new MyQueue
+        queue.put(10)
+
         println(queue.get())
     }
 }
