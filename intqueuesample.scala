@@ -30,10 +30,11 @@ object IntQueueSample {
 
     def main(args: Array[String]) = {
         val queue = (new BasicIntQueue
-            with Incrementing with Filtering)
+             with Filtering with Incrementing)
 
         queue.put(-1); queue.put(0); queue.put(1)
 
+        println(queue.get())
         println(queue.get())
         println(queue.get())
     }
