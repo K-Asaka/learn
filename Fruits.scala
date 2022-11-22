@@ -15,7 +15,11 @@ object Fruits {
 
 // import bobsdelights.Fruit
 // import bobsdelights._
-import bobsdelights.Fruits._
+// import bobsdelights.Fruits._
+// import Fruits.{ Apple => McIntosh, Orange }
+// Pear以外をインポートし、AppleはMcIntoshという名前でインポート
+import Fruits.{ Pear => _, Apple => McIntosh, _}
+
 
 object FruitsSample {
     def showFruit(fruit: Fruit) = {
@@ -23,7 +27,9 @@ object FruitsSample {
         println(name + "s are " + color)
     }
     def main(args: Array[String]) = {
-        showFruit(Apple)
+        //showFruit(Apple)
+        showFruit(McIntosh)
         showFruit(Orange)
+        //showFruit(Pear)
     }
 }
