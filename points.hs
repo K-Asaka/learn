@@ -12,3 +12,5 @@ orderedPoints = do
     y <- [1..3]
     guard (x < y)   -- ここで絞り込む
     return (x, y)
+-- 内包表記
+-- [(x, y) | x <- [1..3], y <- [1..3], x < y]
