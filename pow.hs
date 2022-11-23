@@ -13,3 +13,13 @@ consume = do
     let consumption = if savemode then energy / 10.0
                                   else energy
     return consumption
+
+testrun :: PowerEnv -> Double
+testrun env = (`runReader` env) $ do
+    cons1 <- consume
+    cons2 <- consume
+    consOthers <- local (\e -> e {powSaveMode = True}) $ do
+        cons3 <- consume    -- localの影響を受ける
+        cons4 <- consume    -- localの影響を受ける
+        return (cons3 + cons4)
+    return (cons1 + cons2 + consOthers)
