@@ -33,3 +33,8 @@ def constructormatch(expr: Any) = expr match {
     case BinOp("+", e, Number(0)) => println("a deep match")
     case _ => 
 }
+
+def sequencematch(expr: Any) = expr match {
+    case List(0, _, _) => println("found it")
+    case _ =>
+}
