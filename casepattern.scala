@@ -70,3 +70,10 @@ def varbindmatch(expr: Any) = expr match {
     case UnOp("abs", e @ UnOp("abs", _)) => e
     case _ =>
 }
+
+def simplifyAdd(e: Expr) = e match {
+    case BinOp("+", x, y) if x == y =>
+        BinOp("*", x, Number(2))
+    case _ => e
+}
+
