@@ -65,3 +65,8 @@ def isStringArray(x: Any) = x match {
     case a: Array[String] => "yes"
     case _ => "no"
 }
+
+def varbindmatch(expr: Any) = expr match {
+    case UnOp("abs", e @ UnOp("abs", _)) => e
+    case _ =>
+}
