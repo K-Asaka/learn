@@ -34,5 +34,5 @@ copyFile src dst = loop
                 then return ()
                 else do
                     line <- hGetLine src
-                    hPutStrLn dst line
+                    hPutStrLn dst (map toUpper line)    -- 変更した
                     loop
