@@ -13,7 +13,9 @@ import Data.Char (toUpper)
 main :: IO ()
 main = do
     filePaths <- getArgs
-    concatMultiFiles filePaths stdout
+    handleMultiFiles filePaths $ \hdl -> do
+        foreachLine hdl $ \line -> do
+            hPutStrLn stdout line
 
 -- 複数ファイルをそれぞれ引数の出力先に出力
 concatMultiFiles :: [FilePath] -> Handle -> IO ()
