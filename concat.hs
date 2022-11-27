@@ -15,7 +15,7 @@ main = do
     filePaths <- getArgs
     handleMultiFiles filePaths $ \hdl -> do
         foreachLine hdl $ \line -> do
-            hPutStrLn stdout line
+            hPutStrLn stdout (map toUpper line)
 
 -- 複数ファイルをそれぞれ引数の出力先に出力
 concatMultiFiles :: [FilePath] -> Handle -> IO ()
