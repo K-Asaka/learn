@@ -26,7 +26,10 @@ concatMultiFiles filePaths dst =
 
 -- 1つのフィルを引数の出力先に出力
 copyFile :: Handle -> Handle -> IO ()
-copyFile src dst = loop
+copyFile src dst = copyFileWithConvert src dst id   -- `id`を使って再実装
+
+copyFileWithConvert :: Handle -> Handle -> (String -> String) -> IO ()
+copyFileWithConvert src dst convert = loop
     where
         loop = do
             isEof <- hIsEOF src
@@ -34,5 +37,5 @@ copyFile src dst = loop
                 then return ()
                 else do
                     line <- hGetLine src
-                    hPutStrLn dst (map toUpper line)    -- 変更した
+                    hPutStrLn dst (convert line)
                     loop
