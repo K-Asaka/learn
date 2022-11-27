@@ -18,11 +18,15 @@ main = do
 -- 複数ファイルをそれぞれ引数の出力先に出力
 concatMultiFiles :: [FilePath] -> Handle -> IO ()
 concatMultiFiles filePaths dst =
+    handleMultiFiles filePaths (\hdl -> copyFile hdl dst)
+
+handleMultiFiles :: [FilePath] -> (Handle -> IO ()) -> IO ()
+handleMultiFiles filePaths fileHandler =
     forM_ filePaths $ \filePath ->
         bracket
             (openFile filePath ReadMode)
             (\hdl -> hClose hdl)
-            (\hdl -> copyFile hdl dst)
+            (\hdl -> fileHandler hdl)
 
 -- 1つのフィルを引数の出力先に出力
 copyFile :: Handle -> Handle -> IO ()
@@ -43,7 +47,14 @@ copyFileWithConvert src dst convert = loop
 -- copyFileのバリエーション
 -- 第三引数の関数は、文字列を用いたI/Oアクションに変更している
 foreachLineAndAppend :: Handle -> Handle -> (String -> IO String) -> IO ()
-foreachLineAndAppend src dst ioAction = loop
+foreachLineAndAppend src dst ioAction =
+    foreachLine src $ \line -> do
+        output <- ioAction line
+        hPutStrLn dst output
+
+-- 抽象度を高める
+foreachLine :: Handle -> (String -> IO ()) -> IO ()
+foreachLine src ioAction = loop
     where
         loop = do
             isEof <- hIsEOF src
@@ -51,6 +62,5 @@ foreachLineAndAppend src dst ioAction = loop
                 then return ()
                 else do
                     line <- hGetLine src
-                    outputLine <- ioAction line     -- DBアクセスのようなI/Oアクション
-                    hPutStrLn dst outputLine
+                    ioAction line
                     loop
