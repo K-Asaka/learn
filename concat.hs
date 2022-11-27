@@ -39,3 +39,18 @@ copyFileWithConvert src dst convert = loop
                     line <- hGetLine src
                     hPutStrLn dst (convert line)
                     loop
+
+-- copyFileのバリエーション
+-- 第三引数の関数は、文字列を用いたI/Oアクションに変更している
+foreachLineAndAppend :: Handle -> Handle -> (String -> IO String) -> IO ()
+foreachLineAndAppend src dst ioAction = loop
+    where
+        loop = do
+            isEof <- hIsEOF src
+            if isEof
+                then return ()
+                else do
+                    line <- hGetLine src
+                    outputLine <- ioAction line     -- DBアクセスのようなI/Oアクション
+                    hPutStrLn dst outputLine
+                    loop
