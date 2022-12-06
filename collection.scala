@@ -21,3 +21,7 @@ buf2 += 15
 buf2
 buf2.length
 buf2(0)
+
+def hasUpperCase(s: String) = s.exists(_.isUpper)
+hasUpperCase("Robert Frost")
+hasUpperCase("e e cummings")
