@@ -6,6 +6,8 @@ def flattenLeft[T](xss: List[List[T]]) =
     xss.foldLeft(List[T]())(_ ::: _)
 def flattenRight[T](xss: List[List[T]]) =
     xss.foldRight(List[T]())(_ ::: _)
+def reverseLeft[T](xs: List[T]) = 
+    xs.foldLeft(List[T]()) { (ys, y) => y :: ys }
 
 words.foldLeft("")(_ + " " + _)
 words.tail.foldLeft(words.head)(_ + " " + _)
