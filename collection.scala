@@ -76,3 +76,21 @@ var roughlyPi = 3.0
 roughlyPi += 0.1
 roughlyPi += 0.04
 roughlyPi
+
+List(1, 2, 3)
+Set('a', 'b', 'c')
+
+import scala.collection.mutable
+mutable.Map("hi" -> 2, "there" -> 5)
+Array(1.0, 2.0, 3.0)
+
+import scala.collection.mutable
+// val stuff = mutable.Set(42)
+val stuff = mutable.Set[Any](42)
+stuff += "abracadabra"
+
+val colors2 = List("blue", "yello", "red", "green")
+
+import scala.collection.immutable.TreeSet
+// val treeSet = TreeSet(colors)
+val treeSet = colors2 to TreeSet
