@@ -1,4 +1,5 @@
 val words = List("the", "quick", "brown", "fox")
+val abcde = List('a', 'b', 'c', 'd','e')
 
 def sum(xs: List[Int]): Int = xs.foldLeft(0)(_ + _)
 def product(xs: List[Int]): Int = xs.foldLeft(1)(_ + _)
@@ -8,6 +9,24 @@ def flattenRight[T](xss: List[List[T]]) =
     xss.foldRight(List[T]())(_ ::: _)
 def reverseLeft[T](xs: List[T]) = 
     xs.foldLeft(List[T]()) { (ys, y) => y :: ys }
+def msortSwapped[T](xs: List[T])
+        (less: (T, T) => Boolean): List[T] = {
+    // msortと実装は同じだがパラメーターは逆になっている
+    def merge(xs: List[T], ys: List[T]): List[T] =
+    (xs, ys) match {
+        case (Nil, _) => ys
+        case (_, Nil) => xs
+        case (x :: xs1, y :: ys1) =>
+            if (less(x, y)) x :: merge(xs1, ys)
+            else y :: merge(xs, ys1)
+    }
+    val n = xs.length / 2
+    if (n == 0) xs
+    else {
+        val (ys, zs) = xs splitAt n
+        merge(msort(less)(ys), msort(less)(zs))
+    }
+}
 
 words.foldLeft("")(_ + " " + _)
 words.tail.foldLeft(words.head)(_ + " " + _)
@@ -30,3 +49,8 @@ List.concat()
 (List(10, 20) lazyZip List(3, 4, 5)).map(_ * _)
 (List("abc", "de") lazyZip List(3, 2)).forall(_.length == _)
 (List("abc", "de") lazyZip List(3, 2)).exists(_.length != _)
+msort((x: Char, y: Char) => x > y)(abcde)
+abcde sortWith (_ > _)
+// msort(_ > _)(abcde) // エラー
+msort[Char](_ > _)(abcde)
+msortSwapped(abcde)(_ > _)
