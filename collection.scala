@@ -97,3 +97,8 @@ val treeSet = colors2 to TreeSet
 
 treeSet.toList
 treeSet.toArray
+
+import scala.collection.mutable
+treeSet
+val mutaSet2 = treeSet to mutable.Set
+val immutaSet2 = mutaSet to Set
