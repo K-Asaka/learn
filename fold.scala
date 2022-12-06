@@ -15,3 +15,6 @@ List(1, -3, 4, 2, 6) sortWith (_ < _)
 words sortWith (_.length > _.length)
 
 List.apply(1, 2, 3)
+List.range(1, 5)
+List.range(1, 9, 2)
+List.range(9, 1, -3)
