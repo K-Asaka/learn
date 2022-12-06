@@ -25,3 +25,6 @@ buf2(0)
 def hasUpperCase(s: String) = s.exists(_.isUpper)
 hasUpperCase("Robert Frost")
 hasUpperCase("e e cummings")
+
+import scala.collection.mutable
+val mutaSet = mutable.Set(1, 2, 3)
