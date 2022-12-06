@@ -94,3 +94,6 @@ val colors2 = List("blue", "yello", "red", "green")
 import scala.collection.immutable.TreeSet
 // val treeSet = TreeSet(colors)
 val treeSet = colors2 to TreeSet
+
+treeSet.toList
+treeSet.toArray
