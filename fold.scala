@@ -26,3 +26,7 @@ val multiplication = List.tabulate(5, 5)(_ * _)
 List.concat(List('a', 'b'), List('c'))
 List.concat(List(), List('b'), List('c'))
 List.concat()
+(List(10, 20) zip List(3, 4, 5)).map { case (x, y) => x * y }
+(List(10, 20) lazyZip List(3, 4, 5)).map(_ * _)
+(List("abc", "de") lazyZip List(3, 2)).forall(_.length == _)
+(List("abc", "de") lazyZip List(3, 2)).exists(_.length != _)
