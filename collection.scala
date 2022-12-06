@@ -64,3 +64,15 @@ import scala.collection.immutable.TreeMap
 var tm = TreeMap(3 -> 'x', 1 -> 'x', 4 -> 'x')
 tm += (2 -> 'x')
 tm
+
+// val people = Set("Nancy", "Jane")    // エラー
+var people = Set("Nancy", "Jane")
+people += "Bob"
+people -= "Jane"
+people ++= List("Tom", "Harry")
+people
+
+var roughlyPi = 3.0
+roughlyPi += 0.1
+roughlyPi += 0.04
+roughlyPi
