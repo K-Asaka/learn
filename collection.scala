@@ -35,3 +35,23 @@ val words = mutable.Set.empty[String]
 for (word <- wordsArray)
     words += word.toLowerCase
 words
+
+val map = mutable.Map.empty[String, Int]
+map("hello") = 1
+map("there") = 2
+map
+map("hello")
+
+def countWords(text: String) = {
+    val counts = mutable.Map.empty[String, Int]
+    for (rawWord <- text.split("[ ,!.]+")) {
+        val word = rawWord.toLowerCase
+        val oldCount =
+            if (counts.contains(word)) counts(word)
+            else 0
+        counts += (word -> (oldCount + 1))
+    }
+    counts
+}
+
+countWords("See Spot run! Run, Spot. Run!")
