@@ -55,3 +55,12 @@ def countWords(text: String) = {
 }
 
 countWords("See Spot run! Run, Spot. Run!")
+
+import scala.collection.immutable.TreeSet
+val ts = TreeSet(9, 3, 1, 8, 0, 2, 7, 4, 6, 5)
+val cs = TreeSet('f', 'u', 'n')
+
+import scala.collection.immutable.TreeMap
+var tm = TreeMap(3 -> 'x', 1 -> 'x', 4 -> 'x')
+tm += (2 -> 'x')
+tm
