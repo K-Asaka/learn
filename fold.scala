@@ -1,0 +1,11 @@
+val words = List("the", "quick", "brown", "fox")
+
+def sum(xs: List[Int]): Int = xs.foldLeft(0)(_ + _)
+def product(xs: List[Int]): Int = xs.foldLeft(1)(_ + _)
+def flattenLeft[T](xss: List[List[T]]) =
+    xss.foldLeft(List[T]())(_ ::: _)
+def flattenRight[T](xss: List[List[T]]) =
+    xss.foldRight(List[T]())(_ ::: _)
+
+words.foldLeft("")(_ + " " + _)
+words.tail.foldLeft(words.head)(_ + " " + _)
