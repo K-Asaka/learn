@@ -13,3 +13,5 @@ words.foldLeft("")(_ + " " + _)
 words.tail.foldLeft(words.head)(_ + " " + _)
 List(1, -3, 4, 2, 6) sortWith (_ < _)
 words sortWith (_.length > _.length)
+
+List.apply(1, 2, 3)
