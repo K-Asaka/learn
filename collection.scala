@@ -13,3 +13,11 @@ buf += 2
 buf
 3 +=: buf
 buf.toList
+
+import scala.collection.mutable.ArrayBuffer
+val buf2 = new ArrayBuffer[Int]()
+buf2 += 12
+buf2 += 15
+buf2
+buf2.length
+buf2(0)
