@@ -11,10 +11,14 @@ class SlowHeadQueue[T](smele: List[T]) {        // 効率が悪い
     def enqueue(x: T) = new SlowHeadQueue(x :: smele)
 }
 
-class Queue[T](
+class Queue[T] private (
     private val leading: List[T],
     private val trailing: List[T]
 ) {
+    def this() = this(Nil, Nil)
+    def this(elems: T*) = this(elems.toList, Nil)
+
+
     private def mirror = 
         if (leading.isEmpty) 
             new Queue(trailing.reverse, Nil)
@@ -31,3 +35,7 @@ class Queue[T](
         new Queue(leading, x :: trailing)
 }
 
+object Queue {
+    // 初期要素'xs'を使ってキューを構築する
+    def apply[T](xs: T*) = new Queue[T](xs.toList, Nil)
+}
