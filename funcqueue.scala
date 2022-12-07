@@ -39,3 +39,7 @@ object Queue {
     // 初期要素'xs'を使ってキューを構築する
     def apply[T](xs: T*) = new Queue[T](xs.toList, Nil)
 }
+
+val q = new Queue(1, 2, 3)
+val q1 = q enqueue 4
+q
