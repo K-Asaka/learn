@@ -78,3 +78,7 @@ class Cell[T](init: T) {
     def get = current
     def set(x: T) = { current = x }
 }
+
+val a1 = Array("abc")
+//val a2: Array[Any] = a1
+val a2: Array[Object] = a1.asInstanceOf[Array[Object]]
