@@ -11,10 +11,11 @@ class SlowHeadQueue[T](smele: List[T]) {        // 効率が悪い
     def enqueue(x: T) = new SlowHeadQueue(x :: smele)
 }
 
-trait Queue[T] {
+trait Queue[+T] {
+    // [T]: 不変　[+T]: 共変　[-T]: 反変
     def head: T
     def tail: Queue[T]
-    def enqueue(x: T): Queue[T]
+//    def enqueue(x: T): Queue[T]
 }
 object Queue {
     // 初期要素'xs'を使ってキューを構築する
@@ -71,3 +72,9 @@ object Queue {
 // val q = new Queue(1, 2, 3)
 // val q1 = q enqueue 4
 // q
+
+class Cell[T](init: T) {
+    private[this] var current = init
+    def get = current
+    def set(x: T) = { current = x }
+}
