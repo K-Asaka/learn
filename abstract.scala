@@ -46,8 +46,7 @@ trait RationalTrait {
 
 val x = 2
 
-// 例外
-new RationalTrait {
+new {
     val numerArg = 1 * x
     val denomArg = 2 * x
-}
+} with RationalTrait 
