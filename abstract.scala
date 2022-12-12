@@ -26,3 +26,9 @@ abstract class BadApple extends Fruit {
     //def v: String       // エラー: 'val'は'def'でオーバーライドできない
     def m: String
 }
+
+trait AbstractTime {
+    var hour: Int
+    var minute: Int
+}
+
