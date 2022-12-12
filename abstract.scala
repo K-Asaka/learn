@@ -35,9 +35,19 @@ trait AbstractTime {
 trait RationalTrait {
     val numerArg: Int
     val denomArg: Int
+    require(denomArg != 0)
+    private val g = gcd(numerArg, denomArg)
+    val numer = numerArg / g
+    val denom = denomArg / g
+    private def gcd(a: Int, b: Int): Int = 
+        if (b == 0) a else gcd(b, a % b)
+    override def toString = s"$numer/$denom"
 }
 
+val x = 2
+
+// 例外
 new RationalTrait {
-    val numerArg = 1
-    val denomArg = 2
+    val numerArg = 1 * x
+    val denomArg = 2 * x
 }
