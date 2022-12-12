@@ -50,3 +50,8 @@ new {
     val numerArg = 1 * x
     val denomArg = 2 * x
 } with RationalTrait 
+
+object twoThirds extends {
+    val numerArg = 2
+    val denomArg = 3
+} with RationalTrait
