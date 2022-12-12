@@ -97,3 +97,7 @@ class Queue[+T] (
     def enqueue[U >: T](x: U) =
         new Queue[U](leading, x :: trailing)
 }
+
+trait OutputChannel[-T] {
+    def write(x: T): Unit
+}
