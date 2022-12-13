@@ -25,3 +25,10 @@ val lassie = new Dog
 // lassie eat (new bessy.SuitableFood)   // 互換性がないためエラー
 val bootsie = new Dog
 lassie eat (new bootsie.SuitableFood)
+
+class Outer {
+    class Inner
+}
+val o1 = new Outer
+val o2 = new Outer
+new o1.Inner
