@@ -32,3 +32,9 @@ class Outer {
 val o1 = new Outer
 val o2 = new Outer
 new o1.Inner
+
+class Pasture {
+    var animals: List[Animal { type SuitableFood = Grass }] = Nil
+}
+val pasture = new Pasture
+pasture.animals = List(new Cow, new Cow, new Cow)
