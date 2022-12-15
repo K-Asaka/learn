@@ -8,9 +8,10 @@ class Orange extends Fruit
 val apples = new Apple :: Nil
 val fruits = new Orange :: apples
 
-def incAll(xs: List[Int]): List[Int] = xs match {
-    case List() => List()
-    case x :: xs1 => x + 1 :: incAll(xs1)
+def incAll(xs: List[Int]): List[Int] = {
+    val buf = new ListBuffer[Int]
+    for (x <- xs) buf += x + 1
+    buf.toList
 }
 
 var result = List[Int]()    // 非常に効率の悪いアプローチ
