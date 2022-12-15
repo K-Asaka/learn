@@ -29,7 +29,7 @@ def maxList[T](elements: List[T])
             throw new IllegalArgumentException("empty list!")
         case List(x) => x
         case x :: rest =>
-            val maxRest = maxList(rest)     // 暗黙のうちに(ordering)が追加される
-            if (ordering.gt(x, maxRest)) x  // このorderingはまだ明示しなければならない
+            val maxRest = maxList(rest)
+            if (implicitly[Ordering[T]].gt(x, maxRest)) x
             else maxRest
     }
