@@ -32,3 +32,9 @@ def maxList[T : Ordering](elements: List[T]): T =
             if (implicitly[Ordering[T]].gt(x, maxRest)) x
             else maxRest
     }
+
+def printLength(seq: Seq[Int]) = println(seq.length)
+implicit def intToRange(i: Int) = 1 to i
+implicit def intToDigits(i: Int) =
+    i.toString.toList.map(_.toInt)
+printLength(12)
