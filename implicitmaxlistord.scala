@@ -22,8 +22,7 @@ def maxListImpParm[T](elements: List[T])
             else maxRest
     }
 
-def maxList[T](elements: List[T])
-        (implicit ordering: Ordering[T]): T =
+def maxList[T : Ordering](elements: List[T]): T =
     elements match {
         case List() =>
             throw new IllegalArgumentException("empty list!")
