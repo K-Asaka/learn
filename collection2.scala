@@ -29,3 +29,8 @@ val sit = xs sliding 3
 sit.next()
 sit.next()
 sit.next()
+
+Seq(1, 2, 3)(1)
+Set('a', 'b', 'c')('b')
+Set()('a')
+Map('a' -> 1, 'b' -> 10, 'c' -> 100)('b')
