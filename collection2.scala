@@ -38,3 +38,11 @@ Map('a' -> 1, 'b' -> 10, 'c' -> 100)('b')
 val fruit = Set("apple", "orange", "peach", "banana")
 fruit("peach")
 fruit("potato")
+
+var s = Set(1, 2, 3)
+s += 4; s -= 2
+s
+
+val ms = collection.mutable.Set(1, 2, 3)
+ms += 4
+ms -= 2
