@@ -20,3 +20,12 @@ List(1, 2, 3)
 HashMap("x" -> 24, "y" -> 25, "z" -> 26)
 List(1, 2, 3) map (_ + 1)
 Set(1, 2, 3) map (_ * 2)
+
+val xs = List(1, 2, 3, 4, 5)
+val git = xs grouped 3
+git.next()
+git.next()
+val sit = xs sliding 3
+sit.next()
+sit.next()
+sit.next()
