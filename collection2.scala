@@ -34,3 +34,7 @@ Seq(1, 2, 3)(1)
 Set('a', 'b', 'c')('b')
 Set()('a')
 Map('a' -> 1, 'b' -> 10, 'c' -> 100)('b')
+
+val fruit = Set("apple", "orange", "peach", "banana")
+fruit("peach")
+fruit("potato")
