@@ -46,3 +46,22 @@ s
 val ms = collection.mutable.Set(1, 2, 3)
 ms += 4
 ms -= 2
+
+def f(x: String) = {
+    println("taking my time."); Thread.sleep(3000)
+    x.reverse }
+
+val cache = collection.mutable.Map[String, String]()
+def cachedF(s: String) = cache.getOrElseUpdate(s, f(s))
+
+cachedF("abc")
+cachedF("abc")
+
+// 基本的なマップ演算だけを使って直接実装した場合
+// def cachedF(arg: String) = cache get arg match {
+//     case Some(result) => result
+//     case None =>
+//         val result = f(arg)
+//         cache(arg) = result
+//         result
+// }
