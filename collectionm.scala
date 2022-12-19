@@ -12,3 +12,10 @@ val buf3 = new StringBuilder
 buf3 += 'a'
 buf3 ++= "bcdef"
 buf3.toString
+
+val queue = new scala.collection.mutable.Queue[String]
+queue += "a"
+queue ++= List("b", "c")
+queue
+queue.dequeue
+queue
