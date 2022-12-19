@@ -29,3 +29,9 @@ stack.pop()
 stack
 stack.pop()
 stack
+
+val map = collection.mutable.HashMap.empty[Int, String]
+map += (1 -> "make a web site")
+map += (3 -> "profit!")
+map(1)
+map contains 2
