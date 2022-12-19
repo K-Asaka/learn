@@ -32,3 +32,8 @@ val bits = scala.collection.immutable.BitSet.empty
 val moreBits = bits + 3 + 4 + 4
 moreBits(3)
 moreBits(0)
+
+val vm = scala.collection.immutable.VectorMap.empty[Int, String]
+val vm1 = vm + (1 -> "one")
+val vm2 = vm1 + (2 -> "two")
+vm2 == Map(2 -> "two", 1 -> "one")
