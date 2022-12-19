@@ -37,3 +37,7 @@ val vm = scala.collection.immutable.VectorMap.empty[Int, String]
 val vm1 = vm + (1 -> "one")
 val vm2 = vm1 + (2 -> "two")
 vm2 == Map(2 -> "two", 1 -> "one")
+
+val map = collection.immutable.ListMap(
+    1 -> "oen", 2 -> "two")
+map(2)
