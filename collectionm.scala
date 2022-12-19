@@ -35,3 +35,8 @@ map += (1 -> "make a web site")
 map += (3 -> "profit!")
 map(1)
 map contains 2
+
+val bits = scala.collection.mutable.BitSet.empty
+bits += 1
+bits += 3
+bits
