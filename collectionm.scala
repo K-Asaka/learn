@@ -19,3 +19,13 @@ queue ++= List("b", "c")
 queue
 queue.dequeue
 queue
+
+val stack = new scala.collection.mutable.Stack[Int]
+stack.push(1)
+stack
+stack.push(2)
+stack
+stack.pop()
+stack
+stack.pop()
+stack
