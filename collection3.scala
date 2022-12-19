@@ -20,3 +20,7 @@ val empty = scala.collection.immutable.Queue[Int]()
 val has1 = empty.enqueue(1)
 val has123 = has1.enqueueAll(List(2, 3))
 val (element, has23) = has123.dequeue
+
+1 to 3
+5 to 14 by 3
+1 until 3
