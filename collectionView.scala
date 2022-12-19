@@ -17,5 +17,5 @@ x2.to(Vector)
 def isPalindrome(x: String) = x == x.reverse
 def findPalindrome(s: Iterable[String]) = s find isPalindrome
 
-findPalindrome(words take 1000000)
-findPalindrome(words.view take 1000000)
+// findPalindrome(words take 1000000)       // 中間シーケンスが作られる
+// findPalindrome(words.view take 1000000)  // 中間シーケンスが作られない
