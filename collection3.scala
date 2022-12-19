@@ -27,3 +27,8 @@ val (element, has23) = has123.dequeue
 
 val set = collection.immutable.TreeSet.empty[Int]
 set + 1 + 3 + 3
+
+val bits = scala.collection.immutable.BitSet.empty
+val moreBits = bits + 3 + 4 + 4
+moreBits(3)
+moreBits(0)
