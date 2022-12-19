@@ -24,3 +24,6 @@ val (element, has23) = has123.dequeue
 1 to 3
 5 to 14 by 3
 1 until 3
+
+val set = collection.immutable.TreeSet.empty[Int]
+set + 1 + 3 + 3
