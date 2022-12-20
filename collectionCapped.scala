@@ -1,12 +1,13 @@
 import scala.collection._
 
-class Capped2[A] private (val capacity: Int, val length: Int, offset: Int, elems: Array[Any])
+class Capped[A] private (val capacity: Int, val length: Int, offset: Int, elems: Array[Any])
         extends immutable.Iterable[A]
-        with IterableOps[A, Capped2, Capped2[A]] { self =>
+        with IterableOps[A, Capped, Capped[A]]
+        with StrictOptimizedIterableOps[A, Capped, Capped[A]] { self =>
 
     def this(capacity: Int) = this(capacity, length = 0, offset = 0, elems = Array.ofDim(capacity))
 
-    def appended[B >: A](elem: B): Capped2[B] = {
+    def appended[B >: A](elem: B): Capped[B] = {
         val newElems = Array.ofDim[Any](capacity)
         Array.copy(elems, 0, newElems, 0, capacity)
         val (newOffset, newLength) =
@@ -17,45 +18,48 @@ class Capped2[A] private (val capacity: Int, val length: Int, offset: Int, elems
                 newElems(length) = elem
                 (offset, length + 1)
             }
-        new Capped2[B](capacity, newLength, newOffset, newElems)
+        new Capped[B](capacity, newLength, newOffset, newElems)
     }
-    @inline def :+ [B >: A](elem: B): Capped2[B] = appended(elem)
+    @inline def :+ [B >: A](elem: B): Capped[B] = appended(elem)
 
     def apply(i: Int): A =
         elems((i + offset) % capacity).asInstanceOf[A]
     
-    def iterator: Iterator[A] = new AbstractIterator[A] {
-        private var current = 0
-        def hasNext = current < self.length
-        def next(): A = {
-            val elem = self(current)
-            current += 1
-            elem
-        }
-    }
-    override def className = "Capped2"
+    def iterator: Iterator[A] = view.iterator
 
-    override val iterableFactory: IterableFactory[Capped2] =
-        new Capped2Factory(capacity)
+    override def view: IndexedSeqView[A] = new IndexedSeqView[A] {
+        def length: Int = self.length
+        def apply(i: Int): A = self(i)
+    }
+
+    override def knownSize: Int = length
+
+    override def className = "Capped"
+
+    override val iterableFactory: IterableFactory[Capped] =
+        new CappedFactory(capacity)
     
-    override protected def fromSpecific(coll: IterableOnce[A]): Capped2[A] =
+    override protected def fromSpecific(coll: IterableOnce[A]): Capped[A] =
         iterableFactory.from(coll)
     
-    override protected def newSpecificBuilder: mutable.Builder[A, Capped2[A]] =
+    override protected def newSpecificBuilder: mutable.Builder[A, Capped[A]] =
         iterableFactory.newBuilder
     
-    override def empty: Capped2[A] = iterableFactory.empty
+    override def empty: Capped[A] = iterableFactory.empty
 }
-class Capped2Factory(capacity: Int)
-        extends IterableFactory[Capped2] {
+class CappedFactory(capacity: Int)
+        extends IterableFactory[Capped] {
     
-    def from[A](source: IterableOnce[A]): Capped2[A] =
-        (newBuilder[A] ++= source).result()
+    def from[A](source: IterableOnce[A]): Capped[A] =
+        source match {
+            case capped: Capped[A] if capped.capacity == capacity => capped
+            case _ => (newBuilder[A] ++= source).result()
+        }
     
-    def empty[A]: Capped2[A] = new Capped2[A](capacity)
+    def empty[A]: Capped[A] = new Capped[A](capacity)
 
-    def newBuilder[A]: mutable.Builder[A, Capped2[A]] =
-        new mutable.ImmutableBuilder[A, Capped2[A]](empty) {
+    def newBuilder[A]: mutable.Builder[A, Capped[A]] =
+        new mutable.ImmutableBuilder[A, Capped[A]](empty) {
             def addOne(elem: A): this.type = {
             elems = elems :+ elem
             this
