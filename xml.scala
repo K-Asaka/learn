@@ -65,6 +65,6 @@ val catalog =
 
 catalog match {
     case <catalog>{therms @ _*}</catalog> =>
-        for (therm <- therms)
+        for (therm @ <cctherm>{_*}</cctherm> <- therms)
             println("processing: " + (therm \ "description").text)
 }
