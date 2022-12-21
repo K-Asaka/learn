@@ -40,8 +40,11 @@ class ColoredPoint(x: Int, y: Int, val color: Color.Value)
 
     override def equals(other: Any) = other match {
         case that: ColoredPoint =>
-            this.color == that.color && super.equals(that)
-        case _ => false
+            (this.color == that.color) && super.equals(that)
+        case that: Point =>
+            that equals this
+        case _ =>
+            false
     }
 }
 
@@ -51,3 +54,9 @@ cp1 equals cp2
 cp2 equals cp1
 collection.mutable.HashSet[Point](cp1) contains cp2
 collection.mutable.HashSet[Point](cp2) contains cp1
+
+val redp = new ColoredPoint(1, 2, Color.Red)
+val bluep = new ColoredPoint(1, 2, Color.Blue)
+redp == cp1
+cp1 == bluep
+redp == bluep
