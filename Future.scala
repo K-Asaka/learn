@@ -15,3 +15,8 @@ val fut2 = Future { Thread.sleep(10000); 21 / 0 }
 fut2.value
 // 10秒経ってから実行する
 fut2.value
+
+val result = fut.map(x => x + 1)
+result.value
+// 10秒経ってから実行する
+result.value
