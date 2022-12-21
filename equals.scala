@@ -3,35 +3,36 @@ class Point(val x: Int, val y: Int) {
     override def hashCode = (x, y).##
     override def equals(other: Any) = other match {
         case that: Point =>
-            this.x == that.x && this.y == that.y &&
-            this.getClass == that.getClass
+            (that canEqual this) &&
+            (this.x == that.x) && (this.y == that.y)
         case _ => false
     }
+    def canEqual(other: Any) = other.isInstanceOf[Point]
 }
 
-val p1, p2 = new Point(1, 2)
-val q = new Point(2, 3)
-p1 equals p2
-p1 equals q
+// val p1, p2 = new Point(1, 2)
+// val q = new Point(2, 3)
+// p1 equals p2
+// p1 equals q
 
-import scala.collection.mutable
-val coll = mutable.HashSet(p1)
-coll contains p2
+// import scala.collection.mutable
+// val coll = mutable.HashSet(p1)
+// coll contains p2
 
-val p2a: Any = p2
-p1 equals p2a
+// val p2a: Any = p2
+// p1 equals p2a
 
-collection.mutable.HashSet(p1) contains p2
+// collection.mutable.HashSet(p1) contains p2
 
-val p = new Point(1, 2)
-val coll2 = collection.mutable.HashSet(p)
-coll2 contains p
+// val p = new Point(1, 2)
+// val coll2 = collection.mutable.HashSet(p)
+// coll2 contains p
 
-// p.x += 1
+// // p.x += 1
 
-coll2 contains p
+// coll2 contains p
 
-coll2.iterator contains p
+// coll2.iterator contains p
 
 
 object Color extends Enumeration {
@@ -43,22 +44,34 @@ class ColoredPoint(x: Int, y: Int, val color: Color.Value)
 
     override def equals(other: Any) = other match {
         case that: ColoredPoint =>
-            (this.color == that.color) && super.equals(that)
-        case _ => false
+            (that canEqual this) &&
+            super.equals(that) && this.color == that.color
+        case _ =>
+            false
     }
+    override def canEqual(other: Any) =
+        other.isInstanceOf[ColoredPoint]
 }
 
-val cp1 = new Point(1, 2)
-val cp2 = new ColoredPoint(1, 2, Color.Red)
-cp1 equals cp2
-cp2 equals cp1
-collection.mutable.HashSet[Point](cp1) contains cp2
-collection.mutable.HashSet[Point](cp2) contains cp1
+// val cp1 = new Point(1, 2)
+// val cp2 = new ColoredPoint(1, 2, Color.Red)
+// cp1 equals cp2
+// cp2 equals cp1
+// collection.mutable.HashSet[Point](cp1) contains cp2
+// collection.mutable.HashSet[Point](cp2) contains cp1
 
-val redp = new ColoredPoint(1, 2, Color.Red)
-val bluep = new ColoredPoint(1, 2, Color.Blue)
-redp == cp1
-cp1 == bluep
-redp == bluep
+// val redp = new ColoredPoint(1, 2, Color.Red)
+// val bluep = new ColoredPoint(1, 2, Color.Blue)
+// redp == cp1
+// cp1 == bluep
+// redp == bluep
 
-val pAnon = new Point(1, 1) { override val y = 2 }
+// val pAnon = new Point(1, 1) { override val y = 2 }
+
+val p = new Point(1, 2)
+val cp = new ColoredPoint(1, 2, Color.Indigo)
+val pAnon = new Point(1 ,1) { override val y = 2 }
+val coll = List(p)
+coll contains p
+coll contains cp
+coll contains pAnon
