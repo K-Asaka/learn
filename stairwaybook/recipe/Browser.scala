@@ -1,6 +1,6 @@
 package org.stairwaybook.recipe
 
-abstract class Browswer {
+abstract class Browser {
     val database: Database
 
     def recipesUsing(food: Food) =

@@ -8,5 +8,5 @@ abstract class Database {
         allFoods.find(f => f.name == name)
     
     case class FoodCategory(name: String, foods: List[Food])
-    def allCategories = List[FoodCategory]
+    def allCategories: List[FoodCategory]
 }
