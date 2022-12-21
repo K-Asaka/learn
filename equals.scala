@@ -29,3 +29,25 @@ p.x += 1
 coll2 contains p
 
 coll2.iterator contains p
+
+
+object Color extends Enumeration {
+    val Red, Orange, Yellow, Green, Blue, Indigo, Violet = Value
+}
+
+class ColoredPoint(x: Int, y: Int, val color: Color.Value)
+        extends Point(x, y) {       // 問題: equalsが対称率を満たさなくなる
+
+    override def equals(other: Any) = other match {
+        case that: ColoredPoint =>
+            this.color == that.color && super.equals(that)
+        case _ => false
+    }
+}
+
+val cp1 = new Point(1, 2)
+val cp2 = new ColoredPoint(1, 2, Color.Red)
+cp1 equals cp2
+cp2 equals cp1
+collection.mutable.HashSet[Point](cp1) contains cp2
+collection.mutable.HashSet[Point](cp2) contains cp1
