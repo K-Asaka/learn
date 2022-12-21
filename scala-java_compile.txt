@@ -1,0 +1,6 @@
+ScalaとJavaを併用するコードのコンパイル
+ScalaはJavaソースコードまで参照したコンパイルをサポートしている。
+
+$ scalac -d bin InventoryAnalysis.scala InventoryItem.java Inventory.java
+$ javac -cp bin -d bin Inventory.java InventoryItem.java InventoryManagement.java
+$ scala -cp bin InventoryManagement
