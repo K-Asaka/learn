@@ -1,7 +1,9 @@
 class Point(val x: Int, val y: Int) {
-    // equalsの定義としてまったく間違っているもの
-    def equals(other: Point): Boolean =
-        this.x == other.x && this.y == other.y
+    // ましな定義だがまだ完璧ではない
+    override def equals(other: Any) = other match {
+        case that: Point => this.x == that.x && this.y == that.y
+        case _ => false
+    }
 }
 
 val p1, p2 = new Point(1, 2)
