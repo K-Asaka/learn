@@ -32,3 +32,13 @@ def userTwiceUpper(s: String) = s match {
 userTwiceUpper("DIDI@hotmail.com")
 userTwiceUpper("DIDO@hotmail.com")
 userTwiceUpper("didi@hotmail.com")
+
+object Domain {
+    // 注入メソッド(オプション)
+    def apply(parts: String*): String =
+        parts.reverse.mkString(".")
+    
+    // 抽出メソッド(必須)
+    def unapplySeq(whole: String): Option[Seq[String]] =
+        Some(whole.split("\\.").reverse.toSeq)
+}
