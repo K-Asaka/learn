@@ -51,3 +51,16 @@ def isTomInDotCom(s: String): Boolean = s match {
 isTomInDotCom("tom@sun.com")
 isTomInDotCom("peter@sun.com")
 isTomInDotCom("tom@acm.org")
+
+object ExpandedEMail {
+    def unapplySeq(email: String): Option[(String, Seq[String])] = {
+        val parts = email split "@"
+        if (parts.length == 2)
+            Some(parts(0), parts(1).split("\\.").reverse.toSeq)
+        else
+            None
+    }
+}
+
+val s = "tom@support.epfl.ch"
+val ExpandedEMail(name, topdom, subdoms @ _*) = s
