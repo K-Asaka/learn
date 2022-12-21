@@ -17,6 +17,16 @@ abstract class CCTherm {
             <purchasePrice>{purchasePrice}</purchasePrice>
             <condition>{condition}</condition>
         </cctherm>
+    
+    def fromXML(node: scala.xml.Node): CCTherm =
+        new CCTherm {
+            val description = (node \ "description").text
+            val yearMade = (node \ "yearMade").text
+            val dateObtained = (node \ "dateObtained").text
+            val bookPrice = (node \ "bookPrice").text.toInt
+            val purchasePrice = (node \ "purchasePrice").text.toInt
+            val condition = (node \ "condition").text.toInt
+        }
 }
 
 val therm = new CCTherm {
@@ -30,5 +40,10 @@ val therm = new CCTherm {
 
 therm.toXML
 
+val node = therm.toXML
+fromXML(node)
+
+
 // 中括弧をScalaコードへのエスケープではなく、XMLテキストとして使いたい場合は単に2個の中括弧を続けて書けばよい
 val p = <a> {{{{かっこ つけよう！}}}} </a>
+
