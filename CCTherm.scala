@@ -43,7 +43,11 @@ therm.toXML
 val node = therm.toXML
 fromXML(node)
 
+scala.xml.XML.save("therm1.xml", node)
+
+val loadnode = xml.XML.loadFile("therm1.xml")
+fromXML(loadnode)
+
 
 // 中括弧をScalaコードへのエスケープではなく、XMLテキストとして使いたい場合は単に2個の中括弧を続けて書けばよい
 val p = <a> {{{{かっこ つけよう！}}}} </a>
-
