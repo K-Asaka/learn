@@ -1,7 +1,10 @@
-class Point(var x: Int, var y: Int) {   // 問題あり
+// 技術的に誤りではないが、満足のいかないequalsメソッド
+class Point(val x: Int, val y: Int) {
     override def hashCode = (x, y).##
     override def equals(other: Any) = other match {
-        case that: Point => this.x == that.x && this.y == that.y
+        case that: Point =>
+            this.x == that.x && this.y == that.y &&
+            this.getClass == that.getClass
         case _ => false
     }
 }
@@ -24,7 +27,7 @@ val p = new Point(1, 2)
 val coll2 = collection.mutable.HashSet(p)
 coll2 contains p
 
-p.x += 1
+// p.x += 1
 
 coll2 contains p
 
@@ -41,10 +44,7 @@ class ColoredPoint(x: Int, y: Int, val color: Color.Value)
     override def equals(other: Any) = other match {
         case that: ColoredPoint =>
             (this.color == that.color) && super.equals(that)
-        case that: Point =>
-            that equals this
-        case _ =>
-            false
+        case _ => false
     }
 }
 
@@ -60,3 +60,5 @@ val bluep = new ColoredPoint(1, 2, Color.Blue)
 redp == cp1
 cp1 == bluep
 redp == bluep
+
+val pAnon = new Point(1, 1) { override val y = 2 }
