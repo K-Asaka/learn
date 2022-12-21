@@ -12,3 +12,10 @@ val x5 = "<a>" + "</a>potential security hole</a>" + "</a>"
 
 val x6 = <a>Sounds <tag/> good</a>.text
 val x7 = <a> input ---&gt; output </a>.text
+
+val x8 = <a><B><c>hello</c></B></a> \ "b"
+
+val x9 = <a><B><c>hello</c></B></a> \ "c"
+val x10 = <a><B><c>hello</c></B></a> \\ "c"
+val x11 = <a><B><c>hello</c></B></a> \ "a"
+val x12 = <a><B><c>hello</c></B></a> \\ "a"
