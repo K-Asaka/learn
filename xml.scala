@@ -30,11 +30,15 @@ joe \ "@serial"
 
 def proc(node: scala.xml.Node): String =
     node match {
-        case <a>{contents}</a> => "It's an a: " + contents
-        case <B>{contents}</B> => "It's a b: " + contents
+        case <a>{contents @ _*}</a> => "It's an a: " + contents
+        case <B>{contents @ _*}</B> => "It's a b: " + contents
         case _ => "It's something else."
     }
 
 proc(<a>apple</a>)
 proc(<B>banana</B>)
 proc(<c>cherry</c>)
+
+// @パターンを使って_*の結果値でcontents変数を束縛するとマッチする
+proc(<a>a <em>red</em> apple</a>)
+proc(<a/>)
