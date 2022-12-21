@@ -1,5 +1,5 @@
 class Point(val x: Int, val y: Int) {
-    // ましな定義だがまだ完璧ではない
+    override def hashCode = (x, y).##
     override def equals(other: Any) = other match {
         case that: Point => this.x == that.x && this.y == that.y
         case _ => false
@@ -18,3 +18,4 @@ coll contains p2
 val p2a: Any = p2
 p1 equals p2a
 
+collection.mutable.HashSet(p1) contains p2
