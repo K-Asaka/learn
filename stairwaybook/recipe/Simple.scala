@@ -11,12 +11,6 @@ object SimpleDatabase extends Database {
     def allCategories = categories
 }
 
-object SimpleBrowser {
-    def recipesUsing(food: Food) =
-        SimpleDatabase.allRecipes.filter(recipe =>
-            recipe.ingredients.contains(food))
-    
-    def displayCategory(category: SimpleDatabase.FoodCategory) = {
-        println(category)
-    }
+object SimpleBrowser extends Browser {
+    val database = SimpleDatabase
 }
