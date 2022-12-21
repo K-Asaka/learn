@@ -19,3 +19,10 @@ val x9 = <a><B><c>hello</c></B></a> \ "c"
 val x10 = <a><B><c>hello</c></B></a> \\ "c"
 val x11 = <a><B><c>hello</c></B></a> \ "a"
 val x12 = <a><B><c>hello</c></B></a> \\ "a"
+
+val joe = <employee
+        name="Joe"
+        rank="code monkey"
+        serial="123"/>
+joe \ "@name"
+joe \ "@serial"
