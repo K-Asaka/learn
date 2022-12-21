@@ -16,3 +16,19 @@ object Deprecation2 {
     }
 }
 // scalac -deprecation annotation.scala
+
+// 揮発性フィールド
+@volatile
+
+// バイナリシリアライゼーション
+@SerialVersionUID(1234)
+
+// 末尾再帰
+@tailrec
+
+// パターンのチェック回避
+@unchecked
+
+// ネイティブメソッド
+@native
+def beginCountdown() = {}
