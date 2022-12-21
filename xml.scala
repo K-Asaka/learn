@@ -9,3 +9,6 @@ val x4 = <a> {"</a>potential security hole</a>"} </a>
 
 val x5 = "<a>" + "</a>potential security hole</a>" + "</a>"
 
+
+val x6 = <a>Sounds <tag/> good</a>.text
+val x7 = <a> input ---&gt; output </a>.text
