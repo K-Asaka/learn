@@ -42,3 +42,12 @@ object Domain {
     def unapplySeq(whole: String): Option[Seq[String]] =
         Some(whole.split("\\.").reverse.toSeq)
 }
+
+def isTomInDotCom(s: String): Boolean = s match {
+    case EMail("tom", Domain("com", _*)) => true
+    case _ => false
+}
+
+isTomInDotCom("tom@sun.com")
+isTomInDotCom("peter@sun.com")
+isTomInDotCom("tom@acm.org")
