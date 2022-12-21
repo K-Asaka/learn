@@ -17,3 +17,7 @@ object Twice {
         if (half == s.substring(length)) Some(half) else None
     }
 }
+
+object UpperCase {
+    def unapply(s: String): Boolean = s.toUpperCase == s
+}
