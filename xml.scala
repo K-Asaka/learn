@@ -26,3 +26,15 @@ val joe = <employee
         serial="123"/>
 joe \ "@name"
 joe \ "@serial"
+
+
+def proc(node: scala.xml.Node): String =
+    node match {
+        case <a>{contents}</a> => "It's an a: " + contents
+        case <B>{contents}</B> => "It's a b: " + contents
+        case _ => "It's something else."
+    }
+
+proc(<a>apple</a>)
+proc(<B>banana</B>)
+proc(<c>cherry</c>)
