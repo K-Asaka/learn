@@ -187,3 +187,27 @@ val newFuture = success andThen {
     case Failure(ex) => println(ex)
 }
 newFuture.value
+
+val nestedFuture = Future { Future { 42 } }
+val flattened = nestedFuture.flatten    // Scala 2.12以降
+
+val futNum = Future { 21 + 21 }
+val futStr = Future { "ans" + "wer" }
+val zipped = futNum zip futStr
+val mapped = zipped map {
+    case (num, str) => s"$num is the $str"
+}
+mapped.value
+
+val fut4 = futNum.zipWith(futStr) {
+    case (num, str) => s"$num is the $str"
+} 
+fut4.value
+
+val flipped = success.transformWith {   // Scala 2.12
+    case Success(res) =>
+        Future { throw new Exception(res.toString) }
+    case Failure(ex) => Future { 21 + 21 }
+}
+flipped.value
+
