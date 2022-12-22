@@ -14,6 +14,7 @@ class JSON1 extends JavaTokenParsers {
       | "null" ^^ (x => null)
       | "true" ^^ (x => true)
       | "false" ^^ (x => false)
+      | failure("illegal start of value")
     )
 }
 // $ scala JSON1Test address-book.json
