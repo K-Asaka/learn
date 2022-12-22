@@ -165,3 +165,25 @@ futureList.value
 
 val traversed = Future.traverse(List(1, 2, 3)) { i => Future(i) }
 traversed.value
+
+failure.foreach(ex => println(ex))
+success.foreach(res => println(res))
+for (res <- failure) println(res)
+for (res <- success) println(res)
+
+import scala.util.{Success, Failure}
+success onComplete {
+    case Success(res) => println(res)
+    case Failure(ex) => println(ex)
+}
+
+failure onComplete {
+    case Success(res) => println(res)
+    case Failure(ex) => println(ex)
+}
+
+val newFuture = success andThen {
+    case Success(res) => println(res)
+    case Failure(ex) => println(ex)
+}
+newFuture.value
