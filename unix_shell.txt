@@ -1,0 +1,22 @@
+ファイルの先頭に#!ディレクティブをつけることで、Scalaスクリプトをシェルスクリプトとして実行できる。
+
+
+--- helloarg ---
+#! /bin/sh
+exec scala "$0" "$@"
+!#
+// 第1引数に対してHelloと呼びかける
+println("Hello, " + args(0) + "!")
+
+
+$ chmod +x helloarg
+$ ./helloarg globe
+
+
+Windowsの場合は、ファイルにhelloarg.batという名前を付け、スクリプトの冒頭に次のものを追加すれば同様の効果が得られる。
+
+::#!
+@echo off
+call scala %0 %*
+goto :eof
+::!#
