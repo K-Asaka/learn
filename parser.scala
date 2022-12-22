@@ -12,3 +12,7 @@ object ParseExpr extends Arith {
         println(parseAll(expr, args(0)))
     }
 }
+
+object MyParsers extends RegexParsers {
+    val ident: Parser[String] = """[a-zA-Z_]\w*""".r
+}
