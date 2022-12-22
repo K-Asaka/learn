@@ -75,3 +75,40 @@ valid3.value
 val invalid3 = fut3 collect { case res if res < 0 => res + 46 }
 invalid3.value
 
+val failure = Future { 42 / 0 }
+failure.value
+val expectedFailure = failure.failed
+expectedFailure.value
+
+val success = Future { 42 / 1 }
+success.value
+val unexpectedSuccess = success.failed
+unexpectedSuccess.value
+
+val fallback = failure.fallbackTo(success)
+fallback.value
+
+val failedFallback = failure.fallbackTo(
+    Future { val res = 42; require(res < 0); res }
+)
+failedFallback.value
+
+val recovered = failedFallback recover {
+    case ex: ArithmeticException => -1
+}
+recovered.value
+
+val unrecovered = fallback recover {
+    case ex: ArithmeticException => -1
+}
+unrecovered.value
+
+val alsoUnrecovered = failedFallback recover {
+    case ex: IllegalArgumentException => -2
+}
+alsoUnrecovered.value
+
+val alsoRecovered = failedFallback recoverWith {
+    case ex: ArithmeticException => Future { 42 + 46 }
+}
+alsoRecovered.value
