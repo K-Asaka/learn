@@ -112,3 +112,35 @@ val alsoRecovered = failedFallback recoverWith {
     case ex: ArithmeticException => Future { 42 + 46 }
 }
 alsoRecovered.value
+
+val first = success.transform (
+    res => res * -1,
+    ex => new Exception("see cause", ex)
+)
+first.value
+
+val second = failure.transform (
+    res => res * -1,
+    ex => new Exception("see cause", ex)
+)
+second.value
+
+val firstCase = success.transform {     // Scala 2.12以降
+    case Success(res) => Success(res * -1)
+    case Failure(ex) => 
+        Failure(new Exception("see cause", ex))
+}
+firstCase.value
+
+val secondCase = failure.transform {
+    case Success(res) => Success(res * -1)
+    case Failure(ex) => 
+        Failure(new Exception("see cause", ex))
+}
+secondCase.value
+
+val nonNegative = failure.transform {   // Scala2.12
+    case Success(res) => Success(res.abs + 1)
+    case Failure(_) => Success(0)
+}
+nonNegative.value
