@@ -54,3 +54,24 @@ pfut.value
 
 pro.success(42)
 pfut.value
+
+
+val fut3 = Future { 42 }
+val valid = fut3.filter(res => res > 0)
+valid.value
+
+val invalid = fut.filter(res => res < 0)
+invalid.value
+
+val valid2 = for (res <- fut3 if res > 0) yield res
+valid2.value
+
+val invalid2 = for (res <- fut3 if res < 0) yield res
+invalid2.value
+
+val valid3 = fut3 collect { case res if res > 0 => res + 46 }
+valid3.value
+
+val invalid3 = fut3 collect { case res if res < 0 => res + 46 }
+invalid3.value
+
