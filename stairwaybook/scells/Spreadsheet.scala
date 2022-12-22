@@ -1,6 +1,5 @@
 package org.stairwaybook.scells
-import swing._
-import event._
+import swing._, event._
 
 class Spreadsheet(val height: Int, val width: Int)
         extends ScrollPane {
@@ -14,8 +13,9 @@ class Spreadsheet(val height: Int, val width: Int)
         showGrid = true
         gridColor = new java.awt.Color(150, 150, 150)
 
-        override def rendererComponent(isSelected: Boolean,
-                hasFocus: Boolean, row: Int, column: Int): Component =
+        override def rendererComponent(
+                isSelected: Boolean, hasFocus: Boolean,
+                row: Int, column: Int) =
             if (hasFocus) new TextField(userData(row, column))
             else
                 new Label(cells(row)(column).toString) {
@@ -30,10 +30,15 @@ class Spreadsheet(val height: Int, val width: Int)
                 for (row <- rows)
                     cells(row)(column).formula =
                         FormulaParsers.parse(userData(row, column))
+            case ValueChanged(cell) =>
+                updateCell(cell.row, cell.column)
         }
+
+        for (row <- cells; cell <- row) listenTo(cell)
     }
+
     val rowHeader =
-        new ListView((0 until height) map (_.toString)) {
+        new ListView(0 until height) {
             fixedCellWidth = 30
             fixedCellHeight = table.rowHeight
         }
