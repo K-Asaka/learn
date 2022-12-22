@@ -144,3 +144,24 @@ val nonNegative = failure.transform {   // Scala2.12
     case Failure(_) => Success(0)
 }
 nonNegative.value
+
+val zippedSuccess = success zip recovered
+zippedSuccess.value
+
+val zippedFailure = success zip failure
+zippedFailure.value
+
+val fortyTwo = Future { 21 + 21 }
+val fortySix = Future { 23 + 23 }
+val futureNums = List(fortyTwo, fortySix)
+val folded = Future.foldLeft(futureNums)(0) { (acc, num) => acc + num }
+folded.value
+
+val reduced = Future.reduceLeft(futureNums) { (acc, num) => acc + num }
+reduced.value
+
+val futureList = Future.sequence(futureNums)
+futureList.value
+
+val traversed = Future.traverse(List(1, 2, 3)) { i => Future(i) }
+traversed.value
