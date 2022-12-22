@@ -6,6 +6,12 @@ class Arith extends JavaTokenParsers {
     def factor: Parser[Any] = floatingPointNumber | "("~expr~")"
 }
 
+class ArithHypothetical extends JavaTokenParsers {
+    def expr: Parser[Any] = term andThen rep(("+" andThen term) orElse ("-" andThen term))
+    def term: Parser[Any] = factor andThen rep(("*" andThen factor) orElse ("/" andThen factor))
+    def factor: Parser[Any] = floatingPointNumber orElse ("(" andThen expr andThen ")")
+}
+
 object ParseExpr extends Arith {
     def main(args: Array[String]) = {
         println("input : " + args(0))
