@@ -222,3 +222,20 @@ x should be (42)
 import org.scalatest.concurrent.ScalaFutures._
 val fut6 = Future { Thread.sleep(10000); 21 + 21 }
 fut6.futureValue should be (42)     // futureValueはブロックを起こす
+
+import org.scalatest.funspec.AsyncFunSpec
+import scala.concurrent.Future
+
+class AddSpec extends AsyncFunSpec {
+    def addSoon(addends: Int*): Future[Int] =
+        Future { addends.sum }
+    
+    describe("addSoon") {
+        it("will eventually compute a sum of passed Ints") {
+            val futureSum: Future[Int] = addsoon(1, 2)
+            // Futureをアサーションにmapし、
+            // 得られたFuture[Assertion]をScalaTestに返す
+            futureSum map { sum => assert(sum == 3) }
+        }
+    }
+}
