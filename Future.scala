@@ -211,3 +211,14 @@ val flipped = success.transformWith {   // Scala 2.12
 }
 flipped.value
 
+import scala.concurrent.Await
+import scala.concurrent.duration._
+val fut5 = Future { Thread.sleep(10000); 21 + 21 }
+val x = Await.result(fut5, 15.seconds)      // ブロック
+
+import org.scalatest.matchers.should.Matchers._
+x should be (42)
+
+import org.scalatest.concurrent.ScalaFutures._
+val fut6 = Future { Thread.sleep(10000); 21 + 21 }
+fut6.futureValue should be (42)     // futureValueはブロックを起こす
