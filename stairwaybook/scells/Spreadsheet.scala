@@ -1,5 +1,6 @@
 package org.stairwaybook.scells
-import scala.swing._
+import swing._
+import event._
 
 class Spreadsheet(val height: Int, val width: Int)
         extends ScrollPane {
@@ -23,6 +24,12 @@ class Spreadsheet(val height: Int, val width: Int)
         def userData(row: Int, column: Int): String = {
             val v = this(row, column)
             if (v == null) "" else v.toString
+        }
+        reactions += {
+            case TableUpdated(table, rows, column) =>
+                for (row <- rows)
+                    cells(row)(column).formula =
+                        FormulaParsers.parse(userData(row, column))
         }
     }
     val rowHeader =
