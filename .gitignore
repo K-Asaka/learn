@@ -3,3 +3,5 @@ target/
 .vscode/
 *.class
 *.tasty
+stairwaybook/scells/.bsp/
+stairwaybook/scells/project/
