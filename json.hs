@@ -10,25 +10,50 @@ data Human = Human
     , age :: Int
     } deriving Show
 
+data Department = Department
+    { departmentName :: String
+    , coworkers :: [Human]
+    } deriving Show
+
 deriveJSON defaultOptions ''Human   -- ''Humanという記法がTemplate Haskell由来
+deriveJSON defaultOptions ''Department
 
 taro :: Human
-taro = Human
-    { name = "Taro"
-    , age = 30
-    }
+taro = Human { name = "Taro", age = 30 }
 
-hanako :: B.ByteString
-hanako = "{\"name\":\"Hanako\",\"age\":25}"
+saburo :: Human
+saburo = Human { name = "Saburo", age = 31 }
 
-jiro :: B.ByteString
-jiro = "{\"onamae\":\"Jiro\",\"nenrei\":30}"
+shiro :: Human
+shiro = Human { name = "Shiro", age = 31 }
+
+matsuko :: Human
+matsuko = Human { name = "Matsuko", age = 26 }
+
+nameList :: [Department]
+nameList =
+    [ Department
+        { departmentName = "General Affairs"
+        , coworkers =
+            [ taro
+            , matsuko
+            ]
+        }
+      , Department
+        { departmentName = "Development"
+        , coworkers =
+            [ saburo
+            , shiro
+            ]
+        }
+    ]
+
+data IntStr = IntData Int | StrData String
+deriveJSON defaultOptions ''IntStr
 
 main :: IO ()
 main = do
-    B.putStrLn $ encode (["Taro", "Jiro", "Hanako"] :: [String])
-    B.putStrLn $ encode ([10, 20, 30] :: [Int])
-    B.putStrLn $ encode (("Hello", 100) :: (String, Int))
-    print (decode "[\"Taro\", \"Jiro\", \"Hanako\"]" :: Maybe [String])
-    print (decode "[10, 20, 30]" :: Maybe [Int])
-    print (decode "[777, \"Haskell\"]" :: Maybe (Int, String))
+    B.putStrLn $ encode $ nameList
+
+    B.putStrLn $ encode $ IntData 999
+    B.putStrLn $ encode $ StrData "World!"
