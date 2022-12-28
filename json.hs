@@ -26,5 +26,9 @@ jiro = "{\"onamae\":\"Jiro\",\"nenrei\":30}"
 
 main :: IO ()
 main = do
-    print (eitherDecode hanako :: Either String Human)
-    print (eitherDecode jiro :: Either String Human)
+    B.putStrLn $ encode (["Taro", "Jiro", "Hanako"] :: [String])
+    B.putStrLn $ encode ([10, 20, 30] :: [Int])
+    B.putStrLn $ encode (("Hello", 100) :: (String, Int))
+    print (decode "[\"Taro\", \"Jiro\", \"Hanako\"]" :: Maybe [String])
+    print (decode "[10, 20, 30]" :: Maybe [Int])
+    print (decode "[777, \"Haskell\"]" :: Maybe (Int, String))
