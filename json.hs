@@ -26,7 +26,5 @@ jiro = "{\"onamae\":\"Jiro\",\"nenrei\":30}"
 
 main :: IO ()
 main = do
-    -- encodeとdecodeでJSON化しつつ、printできるようにする
-    B.putStrLn . encode $ taro
-    print (decode hanako :: Maybe Human)
-    print (decode jiro :: Maybe Human)
+    print (eitherDecode hanako :: Either String Human)
+    print (eitherDecode jiro :: Either String Human)
