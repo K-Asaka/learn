@@ -1,64 +1,34 @@
-{-# LANGUAGE TemplateHaskell, OverloadedStrings, OverloadedLists #-}
+{-# LANGUAGE OverloadedStrings, DeriveGeneric #-}
 
 import Data.Aeson -- aeson
-import Data.Aeson.TH -- aeson
 import qualified Data.ByteString.Lazy.Char8 as B -- bytestring
+import GHC.Generics
 
--- JSONにしたいデータ
-data Human = Human
+data Person = Person
     { name :: String
     , age :: Int
-    } deriving Show
+    } deriving (Show, Generic)
 
-data Department = Department
-    { departmentName :: String
-    , coworkers :: [Human]
-    } deriving Show
+instance ToJSON Person
+instance FromJSON Person
 
-deriveJSON defaultOptions ''Human   -- ''Humanという記法がTemplate Haskell由来
-deriveJSON (defaultOptions
-    { fieldLabelModifier = \s -> case s of
-        "departmentName" -> "name"
-        t -> t
-    } ) ''Department    -- TemplateHaskell由来
+taro :: Person
+taro = Person
+    { name = "Taro"
+    , age = 30
+    }
 
-taro :: Human
-taro = Human { name = "Taro", age = 30 }
+hanako :: B.ByteString
+hanako = "{\"name\":\"Hanako\",\"age\":25}"
 
-saburo :: Human
-saburo = Human { name = "Saburo", age = 31 }
-
-shiro :: Human
-shiro = Human { name = "Shiro", age = 31 }
-
-matsuko :: Human
-matsuko = Human { name = "Matsuko", age = 26 }
-
-nameList :: [Department]
-nameList =
-    [ Department
-        { departmentName = "General Affairs"
-        , coworkers =
-            [ taro
-            , matsuko
-            ]
-        }
-      , Department
-        { departmentName = "Development"
-        , coworkers =
-            [ saburo
-            , shiro
-            ]
-        }
-    ]
-
-data IntStr = IntData Int | StrData String
-deriveJSON defaultOptions ''IntStr
+jiro :: B.ByteString
+jiro = "{\"onamae\":\"Jiro\",\"nenrei\":30}"
 
 main :: IO ()
 main = do
-    B.putStrLn $ encode $ nameList
+    B.putStrLn . encode $ taro
+    print (decode hanako :: Maybe Person)
+    print (decode jiro :: Maybe Person)
 
-    B.putStrLn $ encode $ IntData 999
-    B.putStrLn $ encode $ StrData "World!"
-    
+    print (eitherDecode hanako :: Either String Person)
+    print (eitherDecode jiro :: Either String Person)
