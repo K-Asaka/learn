@@ -1,6 +1,27 @@
+
+{-# LANGUAGE TemplateHaskell #-}
 import Control.Lens
+
+-- データ構造の定義
+data User = User
+    { _userName :: String
+    , _userAge :: Int
+    , userPassword :: String    -- _がないので生成されない
+    } deriving Show
+
+makeLenses ''User     -- ''はTemplateHaskellを使う箇所
+
 
 main :: IO ()
 main = do
-    let value = (1, (2, 3, (999, 4, 5)), 6)
-    print $ value&_2._3._1 .~ "New Value"
+    let user = User
+            { _userName = "Taro"
+            , _userAge = 25
+            , userPassword = "12345"
+            }
+    -- USer型に対しアクセサが生成される
+    -- userName :: Functor f => Lens User User String String
+    -- userAge :: Functor f => Lens User User Int Int
+    print (user^.userName)      -- "Taro"
+    print (user^.userAge)       -- 25
+    print (user&userName.~"Jiro")   -- User {_userName = "Jiro", _userAge = 25, userPassword = "12345"}
