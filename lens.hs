@@ -1,37 +1,11 @@
 
 {-# LANGUAGE TemplateHaskell #-}
 import Control.Lens
-import Control.Monad.State
-
--- データ構造の定義
-data User = User
-    { _userName :: String
-    , _userAge :: Int
-    , userPassword :: String    -- _がないので生成されない
-    } deriving Show
-
-makeLenses ''User     -- ''はTemplateHaskellを使う箇所
-
-userPass :: Lens User User String String
-userPass = lens userPassword (\user password -> user { userPassword = password })
 
 main :: IO ()
 main = do
-    let user = User
-            { _userName = "Taro"
-            , _userAge = 25
-            , userPassword = "12345"
-            }
-    -- USer型に対しアクセサが生成される
-    -- userName :: Functor f = Lens User User String String
-    -- userAge :: Functor f => Lens User User Int Int
-    print (user^.userPass)      -- "12345"
-    print (user & userPass .~ "new-password") -- User {_userName = "Taro", _userAge = 25, userPassword = "new-password"}
-
-    print $ runState lensWithState user -- (25,User {_userName = "Jiro", _userAge = 25, userPassword = "12345"})
-
-lensWithState :: State User Int
-lensWithState = do
-    age <- use userAge
-    userName .= "Jiro"
-    return age
+    let leftVal = Left "Left Value" :: Either String String
+    print $ leftVal&_Left.~"New Value"
+    print $ leftVal&_Right.~"New Value"
+    print $ leftVal^?_Left
+    print $ leftVal^?_Right
