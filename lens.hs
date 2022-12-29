@@ -1,6 +1,7 @@
 
 {-# LANGUAGE TemplateHaskell #-}
 import Control.Lens
+import Control.Monad.State
 
 -- データ構造の定義
 data User = User
@@ -26,3 +27,11 @@ main = do
     -- userAge :: Functor f => Lens User User Int Int
     print (user^.userPass)      -- "12345"
     print (user & userPass .~ "new-password") -- User {_userName = "Taro", _userAge = 25, userPassword = "new-password"}
+
+    print $ runState lensWithState user -- (25,User {_userName = "Jiro", _userAge = 25, userPassword = "12345"})
+
+lensWithState :: State User Int
+lensWithState = do
+    age <- use userAge
+    userName .= "Jiro"
+    return age
