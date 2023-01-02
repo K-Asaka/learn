@@ -8,4 +8,14 @@ hello = do
         return $ "Hello, " ++ s
 
 main :: IO ()
-main = runEffect $ P.stdinLn >-> hello >-> P.stdoutLn
+main = sample1
+
+
+sample1 :: IO ()
+sample1 = runEffect $ sampleProducer >-> P.map ("input : "++) >-> P.stdoutLn
+
+sampleProducer :: Producer String IO ()
+sampleProducer = do
+    yield "Hoge"
+    yield "Piyo"
+    yield "Fuga"
