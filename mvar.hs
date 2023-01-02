@@ -1,5 +1,16 @@
 import Control.Concurrent
 
+actionIO :: IO a => IO a
+actionIO action = do
+    mv <- newEmptyMVar :: IO (MVar (Either SomeException a))
+    _tid <- forkIO $ do
+        result <- try action
+        putMVar mv result
+    result <- takeMVar mv
+    case result of
+        Left e -> throwIO e
+        Right r -> return r
+
 main :: IO ()
 main = do
     -- スレッド間で共有するMVar生成
