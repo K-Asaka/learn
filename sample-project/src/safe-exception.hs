@@ -3,7 +3,7 @@ module Main where
 import Control.Monad (forever)
 import Control.Concurrent
 -- Control.Exceptionの代わりにControl.Exception.Safeをimportしても実行できる
-import Control.Exception (mask, try, throwIO, finally, Exception, SomeException)
+import Control.Exception.Safe (mask, try, throwIO, finally, Exception, SomeException)
 import Data.Typeable
 
 data MyException = ThisException | ThatException
