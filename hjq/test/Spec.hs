@@ -23,13 +23,13 @@ main = do
 jqFilterParserTest :: Test
 jqFilterParserTest = TestList
     [ "jqFilterParser test 1" ~:
-        parseJqFilter "." ~?= Right JqNil -- .が来たらJqNil
+        parseJqFilter " . " ~?= Right JqNil -- .が来たらJqNil
     , "jqFilterParser test 2" ~:
-        parseJqFilter ".[0]" ~?= Right (JqIndex 0 JqNil)   -- .[0]が来たらJpIndex 0 JpNil
+        parseJqFilter " . [ 0 ] " ~?= Right (JqIndex 0 JqNil)   -- .[0]が来たらJpIndex 0 JpNil
     , "jqFilterParser test 3" ~:
-        parseJqFilter ".fieldName" ~?= Right (JqField "fieldName" JqNil)
+        parseJqFilter " . fieldName " ~?= Right (JqField "fieldName" JqNil)
     , "jqFilterParser test 4" ~:
-        parseJqFilter ".[0].fieldName" ~?= Right (JqIndex 0 (JqField "fieldName" JqNil))
+        parseJqFilter " . [ 0 ] . fieldName " ~?= Right (JqIndex 0 (JqField "fieldName" JqNil))
     , "jqFilterParser test 5" ~:
-        parseJqFilter ".fieldName[0]" ~?= Right (JqField "fieldName" (JqIndex 0 JqNil))
+        parseJqFilter " . fieldName [ 0 ] " ~?= Right (JqField "fieldName" (JqIndex 0 JqNil))
     ]

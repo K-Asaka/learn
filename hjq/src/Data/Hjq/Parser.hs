@@ -16,19 +16,22 @@ parseJqFilter :: Text -> Either Text JqFilter
 parseJqFilter s = showParseResult
     $ parse (jqFilterParser <* endOfInput) s `feed` ""
 
+schar :: Char -> Parser Char
+schar c = skipSpace *> char c <* skipSpace
+
 -- attoparsecを使ってフィルタの文字列をJqFilter型にパース
 jqFilterParser :: Parser JqFilter
-jqFilterParser = char '.' >> (jqField <|> jqIndex <|> pure JqNil)
+jqFilterParser = schar '.' >> (jqField <|> jqIndex <|> pure JqNil)
   where
     jqFilter :: Parser JqFilter
     jqFilter
-        = (char '.' >> jqField) <|> jqIndex <|> pure JqNil
+        = (schar '.' >> jqField) <|> jqIndex <|> pure JqNil
 
     jqField :: Parser JqFilter
-    jqField = JqField <$> word <*> jqFilter
+    jqField = JqField <$> (word <* skipSpace) <*> jqFilter
         
     jqIndex :: Parser JqFilter
-    jqIndex = JqIndex <$> (char '[' *> decimal <* char ']') <*> jqFilter
+    jqIndex = JqIndex <$> (schar '[' *> decimal <* schar ']') <*> jqFilter
     
 -- パース結果の表示
 showParseResult :: Show a => Result a -> Either Text a
