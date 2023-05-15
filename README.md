@@ -34,3 +34,20 @@ argv[1]→x\0
 argv[2]→y\0
 argv[3]→z\0
 
+
+stdioの動作を確かめる
+straceのインストール
+
+AlmaLinux:
+sudo dnf install strace
+
+straceを使って確認
+strace ./hello >/dev/null
+
+4096バイトのデータを作成
+for i in `seq 1 4096`;do echo -n "a" >> data; done
+
+catとcat2(stdio)の違いを確認
+strace -e trace=open,read,write,close ./cat data >/dev/null
+strace -e trace=open,read,write,close ./cat2 data >/dev/null
+
