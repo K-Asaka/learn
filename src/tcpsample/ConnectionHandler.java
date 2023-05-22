@@ -18,10 +18,12 @@ public class ConnectionHandler implements Runnable {
             String msg = "Server Message\n";
             InputStream in = socket.getInputStream();
             OutputStream out = socket.getOutputStream();
-            for (int i = 0; i < msg.length(); i++) {
-                out.write((byte)msg.charAt(i));
+            while (true) {
+                for (int i = 0; i < msg.length(); i++) {
+                    out.write((byte)msg.charAt(i));
+                }
+                out.flush();
             }
-            out.flush();
         } catch (IOException e) {
         } finally {
             try {
