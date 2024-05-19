@@ -1,4 +1,8 @@
 # 学習記録用リポジトリ
 
-いろんなものの、確認した内容の記録。
+## Python 機械学習プログラミング
 
+python -m venv ~/venv
+source ~/venv/bin/activate
+
+pip install numpy scipy scikit-learn
