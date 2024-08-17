@@ -5,18 +5,27 @@
 # インポート
 
 # グローバル変数の宣言
+ELEMENT_SYMBOLS = {
+    '火': '$',
+    '水': '~',
+    '風': '@',
+    '土': '#',
+    '命': '&',
+    '無': ' '
+}
 
 # 関数宣言
 def print_monster_name(monster):
     # monsterはディクショナリで受け取る
-    # (1)モンスターの名前をキーnameで取得する
-    # (2)
+    # (1)モンスターの名前と属性を取得する
+    # (2)取得した属性に対応する記号をELEMENT_SYMBOLSから取得する
     # (3)
     
     monster_name = monster['name']
+    symbol = ELEMENT_SYMBOLS[monster['element']]
 
     # モンスター名を表示する
-    print(f'{monster_name}', end='')
+    print(f'{symbol}{monster_name}{symbol}', end='')
 
 
 def do_battle(monster):
