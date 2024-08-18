@@ -13,19 +13,28 @@ ELEMENT_SYMBOLS = {
     '命': '&',
     '無': ' '
 }
+ELEMENT_COLORS = {
+    '火': '31',
+    '水': '36',
+    '風': '32',
+    '土': '33',
+    '命': '35',
+    '無': '37'
+}
 
 # 関数宣言
 def print_monster_name(monster):
     # monsterはディクショナリで受け取る
     # (1)モンスターの名前と属性を取得する
     # (2)取得した属性に対応する記号をELEMENT_SYMBOLSから取得する
-    # (3)
+    # (3)取得した属性に対応する記号をELEMENT_COLORSから取得する
     
     monster_name = monster['name']
     symbol = ELEMENT_SYMBOLS[monster['element']]
+    color = ELEMENT_COLORS[monster['element']]
 
     # モンスター名を表示する
-    print(f'{symbol}{monster_name}{symbol}', end='')
+    print(f'\033[{color}m{symbol}{monster_name}{symbol}\033[0m ', end='')
 
 
 def do_battle(monster):
