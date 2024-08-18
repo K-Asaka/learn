@@ -3,6 +3,7 @@
 作成者: あいうえお
 '''
 # インポート
+import random
 
 # グローバル変数の宣言
 ELEMENT_SYMBOLS = {
@@ -73,16 +74,25 @@ def organize_party(player_name, friends):
 
     return party
 
+def do_attack(monster, command):
+    damage = hash(command) % 50
+    damage += abs(damage - monster['dp']) + int(damage * random.uniform(0, 3))
+    return damage
+
+def do_enemy_attack(party, monster):
+    damage = int(abs(monster['ap'] - party['dp']) * random.uniform(0, 3))
+    return damage
+
 def on_player_turn(party, monster):
     print(f"【{party['player_name']}のターン】(HP={party['hp']})")
     command = input('コマンド？ > ')
-    damage = 50
+    damage = do_attack(monster, command)
     print(f'{damage}のダメージを与えた')
     monster['hp'] -= damage
 
 def on_enemy_turn(party, monster):
     print(f"【{monster['name']}のターン】(HP={monster['hp']})")
-    damage = 20
+    damage = do_enemy_attack(party, monster)
     print(f'{damage}のダメージを受けた')
     party['hp'] -= damage
 
