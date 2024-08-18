@@ -36,6 +36,13 @@ def print_monster_name(monster):
     # モンスター名を表示する
     print(f'\033[{color}m{symbol}{monster_name}{symbol}\033[0m ', end='')
 
+def show_party(party):
+    for friend in party['friends']:
+        print_monster_name(friend)
+        print(f" HP= {friend['hp']}", end=' ')
+        print(f" 攻撃= {friend['ap']:2}", end=' ')
+        print(f" 防御= {friend['dp']:2}")
+
 def organize_party(player_name, friends):
     """
         引数
@@ -78,6 +85,9 @@ def do_battle(monster):
 
 def go_dungeon(party, monsters):
     print(party['player_name'] + f'のパーティ(HP={party['hp']})はダンジョンに到達した')
+    print('＜パーティ編成＞-------------------')
+    show_party(party)
+    print('-----------------------------------')
     is_win = 0
 
     for monster in monsters:
