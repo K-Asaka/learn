@@ -74,37 +74,43 @@ def organize_party(player_name, friends):
     return party
 
 
-def do_battle(monster):
+def do_battle(party, monster):
     is_win = 1
-    print_monster_name(monster)
-    print('が現れた！')
+    print(f'{print_monster_name(monster)}が現れた！')
 
-    print_monster_name(monster)
-    print('を倒した！')
+    print(f'{print_monster_name(monster)}を倒した！')
+
     return is_win
 
 def go_dungeon(party, monsters):
     print(party['player_name'] + f'のパーティ(HP={party['hp']})はダンジョンに到達した')
     print('＜パーティ編成＞-------------------')
     show_party(party)
-    print('-----------------------------------')
+    print('-' * 35, end='\n\n')
     is_win = 0
 
     for monster in monsters:
-        is_win += do_battle(monster)
-
-    print(party['player_name'] + 'のパーティはダンジョンを制覇した')
+        is_win += do_battle(party, monster)
+        if party['hp'] <= 0:
+            print(f'{party['player_name']}はダンジョンから逃げ出した')
+            break
+        else:
+            print(f'{party['player_name']}はさらに奥へと進んだ')
+            print('=' * 35)
+    
+    if is_win == len(monsters):
+        print(party['player_name'] + 'のパーティはダンジョンを制覇した')
     return is_win
 
 def main():
-    print('*** Puzzle & Monsters ***')
-
     while True:
         player = input('プレイヤー名を入力してください> ')
         if player != '':
             break
         else:
             print('エラー：プレイヤー名を入力してください')
+    
+    print('*** Puzzle & Monsters ***')
     
     seiryu = {
         'name': '青龍',
@@ -189,7 +195,7 @@ def main():
         print('*** GAME OVER!! ***')
     else:
         print('*** GAME CLEARED!! ***')
-        print(f'倒したモンスター数={is_win}')
+    print(f'倒したモンスター数={is_win}')
 
 # main関数の呼び出し
 main()
