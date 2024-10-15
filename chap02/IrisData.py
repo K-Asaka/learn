@@ -103,3 +103,32 @@ ax[1].set_ylabel('Sum-squared-error')
 ax[1].set_title('Adaline - Learning rage 0.0001')
 # 図の表示
 plt.show()
+
+# データのコピー
+X_std = np.copy(X)
+# 各列の標準化
+X_std[:, 0] = (X[:, 0] - X[:, 0].mean()) / X[:, 0].std()
+X_std[:, 1] = (X[:, 1] - X[:, 1].mean()) / X[:, 1].std()
+
+# 勾配降下法によるADALINEの学習(標準化後、学習率 eta=0.01)
+ada = AdalineGD(n_iter=15, eta=0.01)
+# モデルの適合
+ada.fit(X_std, y)
+# 境界領域のプロット
+plot_decision_regions(X_std, y, classifier=ada)
+# タイトルの設定
+plt.title('Adaline - Gradient Descent')
+# 軸のラベルの設定
+plt.xlabel('sepal length [standardized]')
+plt.ylabel('petal length [standardized]')
+# 凡例の設定(左上に配置)
+plt.legend(loc='upper left')
+# 図の表示
+plt.show()
+# エポック数とコストの関係を表す折れ線グラフのプロット
+plt.plot(range(1, len(ada.cost_) + 1), ada.cost_, marker='o')
+# 軸のラベルの設定
+plt.xlabel('Epochs')
+plt.ylabel('Sum-squared-error')
+# 図の表示
+plt.show()
