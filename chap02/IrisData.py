@@ -76,3 +76,30 @@ plt.legend(loc='upper left')
 # 図の表示
 plt.show()
 
+
+import matplotlib.pyplot as plt
+import numpy as np
+from adalinegd import AdalineGD
+
+# 描画領域を1行2列に分割
+fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(8, 4))
+# 勾配降下法によるADALINEの学習(学習率 eta=0.01)
+ada1 = AdalineGD(n_iter=10, eta=0.01).fit(X, y)
+# エポック数とコストの関係を表す折れ線グラフのプロット(縦軸のコストは常用対数)
+ax[0].plot(range(1, len(ada1.cost_) + 1), np.log10(ada1.cost_), marker='o')
+# 軸のラベルの設定
+ax[0].set_xlabel('Epochs')
+ax[0].set_ylabel('log(Sum-squared-error)')
+# タイトルの設定
+ax[0].set_title('Adaline - Learning rate 0.01')
+# 勾配降下法によるADALINEの学習(学習率 eta=0.0001)
+ada2 = AdalineGD(n_iter=10, eta=0.00001).fit(X, y)
+# エポック数とコストの関係を表す折れ線グラフのプロット
+ax[1].plot(range(1, len(ada2.cost_) + 1), ada2.cost_, marker='o')
+# 軸のラベル設定
+ax[1].set_xlabel('Epochs')
+ax[1].set_ylabel('Sum-squared-error')
+# タイトルの設定
+ax[1].set_title('Adaline - Learning rage 0.0001')
+# 図の表示
+plt.show()
