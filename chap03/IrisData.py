@@ -112,7 +112,7 @@ plt.axvline(0.0, color='k')
 plt.ylim(-0.1, 1.1)
 # 軸のラベルを設定
 plt.xlabel('z')
-plt.ylabel('$\phi (z)$')
+plt.ylabel(r'$\phi (z)$')
 # y軸の目盛を追加
 plt.yticks([0.0, 0.5, 1.0])
 # Axesクラスのオブジェクトの取得
@@ -140,4 +140,28 @@ plt.legend(loc='upper left')
 plt.show()
 
 print(lr.predict_proba(X_test_std[0, :].reshape(1, -1)))
+
+
+# 空のリストを生成(重み係数、逆正則化パラメータ)
+weights, params = [], []
+# 10個の逆正則化パラメータに対応するロジスティック回帰モデルをそれぞれ処理
+for c in np.arange(-5, 5, 1.0):
+    lr = LogisticRegression(C=10**c, random_state=0)
+    lr.fit(X_train_std, y_train)
+    # 重み係数を格納
+    weights.append(lr.coef_[1])
+    # 逆正則化パラメータを格納
+    params.append(10**c)
+
+# 重み係数をNumPy配列に変換
+weights = np.array(weights)
+# 横軸に逆正則化パラメータ、縦軸に重み係数をプロット
+plt.plot(params, weights[:, 0], label='petal length')
+plt.plot(params, weights[:, 1], linestyle='--', label='petal width')
+plt.ylabel('weight coefficient')
+plt.xlabel('C')
+plt.legend(loc='upper left')
+# 横軸を対数スケールに設定
+plt.xscale('log')
+plt.show()
 
