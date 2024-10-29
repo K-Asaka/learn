@@ -121,3 +121,23 @@ ax = plt.gca()
 ax.yaxis.grid(True)
 # グラフを表示
 plt.show()
+
+
+from sklearn.linear_model import LogisticRegression
+# ロジスティック回帰のインスタンスを生成
+lr = LogisticRegression(C=1000.0, random_state=0)
+# トレーニングデータをモデルに適合させる
+lr.fit(X_train_std, y_train)
+# 決定境界をプロット
+plot_decision_regions(X_combined_std, y_combined, classifier=lr,
+                        test_idx=range(105, 150))
+# 軸のラベルを設定
+plt.xlabel('petal length [standardized]')
+plt.ylabel('petal width [standardized]')
+# 凡例を設定(左上に配置)
+plt.legend(loc='upper left')
+# グラフを表示
+plt.show()
+
+print(lr.predict_proba(X_test_std[0, :].reshape(1, -1)))
+
