@@ -34,6 +34,7 @@ y_pred = ppn.predict(X_test_std)
 # 誤分類のサンプルの個数を表示
 print('Misclassified samples: %d' % (y_test != y_pred).sum())
 
+
 from sklearn.metrics import accuracy_score
 # 分類の正解率を表示
 print('Accuracy: %.2f' % accuracy_score(y_test, y_pred))
@@ -43,7 +44,6 @@ from matplotlib.colors import ListedColormap
 import matplotlib.pyplot as plt
 
 def plot_decision_regions(X, y, classifier, test_idx=None, resolution=0.02):
-
     # マーカーとカラーマップの準備
     markers = ('s', 'x', 'o', '^', 'v')
     colors = ('red', 'blue', 'lightgreen', 'gray', 'cyan')
@@ -71,7 +71,7 @@ def plot_decision_regions(X, y, classifier, test_idx=None, resolution=0.02):
                     marker=markers[idx], label=cl)
     
     # テストサンプルを目立たせる(点を○で表示)
-    if test_idx is not None:
+    if test_idx:
         X_test, y_test = X[test_idx, :], y[test_idx]
         plt.scatter(X_test[:, 0], X_test[:, 1], c=colors[idx],
                     alpha=1.0, linewidths=1, marker='o',
@@ -90,5 +90,34 @@ plt.xlabel('petal length [standardized]')
 plt.ylabel('petal width [standardized]')
 # 凡例の設定(左上に配置)
 plt.legend(loc='upper left')
+# グラフを表示
+plt.show()
+
+
+import matplotlib.pyplot as plt
+import numpy as np
+# シグモイド関数を定義
+def sigmoid(z):
+    return 1.0 / (1.0 + np.exp(-z))
+
+# 0.1間隔で-7以上7未満のデータを生成
+z = np.arange(-7, 7, 0.1)
+# 生成したデータでシグモイド関数を実行
+phi_z = sigmoid(z)
+# 元のデータとシグモイド関数の出力をプロット
+plt.plot(z, phi_z)
+# 垂直線を追加(z=0)
+plt.axvline(0.0, color='k')
+# y軸の上限/下限を設定
+plt.ylim(-0.1, 1.1)
+# 軸のラベルを設定
+plt.xlabel('z')
+plt.ylabel('$\phi (z)$')
+# y軸の目盛を追加
+plt.yticks([0.0, 0.5, 1.0])
+# Axesクラスのオブジェクトの取得
+ax = plt.gca()
+# y軸の目盛に合わせて水平グリッド線を追加
+ax.yaxis.grid(True)
 # グラフを表示
 plt.show()
