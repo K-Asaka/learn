@@ -267,3 +267,16 @@ plt.xlabel('petal length [cm]')
 plt.ylabel('petal width [cm]')
 plt.legend(loc='upper left')
 plt.show()
+
+
+from sklearn.neighbors import KNeighborsClassifier
+# k近傍法のインスタンスを生成
+knn = KNeighborsClassifier(n_neighbors=5, p=2, metric='minkowski')
+knn.fit(X_train_std, y_train)   # k近傍法のモデルにトレーニングデータを適合させる
+plot_decision_regions(X_combined_std, y_combined, classifier=knn,
+                      test_idx=range(105, 150))
+plt.xlabel('petal length [standardized]')
+plt.ylabel('petal width [standardized]')
+plt.legend(loc='upper left')
+plt.show()
+
