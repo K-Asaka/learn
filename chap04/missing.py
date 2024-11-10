@@ -29,3 +29,15 @@ print(df.dropna(thresh=4))
 
 # 特定の列(この場合は'C')にNaNが含まれている行だけを削除
 print(df.dropna(subset=['C']))
+
+
+#from sklearn.preprocessing import Imputer
+from sklearn.impute import SimpleImputer
+# 欠測値補完のインスタンスを生成(平均値補完)
+#imr = Imputer(missing_values='NaN', strategy='mean', axis=0)
+imr = SimpleImputer()
+# データを適合
+imr = imr.fit(df)
+# 補完を実行
+imputed_data = imr.transform(df.values)
+print(imputed_data)
