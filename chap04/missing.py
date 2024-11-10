@@ -13,3 +13,19 @@ print(df)
 
 # 各特徴量の欠測値をカウント
 print(df.isnull().sum())
+
+
+# 欠測値を含む行を削除
+print(df.dropna())
+
+# 欠測値を含む列を削除
+print(df.dropna(axis=1))
+
+# すべての列がNaNである行だけを削除
+print(df.dropna(how='all'))
+
+# 非NaN値が4つ未満の行を削除
+print(df.dropna(thresh=4))
+
+# 特定の列(この場合は'C')にNaNが含まれている行だけを削除
+print(df.dropna(subset=['C']))
