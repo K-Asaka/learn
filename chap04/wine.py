@@ -96,3 +96,41 @@ plt.xscale('log')
 plt.legend(loc='upper left')
 ax.legend(loc='upper center', bbox_to_anchor=(1.38, 1.03), ncol=1, fancybox=True)
 plt.show()
+
+
+from sklearn.neighbors import KNeighborsClassifier
+from sbs import SBS
+# k近傍分類器のインスタンスを生成(近傍点数=2)
+knn = KNeighborsClassifier(n_neighbors=2)
+# 逐次後退選択のインスタンスを生成(特徴量の個数が1になるまで特徴量を選択)
+sbs = SBS(knn, k_features=1)
+# 逐次後退選択を実行
+sbs.fit(X_train_std, y_train)
+
+# 近傍点の個数のリスト(13, 12, ..., 1)
+k_feat = [len(k) for k in sbs.subsets_]
+# 横軸を金傍点の個数、縦軸をスコアとした折れ線グラフのプロット
+plt.plot(k_feat, sbs.scores_, marker='o')
+plt.ylim([0.7, 1.1])
+plt.ylabel('Accuracy')
+plt.xlabel('Number of features')
+plt.grid()
+plt.show()
+
+k5 = list(sbs.subsets_[8])
+print(df_wine.columns[1:][k5])
+
+# 13個すべての特徴量を用いてモデルに適合
+knn.fit(X_train_std, y_train)
+# トレーニングの正解率を出力
+print('Training accuracy:', knn.score(X_train_std, y_train))
+# テストの正解率を出力
+print('Test accuracy:', knn.score(X_test_std, y_test))
+
+# 5個の特徴量を用いてモデルに適合
+knn.fit(X_train_std[:, k5], y_train)
+# トレーニングの正解率を出力
+print('Training accuracy:', knn.score(X_train_std[:, k5], y_train))
+# テストの正解率を出力
+print('Test accuracy:', knn.score(X_test_std[:, k5], y_test))
+
