@@ -8,3 +8,9 @@ df = pd.DataFrame([
 df.columns = ['color', 'size', 'price', 'classlabel']
 print(df)
 
+# Tシャツのサイズと整数を対応させるディクショナリを生成
+size_mapping = {'XL': 3, 'L': 2, 'M': 1}
+# Tシャツのサイズを整数に変換
+df['size'] = df['size'].map(size_mapping)
+print(df)
+
