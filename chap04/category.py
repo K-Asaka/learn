@@ -40,3 +40,21 @@ print(y)
 # クラスラベルを文字列に戻す
 print(class_le.inverse_transform(y))
 
+
+# Tシャツの色、サイズ、価格を抽出
+X = df[['color', 'size', 'price']].values
+color_le = LabelEncoder()
+X[:, 0] = color_le.fit_transform(X[:, 0])
+print(X)
+
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.compose import ColumnTransformer
+# one-hotエンコーダの生成
+#ohe = OneHotEncoder(categorical_features=[0])
+ct = ColumnTransformer([("test", OneHotEncoder(), [0])], remainder='passthrough')
+# one-hotエンコーディングを実行
+#print(ohe.fit_transform(X).toarray())
+print(ct.fit_transform(X))
+
+# one-hotエンコーディングを実行
+print(pd.get_dummies(df[['price', 'color', 'size']]))
