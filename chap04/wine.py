@@ -134,3 +134,36 @@ print('Training accuracy:', knn.score(X_train_std[:, k5], y_train))
 # テストの正解率を出力
 print('Test accuracy:', knn.score(X_test_std[:, k5], y_test))
 
+from sklearn.ensemble import RandomForestClassifier
+# Wineデータセットの特徴量の名称
+feat_labels = df_wine.columns[1:]
+# ランダムフォレストオブジェクトの生成
+# (木の個数=10000、すべてのコアを用いて並列計算を実行)
+forest = RandomForestClassifier(n_estimators=10000, random_state=0, n_jobs=-1)
+# モデルに適合
+forest.fit(X_train, y_train)
+# 特徴量の重要度を抽出
+importances = forest.feature_importances_
+# 重要度の降順で特徴量のインデックスを抽出
+indices = np.argsort(importances)[::-1]
+# 重要度の降順で特徴量の名称、重要度を表示
+for f in range(X_train.shape[1]):
+    print("%2d) %-*s %f" %
+           (f + 1, 30, feat_labels[indices[f]], importances[indices[f]]))
+
+plt.title('Feature Importances')
+plt.bar(range(X_train.shape[1]), importances[indices], color='lightblue',
+        align='center')
+plt.xticks(range(X_train.shape[1]), feat_labels[indices], rotation=90)
+plt.xlim([-1, X_train.shape[1]])
+plt.tight_layout()
+plt.show()
+
+# 重要度が0.15以上の特徴量を抽出
+from sklearn.feature_selection import SelectFromModel
+# 特徴選択オブジェクトの生成(重要度のしきい値を0.15に設定)
+sfm = SelectFromModel(forest, prefit=True, threshold=0.15)
+# 特徴量を抽出
+#X_selected = forest.transform(X_train, threshold=0.15)
+X_selected = sfm.transform(X_train)
+print(X_selected.shape)
