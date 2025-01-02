@@ -1,0 +1,14 @@
+.horizontal {
+    height: 100vh;
+    background: linear-gradient(90deg, #4db1ec, #a2e29b);
+}
+
+.angled {
+    height: 100vh;
+    background: linear-gradient(125deg, #ffd673, #ffb2c1);
+}
+
+.circle {
+    height: 100vh;
+    background: radial-gradient(#a2e29b, #00a2af);
+}

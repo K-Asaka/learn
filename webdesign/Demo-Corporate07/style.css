@@ -1,0 +1,30 @@
+table {
+    margin: 3.5rem 0;
+    width: 100%;
+}
+th {
+    font-weight: normal;
+    background: #f8f6f2;
+    vertical-align: middle;
+    padding: 1rem;
+}
+td {
+    padding: .75rem 1rem 1.75rem;
+}
+
+th, td {
+    display: block;
+}
+
+@media (min-width: 600px) {
+    th, td {
+        padding: 1.25rem;
+        display: table-cell;
+    }
+    tr:nth-child(odd) {
+        background: #f8f6f2;
+    }
+    tr:nth-child(even) th {
+        background: #fff;
+    }
+}

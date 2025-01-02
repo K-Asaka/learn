@@ -1,0 +1,13 @@
+.container {
+    overflow: auto;
+    /* scroll-snap-type: y; */
+    /* height: 100vh; */
+    scroll-snap-type: x;
+    display: flex;
+}
+.area {
+    scroll-snap-align: start;
+    height: 96vh;
+    width: 50vw;
+    flex: none;
+}

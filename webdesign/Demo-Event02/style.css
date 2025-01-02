@@ -1,0 +1,11 @@
+#hero {
+    background-color: #4db1ec;
+    background-image: url('../img/winxp.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-blend-mode: screen;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}

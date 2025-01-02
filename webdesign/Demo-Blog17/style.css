@@ -1,0 +1,7 @@
+@media (min-widhth: 600px) {
+    /* 人気記事 */
+    .popular-posts {
+        position: sticky;
+        top: 1rem;
+    }
+}

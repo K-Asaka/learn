@@ -1,0 +1,19 @@
+:root {
+    --grey: #333;
+    --bg: pink;
+    --BG: orange;
+}
+
+body {
+    --BG: skyblue;
+    /* background-color: var(--bg); */
+    background-color: var(--BG);
+    color: var(--grey);
+    font-family: sans-serif;
+}
+h1 {
+    --w: 33;
+    width: calc(var(--w) * 1rem);
+    margin: 0 auto;
+    border: 1px solid black;
+}

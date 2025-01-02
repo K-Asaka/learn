@@ -1,0 +1,9 @@
+h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+    background: #0bd;
+    color: #fff;
+    padding: .5rem 1rem;
+    position: sticky;
+    top: 0;
+}

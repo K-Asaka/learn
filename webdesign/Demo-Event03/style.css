@@ -1,0 +1,9 @@
+body {
+    background-color: #4db1ec;
+    background-image: url('../img/winxp.jpg'), url('../img/win2000.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-blend-mode: hard-light;
+    height: 100vh;
+}

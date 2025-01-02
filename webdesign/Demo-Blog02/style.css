@@ -1,0 +1,50 @@
+.post-title {
+    padding-bottom: 10px;
+    background-image: linear-gradient(45deg, #fff 30%, #ccc 30%, #ccc 50%, #fff 50%, #fff 80%, #ccc 80%, #ccc 100%);
+    background-size: 6px 6px;
+    margin-bottom: 1.5rem;
+}
+.post-title h2 {
+    background: #fff;
+    padding: 0 .5rem .875rem;
+    font-size: 1.5rem;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-weight: 500;
+    line-height: 1.5;
+}
+.post-title a {
+    color: #949087;
+    text-decoration: none;
+}
+
+h1 {
+    font-size: 2rem;
+    font-family: sans-serif;
+    font-weight: bold;
+    display: inline-block;
+    background-image: linear-gradient(transparent 50%, #ff6 50%);
+    padding-bottom: .25rem;
+}
+
+.post-img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;border-radius: 40% 70% 50% 30%/50%;
+}
+
+.post-thumb {
+    margin: 0 0 1rem 0;
+    position: relative;
+}
+
+@media (min-width: 600px) {
+    .post-img {
+        width: 220px;
+        height: 180px;
+    }
+    .post-thumb {
+        margin: 0 3rem 1rem 0;
+        shape-outside: circle();
+        float: left;
+    }
+}

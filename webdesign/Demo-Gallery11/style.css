@@ -1,0 +1,51 @@
+:root {
+    --text: #333;
+    --bg: #fff;
+    --video-opacity: .5;
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text: #ddd;
+        --bg: #000;
+        --video-opacity: .7;
+    }
+}
+
+body {
+    color: var(--text);
+    background: var(--bg);
+    font-family: 'Bree Serif', sans-serif;
+    transition: .5s;
+}
+
+header {
+    position: relative;
+    margin-bottom: .5rem;
+}
+.header-text {
+    position: absolute;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;     /* ← 追加 */
+    text-align: center;
+}
+.header-pattern {
+    position: absolute;
+    z-index: 1;
+    background-size: auto auto;
+    background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, var(--bg) 2px, var(--bg) 4px);
+}
+header video {
+    object-fit: cover;
+    object-position: center top;
+    opacity: var(--video-opacity);
+}
+.header-text,
+.header-pattern,
+header video {
+    width: 100vw;
+    height: 90vh;
+}

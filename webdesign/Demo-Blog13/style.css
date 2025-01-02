@@ -1,0 +1,43 @@
+body {
+    padding: 1rem;
+}
+div.side-box {
+    width: 220px;
+}
+
+.side-box {
+    margin-bottom: 4rem;
+    border: 1px solid #ccc;
+    outline: 2px solid #ccc;
+    outline-offset: 4px;
+    border-radius: 6px;
+    padding: .875rem;
+    position: relative;
+}
+.side-box::before {
+    display: block;
+    width: 2rem;
+    height: 2rem;
+    text-align: center;
+    background: #fff;
+    position: absolute;
+    top: -1rem;
+    left: 0;
+    right: 0;
+    margin: auto;
+/* Font Awesome */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    color: #949087;
+    font-size: 1.5rem;
+    content: '\f1b0';
+}
+
+p {
+    background: #efefef;
+    padding: 1.5rem;
+    max-width: 400px;
+    margin: 2rem auto;
+    border-radius: 15rem 1rem 8rem 1rem / 1rem 12rem 1rem 12rem;
+    border: 2px dashed #999;
+}

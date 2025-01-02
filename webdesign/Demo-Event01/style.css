@@ -1,0 +1,43 @@
+html {
+    scroll-behavior: smooth;
+}
+
+header {
+    background: #333;
+    padding: 1rem 0;
+    /* ↓固定表示のための記述↓ */
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+}
+
+section {
+    height: 100vh;
+    scroll-snap-align: start;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+header .wrapper {
+    display: flex;
+}
+header .logo {
+    color: #fff;
+}
+nav, .main-nav {
+    display: flex;
+}
+.main-nav {
+    list-style: none;
+}
+.main-nav a {
+    margin-right: .625rem;
+    color: #fff;
+    text-decoration: none;
+}
+
+h2 {
+    padding-top: 3rem;
+    font-size: 3rem;
+}

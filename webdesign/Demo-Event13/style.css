@@ -1,0 +1,25 @@
+.content {
+    width: 100px;
+    height: 100px;
+    margin: 1rem auto;
+    padding: auto;
+}
+
+.recommend {
+    color: tomato;
+    display: inline-block;
+    position: relative;
+    animation: recommend-animation 2s 3;
+}
+
+@keyframes recommend-animation {
+    0%, 50%, 100% {
+        top: 0;
+    }
+    25% {
+        top: -.8rem;
+    }
+    75% {
+        top: -.5rem;
+    }
+}

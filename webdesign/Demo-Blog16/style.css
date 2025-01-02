@@ -1,0 +1,15 @@
+html, body {
+    height: 100%;
+}
+body {
+    display: flex;
+    flex-direction: column;
+}
+article {
+    flex: 1;
+}
+footer {
+    background: skyblue;
+    text-align: center;
+    padding: 1rem;
+}

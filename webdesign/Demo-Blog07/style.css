@@ -1,0 +1,12 @@
+article ol {
+    list-style: none;
+}
+article ol li {
+    counter-increment: list;
+}
+article ol li::before {
+    content: counter(list);
+    color: #93dfb8;
+    display: inline-block;
+    margin-right: 8px;
+}

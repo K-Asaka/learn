@@ -1,0 +1,19 @@
+@media (min-width: 600px) {
+    .container {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 4rem;
+        padding: 1rem 2.5rem 2.5rem;
+    }
+
+    main {
+        width: 68%;
+        margin-bottom: 0;
+        border: 1px solid blue;
+    }
+
+    aside {
+        width: 26%;
+        border: 1px solid red;
+    }
+}

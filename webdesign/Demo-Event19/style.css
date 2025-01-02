@@ -1,0 +1,44 @@
+:root {
+    --light-blue: #4db1ec;
+    --blue: #1665cc;
+    --purple: #b473bf;
+    --pink: #ffb2c1;
+    --orange: #ff9f67;
+    --yellow: #ffd673;
+    --light-green: #a2e29b;
+    --green: #00a2af;
+    --grey: #777;
+    --white: #fff;
+}
+
+button {
+    background: var(--grey);
+}
+.btn-menu {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    border: 1px solid rgba(255, 255, 255, .5);
+    color: var(--white);
+    padding: .5rem 1rem;
+}
+.main-nav {
+    background: var(--grey);
+    width: 0;
+    position: absolute;
+    z-index: 2;
+    top: 50px;
+    right: 0;
+    overflow: hidden;
+    transition: .5s;    /* ← 追加 */
+}
+.main-nav li {
+    text-align: center;
+    margin: 2rem 0;
+}
+.main-nav a {
+    display: block;
+}
+.main-nav.open-menu {
+    width: 100%;
+}

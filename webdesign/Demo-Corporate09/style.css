@@ -1,0 +1,91 @@
+input[type='text']::placeholder,
+input[type='email']::placeholder,
+input[type='url']::placeholder,
+textarea::placeholder {
+    color: #bbb;
+}
+
+/* デフォルトのチェックボックスを非表示 */
+input[type='checkbox'] {
+    opacity: 0;
+    -webkit-appearance: none;
+    appearance: none;
+    position: absolute;
+}
+/* チェックボックス用の四角形を作る */
+input[type='checkbox'] + span::before {
+    display: inline-block;
+    content: '';
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 1px solid #bbb;
+    background: #fff;
+    margin: -.125rem .5rem 0 0;
+    vertical-align: middle;
+/* Font Awesome */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    padding: 0 2px;
+    line-height: 1.5;
+}
+/* チェックが入るとチェックアイコンを表示 */
+input[type='checkbox']:checked + span::before {
+    content: '\f00c';
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 100%;
+}
+.select-box {
+    position: relative;
+}
+.select-box::after {
+    display: inline-block;
+    position: absolute;
+    /* top: .625rem; */
+    right: 1rem;
+/* Font Awesome */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    content: '\f078';
+    color: #bbb;
+}
+
+input[required] {
+    background: pink;
+}
+
+input[type="email"] {
+    background: pink;
+}
+
+li[class~="pink"] {
+    background: pink;
+}
+
+li[class|="list"] {
+    background: pink;
+}
+
+.http-bg a[href^="http"] {
+    background: pink;
+}
+
+.pdf-bg a[href$="pdf"] {
+    background: pink;
+}
+
+.twitter-bg a[href*="twitter"] {
+    background: pink;
+}
+
+.li-bg li:nth-child(3) {
+    background: #c1eff7;
+}
+
+.li-bg2 li:nth-child(3n + 1) {
+    background: #c1eff7;
+}

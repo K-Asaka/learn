@@ -1,0 +1,28 @@
+:root {
+    --light-blue: #4db1ec;
+    --blue: #1665cc;
+    --purple: #b473bf;
+    --pink: #ffb2c1;
+    --orange: #ff9f67;
+    --yellow: #ffd673;
+    --light-green: #a2e29b;
+    --green: #00a2af;
+}
+
+#ticket {
+    background-image: linear-gradient(var(--pink), var(--purple));
+    padding: 6rem 1rem 2rem;
+    -webkit-clip-path: polygon(0 0, 100% 10%, 100% 100%, 0 100%);
+    clip-path: polygon(0 0, 100% 10%, 100% 100%, 0 100%);
+}
+
+#about h2 {
+    padding: 1rem 3rem;
+    font-size: 10rem;
+    font-weight: bold;
+    background: linear-gradient(var(--yellow), var(--orange));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
+}

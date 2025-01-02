@@ -1,0 +1,37 @@
+:root {
+    --light-blue: #4db1ec;
+    --blue: #1665cc;
+    --purple: #b473bf;
+    --pink: #ffb2c1;
+    --orange: #ff9f67;
+    --yellow: #ffd673;
+    --light-green: #a2e29b;
+    --green: #00a2af;
+}
+
+#hero {
+    background-color: var(--light-blue);
+    background-image: url('../img/winxp.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-blend-mode: screen;
+    animation: bg-color 24s infinite;   /* キーフレーム名 bg-color を指定 */
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+}
+
+@keyframes bg-color {
+    0% { background-color: var(--light-blue); }
+    12.5% { background-color: var(--blue); }
+    25% { background-color: var(--purple); }
+    37.5% { background-color: var(--pink); }
+    50% { background-color: var(--orange); }
+    62.5% { background-color: var(--yellow); }
+    75% { background-color: var(--light-green); }
+    87.5% { background-color: var(--green); }
+    100% { background-color: var(--light-blue); }
+}

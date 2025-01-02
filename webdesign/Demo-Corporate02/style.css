@@ -1,0 +1,27 @@
+/* グラフの文字 */
+.ct-label {
+    font-size: 1rem;
+    fill: #fff;
+}
+
+/* 円グラフ */
+.ct-series-a .ct-slice-pie {
+    fill: #2d3374;
+}
+.ct-series-b .ct-slice-pie {
+    fill: #3a7edf;
+}
+.ct-series-c .ct-slice-pie {
+    fill: #9bcbf8;
+}
+.ct-series-d .ct-slice-pie {
+    fill: #bbb;
+}
+
+/* 棒グラフ */
+.ct-series-a .ct-bar {
+    stroke: #3a7edf;
+}
+.ct-bar {
+    stroke-width: 16%;
+}

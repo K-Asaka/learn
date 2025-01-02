@@ -1,0 +1,16 @@
+.btn a {
+    color: #fff;
+    padding: 10px 20px;
+    background: #eda1a1;
+    box-shadow: 0 0 0 5px #eda1a1;
+    border: 2px dashed #e38787;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+}
+.btn a:hover {
+    color: #fff;
+    background: #e38787;
+    box-shadow: 0 0 0 5px #e38787;
+    border: 2px dashed #eda1a1;
+}

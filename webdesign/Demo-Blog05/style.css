@@ -1,0 +1,12 @@
+article ul {
+    list-style: none;
+}
+article ul li::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #93d8d0;
+    display: inline-block;
+    margin: 0 8px 2px 0;
+}
