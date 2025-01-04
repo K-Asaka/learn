@@ -50,5 +50,5 @@ def rbf_kernel_pca(X, gamma, n_components):
 
     # 対応する固有値を収集
     lambdas = [eigvals[-i] for i in range(1, n_components + 1)]
-        
+
     return alphas, lambdas
