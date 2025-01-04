@@ -156,3 +156,34 @@ for i, mean_vec in enumerate(mean_vecs):
         mean_overall = mean_overall.reshape(d, 1)
         S_B += n * (mean_vec - mean_overall).dot((mean_vec - mean_overall).T)
 print('Between-class scatter matrix: %sx%s' % (S_B.shape[0], S_B.shape[1]))
+
+# inv関数で逆行列、dot関数で行列積、eig関数で固有値を計算
+eigen_vals, eigen_vecs = np.linalg.eig(np.linalg.inv(S_W).dot(S_B))
+
+eigen_pairs = [(np.abs(eigen_vals[i]), eigen_vecs[:, i])
+        for i in range(len(eigen_vals))]
+eigen_pairs = sorted(eigen_pairs, key=lambda k: k[0], reverse=True)
+print('Eigenvalues in decreasing order:\n')
+for eigen_val in eigen_pairs:
+        print(eigen_val[0])
+
+# 固有値の実数部の総和を求める
+tot = sum(eigen_vals.real)
+# 分散説明率とその累積和を計算
+discr = [(i / tot) for i in sorted(eigen_vals.real, reverse=True)]
+cum_discr = np.cumsum(discr)
+plt.bar(range(1, 14), discr, alpha=0.5, align='center',
+        label='individual "discriminability"')
+plt.step(range(1, 14), cum_discr, where='mid',
+        label='cumulative "discriminability"')
+plt.ylabel('"discriminability" ratio')
+plt.xlabel('Linear Discriminants')
+plt.ylim([-0.1, 1.1])
+plt.legend(loc='best')
+plt.show()
+
+# 2つの固有ベクトルから変換行列を作成
+w = np.hstack((eigen_pairs[0][1][:, np.newaxis].real,
+        eigen_pairs[1][1][:, np.newaxis].real))
+print('Matrix W:\n', w)
+
