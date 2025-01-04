@@ -1,5 +1,6 @@
 from scipy.spatial.distance import pdist, squareform
-from scipy import stats
+# from scipy import exp
+from numpy import exp
 from scipy.linalg import eigh
 import numpy as np
 
@@ -30,7 +31,7 @@ def rbf_kernel_pca(X, gamma, n_components):
     mat_sq_dists = squareform(sq_dists)
     
     # 対称カーネル行列を計算
-    K = stats.exp(-gamma * mat_sq_dists)
+    K = exp(-gamma * mat_sq_dists)
     
     # カーネル行列を中心化
     N = K.shape[0]
@@ -42,8 +43,7 @@ def rbf_kernel_pca(X, gamma, n_components):
     eigvals, eigvecs = eigh(K)
     
     # 上位k個の固有ベクトル（射影されたサンプル）を収集
-    X_pc = np.column_stack((eigvecs[:, i] 
-                            for i in range(1, n_components + 1)))
-    
+    X_pc = np.column_stack([eigvecs[:, -i]
+                            for i in range(1, n_components + 1)])
+        
     return X_pc
-
