@@ -110,3 +110,10 @@ plt.xlabel('PC1')
 plt.ylabel('PC2')
 plt.legend(loc='lower left')
 plt.show()
+
+# 決定境界をプロット
+plot_decision_regions(X_test_pca, y_test, classifier=lr)
+plt.xlabel('PC1')
+plt.ylabel('PC2')
+plt.legend(loc='lower left')
+plt.show()
