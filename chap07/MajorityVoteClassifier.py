@@ -30,7 +30,7 @@ class MajorityVoteClassifier(BaseEstimator, ClassifierMixin):
     def __init__(self, classifiers, vote='classlabel', weights=None):
 
         self.classifiers = classifiers
-        self.named_classsifiers = {key: value for key,
+        self.named_classifiers = {key: value for key,
                                    value in _name_estimators(classifiers)}
         self.vote = vote
         self.weights = weights
@@ -118,7 +118,7 @@ class MajorityVoteClassifier(BaseEstimator, ClassifierMixin):
         return avg_proba
     
     def get_params(self, deep=True):
-        """ GridSearchの実行時に分類器のパラメータ名を取得"""
+        """ GridSearchの実行時に分類器のパラメータ名を取得 """
         if not deep:
             return super(MajorityVoteClassifier, self).get_params(deep=False)
         else:
