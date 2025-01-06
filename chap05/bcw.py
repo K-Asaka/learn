@@ -206,3 +206,19 @@ for i in range(confmat.shape[0]):   # クラス0の繰り返し処理
 plt.xlabel('predicted label')
 plt.ylabel('true label')
 plt.show()
+
+# 適合率、再現率、F1スコアを出力
+from sklearn.metrics import precision_score
+from sklearn.metrics import recall_score, f1_score
+print('Precision: %.3f' % precision_score(y_true=y_test, y_pred=y_pred))
+print('Recall: %.3f' % recall_score(y_true=y_test, y_pred=y_pred))
+print('F1: %.3f' % f1_score(y_true=y_test, y_pred=y_pred))
+
+# カスタムの性能指標を出力
+from sklearn.metrics import make_scorer, f1_score
+scorer = make_scorer(f1_score, pos_label=0)
+gs = GridSearchCV(estimator=pipe_svc,
+                  param_grid=param_grid,
+                  scoring=scorer,
+                  cv=10)
+
