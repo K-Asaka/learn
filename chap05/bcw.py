@@ -164,3 +164,25 @@ print(gs.best_params_)
 clf = gs.best_estimator_
 clf.fit(X_train, y_train)
 print('Test accuracy: %.3f' % clf.score(X_test, y_test))
+
+gs = GridSearchCV(estimator=pipe_svc,
+                  param_grid=param_grid,
+                  scoring='accuracy',
+                  cv=2,
+                  n_jobs=-1)
+scores = cross_val_score(gs, X_train, y_train, scoring='accuracy', cv=5)
+print('CV accuracy: %.3f +/- %.3f' % (np.mean(scores), np.std(scores)))
+
+from sklearn.tree import DecisionTreeClassifier
+# ハイパーパラメータ値として決定木の深さパラメータを指定し、
+# グリッドサーチを行うGridSearchCVクラスをインスタンス化
+gs = GridSearchCV(estimator=DecisionTreeClassifier(random_state=0),
+                  param_grid=[{'max_depth': [1, 2, 3, 4, 5, 6, 7, None]}],
+                  scoring='accuracy',
+                  cv=2)
+scores = cross_val_score(gs,
+                         X_train,
+                         y_train,
+                         scoring='accuracy',
+                         cv=5)
+print('CV accuracy: %.3f +/- %.3f' % (np.mean(scores), np.std(scores)))
