@@ -288,3 +288,9 @@ y_pred2 = pipe_lr.predict(X_test[:, [4, 14]])
 from sklearn.metrics import roc_auc_score, accuracy_score
 print('ROC AUC: %.3f' % roc_auc_score(y_true=y_test, y_score=y_pred2))
 print('Accuracy: %.3f' % accuracy_score(y_true=y_test, y_pred=y_pred2))
+
+pre_scorer = make_scorer(score_func=precision_score,
+                         pos_label=1,
+                         greater_is_better=True,
+                         average='micro')
+print(pre_scorer)
