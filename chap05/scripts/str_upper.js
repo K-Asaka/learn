@@ -7,3 +7,6 @@ console.log(str2.toLowerCase());
 
 console.log(str1.toLocaleLowerCase('en-US'));
 console.log(str1.toLocaleLowerCase(['tr', 'tr-TR']));
+
+let msg = 'hELLo';
+console.log(msg.substring(0, 1).toUpperCase() + msg.substring(1).toLowerCase());
