@@ -1,4 +1,4 @@
-let str = 'にわいはにわにわとりがいる';
+let str = 'にわにはにわにわとりがいる';
 
 console.log(str.indexOf('にわ'));
 console.log(str.lastIndexOf('にわ'));
