@@ -9,3 +9,7 @@ let books = [
 console.log(books.find(function(value) {
 	return value.title.startsWith('Bootstrap');
 }));
+
+console.log(books.findIndex(function(value) {
+	return value.title.startsWith('Bootstrap');
+}));
