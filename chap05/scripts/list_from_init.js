@@ -6,3 +6,7 @@ let list = Array.from(
 );
 
 console.log(list);
+
+let data = new Array(5);
+data.fill('ー', 0, data.length);
+console.log(data);
