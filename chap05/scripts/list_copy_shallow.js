@@ -17,3 +17,15 @@ console.log(list1);
 console.log(copy1);
 console.log(list2);
 console.log(copy2);
+
+// スプレッド構文
+let copy = [...list1];
+console.log(copy);
+
+// sliceメソッド
+copy = list1.slice();
+console.log(copy);
+
+// concatメソッド
+copy = list1.concat();
+console.log(copy);
