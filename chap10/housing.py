@@ -10,6 +10,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 # グラフのスタイルを指定(whitegridは白背景グリッド、notebookはデフォルトサイズ)
 sns.set(style='whitegrid', context='notebook')
+# seabornライブラリのスタイルを使用したくない場合
+sns.reset_orig()
 cols = ['LSTAT', 'INDUS', 'NOX', 'RM', 'MEDV']
 # 変数のペアの関係をプロット：dfはDataFrameオブジェクト、sizeは1面のインチサイズ
 # sns.pairplot(df[cols], size=2.5)
