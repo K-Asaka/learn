@@ -1,5 +1,5 @@
 function getTriangleArea(base, height) {
-	if (base <= 0 || height <= 0) { return 0; }
+	if (base <= 0 || height <= 0) { return; }
 	return base * height / 2;
 }
 
