@@ -1,8 +1,8 @@
 let value = [1, 2, 4, 8, 16];
 
 function updateArray(value) {
-	// 末尾の要素を削除
-	value.pop();
+	// 配列そのものを置き換え
+	value = [10, 20, 30];
 	return value;
 }
 
