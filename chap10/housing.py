@@ -103,3 +103,31 @@ print("Price in $1000's: %.3f" % price_original[0, 0])
 
 print('Slope: %.3f' % lr.w_[1])
 print('Intercept: %.3f' % lr.w_[0])
+
+
+from sklearn.linear_model import LinearRegression
+slr = LinearRegression()
+slr.fit(X, y)
+slope = slr.coef_[0].item()
+intercept = slr.intercept_
+# print('Slope: %.3f' % slr.coef_[0])
+print('Slope: %.3f' % slope)
+if np.ndim(intercept) > 0:
+    intercept = intercept.item()
+# print('Intercept: %.3f' % slr.intercept_)
+print('Intercept: %.3f' % intercept)
+
+lin_regplot(X, y, slr)
+plt.xlabel('Average number of rooms [RM]')
+plt.ylabel('Price in $1000\'s [MEDV]')
+plt.show()
+
+
+# "1"で構成された列ベクトルを追加
+Xb = np.hstack((np.ones((X.shape[0], 1)), X))
+y = y.reshape(-1, 1)
+w = np.zeros(X.shape[1])
+z = np.linalg.inv(np.dot(Xb.T, Xb))
+w = np.dot(z, np.dot(Xb.T, y))
+print('Slope: %.3f' % w[1, 0])
+print('Intercept: %.3f' % w[0, 0])
