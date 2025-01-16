@@ -13,3 +13,5 @@ arrayWalk(
 		console.log(`${key}：${value}`);
 	}
 );
+
+arrayWalk(list, (value, key) => console.log(`${key}：${value}`));
