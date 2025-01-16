@@ -12,4 +12,4 @@ arrayWalk(
 	function (value, key) {
 		console.log(`${key}：${value}`);
 	}
-	);
+);
