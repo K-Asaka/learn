@@ -18,5 +18,7 @@ console.log(obj);
 console.log(Object.getPrototypeOf(obj));
 
 for (let prop in obj) {
+	// 独自プロパティでなければスキップ
+	if (!Object.hasOwn(prop, obj)) { continue; }
 	console.log(`${prop}: ${obj[prop]}`);
 }
