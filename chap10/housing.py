@@ -194,3 +194,13 @@ print('MSE train: %.3f, test: %.3f' % (mean_squared_error(y_train, y_train_pred)
 from sklearn.metrics import r2_score
 print('R^2 train: %.3f, test: %.3f' % (r2_score(y_train, y_train_pred),
                                        r2_score(y_test, y_test_pred)))
+
+
+from sklearn.linear_model import Ridge
+ridge = Ridge(alpha=1.0)    # L2ペナルティ項の影響度合いを表す値
+
+from sklearn.linear_model import Lasso
+lasso = Lasso(alpha=1.0)
+
+from sklearn.linear_model import ElasticNet
+elasticnet = ElasticNet(alpha=1.0, l1_ratio=0.5)
