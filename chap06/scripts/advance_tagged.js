@@ -21,3 +21,9 @@ function e(templates, ...values) {
 // テンプレート文字列をエスケープ処理
 let name = '<"Mario" & \'Luigi\'>';
 console.log(e`こんにちは、${name}さん！`);
+
+// 標準のタグ関数
+console.log(`C:\\data\\jsbook\\chap06`);
+console.log(String.raw`C:\data\jsbook\chap06`);
+let file = 'index.html';
+console.log(String.raw`${file}はC:\data\jsbook\chap06配下`);
