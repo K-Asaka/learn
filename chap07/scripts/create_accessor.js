@@ -35,7 +35,7 @@ let member = Object.create(Object.prototype, {
 	gender: {
 		// genderゲッター
 		get() {
-			// 無視低の場合の既定値
+			// 無指定の場合の既定値
 			if (!this._gender) { return 'unknown'; }
 			return this._gender;
 		},
