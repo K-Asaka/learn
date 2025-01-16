@@ -1,4 +1,4 @@
-function getTriangleArea(base=10, height=5) {
+function getTriangleArea(base=10, height=base) {
 	return base * height / 2;
 }
 
