@@ -131,3 +131,36 @@ z = np.linalg.inv(np.dot(Xb.T, Xb))
 w = np.dot(z, np.dot(Xb.T, y))
 print('Slope: %.3f' % w[1, 0])
 print('Intercept: %.3f' % w[0, 0])
+
+
+from sklearn.linear_model import RANSACRegressor
+# ロバスト回帰モデルのクラスをインスタンス化
+ransac = RANSACRegressor(LinearRegression(),
+                         max_trials=100,
+                         min_samples=50,
+                        #  residual_metric=lambda x: np.sum(np.abs(x), axis=1),
+                         residual_threshold=5.0,
+                         random_state=0)
+ransac.fit(X, y)
+inlier_mask = ransac.inlier_mask_               # 正常値を表す真偽値を取得
+outlier_mask = np.logical_not(inlier_mask)      # 外れ値を表す真偽値を取得
+line_X = np.arange(3, 10, 1)                    # 3から9までの整数値を作成
+line_y_ransac = ransac.predict(line_X[:, np.newaxis])   # 予測値を計算
+# 正常値をプロット
+plt.scatter(X[inlier_mask], y[inlier_mask],
+            c='blue', marker='o', label='Inliers')
+# 外れ値をプロット
+plt.scatter(X[outlier_mask], y[outlier_mask],
+            c='lightgreen', marker='s', label='Outliers')
+# 予測値をプロット
+plt.plot(line_X, line_y_ransac, color='red')
+plt.xlabel('Average number of rooms [RM]')
+plt.ylabel('Price in $1000\'s [MEDV]')
+plt.legend(loc='upper left')
+plt.show()
+
+# print('Slope: %.3f' % ransac.estimator_.coef_[0])
+# print('Intercept: %.3f' % ransac.estimator_.intercept_)
+
+print('Slope: %.3f' % ransac.estimator_.coef_[0].item())
+print('Intercept: %.3f' % ransac.estimator_.intercept_.item())
