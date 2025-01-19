@@ -214,3 +214,12 @@ fig.colorbar(cax)
 axm.set_xticklabels([''] + list(df_rowcluster.columns))
 axm.set_yticklabels([''] + list(df_rowcluster.index))
 plt.show()
+
+
+from sklearn.cluster import AgglomerativeClustering
+ac = AgglomerativeClustering(n_clusters=2,          # クラスタの個数
+                            #  affinity='euclidean',  # 類似度の指標(ここではユークリッド距離)
+                             metric='euclidean',  # 類似度の指標(ここではユークリッド距離)
+                             linkage='complete')    # 連結方法(ここでは完全連結法)
+labels = ac.fit_predict(X)
+print('Cluster labels: %s' % labels)
