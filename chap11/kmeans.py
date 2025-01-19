@@ -65,3 +65,92 @@ plt.plot(range(1, 11), distortions, marker='o')
 plt.xlabel('Number of clusters')
 plt.ylabel('Distortion')
 plt.show()
+
+
+km = KMeans(n_clusters=3,
+            init='k-means++',
+            n_init=10,
+            max_iter=300,
+            tol=1e-04,
+            random_state=0)
+y_km = km.fit_predict(X)
+
+import numpy as np
+from matplotlib import cm
+from sklearn.metrics import silhouette_samples
+cluster_labels = np.unique(y_km)        # y_kmの要素の中で重複をなくす
+n_clusters = cluster_labels.shape[0]    # 配列の長さを返す
+# シルエット係数を計算
+silhouette_vals = silhouette_samples(X, y_km, metric='euclidean')
+y_ax_lower, y_ax_upper = 0, 0
+yticks = []
+for i, c in enumerate(cluster_labels):
+    c_silhouette_vals = silhouette_vals[y_km == c]
+    c_silhouette_vals.sort()
+    y_ax_upper += len(c_silhouette_vals)
+    color = cm.jet(float(i) / n_clusters)       # 色の値をセット
+    plt.barh(range(y_ax_lower, y_ax_upper),     # 水平の棒グラフを描画(底辺の範囲を指定)
+             c_silhouette_vals,                 # 棒の幅
+             height=1.0,                        # 棒の高さ
+             edgecolor='none',                  # 棒の端の色
+             color=color)                       # 棒の色
+    yticks.append((y_ax_lower + y_ax_upper) / 2)    # クラスタラベルの表示位置を追加
+    y_ax_lower += len(c_silhouette_vals)        # 底辺の値に棒の幅を追加
+
+silhouette_avg = np.mean(silhouette_vals)                   # シルエット係数の平均値
+plt.axvline(silhouette_avg, color="red", linestyle="--")    # 係数の平均値に破線を引く
+plt.yticks(yticks, cluster_labels + 1)                      # クラスタラベルを表示
+plt.ylabel('Cluster')
+plt.xlabel('Silhouette coefficient')
+plt.show()
+
+km = KMeans(n_clusters=2,
+            init='k-means++',
+            n_init=10,
+            max_iter=300,
+            tol=1e-04,
+            random_state=0)
+y_km = km.fit_predict(X)
+plt.scatter(X[y_km==0,0],
+            X[y_km==0,1],
+            s=50, c='lightgreen',
+            marker='s',
+            label='cluster 1')
+plt.scatter(X[y_km==1,0],
+            X[y_km==1,1],
+            s=50, c='orange',
+            marker='o',
+            label='cluster 2')
+plt.scatter(km.cluster_centers_[:,0],
+            km.cluster_centers_[:,1],
+            s=250, c='red',
+            marker='*',
+            label='centroids')
+plt.legend()
+plt.grid()
+plt.show()
+
+cluster_labels = np.unique(y_km)
+n_clusters = cluster_labels.shape[0]
+silhouette_vals = silhouette_samples(X, y_km, metric='euclidean')
+y_ax_lower, y_ax_upper= 0, 0
+yticks = []
+for i, c in enumerate(cluster_labels):
+    c_silhouette_vals = silhouette_vals[y_km == c]
+    c_silhouette_vals.sort()
+    y_ax_upper += len(c_silhouette_vals)
+    color = cm.jet(i / n_clusters)
+    plt.barh(range(y_ax_lower, y_ax_upper),
+             c_silhouette_vals,
+             height=1.0,
+             edgecolor='none',
+             color=color)
+    yticks.append((y_ax_lower + y_ax_upper) / 2)
+    y_ax_lower += len(c_silhouette_vals)
+
+silhouette_avg = np.mean(silhouette_vals)
+plt.axvline(silhouette_avg, color="red", linestyle="--")
+plt.yticks(yticks, cluster_labels + 1)
+plt.ylabel('Cluster')
+plt.xlabel('Silhouette coefficient')
+plt.show()
