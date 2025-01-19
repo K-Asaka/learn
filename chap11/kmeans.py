@@ -164,3 +164,34 @@ labels = ['ID_0', 'ID_1', 'ID_2', 'ID_3', 'ID_4']
 X = np.random.random_sample([5, 3]) * 10    # 5行3列のサンプルデータを生成
 df = pd.DataFrame(X, columns=variables, index=labels)
 print(df)
+
+
+from scipy.spatial.distance import pdist, squareform
+# pdistで距離を計算、squareformで対称行列を作成
+row_dist = pd.DataFrame(squareform(pdist(df, metric='euclidean')),
+                        columns=labels, index=labels)
+print(row_dist)
+
+from scipy.cluster.hierarchy import linkage
+# help(linkage)
+row_clusters = linkage(pdist(df, metric='euclidean'), method='complete')
+#row_clusters = linkage(df.values, method='complete', metric='euclidean')
+print(pd.DataFrame(row_clusters,
+             columns=['row label 1',
+                      'row label 2',
+                      'distance',
+                      'no. of items in clust.'],
+             index=['cluster %d' %(i + 1) for i in range(row_clusters.shape[0])])
+)
+
+from scipy.cluster.hierarchy import dendrogram
+# 樹形図を黒で表示する場合(パート 1/2)
+# from scipy.cluster.hierarchy import set_link_color_palette
+# set_link_color_palette(['black'])
+row_dendr = dendrogram(row_clusters,
+                       labels=labels,
+                       # 樹形図を黒で表示する場合(パート 2/2)
+                       # color_threshold=np.inf
+)
+plt.ylabel('Euclidean distance')
+plt.show()
