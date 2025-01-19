@@ -1,7 +1,8 @@
 class Member {
 	constructor(name = '名無権兵衛', age = 0) {
-		this.name = name;
-		this.age = age;
+		// this.name = name;
+		// this.age = age;
+		Object.assign(this, { name, age });
 	}
 
 	show() {
