@@ -195,3 +195,22 @@ row_dendr = dendrogram(row_clusters,
 )
 plt.ylabel('Euclidean distance')
 plt.show()
+
+fig = plt.figure(figsize=(8, 8), facecolor='white')
+axd = fig.add_axes([0.09, 0.1, 0.2, 0.6])   # x軸の位置、y軸の位置、幅、高さ
+# 注意：matplotlibがv1.5.1以下の場合は、orientation='left'を使用すること
+# row_dendr = dendrogram(row_clusters, orientation='right')
+row_dendr = dendrogram(row_clusters, orientation='left')
+# df_rowcluster = df.ix[row_dendr['leaves'][::-1]]
+df_rowcluster = df.iloc[row_dendr['leaves'][::-1]]
+axm = fig.add_axes([0.23, 0.1, 0.6, 0.6])
+cax = axm.matshow(df_rowcluster, interpolation='nearest', cmap='hot_r')
+axd.set_xticks([])
+axd.set_yticks([])
+for i in axd.spines.values():
+    i.set_visible(False)
+
+fig.colorbar(cax)
+axm.set_xticklabels([''] + list(df_rowcluster.columns))
+axm.set_yticklabels([''] + list(df_rowcluster.index))
+plt.show()
