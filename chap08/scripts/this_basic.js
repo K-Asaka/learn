@@ -8,7 +8,7 @@ let member = {
 }
 
 function myHigher(fn) {
-	fn();
+	fn.call(member);
 }
 
 myHigher(member.greet);
