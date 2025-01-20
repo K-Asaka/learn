@@ -1,6 +1,10 @@
 class Member {
 	// インスタンスをキャッシュするための静的プロパティ
-	static cache = new Map();
+	static cache;
+
+	static {
+		this.cache = new Map();
+	}
 
 	constructor(name) {
 		this.name = name;
