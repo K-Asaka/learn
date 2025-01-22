@@ -7,3 +7,7 @@ let proxy = new Proxy(data, {
 
 console.log(proxy.red);
 console.log(proxy.nothing);
+
+proxy.red = 'レッド';
+console.log(data.red);
+console.log(proxy.red);
