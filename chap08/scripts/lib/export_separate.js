@@ -13,4 +13,4 @@ class Member {
 		console.log(`私の名前は${this.name}、${this.age}歳です。`);
 	}
 }
-export { getTriangleArea, Member };
+export { getTriangleArea, Member as MyAppMember };

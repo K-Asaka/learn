@@ -1,4 +1,4 @@
-import { getTriangleArea, Member } from './lib/export_separate.js';
+import { getTriangleArea, MyAppMember as Member} from './lib/export_separate.js';
 
 console.log(getTriangleArea(10, 2));
 
