@@ -13,6 +13,14 @@ class Coordinate {
 	valueOf() {
 		return Math.sqrt(this.x ** 2 + this.y ** 2);
 	}
+
+	// 基本型変換のルールを定義
+	[Symbol.toPrimitive](hint) {
+		if (hint === 'number') {
+			return this.valueOf();
+		}
+		return this.toString();
+	}
 }
 
 let c = new Coordinate(5, 2);
