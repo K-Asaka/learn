@@ -8,7 +8,8 @@
 </head>
 <body>
 	<img id="cover" src="images/haribo.jpg"
-		onmouseenter="imgEnter()" onmouseleave="imgLeave()" />
+		onmouseenter="document.querySelector('#cover').src = 'images/haribo.jpg';"
+		onmouseleave="document.querySelector('#cover').src = 'images/sauce.jpg';">
 
 	<script src="scripts/event_tag.js"></script>
 	<noscript>JavaScriptが利用できません。</noscript>
