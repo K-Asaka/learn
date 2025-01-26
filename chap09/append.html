@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>ページに新たなコンテンツを追加する</title>
+</head>
+<body>
+	<form>
+		<div>
+			<label for="title">サイト名：</label><br />
+			<input id="title" name="title" type="text" size="30" />
+		</div>
+		<div>
+			<label for="url">URL：</label><br />
+			<input id="url" name="url" type="url" size="50" />
+		</div>
+		<div>
+			<input id="btn" type="button" value="追加" />
+		</div>
+	</form>
+	<ul id="list"></ul>
+
+	<script src="scripts/append.js"></script>
+	<noscript>JavaScriptが利用できません。</noscript>
+</body>
+</html>
