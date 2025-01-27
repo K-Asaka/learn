@@ -1,7 +1,9 @@
 // <a id="inner">要素のclickイベントリスナー
 document.querySelector('#inner').addEventListener('click', function(e) {
     window.alert('#innerリスナーが発生しました。');
-    e.stopPropagation();
+    // e.stopPropagation();
+    // イベントの伝播を直ちにキャンセルする
+    e.stopImmediatePropagation();
 }, false);
 
 document.querySelector('#inner').addEventListener('click', function() {
