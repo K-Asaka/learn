@@ -3,7 +3,9 @@ document.querySelector('#inner').addEventListener('click', function(e) {
     window.alert('#innerリスナーが発生しました。');
     // e.stopPropagation();
     // イベントの伝播を直ちにキャンセルする
-    e.stopImmediatePropagation();
+    // e.stopImmediatePropagation();
+    // イベント本来の挙動をキャンセルする
+    e.preventDefault();
 }, false);
 
 document.querySelector('#inner').addEventListener('click', function() {
