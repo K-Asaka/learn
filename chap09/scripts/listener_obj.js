@@ -8,3 +8,8 @@ let data = {
 };
 
 document.querySelector('#btn').addEventListener('click', data, false);
+// thisの変化に注意
+document.querySelector('#btn').addEventListener('click', data.handleEvent, false);
+// bindメソッドによる解決
+document.querySelector('#btn').addEventListener('click', data.handleEvent.bind(data), false);
+
