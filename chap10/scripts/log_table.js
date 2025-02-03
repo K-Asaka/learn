@@ -4,3 +4,4 @@ let books = [
     { title: 'C#の教科書', price: 3190, publisher: '日経BP' }
 ];
 console.table(books);
+console.table(books, [ 'title', 'price' ]);
