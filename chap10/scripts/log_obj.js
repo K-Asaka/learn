@@ -4,4 +4,5 @@ let obj = {
 };
 
 console.log(obj);
+console.log(JSON.parse(JSON.stringify(obj)));
 obj.price = 2500;
