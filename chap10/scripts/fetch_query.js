@@ -5,6 +5,7 @@ document.querySelector('#btn').addEventListener('click', function() {
     let params = new URLSearchParams();
     params.set('name', document.querySelector('#name').value);
     // クエリ情報を付与してリクエストを発信
+    // fetch(`https://example.com/fetch_query.php?${params.toString()}`)
     fetch(`fetch_query.php?${params.toString()}`)
         .then(res => res.text())
         .then(text => result.textContent = text);
