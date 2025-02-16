@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "SET NODE_OPTIONS=--experimental-vm-modules && jest --watchAll"
+    "test": "SET NODE_OPTIONS=--experimental-vm-modules && jest --coverage"
   },
   "keywords": [],
   "author": "",
