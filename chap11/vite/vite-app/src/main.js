@@ -1,4 +1,5 @@
 import './style.scss'
+import imgUrl from './images/wings.jpg';
 import javascriptLogo from './javascript.svg'
 import viteLogo from '/vite.svg'
 import { setupCounter } from './counter.js'
@@ -20,5 +21,8 @@ document.querySelector('#app').innerHTML = `
     </p>
   </div>
 `
+let img = new Image()
+img.src = imgUrl
+document.querySelector('#app').append(img)
 
 setupCounter(document.querySelector('#counter'))
