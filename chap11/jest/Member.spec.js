@@ -17,6 +17,6 @@ describe('Jestの基本', () => {
     it('greetメソッドの確認', () => {
         let result = m.greet();
         expect(m.name).toBe(NAME);
-        expect(result).toContain(NAME);
+        expect(result).toContain('名無権兵衛');
     });
 });
