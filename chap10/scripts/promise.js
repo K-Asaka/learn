@@ -13,8 +13,9 @@ function asyncProcess(value) {
 
 asyncProcess('トクジロウ')
     // 成功した時に実行される処理
-    .then(response => console.log(response))
-    // 失敗した時に実行される処理
-    .catch(error => console.log(`エラー： ${error}`))
+    .then(
+        response => console.log(response),
+        error => console.log(`エラー： ${error}`)
+    )
     // 成否にかかわらず実行される処理
     .finally(() => console.log('処理終了'));
