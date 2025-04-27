@@ -55,3 +55,35 @@ print(y_probas.sum)
 
 y_class = np.argmax(Z, axis=0)
 print('predicted class label: %d' % y_class[0])
+
+
+import matplotlib.pyplot as plt
+
+def tanh(z):
+	e_p = np.exp(z)
+	e_m = np.exp(-z)
+	return (e_p - e_m) / (e_p + e_m)
+
+z = np.arange(-5, 5, 0.005)
+log_act = logistic(z)
+tanh_act = tanh(z)
+
+plt.ylim([-1.5, 1.5])
+plt.xlabel('net input $z$')
+plt.ylabel('activation $\phi(z)$')
+plt.axhline(1, color='black', linestyle='--')
+plt.axhline(0.5, color='black', linestyle='--')
+plt.axhline(0, color='black', linestyle='--')
+plt.axhline(-1, color='black', linestyle='--')
+plt.plot(z, tanh_act, linewidth=2, color='black', label='tanh')
+plt.plot(z, log_act, linewidth=2, color='lightgreen', label='logistic')
+plt.legend(loc='lower right')
+plt.show()
+
+
+tanh_act = np.tanh(z)
+print(tanh_act)
+
+from scipy.special import expit
+log_act = expit(z)
+print(log_act)
