@@ -39,3 +39,19 @@ print('Probabilities:\n', y_probas)
 
 y_class = np.argmax(Z, axis=0)
 print('predicted class label: %d' % y_class[0])
+
+
+def softmax(z):
+	return np.exp(z) / np.sum(np.exp(z))
+
+def softmax_activation(X, w):
+	z = net_input(X, w)
+	return softmax(z)
+
+y_probas = softmax(Z)
+print('probabilities:\n', y_probas)
+
+print(y_probas.sum)
+
+y_class = np.argmax(Z, axis=0)
+print('predicted class label: %d' % y_class[0])
