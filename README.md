@@ -15,9 +15,13 @@ https://cloudlatex.io/ja
 ArchLinux
 
 日本語関連パッケージ
-sudo pacman -S texlive-langjapanese texlive-luatex texlive-latexextra
+sudo pacman -S texlive-langjapanese texlive-luatex texlive-latexextra texlive-fontsextra otf-latin-modern
+
+更新
+luaotfload-tool --update
+
 確認用
-sudo pacman -S evince poppler-data
+sudo pacman -S evince poppler-data 
 
 タイプセット
 lualatex <ファイル名>.tex
