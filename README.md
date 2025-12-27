@@ -6,3 +6,22 @@
 タイプセット：LaTeXのソースコードを文書に変換すること
 
 
+## LaTeXの環境構築
+
+Cloud LaTeX
+https://cloudlatex.io/ja
+
+
+ArchLinux
+
+日本語関連パッケージ
+sudo pacman -S texlive-langjapanese texlive-luatex texlive-latexextra
+確認用
+sudo pacman -S evince poppler-data
+
+タイプセット
+lualatex <ファイル名>.tex
+
+PDF表示
+evince <ファイル名>.pdf
+
