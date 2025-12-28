@@ -29,3 +29,20 @@ lualatex <ファイル名>.tex
 PDF表示
 evince <ファイル名>.pdf
 
+
+## プリアンブル部
+\begin{document}よりも前の部分をまとめてプリアンブル部と呼ぶ。
+
+\documentclass{ltjsarticle} - ドキュメントクラス(文書全体のレイアウトの指定)
+- 読み込むパッケージ
+- 文書のレイアウトの基本情報
+\title{文書のタイトル}      - 文書のタイトル
+\author{著者名}             - 著者
+\date{\todya}               - 日付
+
+
+## 本文
+\begin{document}と\end{document}に囲まれた部分。
+\sectionを使うと本文中に見出しを挿入できる。
+他にも様々な見出しを生成する専用の命令(\subsection、\paragraphなど)が用意されている。
+
