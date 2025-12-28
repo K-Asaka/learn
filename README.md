@@ -46,3 +46,10 @@ evince <ファイル名>.pdf
 \sectionを使うと本文中に見出しを挿入できる。
 他にも様々な見出しを生成する専用の命令(\subsection、\paragraphなど)が用意されている。
 
+
+## ドキュメントクラス
+LuaLaTeXではドキュメントクラスの冒頭に`lt`を付ける
+jarticle    日本語の論文(japanese article)
+jsarticle   jarticleより余白が狭くなり、書体が変わる
+jsbook      文書全体が教科書のように表示される
+
