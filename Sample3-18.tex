@@ -1,0 +1,33 @@
+\documentclass{ltjsarticle}
+\usepackage{listings, lltjp-listings}
+\lstset{language=C, %
+        basicstyle=\footnotesize,%
+        commentstyle=\textit,%
+        classoffset=1,%
+        keywordstyle=\bfseries,%
+        frame=tRBl,framesep=5pt,%
+        showstringspaces=false,%
+        numbers=left,stepnumber=1,numberstyle=\footnotesize%
+}%
+
+\begin{document}
+\section{作成したプログラム}
+以下に、C言語で作成したプログラムのソースコードを示します。
+\begin{lstlisting}
+#include <stdio.h>
+
+int main(void) {
+  int i;
+  int n;
+
+  printf("回数を入力 > ");
+  scanf("%d", &n);
+  for (i = 0; i < n; i++) {
+    printf("Hello LaTeX!!\n");
+  }
+
+  return 0;
+}
+\end{lstlisting}
+\end{document}
+
