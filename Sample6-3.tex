@@ -1,0 +1,28 @@
+\documentclass{beamer}
+\usepackage{luatexja}
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+%\usetheme{metropolis}
+\usetheme{Copenhagen}
+
+\title{はじめてのスライド}
+\author{山田 太郎}
+\institute{羅手府大学}
+\date{\today}
+
+\begin{document}
+\maketitle
+\begin{frame}
+  \frametitle{文をいろいろな枠で囲む}
+  いろいろな枠で文を囲んでみましょう。
+  \begin{block}{block環境}
+    block環境は青い枠
+  \end{block}
+  \begin{alertblock}{alertblock環境}
+    alertblock環境は赤い枠
+  \end{alertblock}
+  \begin{exampleblock}{exampleblock環境}
+    exampleblock環境は緑の枠
+  \end{exampleblock}
+\end{frame}
+\end{document}
+
