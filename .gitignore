@@ -2,4 +2,7 @@
 *.aux
 *.log
 *.toc
+*.nav
+*.out
+*.snm
 
