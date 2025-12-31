@@ -1,0 +1,64 @@
+\documentclass{beamer}
+\usepackage{luatexja}
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+%\usetheme{metropolis}
+\usetheme{Copenhagen}
+
+\title{はじめてのスライド}
+\author{山田 太郎}
+\institute{羅手府大学}
+\date{\today}
+
+\begin{document}
+\maketitle
+\section{文章を枠で囲む}
+\begin{frame}
+  \frametitle{枠}
+  Beamerでは枠を使用できます。
+  \begin{block}{block環境}
+    枠で囲まれた文章。
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{枠}
+  Beamerでは他の色の枠も使用できます。
+  \begin{alertblock}{alertblock環境}
+    赤い枠で囲まれた文章。
+  \end{alertblock}
+  \begin{exampleblock}{exampleblock環境}
+    緑の枠で囲まれた文章。
+  \end{exampleblock}
+\end{frame}
+
+\section{箇条書きを行う}
+\begin{frame}
+  \frametitle{箇条書き}
+  Beamerではitemizeによる箇条書きを使用できます。
+  \begin{itemize}
+    \item
+    項目1
+    \item
+    項目2
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{箇条書き}
+  Beamerではenumerateによる箇条書きを使用できます。
+  \begin{enumerate}
+    \item
+    項目1
+    \item
+    項目2
+  \end{enumerate}
+\end{frame}
+
+\section{数式を挿入する}
+\begin{frame}
+\frametitle{数式}
+Beamerでは数式を使用できます。
+\[ x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a} \]
+\end{frame}
+\end{document}
+
