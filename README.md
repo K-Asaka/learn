@@ -53,3 +53,8 @@ jarticle    日本語の論文(japanese article)
 jsarticle   jarticleより余白が狭くなり、書体が変わる
 jsbook      文書全体が教科書のように表示される
 
+
+## eqnarray環境は使わない
+align環境とほぼ同じ機能を持つ環境。
+現在使用は推奨されていない。
+
