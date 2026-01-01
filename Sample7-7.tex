@@ -1,0 +1,36 @@
+\documentclass{ltjsbook}
+\usepackage{graphicx}
+\usepackage{enumerate}
+\usepackage{makeidx}
+\makeindex
+\title{索引のテスト}
+\author{山田 太郎}
+\date{\today}
+\begin{document}
+\maketitle
+\chapter{\LaTeX の索引機能}
+教科書や参考書のような書籍を読んでいると、索引\index{さくいん@索引}を見かけることが多いでしょう。索引が付いていると、読者が重要単語の書かれたページだけを簡単に拾い読みできるようになり非常に便利です。\LaTeX \index{らてふ@\LaTeX} では、索引を自動生成してくれるとても便利な機能があります。
+
+\section{事前設定}
+索引を付けたい文書では、以下の設定をする必要があります。
+\begin{enumerate}[(1)]
+\item
+\verb|\usepackage{makeidx}| で、 \verb|makeidx.sty| を読み込む。
+\item
+プリアンブル部\index{ぷりあんぶるぶ@プリアンブル部}に \verb|\makeindex| を記載する。
+\item
+本文中の索引に収録したい言葉の直後に \verb|\index{よみ@索引項目}| を書いてマーク\index{まーく@マーク}。
+- 索引を出力する位置 (通常は文末、つまり \verb|\end{document}| の直前) に \verb|\printindex| を記入。
+\end{enumerate}
+
+そして、最終的に文書を出力すると、そこには索引ページが自動生成されます。
+
+\section{索引があると嬉しいこと}
+なんといっても、索引があると、読者が重要だと思う単語のページだけを拾い読み\index{ひろいよみ@拾い読み}しやすくなり、とても便利なのです。
+Microsoft Office\index{まいくろそふとおふぃす@Microsoft Office}のWord\index{わーど@Word}でも索引作成機能\index{さくいんさくせいきのう@索引作成機能}がありますが、\LaTeX を使って作った索引は、なんといってもレイアウト\index{れいあうと@レイアウト}などが完全自動調整されるので、まるで教科書のような美しい見た目になります。
+
+\section{単語の収録ページ数と順番は自動調整される}
+そして、索引に収録したページ数は自動的にふられ、収録順はあいうえお順 (辞書式順序\index{じしょしきじゅんじょ@辞書式順序}) に自動的に並び替えられます。手入力\index{てにゅうりょく@手入力}で索引を作ろうと思うと、それはかなりしんどい作業となりますが、やはりそこは\LaTeX の機能におまかせしてしまおうという考え方です。
+\printindex
+\end{document}
+

@@ -58,3 +58,20 @@ jsbook      文書全体が教科書のように表示される
 align環境とほぼ同じ機能を持つ環境。
 現在使用は推奨されていない。
 
+
+## 索引
+
+lualatex file.tex
+
+実行後に
+
+upmendex file.idx (または makeindex file.idx)
+
+を実行してindファイルを作成する。
+その後、改めて
+
+lualatex file.tex
+
+を実行する。
+
+
