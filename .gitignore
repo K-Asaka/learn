@@ -5,4 +5,7 @@
 *.nav
 *.out
 *.snm
+*.ind
+*.idx
+*.ilg
 
