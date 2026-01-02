@@ -83,3 +83,37 @@ lualatex file.tex
 - 文中からそれを呼び出す
 
 
+## パッケージのインストール
+mhchem
+
+ダウンロード
+```
+$ cd ~/Downloads
+$ curl -LO https://mirrors.ctan.org/macros/latex/contrib/mhchem.zip
+$ curl -LO http://mirrors.ctan.org/macros/latex/contrib/chemgreek.zip
+```
+
+展開
+```
+$ unzip ~/Downloads/mhchem.zip
+$ unzip ~/Downloads/chemgreek.zip
+```
+
+styファイルの置き場所確認
+```
+$ kpsewhich amsmath.sty
+```
+
+上記コマンドで`latex/`のパスを確認。仮に`/usr/share/texlive/texmf-dist/tex/latex/`とする。
+
+展開したファイルの移動
+```
+$ sudo mv ~/Downloads/mhchem /usr/share/texlive/texmf-dist/tex/latex/
+$ sudo mv ~/Downloads/chemgreek /usr/share/texlive/texmf-dist/tex/latex/
+```
+
+更新
+```
+$ sudo mktexlsr
+```
+
