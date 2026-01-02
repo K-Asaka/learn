@@ -1,0 +1,17 @@
+\documentclass{ltjsarticle}
+\usepackage{graphicx}
+\usepackage{tikz}
+\begin{document}
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}
+    \draw[step=0.5,very thin,gray] (-1.4,-1.4) grid(1.4,1.4);
+    \draw(0,0) circle(1cm);
+    \draw[->] (-1.5,0)--(1.5,0);
+    \draw[->] (0,-1.5)--(0,1.5);
+  \end{tikzpicture}
+  \caption{座標平面上の円}
+  \label{fig:circle}
+\end{figure}
+\end{document}
+
