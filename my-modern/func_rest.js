@@ -8,3 +8,5 @@ function sum(...nums) {
 
 console.log(sum(10, 25, 2));
 console.log(sum(7, 13, 25, 6, 100));
+console.log(sum([10, 25, 2]));
+console.log(sum(...[10, 25, 2]));
