@@ -1,4 +1,4 @@
-function getTrapezoidArea(upper = 1, lower = 1, height = 1) {
+function getTrapezoidArea(upper = 1, lower = upper, height = upper) {
     return (upper + lower) * height / 2;
 }
 
