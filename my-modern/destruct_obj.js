@@ -3,7 +3,8 @@ const member = {
     sex: 'female',
     age: 18
 };
-const { fullname, sex, memo = '---' } = member;
+let fullname, sex, memo;
+({ fullname, sex, memo = '---' } = member);
 console.log(sex, fullname, memo);
 
 // 異なる名前の変数に代入する
