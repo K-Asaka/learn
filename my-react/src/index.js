@@ -11,7 +11,7 @@ import reportWebVitals from './reportWebVitals';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const dest = 'https://ja.react.dev';
 root.render(
-  <a href={dest}>React本家サイト</a>
+  <a href={dest + '/docs'}>React本家サイト</a>
 );
 
 // If you want to start measuring performance in your app, pass a function
