@@ -9,16 +9,22 @@ import reportWebVitals from './reportWebVitals';
 
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const input = (
-  <div className="field">
-    <label htmlFor="title">書名</label>
-    <input id="title" tabIndex="2" />
-  </div>
+const tag = (
+  // コメントです（JSX式内でないのでOK）
+  <ul>
+    {/* コメントです。 */}
+    <li // タグ内ではOK
+      >React</li>
+    <li /*
+      これも大丈夫
+    */>Vue.js</li>
+    // 子要素での「//」「/* ～ */」はダメ
+    <li>Angular</li>
+  </ul>
 );
-
 root.render(
   <>
-    {input}
+    {tag}
   </>
 );
 
