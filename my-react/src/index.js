@@ -9,10 +9,16 @@ import reportWebVitals from './reportWebVitals';
 
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const input = (
+  <div className="field">
+    <label htmlFor="title">書名</label>
+    <input id="title" tabIndex="2" />
+  </div>
+);
+
 root.render(
   <>
-    <p>こんにちは、世界！</p>
-    <p>はじめまして、React！！</p>
+    {input}
   </>
 );
 
