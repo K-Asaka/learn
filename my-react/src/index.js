@@ -9,23 +9,9 @@ import reportWebVitals from './reportWebVitals';
 
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const tag = (
-  // コメントです（JSX式内でないのでOK）
-  <ul>
-    {/* コメントです。 */}
-    <li // タグ内ではOK
-      >React</li>
-    <li /*
-      これも大丈夫
-    */>Vue.js</li>
-    // 子要素での「//」「/* ～ */」はダメ
-    <li>Angular</li>
-  </ul>
-);
+const name = '鈴木';
 root.render(
-  <>
-    {tag}
-  </>
+  <p>こんにちは、{name}です！</p>
 );
 
 // If you want to start measuring performance in your app, pass a function
