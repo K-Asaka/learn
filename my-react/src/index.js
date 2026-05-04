@@ -9,9 +9,11 @@ import reportWebVitals from './reportWebVitals';
 
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const name = '鈴木';
+// JSX式ではなく、ただの文字列リテラル
+const content = `<h3>WINGSプロジェクト</h3>
+  <img src="https://wings.msn.to/image/wings.jpg" />`;
 root.render(
-  <p>こんにちは、{name}です！</p>
+  <p>{content}</p>
 );
 
 // If you want to start measuring performance in your app, pass a function
