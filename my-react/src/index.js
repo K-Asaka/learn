@@ -13,7 +13,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 const content = `<h3>WINGSプロジェクト</h3>
   <img src="https://wings.msn.to/image/wings.jpg" />`;
 root.render(
-  <p>{content}</p>
+  <p dangerouslySetInnerHTML={{__html: content}}></p>
 );
 
 // If you want to start measuring performance in your app, pass a function
