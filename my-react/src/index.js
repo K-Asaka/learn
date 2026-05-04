@@ -10,11 +10,13 @@ import reportWebVitals from './reportWebVitals';
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <>
-    <div>{'Tom \u0026 Jerry'}</div>
-    <div>{`Tom ${String.fromCodePoint(38)} Jerry`}</div>
-    <div dangerouslySetInnerHTML={{__html: 'Tom &amp; Jerry'}} />
-  </>
+  <ul>
+    <li>{String(true)}</li>
+    <li>{false}</li>
+    <li>{undefined}</li>
+    <li>{null}</li>
+    <li>{0}</li>
+  </ul>
 );
 
 // If you want to start measuring performance in your app, pass a function
