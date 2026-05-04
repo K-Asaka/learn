@@ -10,10 +10,10 @@ import reportWebVitals from './reportWebVitals';
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <div>
+  <React.Fragment>
     <p>こんにちは、世界！</p>
     <p>はじめまして、React！！</p>
-  </div>
+  </React.Fragment>
 );
 
 // If you want to start measuring performance in your app, pass a function
