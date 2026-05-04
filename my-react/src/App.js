@@ -1,7 +1,10 @@
+// ロゴ／スタイルシートをインポート
 import logo from './logo.svg';
 import './App.css';
 
+// Appコンポーネントを定義
 function App() {
+  // 描画内容を生成
   return (
     <div className="App">
       <header className="App-header">
@@ -22,4 +25,5 @@ function App() {
   );
 }
 
+// App関数をデフォルトエクスポート
 export default App;
