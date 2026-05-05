@@ -9,9 +9,21 @@ import reportWebVitals from './reportWebVitals';
 
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const dest = 'https://ja.react.dev';
+// あまりよくない例
+const attrs = {
+  href: 'https://wings.msn.to/',
+  download: false,
+  target: '_blank',
+  rel: 'help'
+};
+
 root.render(
-  <a href={dest + '/docs'}>React本家サイト</a>
+  <>
+    <a href={attrs.href} download={attrs.dwnload}
+      target={attrs.target} rel={attrs.rel}>サポートページへ</a><br />
+    {/* スプレッド構文を用いるとオブジェクトを個々の属性に展開できる */}
+    <a {...attrs}>サポートページへ</a>
+  </>
 );
 
 // If you want to start measuring performance in your app, pass a function
