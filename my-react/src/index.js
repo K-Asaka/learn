@@ -9,7 +9,12 @@ import reportWebVitals from './reportWebVitals';
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <MyHello myName="鈴木" />
+  <>
+    <MyHello myName={13} />
+    <MyHello myName={['山田', '鈴木', '佐藤']} />
+    <MyHello myName={() => { console.log('Hoge'); }} />
+    {/* <MyHello myName={{ name: '鈴木', age: 48 }} /> */}
+  </>
 );
 
 // If you want to start measuring performance in your app, pass a function
