@@ -4,21 +4,15 @@ import ReactDOM from 'react-dom/client';
 // アプリ固有のコードをインポート
 import './index.css';
 import App from './App';
+import './class.css';
+
 // パフォーマンス監視のためのサービスをインポート
 import reportWebVitals from './reportWebVitals';
 
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
-// 文字列での指定は不可
-// const props = 'color: white; background-color: Blue; padding: 3px';
-const props = {
-  color: 'white',
-  'background-color': 'Blue',
-  padding: 3
-}
-
 root.render(
-  <p style={props}>WINGSプロジェクト</p>
+  <p className="hoge">WINGSプロジェクト</p>
 );
 
 // If you want to start measuring performance in your app, pass a function
