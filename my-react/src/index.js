@@ -9,20 +9,10 @@ import reportWebVitals from './reportWebVitals';
 
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
-// あまりよくない例
-const attrs = {
-  href: 'https://wings.msn.to/',
-  download: false,
-  target: '_blank',
-  rel: 'help'
-};
-
 root.render(
   <>
-    <a href={attrs.href} download={attrs.dwnload}
-      target={attrs.target} rel={attrs.rel}>サポートページへ</a><br />
-    {/* スプレッド構文を用いるとオブジェクトを個々の属性に展開できる */}
-    <a {...attrs}>サポートページへ</a>
+    <a href="index.html" download>トップへ</a><br />
+    <a href="index.html" download={true}>トップへ</a>
   </>
 );
 
