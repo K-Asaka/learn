@@ -9,11 +9,16 @@ import reportWebVitals from './reportWebVitals';
 
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
+// 文字列での指定は不可
+// const props = 'color: white; background-color: Blue; padding: 3px';
+const props = {
+  color: 'white',
+  backgroundColor: 'Blue',
+  padding: 3
+}
+
 root.render(
-  <>
-    <a href="index.html" download>トップへ</a><br />
-    <a href="index.html" download={true}>トップへ</a>
-  </>
+  <p style={props}>WINGSプロジェクト</p>
 );
 
 // If you want to start measuring performance in your app, pass a function
