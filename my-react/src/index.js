@@ -13,7 +13,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 // const props = 'color: white; background-color: Blue; padding: 3px';
 const props = {
   color: 'white',
-  backgroundColor: 'Blue',
+  'background-color': 'Blue',
   padding: 3
 }
 
