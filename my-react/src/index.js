@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom/client';
-import StateBasic from './StateBasic'
+import books from './books';
+import ForList from './ForList'
 // アプリ固有のコードをインポート
 import './index.css';
 
@@ -9,7 +10,7 @@ import reportWebVitals from './reportWebVitals';
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <StateBasic init={0} />
+  <ForList src={books} />
 );
 
 // If you want to start measuring performance in your app, pass a function
