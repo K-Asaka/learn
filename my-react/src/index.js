@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import SelectStyle from './SelectStyle'
+import StyledPanel from './StyledPanel'
 // アプリ固有のコードをインポート
 import './index.css';
 
@@ -9,7 +9,10 @@ import reportWebVitals from './reportWebVitals';
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <SelectStyle mode="light" />
+  <StyledPanel>
+    <p>メンバー募集中！</p>
+    <p>ようこそ、WINGSプロジェクトへ！！</p>
+  </StyledPanel>
 );
 
 // If you want to start measuring performance in your app, pass a function
