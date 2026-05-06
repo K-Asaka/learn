@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import books from './books';
-import ForFilter from './ForFilter'
+import ForSort from './ForSort'
 // アプリ固有のコードをインポート
 import './index.css';
 
@@ -10,7 +10,7 @@ import reportWebVitals from './reportWebVitals';
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <ForFilter src={books} />
+  <ForSort src={books} />
 );
 
 // If you want to start measuring performance in your app, pass a function
