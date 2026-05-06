@@ -1,6 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import StyledPanel from './StyledPanel';
-import MyHello from './MyHello';
+import TitledPanel from './TitledPanel';
 // アプリ固有のコードをインポート
 import './index.css';
 
@@ -10,9 +9,14 @@ import reportWebVitals from './reportWebVitals';
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <StyledPanel>
-    <MyHello myName="鈴木" />
-  </StyledPanel>
+  <TitledPanel
+    title={
+      <p>メンバー募集中！</p>
+    }
+    body={
+      <p>ようこそ、WINGSプロジェクトへ！！</p>
+    }>
+    </TitledPanel>
 );
 
 // If you want to start measuring performance in your app, pass a function
