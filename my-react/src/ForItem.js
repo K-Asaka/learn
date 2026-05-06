@@ -8,13 +8,10 @@ export default function ForItem({ book }) {
                     {book.title} ({book.price}円)
                 </a>
             </dt>
-            {(() => {
-                if (book.download) {
-                    return <dd>{book.summary}<Download isbn={book.isbn} /></dd>;
-                } else {
-                    return <dd>{book.summary}</dd>;
-                }
-            })()}
+            <dd>
+                {book.summary}
+                {book.download ? <Download isbn={book.isbn} /> : null}
+            </dd>
         </>
     );
 }
