@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom/client';
-import StyledPanel from './StyledPanel'
+import StyledPanel from './StyledPanel';
+import MyHello from './MyHello';
 // アプリ固有のコードをインポート
 import './index.css';
 
@@ -10,8 +11,7 @@ import reportWebVitals from './reportWebVitals';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <StyledPanel>
-    <p>メンバー募集中！</p>
-    <p>ようこそ、WINGSプロジェクトへ！！</p>
+    <MyHello myName="鈴木" />
   </StyledPanel>
 );
 
