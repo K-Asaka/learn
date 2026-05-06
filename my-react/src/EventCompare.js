@@ -9,7 +9,7 @@ export default function EventCompare() {
     return (
         <>
             <div id="outer"
-                onMouseEnter={handleIn} onMouseLeave={handleOut}>
+                onMouseOver={handleIn} onMouseOut={handleOut}>
                 外(outer)
                 <p id="inner">
                     内(inner)
