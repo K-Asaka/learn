@@ -1,6 +1,5 @@
 import ReactDOM from 'react-dom/client';
-//import books from './books';
-import ForNest from './ForNest'
+import SelectStyle from './SelectStyle'
 // アプリ固有のコードをインポート
 import './index.css';
 
@@ -9,14 +8,8 @@ import reportWebVitals from './reportWebVitals';
 
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const books = [];
 root.render(
-  <>
-  <ForNest src={books} />
-  <p>{books.length && `${books.length}件のデータがあります。`}</p>
-  <p>-----</p>
-  <p>{books.length > 0 && `${books.length}件のデータがあります。`}</p>
-  </>
+  <SelectStyle mode="light" />
 );
 
 // If you want to start measuring performance in your app, pass a function
