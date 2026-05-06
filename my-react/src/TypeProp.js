@@ -26,7 +26,13 @@ TypeProp.propTypes = {
         name: PropTypes.string.isRequired,
         age: PropTypes.number,
         sex: PropTypes.oneOf(['男性', '女性', 'その他']),
+    }),
+    prop7: PropTypes.exact({
+        name: PropTypes.string.isRequired,
+        age: PropTypes.number,
+        sex: PropTypes.oneOf(['男性', '女性', 'その他']),
     })
+
 };
 
 export default TypeProp;
