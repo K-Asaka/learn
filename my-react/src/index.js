@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import EventError from './EventError';
+import EventObj from './EventObj';
 // アプリ固有のコードをインポート
 import './index.css';
 
@@ -9,8 +9,7 @@ import reportWebVitals from './reportWebVitals';
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <EventError src="./image/wings.jpg"
-    alt="サンプル画像" />
+  <EventObj />
 );
 
 // If you want to start measuring performance in your app, pass a function
