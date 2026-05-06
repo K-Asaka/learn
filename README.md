@@ -97,3 +97,25 @@ Chrome、Edge、Firefoxに対応している。
         </html>
     ```
 
+
+## PropTypes
+
+PropTypesを利用する際の最低限のルール。
+
+1. prop-typesモジュールをあらかじめインポートしておく
+2. 「コンポーネント名.propTypes」に対して、「プロパティ名：型情報」の形式で型定義を渡す
+3. 型定義はexport宣言よりも前
+
+| 型 | 概要 |
+| :---: | :--- |
+| PropTypes.string | 文字列型 |
+| PropTypes.symbol | シンボル型 |
+| PropTypes.number | 数値型 |
+| PropTypes.bool | 真偽型 |
+| PropTypes.array | 配列(要素の型は任意) |
+| PropTypes.object | オブジェクト型(要素の型は任意) |
+| PropTypes.func | 関数型 |
+| PropTypes.element | React要素 |
+| PropTypes.node | element、number、string、arrayのいずれか |
+| PropTypes.any | 任意の型 |
+

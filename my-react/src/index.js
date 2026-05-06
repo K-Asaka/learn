@@ -1,6 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import books from './books';
-import ListTemplate from './ListTemplate';
+import MyHello from './MyHello';
 // アプリ固有のコードをインポート
 import './index.css';
 
@@ -10,19 +9,7 @@ import reportWebVitals from './reportWebVitals';
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  // render属性として描画関数を渡す
-  <ListTemplate src={books} render={ elem => (
-      <>
-        <dt>
-          <a href={`https://wings.msn.to/books/${elem.isbn}/${elem.isbn}.jpg`}>
-            {elem.title} ({elem.price}円)
-          </a>
-        </dt>
-        <dd>
-          {elem.summary}
-        </dd>      
-      </>
-    )} />
+  <MyHello />
 );
 
 // If you want to start measuring performance in your app, pass a function
