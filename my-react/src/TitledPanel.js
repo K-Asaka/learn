@@ -1,4 +1,8 @@
-export default function TitledPanel({ title, body }) {
+export default function TitledPanel({ children }) {
+    // key属性がtitle／bodyである要素を取得
+    const title = children.find(elem => elem.key === 'title');
+    const body = children.find(elem => elem.key === 'body');
+    
     return (
         <div style={{
             margin: 50,

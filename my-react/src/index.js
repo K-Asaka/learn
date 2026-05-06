@@ -8,10 +8,11 @@ import reportWebVitals from './reportWebVitals';
 
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const title = <p>メンバー募集中！</p>
-const body = <p>ようこそ、WINGSプロジェクトへ！！</p>
 root.render(
-  <TitledPanel title={title} body={body}></TitledPanel>
+  <TitledPanel>
+    <p key="title">メンバー募集中！</p>
+    <p key="body">ようこそ、WINGSプロジェクトへ！！</p>
+  </TitledPanel>
 );
 
 // If you want to start measuring performance in your app, pass a function
