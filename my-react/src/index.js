@@ -10,8 +10,8 @@ import reportWebVitals from './reportWebVitals';
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <ListTemplate src={books}>
-    {elem => (
+  // render属性として描画関数を渡す
+  <ListTemplate src={books} render={ elem => (
       <>
         <dt>
           <a href={`https://wings.msn.to/books/${elem.isbn}/${elem.isbn}.jpg`}>
@@ -22,8 +22,7 @@ root.render(
           {elem.summary}
         </dd>      
       </>
-    )}
-  </ListTemplate>
+    )} />
 );
 
 // If you want to start measuring performance in your app, pass a function
