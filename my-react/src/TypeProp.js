@@ -20,7 +20,13 @@ TypeProp.propTypes = {
     // 数値型の配列
     prop4: PropTypes.arrayOf(PropTypes.number),
     // 数値型のオブジェクト
-    prop5: PropTypes.objectOf(PropTypes.number)
+    prop5: PropTypes.objectOf(PropTypes.number),
+    // name、age、sexプロパティを持つオブジェクト
+    prop6: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        age: PropTypes.number,
+        sex: PropTypes.oneOf(['男性', '女性', 'その他']),
+    })
 };
 
 export default TypeProp;
