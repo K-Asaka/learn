@@ -5,7 +5,10 @@ export default function StateBasic({ init }) {
     const [count, setCount] = useState(init);
     console.log(`count is ${count}`);
     // [カウント] ボタンクリック時にカウント値をインクリメント
-    const handleClick = () => setCount(count + 1);
+    const handleClick = () => {
+        setCount(c => c + 1);
+        setCount(c => c + 1);
+    }
     return (
         <>
             <button onClick={handleClick}>カウント</button>
