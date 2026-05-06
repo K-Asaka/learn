@@ -17,6 +17,8 @@ TypeProp.propTypes = {
         PropTypes.number,
         PropTypes.bool,
     ]),
+    // 数値型の配列
+    prop4: PropTypes.arrayOf(PropTypes.number)
 };
 
 export default TypeProp;
