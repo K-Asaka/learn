@@ -67,3 +67,33 @@ Propsがコンポーネントにパラメーターを渡すための引数であ
 コンポーネントでは、Propsで外から値を受け取り、以降は刻々と変化していく状態をStateで管理していくのが基本。
 関数のキーワードで表現するならば、Propsが仮引数、Stateがローカル変数と言い換えてもよい。
 
+
+## React Developer Tools
+
+Chrome、Edge、Firefoxに対応している。
+
+- Chrome [ https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi ]
+- Edge [ https://microsoftedge.microsoft.com/addos/detail/react-developer-tools/gpphkfbcpidddadnkolkpfckpihlkkil ]
+- Firefox [ https://addons.mozilla.org/en-US/firefox/addon/react-devtools/ ]
+
+
+### Safari環境
+
+1. react-devtoolsパッケージをインストールする
+    - `% npm install -g react-devtools`
+2. 開発者ツールを起動する
+    - `% react-devtools`
+    - コマンドが見つからない場合はパスを通す
+        - `% export PATH=$PATH:/Users/＜ユーザー名＞/.npm-global/bin`
+3. ページに\<script\>要素を追加する
+    ```<!DOCTYPE html>
+        <html lang="en">
+        <head>
+            …中略…
+            <script src="http://localhost:8097"></script>
+            <title>React App</title>
+        </head>
+        …中略…
+        </html>
+    ```
+
