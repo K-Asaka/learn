@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import books from './books';
-import ForNest from './ForNest'
+import ForFilter from './ForFilter'
 // アプリ固有のコードをインポート
 import './index.css';
 
@@ -10,7 +10,7 @@ import reportWebVitals from './reportWebVitals';
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <ForNest src={books} />
+  <ForFilter src={books} />
 );
 
 // If you want to start measuring performance in your app, pass a function
