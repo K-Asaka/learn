@@ -10,7 +10,7 @@ export default function ForItem({ book }) {
             </dt>
             <dd>
                 {book.summary}
-                {book.download ? <Download isbn={book.isbn} /> : null}
+                {book.download && <Download isbn={book.isbn} />}
             </dd>
         </>
     );
