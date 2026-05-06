@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import MyHello from './MyHello';
+import TypeProp, { Member } from './TypeProp';
 // アプリ固有のコードをインポート
 import './index.css';
 
@@ -9,7 +9,10 @@ import reportWebVitals from './reportWebVitals';
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <MyHello />
+  // 正しい例
+  //<TypeProp prop1={new Member()} />
+  // 誤った例
+  <TypeProp prop1="hoge" />
 );
 
 // If you want to start measuring performance in your app, pass a function
