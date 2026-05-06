@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom/client';
-import TitledPanel from './TitledPanel';
+import books from './books';
+import ListTemplate from './ListTemplate';
 // アプリ固有のコードをインポート
 import './index.css';
 
@@ -9,10 +10,20 @@ import reportWebVitals from './reportWebVitals';
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <TitledPanel>
-    <p key="title">メンバー募集中！</p>
-    <p key="body">ようこそ、WINGSプロジェクトへ！！</p>
-  </TitledPanel>
+  <ListTemplate src={books}>
+    {elem => (
+      <>
+        <dt>
+          <a href={`https://wings.msn.to/books/${elem.isbn}/${elem.isbn}.jpg`}>
+            {elem.title} ({elem.price}円)
+          </a>
+        </dt>
+        <dd>
+          {elem.summary}
+        </dd>      
+      </>
+    )}
+  </ListTemplate>
 );
 
 // If you want to start measuring performance in your app, pass a function
