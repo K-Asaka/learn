@@ -8,7 +8,9 @@ function TypeProp(props) {
 
 TypeProp.propTypes = {
     // Member型のプロパティ
-    prop1: PropTypes.instanceOf(Member)
+    prop1: PropTypes.instanceOf(Member),
+    // 男性、女性、その他の中のどれか
+    prop2: PropTypes.oneOf(['男性', '女性', 'その他'])
 };
 
 export default TypeProp;
