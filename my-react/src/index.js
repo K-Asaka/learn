@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import StateForm from './StateForm';
+import StateFormUC from './StateFormUC';
 // アプリ固有のコードをインポート
 import './index.css';
 
@@ -9,7 +9,7 @@ import reportWebVitals from './reportWebVitals';
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <StateForm />
+  <StateFormUC />
 );
 
 // If you want to start measuring performance in your app, pass a function
