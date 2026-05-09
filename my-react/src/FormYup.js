@@ -23,6 +23,7 @@ const schema = yup.object({
     name: yup
         .string()
         .label('名前')
+        .trim().lowercase()
         .required('${label}は必須入力です。')
         .max(20, '${label}は${max}文字以内で入力してください。'),
     gender: yup
