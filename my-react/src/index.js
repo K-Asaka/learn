@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import StateNestImmer from './StateNestImmer';
+import StateNestImmer2 from './StateNestImmer2';
 // アプリ固有のコードをインポート
 import './index.css';
 
@@ -9,7 +9,7 @@ import reportWebVitals from './reportWebVitals';
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <StateNestImmer />
+  <StateNestImmer2 />
 );
 
 // If you want to start measuring performance in your app, pass a function
