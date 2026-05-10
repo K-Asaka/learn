@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import StyledBasic from './StyledBasic';
+import StyledCss from './StyledCss';
 // アプリ固有のコードをインポート
 import './index.css';
 
@@ -10,13 +10,8 @@ import reportWebVitals from './reportWebVitals';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <>
-  <style jsx global>{`
-  h3 {
-    background-color: Yellow;
-  }
-  `}</style>
-    <h3>Styled JSXの基本</h3>
-    <StyledBasic />
+    <h3>Styled JSXの外部化</h3>
+    <StyledCss />
   </>
 );
 
