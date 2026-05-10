@@ -1,9 +1,7 @@
 import ReactDOM from 'react-dom/client';
-import StyledComp from './StyledComp';
+import StyledProps from './StyledProps';
 // アプリ固有のコードをインポート
 import './index.css';
-
-import GlobalStyle from './StyledGlobal';
 
 // パフォーマンス監視のためのサービスをインポート
 import reportWebVitals from './reportWebVitals';
@@ -11,10 +9,7 @@ import reportWebVitals from './reportWebVitals';
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <>
-    <GlobalStyle />
-    <StyledComp />
-  </>
+  <StyledProps />
 );
 
 // If you want to start measuring performance in your app, pass a function
