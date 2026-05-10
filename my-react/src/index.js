@@ -1,5 +1,7 @@
+/** @jsxImportSource @emotion/react */
 import ReactDOM from 'react-dom/client';
-import EmotionComp from './EmotionComp';
+import { css, Global } from '@emotion/react';
+import EmotionJsx from './EmotionJsx';
 // アプリ固有のコードをインポート
 import './index.css';
 
@@ -8,8 +10,17 @@ import reportWebVitals from './reportWebVitals';
 
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const global = css`
+  body {
+    background-color: Yellow;
+  }
+`;
+
 root.render(
-  <EmotionComp />
+  <>
+    <Global styles={global} />
+    <EmotionJsx />
+  </>
 );
 
 // If you want to start measuring performance in your app, pass a function
