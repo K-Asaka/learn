@@ -3,6 +3,9 @@ export default function StyledBasic() {
         <>
             {/* Styled JSXによるスタイル定義 */}
             <style jsx>{`
+            :global(h3) {
+                color: Red;
+            }
             .panel {
                 width: 300px;
                 padding: 10px;
