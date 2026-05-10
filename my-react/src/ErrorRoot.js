@@ -5,7 +5,7 @@ export default function ErrorRoot() {
     return (
         <>
             <h3>Error Boundaryの基本</h3>
-            <ErrorBoundary fallback={<div>エラーが発生しました。</div>}>
+            <ErrorBoundary onError={err => alert(err.message)} fallback={<div>エラーが発生しました。</div>}>
                 <ErrorThrow />
             </ErrorBoundary>
         </>
