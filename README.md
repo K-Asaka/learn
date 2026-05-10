@@ -128,3 +128,59 @@ PropTypesを利用する際の最低限のルール。
 `> npm run build -- --profile`
 
 
+## コンポーネント開発でのスタイル定義
+
+### JSX式にスタイルシートを埋め込む
+
+#### Styled JSXのインストール方法
+
+```
+> npm install styled-jsx
+> npm run eject
+```
+
+`eject`で個々の設定ファイルが展開される。`package.json`を開き、`babel`キーを編集する。
+
+```
+{
+  …中略…
+  "babel": {
+    "presets": [
+      "react-app"
+    ],
+    "plugins": [
+      "styled-jsx/babel"
+    ]
+  }
+}
+```
+
+#### EjectしないでStyled-JSXを利用する
+
+設定ファイルのEjectは一方向の(元に戻せない)操作のため、既存プロジェクトへの影響も大きい。
+以下の手順を踏むことで、EjectせずにStyled JSXを有効にすることができる。
+Styled JSXをインストール後、以下の手順を実行する。
+
+1. act-app-rewiredとcustomize-craをインストールする  
+  Create React Appのバンドル構成を上書きするためのライブラリ。  
+  `> npm install react-app-rewired customize-cra --save-dev`
+2. package.jsonを編集する  
+  アプリを`react-app-rewired`経由でビルドするために、`start`、`build`、`test`コマンドを書き換える。
+  以下は`start`の書き換え例。
+  ```
+  "scripts": {
+    "start": "react-app-rewired start",
+    …中略…
+  },
+  ```
+3. プロジェクトルートに設定ファイルを作成する  
+  設定情報を上書きするために、`config-overrides.js`をプロジェクトルートに作成する。
+  ```
+  const { addBabelPlugins, override } = require("customize-cra");
+  module.exports = override(
+    ...addBabelPlugins(
+      "styled-jsx/babel"
+    )
+  );
+  ```
+
