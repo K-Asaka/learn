@@ -9,3 +9,16 @@ export default css`
     background-color: royalblue;
     color: white;
 }`;
+
+// グローバルスタイル
+export const globalCss = css.global`
+h3 {
+    background-color: Yellow;
+}
+`;
+
+// 埋め込み式のスタイル
+export const resolveCss = css.resolve`
+.panel {
+    margin: 50px;
+}`;
