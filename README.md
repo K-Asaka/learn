@@ -119,3 +119,12 @@ PropTypesを利用する際の最低限のルール。
 | PropTypes.node | element、number、string、arrayのいずれか |
 | PropTypes.any | 任意の型 |
 
+
+## コンポーネントの描画時間を計測する - Profilerコンポーネント
+
+本番環境では既定で無効となる。
+本番環境にプロファイリング機能を付与するには、ビルド時に`--profile`オプションを付与する。
+
+`> npm run build -- --profile`
+
+
