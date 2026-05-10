@@ -16,7 +16,12 @@ export default function EmotionJsx() {
         height: 150
     });
 
+    const plus = css`
+        ${styles}
+        margin: 20px;
+    `;
+
     return (
-        <div css={[styles, others]}><b>Styled JSX</b>は、JSX式にスタイル定義を埋め込む形式のライブラリです。</div>
+        <div css={[plus, others]}><b>Styled JSX</b>は、JSX式にスタイル定義を埋め込む形式のライブラリです。</div>
     )
 }
