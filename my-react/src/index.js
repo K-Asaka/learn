@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import ReactDOM from 'react-dom/client';
-import { css, Global } from '@emotion/react';
-import EmotionJsx from './EmotionJsx';
+import PortalBasic from './PortalBasic';
 // アプリ固有のコードをインポート
 import './index.css';
 
@@ -10,16 +9,10 @@ import reportWebVitals from './reportWebVitals';
 
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const global = css`
-  body {
-    background-color: Yellow;
-  }
-`;
-
 root.render(
   <>
-    <Global styles={global} />
-    <EmotionJsx />
+    <div id="dialog"></div>
+    <PortalBasic />
   </>
 );
 
