@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import MaterialBasic from './MaterialBasic';
+import MaterialDrawer from './MaterialDrawer';
 // アプリ固有のコードをインポート
 import './index.css';
 
@@ -9,7 +9,7 @@ import reportWebVitals from './reportWebVitals';
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <MaterialBasic />
+  <MaterialDrawer />
 );
 
 // If you want to start measuring performance in your app, pass a function
