@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import LazyBasic from './LazyBasic';
+import LazyMulti from './LazyMulti';
 // アプリ固有のコードをインポート
 import './index.css';
 
@@ -9,7 +9,7 @@ import reportWebVitals from './reportWebVitals';
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <LazyBasic />
+  <LazyMulti />
 );
 
 // If you want to start measuring performance in your app, pass a function
