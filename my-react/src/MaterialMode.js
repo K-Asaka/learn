@@ -1,15 +1,11 @@
 import { useState } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { amber, grey } from '@mui/material/colors';
-import { CssBaseline, Button } from '@mui/material';
+import { CssBaseline, Button, useMediaQuery } from '@mui/material';
 
 export default function MaterialMode() {
-    // 現在のモードを管理するState
-    const [mode, setMode] = useState('light');
-    // State値modeをlight⇔darkで反転
-    const toggleMode = () => setMode(prev =>
-        prev === 'light' ? 'dark' : 'light'
-    );
+    const mode = useMediaQuery('(prefers-color-scheme: dark)') ?
+        'dark' : 'light';
     // テーマを定義
     const theme = createTheme({
         palette: {
@@ -36,7 +32,7 @@ export default function MaterialMode() {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Button variant="contained" onClick={toggleMode}>
+            <Button variant="contained">
                 Mode {mode}
             </Button>
         </ThemeProvider>
