@@ -73,12 +73,15 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "plugin:storybook/recommended"
     ]
   },
   "browserslist": {
@@ -151,5 +154,14 @@
     "plugins": [
       "styled-jsx/babel"
     ]
+  },
+  "devDependencies": {
+    "storybook": "^10.3.6",
+    "@storybook/react-webpack5": "^10.3.6",
+    "@storybook/addon-webpack5-compiler-swc": "^4.0.3",
+    "@storybook/addon-a11y": "^10.3.6",
+    "@storybook/addon-docs": "^10.3.6",
+    "@storybook/addon-onboarding": "^10.3.6",
+    "eslint-plugin-storybook": "^10.3.6"
   }
 }
