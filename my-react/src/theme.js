@@ -12,6 +12,13 @@ const theme = createTheme({
         }
     },
     spacing: 10,
+    components: {
+        MuiButton: {
+            defaultProps: {
+                variant: 'contained',
+            },
+        },
+    },
 });
 
 export default theme;
