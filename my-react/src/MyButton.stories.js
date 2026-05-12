@@ -7,6 +7,11 @@ export default {
     args: {
         label: 'Push!!',
     },
+    argTypes: {
+        size: {
+            control: { type: 'select' },
+        },
+    },
 };
 
 // Index、Whiteストーリーを追加
