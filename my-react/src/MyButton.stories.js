@@ -8,6 +8,7 @@ export default {
 
 // Index、Whiteストーリーを追加
 export const Index = {
+    render: args => <MyButton {...args} />,
     args: {
         primary: true,
         size: 'medium',
