@@ -4,6 +4,9 @@ import MyButton from './MyButton';
 export default {
     title: 'MyApp/MyButton',
     component: MyButton,
+    args: {
+        label: 'Push!!',
+    },
 };
 
 // Index、Whiteストーリーを追加
@@ -12,7 +15,6 @@ export const Index = {
     args: {
         primary: true,
         size: 'medium',
-        label: 'ボタン',
         onClick: () => console.log('Hello, Storybook!!')
     }
 };
