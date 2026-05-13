@@ -8,9 +8,30 @@ export default {
         label: 'Push!!',
     },
     argTypes: {
-        size: {
-            control: { type: 'select' },
+        primary: {
+            type: 'boolean',
+            description: 'Primaryカラーを有効にするか',
         },
+        backgroundColor: {
+            type: 'string',
+            description: '背景色'
+        },
+        size: {
+            type: {
+                name: 'enum',
+                value: ['small', 'medium', 'large']
+            },
+            control: { type: 'select' },
+            description: 'ボタンの大きさ'
+        },
+        label: {
+            type: 'string',
+            description: 'ボタンのキャプション'
+        },
+        onClick: {
+            type: 'function',
+            description: 'clickハンドラー',
+        }
     },
 };
 
