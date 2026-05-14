@@ -7,37 +7,10 @@ export default {
     args: {
         label: 'Push!!',
     },
-    argTypes: {
-        primary: {
-            type: 'boolean',
-            description: 'Primaryカラーを有効にするか',
-        },
-        backgroundColor: {
-            type: 'string',
-            description: '背景色'
-        },
-        size: {
-            type: {
-                name: 'enum',
-                value: ['small', 'medium', 'large']
-            },
-            control: { type: 'select' },
-            description: 'ボタンの大きさ'
-        },
-        label: {
-            type: 'string',
-            description: 'ボタンのキャプション'
-        },
-        onClick: {
-            type: 'function',
-            description: 'clickハンドラー',
-        }
-    },
 };
 
 // Index、Whiteストーリーを追加
 export const Index = {
-    render: args => <MyButton {...args} />,
     args: {
         primary: true,
         size: 'medium',
@@ -46,10 +19,11 @@ export const Index = {
 };
 
 export const White = {
-    args: {
-        size: 'small',
-        label: 'ボタン',
-        backgroundColor: '#fff'
+    args:{
+        size:'small',
+        label:'ボタン',
+        backgroundColor:'#fff',
+        primary:false
     }
 };
 
