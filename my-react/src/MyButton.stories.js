@@ -1,3 +1,4 @@
+import { action } from 'storybook/actions';
 import MyButton from './MyButton';
 
 // 基本情報を宣言
@@ -37,8 +38,11 @@ export const Index = {
     args: {
         primary: true,
         size: 'medium',
-        onClick: () => console.log('Hello, Storybook!!')
-    }
+        label: 'ボタン',
+        handleClick: e => {
+            action('clicked')(e, new Date());
+        },
+    },
 };
 
 export const White = {
@@ -46,7 +50,7 @@ export const White = {
         size:'small',
         label:'ボタン',
         backgroundColor:'#fff',
-        primary:false
+        handleClick: action('clicked'),
     }
 };
 
