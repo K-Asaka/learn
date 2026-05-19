@@ -41,16 +41,16 @@ export const Index = {
         primary: true,
         size: 'medium',
         label: 'ボタン',
-        handleClick: e => {
-            action('clicked')(e, new Date());
-        },
+        // イベントハンドラーは無効化
+        //onClick: () => console.log('Hello, Storybook!!')
+        handleClick: fn(),
     },
     play: async ({ args, canvasElement }) => {
         const canvas = within(canvasElement);
         const button = canvas.getByRole('button');
-        userEvent.click(button);
-        userEvent.click(button);
-        expect(args.onClick).toHaveBeenCalledTimes(2);
+        await userEvent.click(button);
+        await userEvent.click(button);
+        await expect(args.handleClick).toHaveBeenCalledTimes(2);
     }
 };
 
