@@ -36,7 +36,7 @@ export default {
     parameters: {
         layout: 'centered',
     },
-    tags: ['autodocs'],
+    //tags: ['autodocs'],
 };
 
 // Index、Whiteストーリーを追加
