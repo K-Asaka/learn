@@ -184,3 +184,11 @@ Styled JSXをインストール後、以下の手順を実行する。
   );
   ```
 
+### 外部サービスからデータを取得する
+
+OpenWeater API  
+[ https://openweathermap.org/current ]  
+
+サインアップページ  
+[ https://home.openweathermap.org/users/sign_up ]
+
