@@ -1,4 +1,3 @@
-import React from 'react';
 //import { userEvent, within } from '@storybook/testing-library';
 import { userEvent, within, expect, fn } from '@storybook/test';
 import { action } from '@storybook/addon-actions';
@@ -34,19 +33,9 @@ export default {
         },
         handleClick: { action: 'clicked' },
     },
-    decorators: [
-        Story => (
-            <div style={{
-                height: 150,
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: '#ccc',
-            }}>
-                <Story />
-            </div>
-        ),
-    ],
+    parameters: {
+        layout: 'centered',
+    },
 };
 
 // Index、Whiteストーリーを追加
