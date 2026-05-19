@@ -1,11 +1,11 @@
-/** @type { import('@storybook/react-webpack5').Preview } */
+/** @type { import('@storybook/react').Preview } */
 const preview = {
   parameters: {
-    actions: { argTypesRegex: "^(on|handle)[A-Z].*" },
+    actions: { argTypesRegex: "^on[A-Z].*" },
     controls: {
       matchers: {
-       color: /(background|color)$/i,
-       date: /Date$/i,
+        color: /(background|color)$/i,
+        date: /Date$/i,
       },
     },
   },

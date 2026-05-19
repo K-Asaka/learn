@@ -1,4 +1,6 @@
-import { action } from 'storybook/actions';
+//import { userEvent, within } from '@storybook/testing-library';
+import { userEvent, within, expect, fn } from '@storybook/test';
+import { action } from '@storybook/addon-actions';
 import MyButton from './MyButton';
 
 // 基本情報を宣言
@@ -43,7 +45,15 @@ export const Index = {
             action('clicked')(e, new Date());
         },
     },
+    play: async ({ args, canvasElement }) => {
+        const canvas = within(canvasElement);
+        const button = canvas.getByRole('button');
+        userEvent.click(button);
+        userEvent.click(button);
+        expect(args.onClick).toHaveBeenCalledTimes(2);
+    }
 };
+
 
 export const White = {
     args:{
