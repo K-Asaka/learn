@@ -45,10 +45,10 @@
     "postcss-preset-env": "^7.0.1",
     "prompts": "^2.4.2",
     "prop-types": "^15.8.1",
-    "react": "^19.2.5",
+    "react": "^18.3.1",
     "react-app-polyfill": "^3.0.0",
     "react-dev-utils": "^12.0.1",
-    "react-dom": "^19.2.5",
+    "react-dom": "^18.3.1",
     "react-error-boundary": "^6.1.1",
     "react-hook-form": "^7.75.0",
     "react-refresh": "^0.11.0",
@@ -156,12 +156,14 @@
     ]
   },
   "devDependencies": {
-    "storybook": "^10.3.6",
-    "@storybook/react-webpack5": "^10.3.6",
-    "@storybook/addon-webpack5-compiler-swc": "^4.0.3",
-    "@storybook/addon-a11y": "^10.3.6",
-    "@storybook/addon-docs": "^10.3.6",
-    "@storybook/addon-onboarding": "^10.3.6",
-    "eslint-plugin-storybook": "^10.3.6"
+    "@storybook/addon-actions": "^7.6.24",
+    "@storybook/addon-essentials": "^7.6.24",
+    "@storybook/addon-interactions": "^7.6.24",
+    "@storybook/addon-links": "^7.6.24",
+    "@storybook/addon-onboarding": "^1.0.11",
+    "@storybook/blocks": "^7.6.24",
+    "@storybook/react-webpack5": "^7.6.24",
+    "@storybook/test": "^7.6.24",
+    "storybook": "^7.6.24"
   }
 }
