@@ -192,3 +192,8 @@ OpenWeater API
 サインアップページ  
 [ https://home.openweathermap.org/users/sign_up ]
 
+
+### OpenWeather APIの基本
+
+[ https://api.openweathermap.org/data/2.5/weather?lat=35.6895&lon=139.692&appid={API_KEY} ]
+
