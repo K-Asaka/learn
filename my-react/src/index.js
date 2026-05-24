@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom/client';
-import HookContext from './HookContext';
+import MyThemeProvider from './MyThemeProvider';
+import HookThemeButton from './HookThemeButton';
 // アプリ固有のコードをインポート
 import './index.css';
 
@@ -9,7 +10,9 @@ import reportWebVitals from './reportWebVitals';
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <HookContext />
+  <MyThemeProvider>
+    <HookThemeButton />
+  </MyThemeProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
