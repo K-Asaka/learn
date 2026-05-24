@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client';
-import MyThemeProvider from './MyThemeProvider';
-import HookThemeButton from './HookThemeButton';
+import { RecoilRoot } from 'recoil';
+import RecoilCounter from './RecoilCounter';
 // アプリ固有のコードをインポート
 import './index.css';
 
@@ -10,9 +10,9 @@ import reportWebVitals from './reportWebVitals';
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <MyThemeProvider>
-    <HookThemeButton />
-  </MyThemeProvider>
+  <RecoilRoot>
+    <RecoilCounter />
+  </RecoilRoot>
 );
 
 // If you want to start measuring performance in your app, pass a function
