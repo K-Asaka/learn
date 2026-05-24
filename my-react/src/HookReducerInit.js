@@ -18,7 +18,8 @@ export default function HookReducerInit({ init }) {
                     return state;
             }
         },
-        initCounter(init),
+        init,
+        initCounter
     );
 
     // Reducer経由でStateを更新
