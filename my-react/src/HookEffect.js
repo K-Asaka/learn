@@ -13,7 +13,7 @@ export default function HookEffect({ init }) {
     const [count, setCount] = useState(0);
 
     // 2000ミリ秒後にState(count)を設定
-    useEffect(() => {
+    useLayoutEffect(() => {
         sleep(2000);
         setCount(init);
     }, []);
