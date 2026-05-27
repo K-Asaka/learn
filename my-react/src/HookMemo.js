@@ -15,10 +15,10 @@ export default function HookMemo() {
     const decrement = () => setCount2(c => c - 1);
 
     // count1に100を加えた値を算出するコード(ダミーの重い処理)
-    const heavyProcess = () => {
+    const heavyProcess = useMemo(() => {
         sleep(1000);
         return count1 + 100;
-    };
+    }, [count1]);
 
     return (
         <>
@@ -26,7 +26,7 @@ export default function HookMemo() {
             <div>
                 <MyButton id="btn1" handleClick={increment}>カウントアップ</MyButton>
                 <MyCounter id="c1" value={count1} />／
-                {heavyProcess()}
+                {heavyProcess}
             </div>
             <div>
                 <MyButton id="btn2" handleClick={decrement}>カウントダウン</MyButton>
