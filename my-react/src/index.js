@@ -1,6 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import { RecoilRoot } from 'recoil';
-import RecoilTodoUp from './RecoilTodoUp';
+import HookMemo from './HookMemo';
 // アプリ固有のコードをインポート
 import './index.css';
 
@@ -10,9 +9,7 @@ import reportWebVitals from './reportWebVitals';
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <RecoilRoot>
-    <RecoilTodoUp />
-  </RecoilRoot>
+  <HookMemo />
 );
 
 // If you want to start measuring performance in your app, pass a function
