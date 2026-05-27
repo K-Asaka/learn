@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import { RecoilRoot } from 'recoil';
-import RecoilTodo from './RecoilTodo';
+import RecoilTodoUp from './RecoilTodoUp';
 // アプリ固有のコードをインポート
 import './index.css';
 
@@ -11,7 +11,7 @@ import reportWebVitals from './reportWebVitals';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <RecoilRoot>
-    <RecoilTodo />
+    <RecoilTodoUp />
   </RecoilRoot>
 );
 
