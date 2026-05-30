@@ -4,7 +4,7 @@ export default function InfoPage() {
     return (
         <>
             <p>Infoページです。</p>
-            <Link to=".." relative="path">トップ</Link>
+            <Link to="/" reloadDocument>トップ</Link>
         </>
     );
 }
