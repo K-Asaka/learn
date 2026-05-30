@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom/client';
-import HookCustom from './HookCustom';
+import { RouterProvider } from 'react-router-dom';
+import routesBasic from './routesBasic';
 // アプリ固有のコードをインポート
 import './index.css';
 
@@ -8,8 +9,9 @@ import reportWebVitals from './reportWebVitals';
 
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
+// React Routerを有効化
 root.render(
-  <HookCustom />
+  <RouterProvider router={routesBasic} />
 );
 
 // If you want to start measuring performance in your app, pass a function
