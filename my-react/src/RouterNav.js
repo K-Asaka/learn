@@ -11,7 +11,7 @@ export default function RouterNav() {
         <>
             <ul>
                 <li><NavLink style={isCurrent} to="/">トップ</NavLink></li>
-                <li><NavLink style={isCurrent} to="/article">公開記事</NavLink></li>
+                <li><NavLink style={isCurrent} to="/article" end>公開記事</NavLink></li>
                 <li><NavLink style={isCurrent} to="/about">このサイトについて</NavLink></li>
             </ul>
             <hr />
