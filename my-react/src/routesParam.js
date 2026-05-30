@@ -3,6 +3,7 @@ import RouterParam from './RouterParam';
 import TopPage from './TopPage';
 import BookPage from './BookPage';
 import SearchPage from './SearchPage';
+import NotFoundPage from './NotFoundPage';
 
 
 const routesParam = createBrowserRouter (
@@ -12,6 +13,8 @@ const routesParam = createBrowserRouter (
             <Route path="/book/:isbn?" element={<BookPage />} />
             {/* 可変長パラメーターを定義 */}
             <Route path="/search/*" element={<SearchPage />} />
+            {/* 任意のページに対応するルート */}
+            <Route path="*" element={<NotFoundPage />} />
         </Route>
     )
 );
