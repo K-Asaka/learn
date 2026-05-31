@@ -11,10 +11,10 @@ import BookStatePage from './BookStatePage';
 
 const routesParam = createBrowserRouter (
     createRoutesFromElements(
-        <Route element={<RouterParam />}>
+        <Route element={<RouterParam />}
+            errorElement={<InvalidParamsPage />}>
             <Route path="/" element={<TopPage />} />
-            <Route path="/book/:isbn?" element={<BookPage />} 
-                errorElement={<InvalidParamsPage />} />
+            <Route path="/book/:isbn?" element={<BookPage />} />
             <Route path="/bookQuery" element={<BookQueryPage />} />
             <Route path="/bookState" element={<BookStatePage />} />
             {/* 可変長パラメーターを定義 */}
