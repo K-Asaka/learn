@@ -1,6 +1,6 @@
 import { Route, createBrowserRouter, createRoutesFromElements,
     json } from 'react-router-dom';
-import InvalidParamsPage from './InvalidParamsPage';
+// import InvalidParamsPage from './InvalidParamsPage';
 import RouterParam from './RouterParam';
 import TopPage from './TopPage';
 import BookPage from './BookPage';
@@ -11,7 +11,10 @@ import BookStatePage from './BookStatePage';
 import WeatherPage from './WeatherPage';
 import CommonErrorPage from './CommonErrorPage';
 
+const sleep = ms => new Promise(res => setTimeout(res, ms));
 const fetchWeather = async ({ params }) => {
+    // ローディングメッセージを表示させるために処理を遅延
+    await sleep(2000);
     const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${params.city}&lang=ja&appid={API_KEY}`);
     // 応答が成功の場合は、そのまま結果データを返す
     if (res.ok) { return res; }
