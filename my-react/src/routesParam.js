@@ -1,4 +1,5 @@
 import { Route, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
+import InvalidParamsPage from './InvalidParamsPage';
 import RouterParam from './RouterParam';
 import TopPage from './TopPage';
 import BookPage from './BookPage';
@@ -12,7 +13,8 @@ const routesParam = createBrowserRouter (
     createRoutesFromElements(
         <Route element={<RouterParam />}>
             <Route path="/" element={<TopPage />} />
-            <Route path="/book/:isbn?" element={<BookPage />} />
+            <Route path="/book/:isbn?" element={<BookPage />} 
+                errorElement={<InvalidParamsPage />} />
             <Route path="/bookQuery" element={<BookQueryPage />} />
             <Route path="/bookState" element={<BookStatePage />} />
             {/* 可変長パラメーターを定義 */}
