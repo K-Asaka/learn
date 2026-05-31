@@ -4,13 +4,10 @@ import books from './books';
 
 export default function BookPage() {
     const { isbn = '978-4-8156-0182-9' } = useParams();
-    const { title, summary } = books.find(b => isbn === b.isbn);
+    // ISBNコードの形式に則っていなければエラー
+    if (!/978-4-[0-9]{2,7}-[0-9]{2,7}-[0-9X]/.test(isbn)) {
+        throw new RangeError('ISBN is invalid!!');
+    }
 
-    return (
-        <>
-            <MyHeader title={title} keywords={title}
-                description={summary} />
-            <p>ISBNコード「{isbn}」のページです。</p>;
-        </>
-    );
+    return <p>ISBNコード「{isbn}」のページです。</p>;
 }
