@@ -15,12 +15,20 @@ const fetchWeather = async ({ params }) => {
     // 応答が成功の場合は、そのまま結果データを返す
     if (res.ok) { return res; }
     // 成功以外の結果ではエラーデータを生成
-    return json({
-        "weather":[
-            {"id":803,"main":"Unknown","description":"不明","icon":"50d"}
-        ],
-        "name":"不明"
-    });
+    return new Response(
+        JSON.stringify({
+            "weather":[
+                {"id":803,"main":"Unknown","description":"不明","icon":"50d"}
+            ],
+            "name":"不明"
+        }),
+        {
+            status: 200,
+            headers: {
+                'Content-Type': 'application/json; UTF-8',
+            },
+        }
+    );
 }
 
 const routesParam = createBrowserRouter (
