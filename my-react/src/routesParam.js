@@ -7,7 +7,7 @@ import SearchPage from './SearchPage';
 import NotFoundPage from './NotFoundPage';
 import BookQueryPage from './BookQueryPage';
 import BookStatePage from './BookStatePage';
-
+import WeatherPage from './WeatherPage';
 
 const routesParam = createBrowserRouter (
     createRoutesFromElements(
@@ -19,6 +19,10 @@ const routesParam = createBrowserRouter (
             <Route path="/bookState" element={<BookStatePage />} />
             {/* 可変長パラメーターを定義 */}
             <Route path="/search/*" element={<SearchPage />} />
+            <Route path="/weather/:city" element={<WeatherPage />}
+                loader={({ params }) =>
+                    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${params.city}&lang=ja&appid={API_KEY}`)
+                }/>
             {/* 任意のページに対応するルート */}
             <Route path="*" element={<NotFoundPage />} />
         </Route>
