@@ -14,6 +14,7 @@ export default function RouterParam() {
             <p>アクセス数：{count}</p>
             <ul>
                 <li><NavLink to="/">トップ</NavLink></li>
+                <li><NavLink to="/book/form">書籍登録フォーム</NavLink></li>
                 <li><NavLink to="/book/978-4-8156-1336-5">
                     これからはじめるVue.js 3実践入門</NavLink></li>
                 <li><NavLink to="/bookQuery?isbn=978-4-8156-1336-5">
