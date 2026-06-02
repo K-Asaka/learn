@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
-import routesParam from './routesParam';
+import routesMyLink from './routesMyLink';
 
 // アプリ固有のコードをインポート
 import './index.css';
@@ -11,7 +11,7 @@ import reportWebVitals from './reportWebVitals';
 // Reactアプリ（Appコンポーネント）を描画
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <RouterProvider router={routesParam} />
+  <RouterProvider router={routesMyLink} />
 );
 
 // If you want to start measuring performance in your app, pass a function
