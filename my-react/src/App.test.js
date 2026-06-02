@@ -3,7 +3,10 @@ import App from './App';
 
 // テストケースを定義
 test('renders learn react link', () => {
-  const { debug, baseElement } = render(<App />);
+  const para = document.createElement('p');
+  const { debug, baseElement } = render(<App />, {
+    container: document.body.appendChild(para)
+  });
   debug(baseElement);
   // コンポーネントを描画
   render(<App />);
