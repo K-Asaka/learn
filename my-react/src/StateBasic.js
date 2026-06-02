@@ -6,7 +6,7 @@ export default function StateBasic({ init }) {
     console.log(`count is ${count}`);
     // [カウント] ボタンクリック時にカウント値をインクリメント
     const handleClick = () => {
-        setCount(c => c + 1);
+//        setCount(c => c + 1);
         setCount(c => c + 1);
     }
     return (

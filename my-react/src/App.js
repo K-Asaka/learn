@@ -19,6 +19,7 @@ function App() {
           rel="noopener noreferrer"
         >
           こんにちは、React！！
+          learn react
         </a>
       </header>
     </div>
