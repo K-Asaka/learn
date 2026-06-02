@@ -197,3 +197,17 @@ OpenWeater API
 
 [ https://api.openweathermap.org/data/2.5/weather?lat=35.6895&lon=139.692&appid={API_KEY} ]
 
+
+### React Routerアプリを本番環境に移行する場合
+
+「http://example.com/about」のようなルート上のパスに、直接アクセスした場合、サーバー上には/aboutというフォルダ／ファイルが存在しないため`404 Not Found`エラーを返す。  
+Apache HTTP Serverでは`/public`フォルダは以下に、`.htaccess`を用意する。
+指定のリソースが存在しない場合は`index.html`にリダイレクトする。
+
+```Apache:.htaccess
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.html [QSA,L]
+```
+
