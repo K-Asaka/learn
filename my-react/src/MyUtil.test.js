@@ -6,6 +6,6 @@ describe('getTriangleArea関数', () => {
     });
 
     test('正常パターン', () => {
-        expect(getTriangleArea(10, 2)).toBe(20);
+        expect(getTriangleArea(10, 2)).toBe(10);
     });
 });

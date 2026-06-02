@@ -211,3 +211,14 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ index.html [QSA,L]
 ```
 
+
+### 単体テスト
+
+- テストを実行する
+  - `npm run test MyUtil.test.js`
+- watchモード
+  - `npm run test -- --watchAll=false`
+- コードカバレッジ分析の結果をレポートする
+  - `npm run test -- --coverage --watchAll=false`
+  - プロジェクトルートの配下から`/coverage/lcov-report/index.html`を開く
+
