@@ -1,28 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import ListTemplate from './ListTemplate';
-import books from './books';
-import type { Book } from './Book';
+import StateBasic from './StateBasic';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <ListTemplate src={books}>
-    {(elem: Book) => (
-      <>
-        <dt>
-          <a href={`https://wings.msn.to/books/${elem.isbn}/${elem.isbn}.jpg`}>
-            {elem.title} ({elem.price}円)
-          </a>
-        </dt>
-        <dd>{elem.summary}</dd>
-      </>
-    )}
-  </ListTemplate>
+  <React.StrictMode>
+    <StateBasic init={0} />
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
