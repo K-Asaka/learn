@@ -228,3 +228,16 @@ RewriteRule ^ index.html [QSA,L]
 
 [ https://www.typescriptlang.org/play ]
 
+
+### TypeScriptのテンプレートの有効化
+
+`npx create-react-app my-react-ts --template typescript`
+
+
+### Create React Appのテンプレート
+
+[ https://www.npmjs.com ]
+
+`cra-template-*`で検索。
+`--template`オプションには「cra-template-xxxxx」の「xxxxx」の部分だけを指定する。
+
