@@ -6,8 +6,8 @@ const sleep = delay => new Promise(resolve => setTimeout(resolve, delay));
 // 天気情報を取得するための関数
 const fetchWeather = async () => {
     // 処理を遅延させるためのダミーの休止処理
-    await sleep(2000);
-    const res = await fetch('https://api.openweathermap.org/data/2.5/weather?lat=35.6895&lon=139.692&lang=ja&appid={API_KEY}');
+    // await sleep(2000);
+    const res = await fetch('https://api.openweathermap.org/data/2.5/weather?lat=35.6895&lon=139.692&lang=ja&appid={API_KEY}');    
     if (res.ok) { return res.json(); }
     // エラー時はその内容をスロー
     throw new Error(res.statusText);
