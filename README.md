@@ -222,3 +222,9 @@ RewriteRule ^ index.html [QSA,L]
   - `npm run test -- --coverage --watchAll=false`
   - プロジェクトルートの配下から`/coverage/lcov-report/index.html`を開く
 
+
+## TypeScriptの活用
+### TypeScript Playground
+
+[ https://www.typescriptlang.org/play ]
+
