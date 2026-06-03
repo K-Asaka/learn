@@ -6,7 +6,4 @@ export type ThemeContextType = {
     toggleMode: () => void
 };
 
-export default createContext<ThemeContextType>({
-    mode: 'light',
-    toggleMode: () => {}
-});
+export default createContext<Partial<ThemeContextType>>({});
