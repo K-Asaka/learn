@@ -1,8 +1,12 @@
 'use client';
 
+import { useTransition } from 'react';
 import { addReview, removeReview } from '@/lib/actions';
 
 export default function FormEdit({ src: { id, read, memo } }) {
+    const [isPending, startTransition] = useTransition();
+    
+    // イベントハンドラー経由でサーバーアクションを呼び出し
     return (
         // サブミット時にaddReviewメソッドを呼び出し
         <form action={addReview}>
@@ -23,9 +27,11 @@ export default function FormEdit({ src: { id, read, memo } }) {
                 className="bg-blue-600 text-white rounded px-4 py-2 mr-2 hover:bg-blue-500">
                 登録</button>
             {/* [削除]ボタンでremoveReview関数を呼び出し */}
-            <button type="submit"
+            <button type="button"
                 className="bg-red-600 text-white rounded px-4 py-2 hover:bg-red-500"
-                formAction={removeReview}>
+                onClick={() => {
+                    startTransition(() => removeReview(id));
+                }}>
                 削除</button>
         </form>
     );

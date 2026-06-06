@@ -33,8 +33,9 @@ export async function addReview(data) {
 // 削除ボタンで指定のレビュー情報を削除
 export async function removeReview(data) {
     await prisma.reviews.delete({
+        // 直接id値を受け取るので、修正
         where: {
-            id: data.get('id')
+            id: data
         }
     });
     // 処理成功の後はトップページにリダイレクト
