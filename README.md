@@ -241,3 +241,20 @@ RewriteRule ^ index.html [QSA,L]
 `cra-template-*`で検索。
 `--template`オプションには「cra-template-xxxxx」の「xxxxx」の部分だけを指定する。
 
+
+## Next.js
+### Google Books API
+
+- Google Books API [https://developers.google.com/books/]
+- Googleブックス [https://books.google.com/]
+
+
+#### 検索キーワードに合致する書籍を検索
+
+- Googleプロジェクトを作成する
+- APIキーを作成する
+- Books APIを有効にする
+- APIキーの制限をかける
+
+`https://www.googleapis.com/books/v1/volumes?q=react`
+
